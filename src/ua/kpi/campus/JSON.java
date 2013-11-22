@@ -7,6 +7,8 @@ public final class JSON {
 		this.original = str;
 	}
 	
+	//TODO Siryoga, make a parser plz
+	
 	@Override
 	public String toString(){
 		return original;
