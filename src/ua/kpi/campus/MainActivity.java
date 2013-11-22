@@ -34,13 +34,14 @@ public class MainActivity extends Activity {
 		@Override
 		public void onClick(View arg0) {
 			// TODO Auto-generated method stub
+			// test...
 			if(firstNumber.getText().length() == 0 
 					|| secondNumber.getText().length() == 0) {
-				Toast.makeText(getApplicationContext(), "Будь ласка, заповните усі поля", Toast.LENGTH_SHORT).show();
+				Toast.makeText(getApplicationContext(), "пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅ", Toast.LENGTH_SHORT).show();
 			} else {
 				String login = firstNumber.getText().toString();
 				String password = secondNumber.getText().toString();			
-				Toast.makeText(getApplicationContext(), "Авторизація невдала", Toast.LENGTH_SHORT).show();
+				Toast.makeText(getApplicationContext(), "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ", Toast.LENGTH_SHORT).show();
 				CampusApi.login(login,password);
 			}
 		}
