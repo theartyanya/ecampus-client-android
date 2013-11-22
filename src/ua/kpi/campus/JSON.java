@@ -6,7 +6,7 @@ public final class JSON {
 	public JSON(String str){
 		this.original = str;
 	}
-	
+	private int trial;
 	//TODO Siryoga, make a parser plz
 	
 	@Override
