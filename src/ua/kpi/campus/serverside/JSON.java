@@ -1,4 +1,4 @@
-package ua.kpi.campus;
+package ua.kpi.campus.serverside;
 
 public final class JSON {
 	private final String original;
