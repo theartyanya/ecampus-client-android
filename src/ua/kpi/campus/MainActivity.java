@@ -11,7 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends Activity {
-//hello commit Serge
+//hello commit Serge1
 	private EditText firstNumber;
 	private EditText secondNumber;
 	private Button sumButton;
