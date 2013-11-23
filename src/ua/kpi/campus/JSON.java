@@ -6,9 +6,6 @@ public final class JSON {
 	public JSON(String str){
 		this.original = str;
 	}
-	private int trial;
-	private int trial2;
-	//TODO Siryoga, make a parser plz
 	
 	@Override
 	public String toString(){
