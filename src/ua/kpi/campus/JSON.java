@@ -7,6 +7,7 @@ public final class JSON {
 		this.original = str;
 	}
 	private int trial;
+	private int trial2;
 	//TODO Siryoga, make a parser plz
 	
 	@Override
