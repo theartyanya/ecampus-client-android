@@ -24,22 +24,36 @@ public class CampusApi {
 	 * API Campus link
 	 */
 	private final static String API_URL = "http://api.ecampus.kpi.ua/";
+	private final static String authPath = "User/Auth?";
+	private final static String getPermissionPath = "User/GetPermissions?";
 
+	
 	/**
 	 * Logging in to Campus system
 	 * 
 	 * @return JSON - string
 	 */
-	public static String login(String login, String password) {
-		String parameters = String.format("User/Auth?login=%s&password=%s",
-				login, password);
-		;
-		HttpURLConnection connection;
-		String response = "";
+	public static String auth(String login, String password) {
+		String parameters = String.format("%slogin=%s&password=%s", authPath, login, password);
+		return getStingFromHTTP(parameters);
+	}
+
+	/**
+	 * Getting permissions to Campus system
+	 * 
+	 * @return JSON - string
+	 */
+	public static String getPermission(String data){
+		String parameters = String.format("%ssessionId=%s", getPermissionPath, data);
+		return getStingFromHTTP(parameters);
+	}
+	
+	private static String getStingFromHTTP(String parameters) {
+	    String response = "";
 
 		try {
-			URL url = CreateURL(API_URL, parameters);
-			connection = openConnectionGet(url);
+			URL url = CreateURL(parameters);
+			HttpURLConnection connection = openConnectionGet(url);
 			sendRequest(parameters, connection);
 			response = getLine(connection);
 		} catch (IOException e) {
@@ -47,8 +61,8 @@ public class CampusApi {
 		}
 
 		return response;
-	}
-
+    }
+	
 	private static String getLine(HttpURLConnection connection)
 			throws IOException {
 		String response;
@@ -92,7 +106,7 @@ public class CampusApi {
 		return connection;
 	}
 
-	private static URL CreateURL(String API_URL, String parameters)
+	private static URL CreateURL(String parameters)
 			throws MalformedURLException {
 		return new URL(API_URL + parameters);
 	}
