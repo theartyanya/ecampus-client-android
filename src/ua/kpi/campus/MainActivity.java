@@ -32,8 +32,6 @@ public class MainActivity extends Activity {
 		
 		@Override
 		public void onClick(View arg0) {
-			// TODO Auto-generated method stub
-			// test...
 			if(firstNumber.getText().length() == 0 
 					|| secondNumber.getText().length() == 0) {
 				Toast.makeText(getApplicationContext(), "���� �����, ��������� �� ����", Toast.LENGTH_SHORT).show();
@@ -41,7 +39,7 @@ public class MainActivity extends Activity {
 				String login = firstNumber.getText().toString();
 				String password = secondNumber.getText().toString();			
 				Toast.makeText(getApplicationContext(), "����������� �������", Toast.LENGTH_SHORT).show();
-				CampusApi.login(login,password);
+				CampusApi.auth(login, password);
 			}
 		}
 	};
