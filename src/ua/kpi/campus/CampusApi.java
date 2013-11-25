@@ -48,6 +48,8 @@ public class CampusApi {
 		return getStingFromHTTP(parameters);
 	}
 	
+	
+	
 	private static String getStingFromHTTP(String parameters) {
 	    String response = "";
 
@@ -56,6 +58,7 @@ public class CampusApi {
 			HttpURLConnection connection = openConnectionGet(url);
 			sendRequest(parameters, connection);
 			response = getLine(connection);
+			
 		} catch (IOException e) {
 			Log.e("HTTP GET:", e.toString());
 		}
