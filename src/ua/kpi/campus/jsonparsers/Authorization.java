@@ -6,7 +6,7 @@ import java.sql.Timestamp;
  * 
  * 
  * @author Serhii Hokhalenko
- * @version 24 лист. 2013
+ * @version 24 . 2013
  */
 public class Authorization {
 	@Override

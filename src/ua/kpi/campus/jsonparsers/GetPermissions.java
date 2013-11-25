@@ -7,7 +7,7 @@ import java.util.ArrayList;
  * 
  * 
  * @author Serhii Hokhalenko
- * @version 24 лист. 2013
+ * @version 24 . 2013
  */
 class GetPermissions {
 	private int statusCode;

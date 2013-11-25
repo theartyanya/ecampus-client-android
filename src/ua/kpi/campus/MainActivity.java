@@ -1,8 +1,7 @@
 package ua.kpi.campus;
 
-import android.os.Bundle;
 import android.app.Activity;
-import android.util.Log;
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -38,11 +37,11 @@ public class MainActivity extends Activity {
 			// test...
 			if(firstNumber.getText().length() == 0 
 					|| secondNumber.getText().length() == 0) {
-				Toast.makeText(getApplicationContext(), "���� �����, ��������� �� ����", Toast.LENGTH_SHORT).show();
+				Toast.makeText(getApplicationContext(), "Заповните всі поля, будь ласка", Toast.LENGTH_SHORT).show();
 			} else {
 				String login = firstNumber.getText().toString();
 				String password = secondNumber.getText().toString();			
-				Toast.makeText(getApplicationContext(), "����������� �������", Toast.LENGTH_SHORT).show();
+				Toast.makeText(getApplicationContext(), "Авторизація невдала", Toast.LENGTH_SHORT).show();
 				CampusApi.auth(login, password);
 			}
 		}

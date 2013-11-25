@@ -3,7 +3,7 @@ package ua.kpi.campus.jsonparsers;
  * 
  * 
  * @author Serhii Hokhalenko
- * @version 25 лист. 2013
+ * @version 25 . 2013
  */
 public class GetPermissionsData {
 	private String subsystemName;

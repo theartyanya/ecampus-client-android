@@ -1,17 +1,14 @@
 package ua.kpi.campus.jsonparsers;
 import org.json.JSONException;
-import java.sql.Timestamp;
-
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.text.InputFilter.LengthFilter;
+import java.sql.Timestamp;
 
 /**
  * 
  * 
  * @author Serhii Hokhalenko
- * @version 24 лист. 2013
+ * @version 24 . 2013
  */
 public class JSONAuthorizationParser {
 	private static final String STATUS_CODE_ATTRIBUTE_NAME = "StatusCode";

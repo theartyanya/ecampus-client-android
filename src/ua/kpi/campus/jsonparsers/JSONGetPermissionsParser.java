@@ -1,17 +1,17 @@
 package ua.kpi.campus.jsonparsers;
 
-import java.sql.Timestamp;
-import java.util.ArrayList;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.sql.Timestamp;
+import java.util.ArrayList;
 
 /**
  * 
  * 
  * @author Serhii Hokhalenko
- * @version 24 лист. 2013
+ * @version 24  2013
  */
 public class JSONGetPermissionsParser {
 	private static final String STATUS_CODE_ATTRIBUTE_NAME = "StatusCode";
