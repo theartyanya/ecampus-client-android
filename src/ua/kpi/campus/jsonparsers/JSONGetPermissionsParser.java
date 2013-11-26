@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * 
  * 
  * @author Serhii Hokhalenko
- * @version 24  2013
+ * @version 24 Nov 2013
  */
 public class JSONGetPermissionsParser {
 	private static final String STATUS_CODE_ATTRIBUTE_NAME = "StatusCode";
@@ -23,30 +23,33 @@ public class JSONGetPermissionsParser {
 
 		try {
 			JSONObject getPermissionsObj = new JSONObject(jsonString);
-			System.out.println(getPermissionsObj
-					.getString(TIMESTAMP_ATTRIBUTE_NAME));
+			
 			String timeStampString = getPermissionsObj.getString(
 					TIMESTAMP_ATTRIBUTE_NAME).replace('T', ' ');
 			timeStampString = timeStampString.substring(0,
 					timeStampString.length() - 6);
 			// create data array
 			
-			JSONArray dataJSONArray = new JSONArray(
-					getPermissionsObj.getJSONArray("Data"));
-			ArrayList<GetPermissionsData> dataArray = new ArrayList<GetPermissionsData>();
-
-			try{
+			 
+			
+				JSONArray 	dataJSONArray = getPermissionsObj.getJSONArray("Data");
+				ArrayList<GetPermissionsData> dataArray = new ArrayList<GetPermissionsData>();
+			
+			
 			for (int i = 0; i < dataJSONArray.length(); i++) {
+				try{
 				JSONObject childJSONObject = dataJSONArray.getJSONObject(i);
-				dataArray.add(new GetPermissionsData(getPermissionsObj
-						.getString("SubsystemName"), getPermissionsObj
-						.getBoolean("IsCreate"), getPermissionsObj
-						.getBoolean("IsRead"), getPermissionsObj
-						.getBoolean("IsUpdate"), getPermissionsObj
+				dataArray.add(new GetPermissionsData(childJSONObject
+						.getString("SubsystemName"), childJSONObject
+						.getBoolean("IsCreate"), childJSONObject
+						.getBoolean("IsRead"), childJSONObject
+						.getBoolean("IsUpdate"), childJSONObject
 						.getBoolean("IsDelete")));
-				
+				} catch (JSONException exeption) {
+					System.out.println(exeption.toString()+"hereloolol");
+				}
 			}
-			}			catch(NullPointerException e){System.out.println("nullpoint");}
+		
 			
 			
 			
@@ -57,8 +60,8 @@ public class JSONGetPermissionsParser {
 					(Object) getPermissionsObj.getString(PAGING_ATTRIBUTE_NAME),
 					dataArray);
 
-		} catch (JSONException exeption) {
-			System.out.println(exeption.toString());
+		} catch (Exception exeption) {
+			System.out.println(exeption.toString()+"here");
 		}
 		
 		return null;
