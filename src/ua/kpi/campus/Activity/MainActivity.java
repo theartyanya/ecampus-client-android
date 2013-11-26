@@ -1,6 +1,7 @@
 package ua.kpi.campus.Activity;
 
 import android.app.Activity;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
@@ -45,18 +46,49 @@ public class MainActivity extends Activity {
 	};
 
     private void authorize() {
-        String login = firstNumber.getText().toString();
-        String password = secondNumber.getText().toString();
-        String response = CampusApi.auth(login, password);
-        if(CampusApi.AUTHORIZATION_FAILED.equals(response)){
+        final String login = firstNumber.getText().toString();
+        final String password = secondNumber.getText().toString();
+        new AsyncTask<String, Void, String>()
+        {
+            @Override public void onPostExecute(String result)
+            {
+                checkAuthResponse(result);
+            }
+
+            @Override
+            protected String doInBackground(String... params) {
+                return CampusApi.auth(login, password);
+            }
+
+        }.execute("");
+    }
+
+    private void checkAuthResponse(String result) {
+        if(CampusApi.ERROR.equals(result)){
             showAuthorizeFail();
         } else {
-            String session_id = getSessionId(response);
-            showSessionId(session_id);
+            String session_id = getSessionId(result);
+            getPermissions(session_id);
         }
     }
 
-    private void showSessionId(String session_id) {
+    private void getPermissions(final String session_id) {
+        new AsyncTask<String, Void, String>()
+        {
+            @Override public void onPostExecute(String result)
+            {
+                showToastLong(result);
+            }
+
+            @Override
+            protected String doInBackground(String... params) {
+                return CampusApi.getPermission(session_id);
+            }
+
+        }.execute("");
+    }
+
+    private void showToastLong(String session_id) {
         Toast.makeText(getApplicationContext(), session_id, Toast.LENGTH_LONG).show();
     }
 
