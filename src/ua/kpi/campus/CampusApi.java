@@ -1,5 +1,7 @@
 package ua.kpi.campus;
 
+import android.util.Log;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -9,24 +11,22 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 
-import android.util.Log;
-
 /**
  * Main Campus API
  * 
  * @author Artur Dzidzoiev
  * @version Nov 24, 2013
- * @see http://sdrv.ms/1gUsc17
- * @see http://dev.ecampus.kpi.ua/library/item/campus-api-for-mobile
+ * @see <a href="http://sdrv.ms/1gUsc17"/>
+ * @see <a href="http://dev.ecampus.kpi.ua/library/item/campus-api-for-mobile"/>
  */
 public class CampusApi {
 	/**
 	 * API Campus link
 	 */
 	private final static String API_URL = "http://api.ecampus.kpi.ua/";
-	private final static String authPath = "User/Auth?";
-	private final static String getPermissionPath = "User/GetPermissions?";
-
+	private final static String AUTH_PATH = "User/Auth?";
+	private final static String GET_PERMISSION_PATH = "User/GetPermissions?";
+    public final static String AUTHORIZATION_FAILED = "403";
 	
 	/**
 	 * Logging in to Campus system
@@ -34,7 +34,7 @@ public class CampusApi {
 	 * @return JSON - string
 	 */
 	public static String auth(String login, String password) {
-		String parameters = String.format("%slogin=%s&password=%s", authPath, login, password);
+		String parameters = String.format("%slogin=%s&password=%s", AUTH_PATH, login, password);
 		return getStingFromHTTP(parameters);
 	}
 
@@ -44,7 +44,7 @@ public class CampusApi {
 	 * @return JSON - string
 	 */
 	public static String getPermission(String data){
-		String parameters = String.format("%ssessionId=%s", getPermissionPath, data);
+		String parameters = String.format("%ssessionId=%s", GET_PERMISSION_PATH, data);
 		return getStingFromHTTP(parameters);
 	}
 	
@@ -58,14 +58,14 @@ public class CampusApi {
 			HttpURLConnection connection = openConnectionGet(url);
 			sendRequest(parameters, connection);
 			response = getLine(connection);
-			
+
 		} catch (IOException e) {
 			Log.e("HTTP GET:", e.toString());
 		}
 
 		return response;
     }
-	
+
 	private static String getLine(HttpURLConnection connection)
 			throws IOException {
 		String response;

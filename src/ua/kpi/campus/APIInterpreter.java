@@ -10,7 +10,7 @@ import ua.kpi.campus.jsonparsers.JSONAuthorizationParser;
  * @version 25  2013
  */
 public class APIInterpreter {
-	public Authorization getAuthorization(String login, String password) {
+	public static Authorization getAuthorization(String login, String password) {
 		return JSONAuthorizationParser.parse(CampusApi.auth(login, password));
 	}
 }

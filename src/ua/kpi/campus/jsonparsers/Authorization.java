@@ -8,22 +8,12 @@ import java.sql.Timestamp;
  * @author Serhii Hokhalenko
  * @version 24 Nov 2013
  */
-public class Authorization {
-	@Override
-	public String toString() {
-		return "Authorization [statusCode=" + statusCode + ", timeStamp="
-				+ timeStamp + ", guid=" + guid + ", padding=" + padding
-				+ ", data=" + data + "]";
-	}
-
-	private int statusCode;
-	private Timestamp timeStamp;
-	private String guid;
-	private Object padding;
-	private String data;
-
-	public Authorization() {
-	}
+public final class Authorization {
+	private final int statusCode;
+	private final Timestamp timeStamp;
+	private final String guid;
+	private final Object padding;
+	private final String data;
 
 	public Authorization(int statusCode, Timestamp timeStamp, String guid,
 			Object padding, String data) {
@@ -35,44 +25,30 @@ public class Authorization {
 		this.data = data;
 	}
 
-	int getStatusCode() {
+    @Override
+    public String toString() {
+        return "Authorization [statusCode=" + statusCode + ", timeStamp="
+                + timeStamp + ", guid=" + guid + ", padding=" + padding
+                + ", data=" + data + "]";
+    }
+
+	public int getStatusCode() {
 		return statusCode;
 	}
 
-	void setStatusCode(int statusCode) {
-		this.statusCode = statusCode;
-	}
-
-	Timestamp getTimeStamp() {
+	public Timestamp getTimeStamp() {
 		return timeStamp;
 	}
 
-	void setTimeStamp(Timestamp timeStamp) {
-		this.timeStamp = timeStamp;
-	}
-
-	String getGuid() {
+	public String getGuid() {
 		return guid;
-	}
+    }
 
-	void setGuid(String guid) {
-		this.guid = guid;
-	}
-
-	Object getPadding() {
+	public Object getPadding() {
 		return padding;
 	}
 
-	void setPadding(Object padding) {
-		this.padding = padding;
-	}
-
-	String getData() {
+	public String getData() {
 		return data;
 	}
-
-	void setData(String data) {
-		this.data = data;
-	}
-
 }

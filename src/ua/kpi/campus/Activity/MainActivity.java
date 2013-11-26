@@ -1,4 +1,4 @@
-package ua.kpi.campus;
+package ua.kpi.campus.Activity;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -9,6 +9,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import ua.kpi.campus.CampusApi;
+import ua.kpi.campus.R;
+import ua.kpi.campus.jsonparsers.*;
 
 public class MainActivity extends Activity {
 	private EditText firstNumber;
@@ -36,13 +39,35 @@ public class MainActivity extends Activity {
 					|| secondNumber.getText().length() == 0) {
 				Toast.makeText(getApplicationContext(), "Заповните всі поля, будь ласка", Toast.LENGTH_SHORT).show();
 			} else {
-				String login = firstNumber.getText().toString();
-				String password = secondNumber.getText().toString();			
-				Toast.makeText(getApplicationContext(), "Авторизація невдала", Toast.LENGTH_SHORT).show();
-				CampusApi.auth(login, password);
+				authorize();
 			}
 		}
 	};
+
+    private void authorize() {
+        String login = firstNumber.getText().toString();
+        String password = secondNumber.getText().toString();
+        String response = CampusApi.auth(login, password);
+        if(CampusApi.AUTHORIZATION_FAILED.equals(response)){
+            showAuthorizeFail();
+        } else {
+            String session_id = getSessionId(response);
+            showSessionId(session_id);
+        }
+    }
+
+    private void showSessionId(String session_id) {
+        Toast.makeText(getApplicationContext(), session_id, Toast.LENGTH_LONG).show();
+    }
+
+    private String getSessionId(String response) {
+        Authorization authorization = JSONAuthorizationParser.parse(response);
+        return authorization.getData();
+    }
+
+    private void showAuthorizeFail() {
+        Toast.makeText(getApplicationContext(), "Авторизація невдала", Toast.LENGTH_SHORT).show();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
