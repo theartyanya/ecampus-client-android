@@ -18,21 +18,20 @@
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent">
                 <LinearLayout
-                        android:orientation="horizontal"
+                        android:orientation="vertical"
                         android:layout_width="fill_parent"
-                        android:layout_height="300dp" android:layout_gravity="top">
+                        android:layout_height="fill_parent" android:layout_gravity="top">
 
-                    <TabWidget
-                            android:id="@android:id/tabs"
+                    <LinearLayout
+                            android:orientation="vertical"
                             android:layout_width="fill_parent"
-                            android:layout_height="wrap_content" android:layout_gravity="bottom">
-                    </TabWidget>
-                </LinearLayout>
-                <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="fill_parent"
-                        android:layout_height="50dp" android:layout_gravity="bottom">
-
+                            android:layout_height="310dp">
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="New Text"
+                                android:id="@+id/textView" android:layout_gravity="left|center_vertical"/>
+                    </LinearLayout>
                     <TabWidget
                             android:id="@android:id/tabs"
                             android:layout_width="fill_parent"
