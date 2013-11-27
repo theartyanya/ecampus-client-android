@@ -14,7 +14,7 @@ import ua.kpi.campus.CampusApi;
 import ua.kpi.campus.R;
 import ua.kpi.campus.jsonparsers.*;
 
-public class MainActivity extends Activity {
+public class LoginActivity extends Activity {
 	private EditText firstNumber;
 	private EditText secondNumber;
 	private Button sumButton;
@@ -23,7 +23,7 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_login);
         
         firstNumber = (EditText)findViewById(R.id.firstNumberEdit);
         secondNumber = (EditText)findViewById(R.id.secondNumberEdit);
