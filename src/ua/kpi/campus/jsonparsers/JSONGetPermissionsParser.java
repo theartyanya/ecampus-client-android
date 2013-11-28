@@ -19,7 +19,7 @@ public class JSONGetPermissionsParser {
 	private static final String GUID_ATTRIBUTE_NAME = "Guid";
 	private static final String PAGING_ATTRIBUTE_NAME = "Paging";
 
-	public static GetPermissions parse(String jsonString) {
+	public static Permissions parse(String jsonString) {
 
 		try {
 			JSONObject getPermissionsObj = new JSONObject(jsonString);
@@ -53,7 +53,7 @@ public class JSONGetPermissionsParser {
 			
 			
 			
-			return new GetPermissions(
+			return new Permissions(
 					getPermissionsObj.getInt(STATUS_CODE_ATTRIBUTE_NAME),
 					Timestamp.valueOf(timeStampString),
 					getPermissionsObj.getString(GUID_ATTRIBUTE_NAME),

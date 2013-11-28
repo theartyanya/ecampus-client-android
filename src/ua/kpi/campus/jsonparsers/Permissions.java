@@ -9,7 +9,7 @@ import java.util.ArrayList;
  * @author Serhii Hokhalenko
  * @version 24 Nov 2013
  */
-class GetPermissions {
+class Permissions {
 	private int statusCode;
 	private Timestamp timeStamp;
 	private String guid;
@@ -17,8 +17,8 @@ class GetPermissions {
 	private ArrayList<GetPermissionsData> data;
 	
 	
-	public GetPermissions(int statusCode, Timestamp timeStamp, String guid,
-			Object padding, ArrayList<GetPermissionsData> data) {
+	public Permissions(int statusCode, Timestamp timeStamp, String guid,
+                       Object padding, ArrayList<GetPermissionsData> data) {
 		super();
 		this.statusCode = statusCode;
 		this.timeStamp = timeStamp;

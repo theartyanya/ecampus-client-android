@@ -19,7 +19,8 @@ public class LoginActivity extends Activity {
 	private EditText secondNumber;
 	private Button sumButton;
 	private TextView resultText;
-	
+    private Authorization authorization;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
