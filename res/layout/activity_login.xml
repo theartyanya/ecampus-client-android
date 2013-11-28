@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/textView1"
         android:layout_below="@+id/textView1"
-        android:ems="10" />
+        android:ems="10" android:text="123"/>
 
     <TextView
         android:id="@+id/textView2"
@@ -42,7 +42,7 @@
         android:layout_below="@+id/textView2"
         android:layout_marginTop="14dp"
         android:ems="10" 
-        android:inputType="textPassword" >
+        android:inputType="textPassword" android:text="123">
         
 
         <requestFocus />
