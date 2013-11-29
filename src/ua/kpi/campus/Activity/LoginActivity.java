@@ -1,6 +1,7 @@
 package ua.kpi.campus.Activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
@@ -12,7 +13,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import ua.kpi.campus.CampusApi;
 import ua.kpi.campus.R;
-import ua.kpi.campus.jsonparsers.*;
+import ua.kpi.campus.jsonparsers.Authorization;
+import ua.kpi.campus.jsonparsers.JSONAuthorizationParser;
 
 public class LoginActivity extends Activity {
 	private EditText firstNumber;
@@ -20,6 +22,8 @@ public class LoginActivity extends Activity {
 	private Button sumButton;
 	private TextView resultText;
     private Authorization authorization;
+    public final static String EXTRA_PERMISSIONS = "permissions";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +82,9 @@ public class LoginActivity extends Activity {
         {
             @Override public void onPostExecute(String result)
             {
-                showToastLong(result);
+                Intent intent = new Intent(getOuter(), MainInfoActivity.class);
+                intent.putExtra(EXTRA_PERMISSIONS, result);
+                startActivity(intent);
             }
 
             @Override
@@ -89,8 +95,8 @@ public class LoginActivity extends Activity {
         }.execute("");
     }
 
-    private void showToastLong(String session_id) {
-        Toast.makeText(getApplicationContext(), session_id, Toast.LENGTH_LONG).show();
+    private LoginActivity getOuter() {
+        return this;
     }
 
     private String getSessionId(String response) {
