@@ -82,7 +82,7 @@ public class LoginActivity extends Activity {
         {
             @Override public void onPostExecute(String result)
             {
-                Intent intent = new Intent(getOuter(), MainInfoActivity.class);
+                Intent intent = new Intent(getOuter(), MainActivity.class);
                 intent.putExtra(EXTRA_PERMISSIONS, result);
                 startActivity(intent);
             }
