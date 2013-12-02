@@ -1,4 +1,4 @@
-package ua.kpi.campus.jsonparsers;
+package ua.kpi.campus.session;
 
 import java.sql.Timestamp;
 

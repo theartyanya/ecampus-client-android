@@ -3,6 +3,8 @@ package ua.kpi.campus.jsonparsers;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import ua.kpi.campus.session.Permissions;
+import ua.kpi.campus.session.PermissionsData;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -33,13 +35,13 @@ public class JSONGetPermissionsParser {
 			 
 			
 				JSONArray 	dataJSONArray = getPermissionsObj.getJSONArray("Data");
-				ArrayList<GetPermissionsData> dataArray = new ArrayList<GetPermissionsData>();
+				ArrayList<PermissionsData> dataArray = new ArrayList<PermissionsData>();
 			
 			
 			for (int i = 0; i < dataJSONArray.length(); i++) {
 				try{
 				JSONObject childJSONObject = dataJSONArray.getJSONObject(i);
-				dataArray.add(new GetPermissionsData(childJSONObject
+				dataArray.add(new PermissionsData(childJSONObject
 						.getString("SubsystemName"), childJSONObject
 						.getBoolean("IsCreate"), childJSONObject
 						.getBoolean("IsRead"), childJSONObject

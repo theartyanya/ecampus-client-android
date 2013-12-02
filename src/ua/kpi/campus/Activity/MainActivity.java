@@ -28,24 +28,22 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import ua.kpi.campus.R;
+import ua.kpi.campus.jsonparsers.JSONGetPermissionsParser;
+import ua.kpi.campus.session.Permissions;
 
 public class MainActivity extends FragmentActivity implements ActionBar.TabListener {
+    private Permissions permissions;
     private final static int COUNT_TABS = 4;
 
-    /**
-     * The {@link android.support.v4.view.PagerAdapter} that will provide fragments for each of the
-     * three primary sections of the app. We use a {@link android.support.v4.app.FragmentPagerAdapter}
-     * derivative, which will keep every loaded fragment in memory. If this becomes too memory
-     * intensive, it may be best to switch to a {@link android.support.v4.app.FragmentStatePagerAdapter}.
-     */
-    AppSectionsPagerAdapter mAppSectionsPagerAdapter;
     /**
      * The {@link ViewPager} that will display the three primary sections of the app, one at a
      * time.
      */
-    ViewPager mViewPager;
+    private ViewPager mViewPager;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,7 +51,13 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
         // Create the adapter that will return a fragment for each of the three primary sections
         // of the app.
-        mAppSectionsPagerAdapter = new AppSectionsPagerAdapter(getSupportFragmentManager());
+        /*
+      The {@link android.support.v4.view.PagerAdapter} that will provide fragments for each of the
+      three primary sections of the app. We use a {@link android.support.v4.app.FragmentPagerAdapter}
+      derivative, which will keep every loaded fragment in memory. If this becomes too memory
+      intensive, it may be best to switch to a {@link android.support.v4.app.FragmentStatePagerAdapter}.
+     */
+        AppSectionsPagerAdapter mAppSectionsPagerAdapter = new AppSectionsPagerAdapter(getSupportFragmentManager());
 
         // Set up the action bar.
         final ActionBar actionBar = getActionBar();
@@ -89,6 +93,18 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                             .setText(mAppSectionsPagerAdapter.getPageTitle(i))
                             .setTabListener(this));
         }
+        Intent intent = getIntent();
+        //String permissionsStr = intent.getStringExtra(LoginActivity.EXTRA_PERMISSIONS);
+        //showToastLong(permissionsStr);
+        //permissions = parsePermissions(permissionsStr);
+    }
+
+    private Permissions parsePermissions(String permissionsStr) {
+        return JSONGetPermissionsParser.parse(permissionsStr);
+    }
+
+    private void showToastLong(String session_id) {
+        Toast.makeText(getApplicationContext(), session_id, Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -119,9 +135,13 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         public Fragment getItem(int i) {
             switch (i) {
                 case 0:
-                    // The first section of the app is the most interesting -- it offers
-                    // a launchpad into the other demonstrations in this example application.
-                    return new LaunchpadSectionFragment();
+                    return new MyProfileSectionFragment();
+                case 1:
+                    return new DeskSectionFragment();
+                case 2:
+                    return new MessageSectionFragment();
+                case 3:
+                    return new StatSectionFragment();
 
                 default:
                     // The other sections of the app are dummy placeholders.
@@ -142,12 +162,76 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         public CharSequence getPageTitle(int position) {
 
             switch (position) {
-                case 0: return getResources().getString(R.string.section1_main_info);
-                case 1: return getResources().getString(R.string.section2_desk);
-                case 2: return getResources().getString(R.string.section3_message);
-                case 3: return getResources().getString(R.string.section4_stat);
-                default: return "Section " + (position + 1);
+                case 0:
+                    return getResources().getString(R.string.section1_main_info);
+                case 1:
+                    return getResources().getString(R.string.section2_desk);
+                case 2:
+                    return getResources().getString(R.string.section3_message);
+                case 3:
+                    return getResources().getString(R.string.section4_stat);
+                default:
+                    return "Section " + (position + 1);
             }
+        }
+    }
+
+    /**
+     * Main profile for user
+     */
+    public class MyProfileSectionFragment extends Fragment {
+        ImageView avatar;
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+            View rootView = inflater.inflate(R.layout.fragment_section_my_profile, container, false);
+            avatar = (ImageView) findViewById(R.id.avatar);
+            //TODO loading avatar from server
+            //avatar.setImageResource(R.drawable.);
+            return rootView;
+        }
+    }
+
+    /**
+     * Дошка оголошень
+     */
+    public class DeskSectionFragment extends Fragment {
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+            View rootView = inflater.inflate(R.layout.fragment_section_desk, container, false);
+
+            return rootView;
+        }
+    }
+
+    /**
+     * Messages
+     */
+    public class MessageSectionFragment extends Fragment {
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+            View rootView = inflater.inflate(R.layout.fragment_section_message, container, false);
+
+            return rootView;
+        }
+    }
+
+    /**
+     * Statistics
+     */
+    public class StatSectionFragment extends Fragment {
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+            View rootView = inflater.inflate(R.layout.fragment_section_stat, container, false);
+
+            return rootView;
         }
     }
 

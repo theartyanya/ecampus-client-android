@@ -5,8 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 import ua.kpi.campus.R;
-import ua.kpi.campus.jsonparsers.JSONGetPermissionsParser;
-import ua.kpi.campus.jsonparsers.Permissions;
+import ua.kpi.campus.session.Permissions;
 
 /**
  * Main activity for user, it appears after authorization
@@ -21,10 +20,10 @@ public class MainInfoActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_info);
         Intent intent = getIntent();
-        String permissionsStr = intent.getStringExtra(LoginActivity.EXTRA_PERMISSIONS);
-        permissions = JSONGetPermissionsParser.parse(permissionsStr);
+        //String permissionsStr = intent.getStringExtra(LoginActivity.EXTRA_PERMISSIONS);
+        //permissions = JSONGetPermissionsParser.parse(permissionsStr);
         //
-        showToastLong(permissionsStr);
+        //showToastLong(permissionsStr);
     }
 
     private void showToastLong(String session_id) {

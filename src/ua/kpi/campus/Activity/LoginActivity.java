@@ -13,17 +13,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 import ua.kpi.campus.CampusApi;
 import ua.kpi.campus.R;
-import ua.kpi.campus.jsonparsers.Authorization;
-import ua.kpi.campus.jsonparsers.JSONAuthorizationParser;
 
 public class LoginActivity extends Activity {
 	private EditText firstNumber;
 	private EditText secondNumber;
 	private Button sumButton;
 	private TextView resultText;
-    private Authorization authorization;
-    public final static String EXTRA_PERMISSIONS = "permissions";
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,36 +67,17 @@ public class LoginActivity extends Activity {
         if(CampusApi.ERROR.equals(result)){
             showAuthorizeFail();
         } else {
-            String session_id = getSessionId(result);
-            getPermissions(session_id);
+            startMainActivity();
         }
     }
 
-    private void getPermissions(final String session_id) {
-        new AsyncTask<String, Void, String>()
-        {
-            @Override public void onPostExecute(String result)
-            {
-                Intent intent = new Intent(getOuter(), MainActivity.class);
-                intent.putExtra(EXTRA_PERMISSIONS, result);
-                startActivity(intent);
-            }
-
-            @Override
-            protected String doInBackground(String... params) {
-                return CampusApi.getPermission(session_id);
-            }
-
-        }.execute("");
+    private void startMainActivity() {
+        Intent intent = new Intent(getOuter(), MainActivity.class);
+        startActivity(intent);
     }
 
     private LoginActivity getOuter() {
         return this;
-    }
-
-    private String getSessionId(String response) {
-        Authorization authorization = JSONAuthorizationParser.parse(response);
-        return authorization.getData();
     }
 
     private void showAuthorizeFail() {
@@ -114,5 +90,4 @@ public class LoginActivity extends Activity {
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
-    
 }

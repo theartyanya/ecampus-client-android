@@ -1,4 +1,4 @@
-package ua.kpi.campus.jsonparsers;
+package ua.kpi.campus.session;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -14,11 +14,11 @@ public  class Permissions {
 	private final Timestamp timeStamp;
 	private final String guid;
 	private final Object padding;
-	private final ArrayList<GetPermissionsData> data;
+	private final ArrayList<PermissionsData> data;
 	
 	
 	public Permissions(int statusCode, Timestamp timeStamp, String guid,
-                       Object padding, ArrayList<GetPermissionsData> data) {
+                       Object padding, ArrayList<PermissionsData> data) {
 		this.statusCode = statusCode;
 		this.timeStamp = timeStamp;
 		this.guid = guid;
@@ -49,7 +49,7 @@ public  class Permissions {
 		return padding;
 	}
 
-	public ArrayList<GetPermissionsData> getData() {
+	public ArrayList<PermissionsData> getData() {
 		return data;
 	}
 }
