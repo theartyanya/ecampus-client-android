@@ -32,6 +32,7 @@ import android.widget.TextView;
 import ua.kpi.campus.R;
 
 public class MainActivity extends FragmentActivity implements ActionBar.TabListener {
+    private final static int COUNT_TABS = 4;
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide fragments for each of the
@@ -40,7 +41,6 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
      * intensive, it may be best to switch to a {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
     AppSectionsPagerAdapter mAppSectionsPagerAdapter;
-
     /**
      * The {@link ViewPager} that will display the three primary sections of the app, one at a
      * time.
@@ -109,7 +109,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to one of the primary
      * sections of the app.
      */
-    public static class AppSectionsPagerAdapter extends FragmentPagerAdapter {
+    public class AppSectionsPagerAdapter extends FragmentPagerAdapter {
 
         public AppSectionsPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -135,12 +135,19 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
         @Override
         public int getCount() {
-            return 3;
+            return COUNT_TABS;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
-            return "Section " + (position + 1);
+
+            switch (position) {
+                case 0: return getResources().getString(R.string.section1_main_info);
+                case 1: return getResources().getString(R.string.section2_desk);
+                case 2: return getResources().getString(R.string.section3_message);
+                case 3: return getResources().getString(R.string.section4_stat);
+                default: return "Section " + (position + 1);
+            }
         }
     }
 
@@ -151,7 +158,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
+                                 Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_section_launchpad, container, false);
 
             // Demonstration of a collection-browsing activity.
@@ -194,7 +201,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
+                                 Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_section_dummy, container, false);
             Bundle args = getArguments();
             ((TextView) rootView.findViewById(android.R.id.text1)).setText(
