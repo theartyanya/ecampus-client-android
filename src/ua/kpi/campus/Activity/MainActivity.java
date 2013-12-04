@@ -32,8 +32,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import ua.kpi.campus.R;
-import ua.kpi.campus.api.jsonparsers.JSONGetPermissionsParser;
-import ua.kpi.campus.api.jsonparsers.Permissions;
 
 public class MainActivity extends FragmentActivity implements ActionBar.TabListener {
     private final static int COUNT_TABS = 4;
@@ -98,9 +96,6 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         //permissions = parsePermissions(permissionsStr);
     }
 
-    private Permissions parsePermissions(String permissionsStr) {
-        return JSONGetPermissionsParser.parse(permissionsStr);
-    }
 
     private void showToastLong(String session_id) {
         Toast.makeText(getApplicationContext(), session_id, Toast.LENGTH_LONG).show();
