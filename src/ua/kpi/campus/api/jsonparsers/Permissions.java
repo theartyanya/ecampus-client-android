@@ -7,9 +7,10 @@ import java.util.ArrayList;
  * 
  * 
  * @author Serhii Hokhalenko
- * @version 24 Nov 2013
+ * @author Artur Dzidzoiev
+ * @version 04 Dec 2013
  */
-public  class Permissions {
+public final class Permissions {
 	private final int statusCode;
 	private final Timestamp timeStamp;
 	private final String guid;
@@ -25,13 +26,6 @@ public  class Permissions {
 		this.padding = padding;
 		this.data = data;
 	}
-
-    @Override
-    public String toString() {
-        return "GetPermissions [statusCode=" + statusCode + ", timeStamp="
-                + timeStamp + ", guid=" + guid + ", padding=" + padding
-                + ", data=" + data + "]";
-    }
 
     public int getStatusCode() {
 		return statusCode;

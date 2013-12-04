@@ -3,7 +3,8 @@ package ua.kpi.campus.api.jsonparsers;
  * 
  * 
  * @author Serhii Hokhalenko
- * @version 25 Nov 2013
+ * @author Artur Dzidzoiev
+ * @version 04 Dec 2013
  */
 public final class PermissionsData {
 	private final String subsystemName;
@@ -20,32 +21,31 @@ public final class PermissionsData {
 		this.isUpdate = isUpdate;
 		this.isDelete = isDelete;
 	}
-	
-	String getSubsystemName() {
-		return subsystemName;
-	}
 
-	@Override
-	public String toString() {
-		return "PermissionsData [subsystemName=" + subsystemName
-				+"\n"+ ", isCreate=" + isCreate +"\n"+ ", isRead=" + isRead
-				+"\n"+ ", isUpdate=" + isUpdate +"\n"+ ", isDelete=" + isDelete + "]";
-	}
+    public String getSubsystemName() {
+        return subsystemName;
+    }
 
-	boolean isCreate() {
+    public boolean isCreate() {
 		return isCreate;
 	}
 
-	boolean isRead() {
+    public boolean isRead() {
 		return isRead;
 	}
 
-	boolean isUpdate() {
+    public boolean isUpdate() {
 		return isUpdate;
 	}
 
-	boolean isDelete() {
+    public boolean isDelete() {
 		return isDelete;
 	}
 
+    @Override
+    public String toString() {
+        return "PermissionsData [subsystemName=" + subsystemName
+                +"\n"+ ", isCreate=" + isCreate +"\n"+ ", isRead=" + isRead
+                +"\n"+ ", isUpdate=" + isUpdate +"\n"+ ", isDelete=" + isDelete + "]";
+    }
 }
