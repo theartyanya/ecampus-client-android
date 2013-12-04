@@ -1,4 +1,4 @@
-package ua.kpi.campus;
+package ua.kpi.campus.api;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;

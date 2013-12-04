@@ -1,8 +1,10 @@
 package ua.kpi.campus.session;
 
 import android.os.AsyncTask;
-import ua.kpi.campus.CampusApi;
-import ua.kpi.campus.jsonparsers.JSONAuthorizationParser;
+import ua.kpi.campus.api.CampusApi;
+import ua.kpi.campus.api.jsonparsers.Authorization;
+import ua.kpi.campus.api.jsonparsers.JSONAuthorizationParser;
+import ua.kpi.campus.api.jsonparsers.Permissions;
 
 /**
  * Class
@@ -15,6 +17,9 @@ public class Session {
     private Authorization authorization;
     public final static String EXTRA_PERMISSIONS = "permissions";
 
+    public Session(String responce){
+
+    }
 
     private void getPermissions(final String session_id) {
         new AsyncTask<String, Void, String>()

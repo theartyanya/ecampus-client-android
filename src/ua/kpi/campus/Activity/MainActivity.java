@@ -32,11 +32,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import ua.kpi.campus.R;
-import ua.kpi.campus.jsonparsers.JSONGetPermissionsParser;
-import ua.kpi.campus.session.Permissions;
+import ua.kpi.campus.api.jsonparsers.JSONGetPermissionsParser;
+import ua.kpi.campus.api.jsonparsers.Permissions;
 
 public class MainActivity extends FragmentActivity implements ActionBar.TabListener {
-    private Permissions permissions;
     private final static int COUNT_TABS = 4;
 
     /**
@@ -93,7 +92,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                             .setText(mAppSectionsPagerAdapter.getPageTitle(i))
                             .setTabListener(this));
         }
-        Intent intent = getIntent();
+        //Intent intent = getIntent();
         //String permissionsStr = intent.getStringExtra(LoginActivity.EXTRA_PERMISSIONS);
         //showToastLong(permissionsStr);
         //permissions = parsePermissions(permissionsStr);

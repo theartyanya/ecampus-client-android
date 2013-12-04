@@ -11,8 +11,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-import ua.kpi.campus.CampusApi;
+import ua.kpi.campus.api.CampusApi;
 import ua.kpi.campus.R;
+import ua.kpi.campus.session.Session;
 
 public class LoginActivity extends Activity {
 	private EditText firstNumber;
@@ -52,7 +53,12 @@ public class LoginActivity extends Activity {
         {
             @Override public void onPostExecute(String result)
             {
-                checkAuthResponse(result);
+                if(isLogged(result)){
+                    Session session = new Session(result);
+                    startMainActivity(session);
+                } else {
+                    showAuthorizeFail();
+                }
             }
 
             @Override
@@ -63,15 +69,11 @@ public class LoginActivity extends Activity {
         }.execute("");
     }
 
-    private void checkAuthResponse(String result) {
-        if(CampusApi.ERROR.equals(result)){
-            showAuthorizeFail();
-        } else {
-            startMainActivity();
-        }
+    private boolean isLogged(String result) {
+        return !CampusApi.ERROR.equals(result);
     }
 
-    private void startMainActivity() {
+    private void startMainActivity(Session session) {
         Intent intent = new Intent(getOuter(), MainActivity.class);
         startActivity(intent);
     }

@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 import ua.kpi.campus.R;
-import ua.kpi.campus.session.Permissions;
+import ua.kpi.campus.api.jsonparsers.Permissions;
 
 /**
  * Main activity for user, it appears after authorization

@@ -1,8 +1,7 @@
-package ua.kpi.campus.jsonparsers;
+package ua.kpi.campus.api.jsonparsers;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import ua.kpi.campus.session.Authorization;
 
 import java.sql.Timestamp;
 

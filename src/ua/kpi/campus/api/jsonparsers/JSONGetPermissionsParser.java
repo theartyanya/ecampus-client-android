@@ -1,10 +1,8 @@
-package ua.kpi.campus.jsonparsers;
+package ua.kpi.campus.api.jsonparsers;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import ua.kpi.campus.session.Permissions;
-import ua.kpi.campus.session.PermissionsData;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
