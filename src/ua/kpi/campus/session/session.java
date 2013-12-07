@@ -1,6 +1,8 @@
 package ua.kpi.campus.session;
 
 import android.os.AsyncTask;
+import android.util.Log;
+import org.json.JSONException;
 import ua.kpi.campus.api.CampusApi;
 import ua.kpi.campus.api.jsonparsers.Authorization;
 import ua.kpi.campus.api.jsonparsers.JSONAuthorizationParser;
@@ -39,7 +41,11 @@ public class Session {
     }
 
     private String getSessionId(String response) {
-        Authorization authorization = JSONAuthorizationParser.parse(response);
+        try {
+            Authorization authorization = JSONAuthorizationParser.parse(response);
+        } catch (JSONException e) {
+            Log.e(JSONAuthorizationParser.class.getName(),e.toString());
+        }
         return authorization.getData();
     }
 

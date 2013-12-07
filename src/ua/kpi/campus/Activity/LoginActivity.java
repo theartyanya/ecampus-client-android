@@ -33,7 +33,7 @@ public class LoginActivity extends Activity {
         
     }
 
-    OnClickListener sumButtonListener  = new OnClickListener() {
+    private OnClickListener sumButtonListener  = new OnClickListener() {
 		
 		@Override
 		public void onClick(View arg0) {
