@@ -54,7 +54,7 @@ public class LoginActivity extends Activity implements LoaderManager.LoaderCallb
                 final String password = secondNumber.getText().toString();
                 Bundle authData = new Bundle();
                 authData.putString(HttpStringLoader.URL_STRING, CampusApiURL.getAuth(login, password));
-                loaderManager.initLoader(AUTH_LOADER_ID, authData, mCallbacks).forceLoad();
+                loaderManager.restartLoader(AUTH_LOADER_ID, authData, mCallbacks).onContentChanged();
 			}
 		}
 	};
@@ -94,6 +94,7 @@ public class LoginActivity extends Activity implements LoaderManager.LoaderCallb
         final int statusCode = httpResponse.getStatusCode();
         if(statusCode == HttpStatus.SC_OK) {
             final String response = httpResponse.getEntity();
+
             showToastLong(response);
         } else {
             showToastLong(getResources().getString(R.string.login_activity_auth_fail));
