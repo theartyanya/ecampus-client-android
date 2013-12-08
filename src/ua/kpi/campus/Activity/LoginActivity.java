@@ -113,8 +113,10 @@ public class LoginActivity extends Activity implements LoaderManager.LoaderCallb
     }
 
     private void startMainActivity(Session session) {
-        Intent intent = new Intent(getOuter(), MainActivity.class);
-        startActivity(intent);
+        if(permissions != null){
+            Intent intent = new Intent(getOuter(), MainActivity.class);
+            startActivity(intent);
+        }
     }
 
     private LoginActivity getOuter() {
