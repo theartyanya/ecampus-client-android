@@ -12,8 +12,8 @@ import org.apache.http.util.EntityUtils;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
-class HTTP {
-    static String getSting(String URL) {
+public class HTTP {
+    public static String getSting(String URL) {
         String str = "error";
         try {
             HttpClient client = new DefaultHttpClient();
