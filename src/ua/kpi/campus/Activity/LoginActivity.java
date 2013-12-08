@@ -13,19 +13,27 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import org.apache.http.HttpStatus;
+import org.json.JSONException;
 import ua.kpi.campus.R;
 import ua.kpi.campus.api.CampusApiURL;
-import ua.kpi.campus.loaders.HttpStringLoader;
+import ua.kpi.campus.api.jsonparsers.Authorization;
+import ua.kpi.campus.api.jsonparsers.JSONAuthorizationParser;
+import ua.kpi.campus.api.jsonparsers.JSONGetPermissionsParser;
+import ua.kpi.campus.api.jsonparsers.Permissions;
 import ua.kpi.campus.loaders.HttpResponse;
+import ua.kpi.campus.loaders.HttpStringLoader;
 import ua.kpi.campus.session.Session;
 
 public class LoginActivity extends Activity implements LoaderManager.LoaderCallbacks<HttpResponse>{
 	private EditText firstNumber;
 	private EditText secondNumber;
 	private Button sumButton;
-    private final static int AUTH_LOADER_ID = 101;
+    private final static int AUTH_LOADER_ID = 1;
+    private final static int PERMISSIONS_LOADER_ID = 2;
+    private final static int USER_DATA_LOADER_ID = 3;
     private LoaderManager.LoaderCallbacks<HttpResponse> mCallbacks;
     private LoaderManager loaderManager;
+    private Permissions permissions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,13 +60,57 @@ public class LoginActivity extends Activity implements LoaderManager.LoaderCallb
 			} else {
                 final String login = firstNumber.getText().toString();
                 final String password = secondNumber.getText().toString();
+                String Url = CampusApiURL.getAuth(login, password);
                 Bundle authData = new Bundle();
-                authData.putString(HttpStringLoader.URL_STRING, CampusApiURL.getAuth(login, password));
+                authData.putString(HttpStringLoader.URL_STRING, Url);
                 loaderManager.restartLoader(AUTH_LOADER_ID, authData, mCallbacks).onContentChanged();
 			}
 		}
 	};
 
+    private void checkAuth(HttpResponse httpResponse) {
+        final int statusCode = httpResponse.getStatusCode();
+        final String response = httpResponse.getEntity();
+        if(statusCode == HttpStatus.SC_OK) {
+            try {
+                //showToastLong(response);
+                Authorization authorization = JSONAuthorizationParser.parse(response);
+                startPermissionsLoader(authorization.getData());
+                startUserDataLoader(authorization.getData());
+            } catch (JSONException e) {
+                showToastLong(getResources().getString(R.string.login_activity_json_error));
+                Log.e(this.getClass().getName(), hashCode() + getResources().getString(R.string.login_activity_json_error));
+            }
+        } else {
+            showToastLong(getResources().getString(R.string.login_activity_auth_fail));
+        }
+    }
+
+    private void startPermissionsLoader(String data) {
+        startHttpLoader(PERMISSIONS_LOADER_ID,CampusApiURL.getPermission(data));
+    }
+
+    private void startUserDataLoader(String data) {
+        startHttpLoader(USER_DATA_LOADER_ID,CampusApiURL.getUserData(data,"11"));
+    }
+
+    private void startHttpLoader(int id, String url) {
+        Bundle permissionsData = new Bundle();
+        permissionsData.putString(HttpStringLoader.URL_STRING, url);
+        loaderManager.initLoader(id, permissionsData, mCallbacks).onContentChanged();
+    }
+
+    private Permissions parsePermissions(HttpResponse httpResponse) {
+        final String permissionsStr = httpResponse.getEntity();
+        try {
+            return JSONGetPermissionsParser.parse(permissionsStr);
+        } catch (JSONException e) {
+            showToastLong(getResources().getString(R.string.login_activity_json_error));
+            Log.e(this.getClass().getName(), hashCode() + getResources().getString(R.string.login_activity_json_error));
+        }
+        //it`s ok because of checking for null further
+        return null;
+    }
 
     private void startMainActivity(Session session) {
         Intent intent = new Intent(getOuter(), MainActivity.class);
@@ -89,20 +141,25 @@ public class LoginActivity extends Activity implements LoaderManager.LoaderCallb
 
     @Override
     public void onLoadFinished(Loader<HttpResponse> httpResponseLoader, HttpResponse httpResponse) {
-        Log.d(this.getClass().getName(), hashCode() + " load finished");
+        int currentLoaderId = httpResponseLoader.getId();
+        Log.d(this.getClass().getName(), hashCode() + " load finished (loader)" + currentLoaderId);
+        switch (currentLoaderId) {
+            case 1:
+                checkAuth(httpResponse);
+                break;
+            case 2:
+                permissions = parsePermissions(httpResponse);
 
-        final int statusCode = httpResponse.getStatusCode();
-        if(statusCode == HttpStatus.SC_OK) {
-            final String response = httpResponse.getEntity();
+                break;
+            case 3:
 
-            showToastLong(response);
-        } else {
-            showToastLong(getResources().getString(R.string.login_activity_auth_fail));
         }
+
+
     }
 
     @Override
     public void onLoaderReset(Loader<HttpResponse> httpResponseLoader) {
-        //To change body of implemented methods use File | Settings | File Templates.
+
     }
 }
