@@ -3,7 +3,6 @@ package ua.kpi.campus.loaders;
 import android.content.AsyncTaskLoader;
 import android.content.Context;
 import android.util.Log;
-import ua.kpi.campus.api.HTTP;
 
 
 /**
@@ -13,18 +12,19 @@ import ua.kpi.campus.api.HTTP;
  * @version 12/7/13
  */
 public class HTTPStringLoader extends AsyncTaskLoader<String> {
-    private final String URL;
+    public final static String URL_STRING = "URL";
+    private final String URL_ADDRESS;
     private final String LOG_TAG = "HTTPStringLoader";
 
-    public HTTPStringLoader(Context context, String URL) {
+    public HTTPStringLoader(Context context, String URL_ADDRESS) {
         super(context);
-        this.URL = URL;
+        this.URL_ADDRESS = URL_ADDRESS;
     }
 
     @Override
     public String loadInBackground() {
         Log.d(LOG_TAG, hashCode() + " loadInBackground start");
-        return HTTP.getSting(URL);
+        return HTTP.getSting(URL_ADDRESS);
     }
 
     @Override
