@@ -1,25 +1,39 @@
 package ua.kpi.campus.Activity;
 
 import android.app.Activity;
+import android.app.LoaderManager;
 import android.content.Intent;
-import android.os.AsyncTask;
+import android.content.Loader;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
-import ua.kpi.campus.api.CampusApi;
+import org.apache.http.HttpStatus;
+import org.json.JSONException;
 import ua.kpi.campus.R;
+import ua.kpi.campus.api.CampusApiURL;
+import ua.kpi.campus.api.jsonparsers.Authorization;
+import ua.kpi.campus.api.jsonparsers.JSONAuthorizationParser;
+import ua.kpi.campus.api.jsonparsers.JSONGetPermissionsParser;
+import ua.kpi.campus.api.jsonparsers.Permissions;
+import ua.kpi.campus.loaders.HttpResponse;
+import ua.kpi.campus.loaders.HttpStringLoader;
 import ua.kpi.campus.session.Session;
 
-public class LoginActivity extends Activity {
+public class LoginActivity extends Activity implements LoaderManager.LoaderCallbacks<HttpResponse>{
 	private EditText firstNumber;
 	private EditText secondNumber;
 	private Button sumButton;
-	private TextView resultText;
+    private final static int AUTH_LOADER_ID = 1;
+    private final static int PERMISSIONS_LOADER_ID = 2;
+    private final static int USER_DATA_LOADER_ID = 3;
+    private LoaderManager.LoaderCallbacks<HttpResponse> mCallbacks;
+    private LoaderManager loaderManager;
+    private Permissions permissions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,48 +43,73 @@ public class LoginActivity extends Activity {
         firstNumber = (EditText)findViewById(R.id.firstNumberEdit);
         secondNumber = (EditText)findViewById(R.id.secondNumberEdit);
         sumButton = (Button)findViewById(R.id.sumButton);
-        sumButton.setOnClickListener(sumButtonListener); 
-        
+        sumButton.setOnClickListener(sumButtonListener);
+
+        mCallbacks = this;
+        loaderManager = getLoaderManager();
     }
 
     private OnClickListener sumButtonListener  = new OnClickListener() {
 		
 		@Override
 		public void onClick(View arg0) {
-			if(firstNumber.getText().length() == 0
+            Log.d(this.getClass().getName(), hashCode() + " click!");
+            if(firstNumber.getText().length() == 0
 					|| secondNumber.getText().length() == 0) {
-				Toast.makeText(getApplicationContext(), "Заповните всі поля, будь ласка", Toast.LENGTH_SHORT).show();
+                showToastLong(getResources().getString(R.string.login_activity_fill_warning));
 			} else {
-				authorize();
+                final String login = firstNumber.getText().toString();
+                final String password = secondNumber.getText().toString();
+                String Url = CampusApiURL.getAuth(login, password);
+                Bundle authData = new Bundle();
+                authData.putString(HttpStringLoader.URL_STRING, Url);
+                loaderManager.restartLoader(AUTH_LOADER_ID, authData, mCallbacks).onContentChanged();
 			}
 		}
 	};
 
-    private void authorize() {
-        final String login = firstNumber.getText().toString();
-        final String password = secondNumber.getText().toString();
-        new AsyncTask<String, Void, String>()
-        {
-            @Override public void onPostExecute(String result)
-            {
-                if(isLogged(result)){
-                    Session session = new Session(result);
-                    startMainActivity(session);
-                } else {
-                    showAuthorizeFail();
-                }
+    private void checkAuth(HttpResponse httpResponse) {
+        final int statusCode = httpResponse.getStatusCode();
+        final String response = httpResponse.getEntity();
+        if(statusCode == HttpStatus.SC_OK) {
+            try {
+                //showToastLong(response);
+                Authorization authorization = JSONAuthorizationParser.parse(response);
+                startPermissionsLoader(authorization.getData());
+                startUserDataLoader(authorization.getData());
+            } catch (JSONException e) {
+                showToastLong(getResources().getString(R.string.login_activity_json_error));
+                Log.e(this.getClass().getName(), hashCode() + getResources().getString(R.string.login_activity_json_error));
             }
-
-            @Override
-            protected String doInBackground(String... params) {
-                return CampusApi.auth(login, password);
-            }
-
-        }.execute("");
+        } else {
+            showToastLong(getResources().getString(R.string.login_activity_auth_fail));
+        }
     }
 
-    private boolean isLogged(String result) {
-        return !CampusApi.ERROR.equals(result);
+    private void startPermissionsLoader(String data) {
+        startHttpLoader(PERMISSIONS_LOADER_ID,CampusApiURL.getPermission(data));
+    }
+
+    private void startUserDataLoader(String data) {
+        startHttpLoader(USER_DATA_LOADER_ID,CampusApiURL.getUserData(data,"11"));
+    }
+
+    private void startHttpLoader(int id, String url) {
+        Bundle permissionsData = new Bundle();
+        permissionsData.putString(HttpStringLoader.URL_STRING, url);
+        loaderManager.initLoader(id, permissionsData, mCallbacks).onContentChanged();
+    }
+
+    private Permissions parsePermissions(HttpResponse httpResponse) {
+        final String permissionsStr = httpResponse.getEntity();
+        try {
+            return JSONGetPermissionsParser.parse(permissionsStr);
+        } catch (JSONException e) {
+            showToastLong(getResources().getString(R.string.login_activity_json_error));
+            Log.e(this.getClass().getName(), hashCode() + getResources().getString(R.string.login_activity_json_error));
+        }
+        //it`s ok because of checking for null further
+        return null;
     }
 
     private void startMainActivity(Session session) {
@@ -82,8 +121,9 @@ public class LoginActivity extends Activity {
         return this;
     }
 
-    private void showAuthorizeFail() {
-        Toast.makeText(getApplicationContext(), "Авторизація невдала", Toast.LENGTH_SHORT).show();
+    private void showToastLong(String text) {
+        Toast.makeText(getApplicationContext(), text, Toast.LENGTH_LONG).show();
+        Log.d(LoginActivity.class.getName(), hashCode() + " ToastLong:" + text);
     }
 
     @Override
@@ -91,5 +131,35 @@ public class LoginActivity extends Activity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
+    }
+
+    @Override
+    public Loader<HttpResponse> onCreateLoader(int i, Bundle bundle) {
+        Log.d(this.getClass().getName(), hashCode() + " load starts");
+        return new HttpStringLoader(LoginActivity.this,bundle.getString(HttpStringLoader.URL_STRING));
+    }
+
+    @Override
+    public void onLoadFinished(Loader<HttpResponse> httpResponseLoader, HttpResponse httpResponse) {
+        int currentLoaderId = httpResponseLoader.getId();
+        Log.d(this.getClass().getName(), hashCode() + " load finished (loader)" + currentLoaderId);
+        switch (currentLoaderId) {
+            case 1:
+                checkAuth(httpResponse);
+                break;
+            case 2:
+                permissions = parsePermissions(httpResponse);
+
+                break;
+            case 3:
+
+        }
+
+
+    }
+
+    @Override
+    public void onLoaderReset(Loader<HttpResponse> httpResponseLoader) {
+
     }
 }

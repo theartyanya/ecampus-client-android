@@ -7,6 +7,7 @@ package ua.kpi.campus.api;
  * @version Nov 24, 2013
  * @see <a href="http://sdrv.ms/1gUsc17"/>
  * @see <a href="http://dev.ecampus.kpi.ua/library/item/campus-api-for-mobile"/>
+ * @deprecated
  */
 public class CampusApi {
 	/**

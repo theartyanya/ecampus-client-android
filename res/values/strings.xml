@@ -11,4 +11,8 @@
     <string name="section2_desk">Дошка оголошень</string>
     <string name="section3_message">Повідомлення</string>
     <string name="section4_stat">Статистика</string>
+
+    <string name="login_activity_auth_fail">Авторизація невдала!</string>
+    <string name="login_activity_fill_warning">Заповните всі поля, будь ласка</string>
+
 </resources>
