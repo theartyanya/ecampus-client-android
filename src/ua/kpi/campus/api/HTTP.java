@@ -12,6 +12,9 @@ import org.apache.http.util.EntityUtils;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
+/**
+ * @deprecated
+ */
 public class HTTP {
     public static String getSting(String URL) {
         String str = "error";
