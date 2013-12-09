@@ -16,6 +16,8 @@ public class CampusApiURL {
 	private final static String AUTH_PATH = "User/Auth?";
 	private final static String GET_PERMISSION_PATH = "User/GetPermissions?";
     private final static String GET_USER_DATA_PATH =  "User/Get?";
+    private final static String GET_CURRENT_USER_DATA_PATH =  "User/GetCurrentUser?";
+
 
     /**
 	 * Logging in to Campus system
@@ -34,6 +36,15 @@ public class CampusApiURL {
 	public static String getPermission(String data) {
 		return String.format("%s%ssessionId=%s",API_URL, GET_PERMISSION_PATH, data);
 	}
+
+    /**
+     * Getting current user
+     *
+     * @return URL
+     */
+    public static String getCurrentUser(String sessionId) {
+        return String.format("%s%ssessionId=%s",API_URL, GET_CURRENT_USER_DATA_PATH, sessionId);
+    }
 
     /**
      * Getting user data
