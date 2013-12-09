@@ -34,13 +34,20 @@ import android.widget.TextView;
 import android.widget.Toast;
 import org.json.JSONException;
 import ua.kpi.campus.R;
+import ua.kpi.campus.api.jsonparsers.Employee;
 import ua.kpi.campus.api.jsonparsers.JSONUserDataParser;
+import ua.kpi.campus.api.jsonparsers.User;
 import ua.kpi.campus.api.jsonparsers.UserData;
 
 public class MainActivity extends FragmentActivity implements ActionBar.TabListener {
     public final static String EXTRA_CURRENT_USER = "user";
     private final static int COUNT_TABS = 4;
     private UserData currentUser;
+    private TextView tFullName;
+    private TextView tSubdivisionName;
+    private TextView tPosition;
+    private TextView tAcademicDegree;
+    private TextView tAcademicStatus;
     /**
      * The {@link ViewPager} that will display the three primary sections of the app, one at a
      * time.
@@ -98,13 +105,29 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         Intent intent = getIntent();
         String permissionsStr = intent.getStringExtra(EXTRA_CURRENT_USER);
         try {
-            currentUser = parseUser(permissionsStr);
+            User currentUser = parseUser(permissionsStr);
+            this.currentUser = currentUser.getData();
             Log.d(MainActivity.class.getName(), hashCode() + " parsed.");
-            showToastLong(permissionsStr);
-
+            //showToastLong(permissionsStr);
         } catch (JSONException e) {
             Log.e(MainActivity.class.getName(), hashCode() + " parsing failed\n" + permissionsStr);
         }
+        tFullName = (TextView) findViewById(R.id.FullName);
+        tSubdivisionName = (TextView) findViewById(R.id.SubdivisionName);
+        tPosition = (TextView) findViewById(R.id.Position);
+        tAcademicDegree = (TextView) findViewById(R.id.AcademicDegree);
+        tAcademicStatus = (TextView) findViewById(R.id.AcademicStatus);
+
+        setTextProfileInfo();
+    }
+
+    private void setTextProfileInfo() {
+        Employee currentEmployee = currentUser.getEmployees().get(0);
+        tFullName.setText(currentUser.getFullName());
+        tSubdivisionName.setText(currentEmployee.getSubDivisionName());
+        tPosition.setText(currentEmployee.getPosition());
+        tAcademicDegree.setText(currentEmployee.getAcademicDegree());
+        tAcademicStatus.setText(currentEmployee.getAcademicStatus());
     }
 
     private void showToastLong(String text) {
@@ -112,7 +135,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         Log.d(this.getClass().getName(), hashCode() + " ToastLong:\n" + text);
     }
 
-    private UserData parseUser(String jsonUser) throws JSONException {
+    private User parseUser(String jsonUser) throws JSONException {
         Log.d(MainActivity.class.getName(), hashCode() + " parsing\n" + jsonUser);
         return JSONUserDataParser.parse(jsonUser);
     }
@@ -256,8 +279,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_section_my_profile, container, false);
             avatar = (ImageView) findViewById(R.id.avatar);
-            //TODO loading avatar from server
-            //avatar.setImageResource(R.drawable.);
+
             return rootView;
         }
     }
