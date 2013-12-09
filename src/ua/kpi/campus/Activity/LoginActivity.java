@@ -27,10 +27,12 @@ public class LoginActivity extends Activity implements LoaderManager.LoaderCallb
     private final static int AUTH_LOADER_ID = 1;
     private final static int PERMISSIONS_LOADER_ID = 2;
     private final static int USER_DATA_LOADER_ID = 3;
+    private final static int USER_LOADER_ID = 4;
     private LoaderManager.LoaderCallbacks<HttpResponse> mCallbacks;
     private LoaderManager loaderManager;
     private Permissions permissions;
     private UserData userData;
+    private UserData currentUserData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +75,9 @@ public class LoginActivity extends Activity implements LoaderManager.LoaderCallb
                 //showToastLong(response);
                 Authorization authorization = JSONAuthorizationParser.parse(response);
                 startPermissionsLoader(authorization.getData());
+                startUserLoader(authorization.getData());
                 startUserDataLoader(authorization.getData());
+
             } catch (JSONException e) {
                 showToastLong(getResources().getString(R.string.login_activity_json_error));
                 Log.e(this.getClass().getName(), hashCode() + getResources().getString(R.string.login_activity_json_error));
@@ -89,6 +93,10 @@ public class LoginActivity extends Activity implements LoaderManager.LoaderCallb
 
     private void startUserDataLoader(String data) {
         startHttpLoader(USER_DATA_LOADER_ID,CampusApiURL.getUserData(data,"11"));
+    }
+
+    private void startUserLoader(String sessionId) {
+        startHttpLoader(USER_LOADER_ID,CampusApiURL.getCurrentUser(sessionId));
     }
 
     private void startHttpLoader(int id, String url) {
@@ -109,6 +117,17 @@ public class LoginActivity extends Activity implements LoaderManager.LoaderCallb
         return null;
     }
 
+    private UserData parseUser(HttpResponse httpResponse) {
+        final String userDataStr = httpResponse.getEntity();
+        try {
+            return JSONUserDataParser.parse(userDataStr);
+        } catch (JSONException e) {
+            showToastLong(getResources().getString(R.string.login_activity_json_error));
+            Log.e(this.getClass().getName(), hashCode() + getResources().getString(R.string.login_activity_json_error));
+        }
+        //it`s ok because of checking for null further
+        return null;
+    }
 
     private UserData parseUserData(HttpResponse httpResponse) {
         final String userDataStr = httpResponse.getEntity();
@@ -154,18 +173,23 @@ public class LoginActivity extends Activity implements LoaderManager.LoaderCallb
     @Override
     public void onLoadFinished(Loader<HttpResponse> httpResponseLoader, HttpResponse httpResponse) {
         int currentLoaderId = httpResponseLoader.getId();
-        Log.d(this.getClass().getName(), hashCode() + " load finished (loader)" + currentLoaderId);
+        Log.d(this.getClass().getName(), hashCode() + " load finished (loader)" + currentLoaderId
+                + "\n---------\n" + httpResponse);
         switch (currentLoaderId) {
-            case 1:
+            case AUTH_LOADER_ID:
                 checkAuth(httpResponse);
                 break;
-            case 2:
+            case PERMISSIONS_LOADER_ID:
                 permissions = parsePermissions(httpResponse);
                 startMainActivity();
                 break;
-            case 3:
+            case USER_DATA_LOADER_ID:
                 userData = parseUserData(httpResponse);
                 startMainActivity();
+                break;
+            case USER_LOADER_ID:
+                currentUserData = parseUser(httpResponse);
+
                 break;
         }
 

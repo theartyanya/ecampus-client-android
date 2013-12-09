@@ -22,4 +22,12 @@ public final class HttpResponse {
     public String getEntity() {
         return entity;
     }
+
+    @Override
+    public String toString() {
+        return "HttpResponse{" +
+                "statusCode=" + statusCode +
+                ", entity='" + entity + '\'' +
+                '}';
+    }
 }
