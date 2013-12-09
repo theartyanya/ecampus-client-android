@@ -24,7 +24,7 @@ public class JSONGetPermissionsParser {
                 TIMESTAMP_ATTRIBUTE_NAME).replace('T', ' ');
         timeStampString = timeStampString.substring(0,
                 timeStampString.length() - 6);
-        ArrayList<PermissionsData> dataArray = parseChild(getPermissionsObj);
+        ArrayList<SubsystemData> dataArray = parseChild(getPermissionsObj);
 
         return new Permissions(
                 getPermissionsObj.getInt(STATUS_CODE_ATTRIBUTE_NAME),
@@ -34,13 +34,13 @@ public class JSONGetPermissionsParser {
                 dataArray);
     }
 
-    private static ArrayList<PermissionsData> parseChild(JSONObject getPermissionsObj) throws JSONException {
+    private static ArrayList<SubsystemData> parseChild(JSONObject getPermissionsObj) throws JSONException {
         JSONArray dataJSONArray = getPermissionsObj.getJSONArray("Data");
-        ArrayList<PermissionsData> dataArray = new ArrayList<PermissionsData>();
+        ArrayList<SubsystemData> dataArray = new ArrayList<SubsystemData>();
 
         for (int i = 0; i < dataJSONArray.length(); i++) {
             JSONObject childJSONObject = dataJSONArray.getJSONObject(i);
-            dataArray.add(new PermissionsData(childJSONObject
+            dataArray.add(new SubsystemData(childJSONObject
                     .getString("SubsystemName"), childJSONObject
                     .getBoolean("IsCreate"), childJSONObject
                     .getBoolean("IsRead"), childJSONObject

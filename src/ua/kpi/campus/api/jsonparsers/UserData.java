@@ -1,49 +1,58 @@
 package ua.kpi.campus.api.jsonparsers;
 
-import java.sql.Timestamp;
+import java.util.ArrayList;
 
 /**
  * Created with IntelliJ IDEA.
  * User: Serhii Hokhalenko
  * Date: 09.12.13
- * Time: 0:26
+ * Time: 0:42
  * To change this template use File | Settings | File Templates.
  */
-public class UserData {
-    private final int statusCode;
-    private final Timestamp timeStamp;
-    private final String guid;
-    private final Object padding;
-    private final SessionIDData data;
+public final class UserData {
+    private final int userAccountID;
+    private final String  photo;
+    private final String fullName;
+    private final Object scientificInterest;
+    private final ArrayList<Object> personalities;
+    private final ArrayList<Employee> employees;
+    private final ArrayList<Profile> profiles;
 
-    public UserData(int statusCode, Timestamp timeStamp, String guid, Object padding, SessionIDData data) {
-        this.statusCode = statusCode;
-        this.timeStamp = timeStamp;
-        this.guid = guid;
-        this.padding = padding;
-        this.data = data;
+    public UserData(int userAccountID, String photo, String fullName, Object scientificInterest, ArrayList<Object> personalities, ArrayList<Employee> employees, ArrayList<Profile> profiles) {
+        this.userAccountID = userAccountID;
+        this.photo = photo;
+        this.fullName = fullName;
+        this.scientificInterest = scientificInterest;
+        this.personalities = personalities;
+        this.employees = employees;
+        this.profiles = profiles;
     }
 
-
-
-    public Timestamp getTimeStamp() {
-        return timeStamp;
+    public String getPhoto() {
+        return photo;
     }
 
-    public String getGuid() {
-        return guid;
+    public String getFullName() {
+        return fullName;
     }
 
-    public Object getPadding() {
-        return padding;
+    public Object getScientificInterest() {
+        return scientificInterest;
     }
 
-    public SessionIDData getData() {
-        return data;
+    public ArrayList<Object> getPersonalities() {
+        return personalities;
     }
 
-    public int getStatusCode() {
+    public ArrayList<Employee> getEmployees() {
+        return employees;
+    }
 
-        return statusCode;
+    public ArrayList<Profile> getProfiles() {
+        return profiles;
+    }
+
+    public int getUserAccountID() {
+        return userAccountID;
     }
 }

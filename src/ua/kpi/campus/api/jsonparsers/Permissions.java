@@ -15,11 +15,11 @@ public final class Permissions {
 	private final Timestamp timeStamp;
 	private final String guid;
 	private final Object padding;
-	private final ArrayList<PermissionsData> data;
+	private final ArrayList<SubsystemData> data;
 	
 	
 	public Permissions(int statusCode, Timestamp timeStamp, String guid,
-                       Object padding, ArrayList<PermissionsData> data) {
+                       Object padding, ArrayList<SubsystemData> data) {
 		this.statusCode = statusCode;
 		this.timeStamp = timeStamp;
 		this.guid = guid;
@@ -43,7 +43,7 @@ public final class Permissions {
 		return padding;
 	}
 
-	public ArrayList<PermissionsData> getData() {
+	public ArrayList<SubsystemData> getData() {
 		return data;
 	}
 }

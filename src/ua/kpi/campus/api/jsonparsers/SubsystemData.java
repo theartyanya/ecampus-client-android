@@ -6,15 +6,15 @@ package ua.kpi.campus.api.jsonparsers;
  * @author Artur Dzidzoiev
  * @version 04 Dec 2013
  */
-public final class PermissionsData {
+public final class SubsystemData {
 	private final String subsystemName;
 	private final boolean isCreate;
 	private final boolean isRead;
 	private final boolean isUpdate;
 	private final boolean isDelete;
 	
-	public PermissionsData(String subsystemName, boolean isCreate, boolean isRead,
-                           boolean isUpdate, boolean isDelete) {
+	public SubsystemData(String subsystemName, boolean isCreate, boolean isRead,
+                         boolean isUpdate, boolean isDelete) {
 		this.subsystemName=subsystemName;
 		this.isCreate = isCreate;
 		this.isRead = isRead;
@@ -44,7 +44,7 @@ public final class PermissionsData {
 
     @Override
     public String toString() {
-        return "PermissionsData [subsystemName=" + subsystemName
+        return "SubsystemData [subsystemName=" + subsystemName
                 +"\n"+ ", isCreate=" + isCreate +"\n"+ ", isRead=" + isRead
                 +"\n"+ ", isUpdate=" + isUpdate +"\n"+ ", isDelete=" + isDelete + "]";
     }
