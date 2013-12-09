@@ -25,17 +25,22 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import org.json.JSONException;
 import ua.kpi.campus.R;
+import ua.kpi.campus.api.jsonparsers.JSONUserDataParser;
+import ua.kpi.campus.api.jsonparsers.UserData;
 
 public class MainActivity extends FragmentActivity implements ActionBar.TabListener {
+    public final static String EXTRA_CURRENT_USER = "user";
     private final static int COUNT_TABS = 4;
-
+    private UserData currentUser;
     /**
      * The {@link ViewPager} that will display the three primary sections of the app, one at a
      * time.
@@ -90,15 +95,26 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                             .setText(mAppSectionsPagerAdapter.getPageTitle(i))
                             .setTabListener(this));
         }
-        //Intent intent = getIntent();
-        //String permissionsStr = intent.getStringExtra(LoginActivity.EXTRA_PERMISSIONS);
-        //showToastLong(permissionsStr);
-        //permissions = parsePermissions(permissionsStr);
+        Intent intent = getIntent();
+        String permissionsStr = intent.getStringExtra(EXTRA_CURRENT_USER);
+        try {
+            currentUser = parseUser(permissionsStr);
+            Log.d(MainActivity.class.getName(), hashCode() + " parsed.");
+            showToastLong(permissionsStr);
+
+        } catch (JSONException e) {
+            Log.e(MainActivity.class.getName(), hashCode() + " parsing failed\n" + permissionsStr);
+        }
     }
 
+    private void showToastLong(String text) {
+        Toast.makeText(getApplicationContext(), text, Toast.LENGTH_LONG).show();
+        Log.d(this.getClass().getName(), hashCode() + " ToastLong:\n" + text);
+    }
 
-    private void showToastLong(String session_id) {
-        Toast.makeText(getApplicationContext(), session_id, Toast.LENGTH_LONG).show();
+    private UserData parseUser(String jsonUser) throws JSONException {
+        Log.d(MainActivity.class.getName(), hashCode() + " parsing\n" + jsonUser);
+        return JSONUserDataParser.parse(jsonUser);
     }
 
     @Override
@@ -113,6 +129,65 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
     @Override
     public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+    }
+
+    /**
+     * A fragment that launches other parts of the demo application.
+     */
+    public static class LaunchpadSectionFragment extends Fragment {
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+            View rootView = inflater.inflate(R.layout.fragment_section_launchpad, container, false);
+
+            // Demonstration of a collection-browsing activity.
+            rootView.findViewById(R.id.demo_collection_button)
+                    .setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent = new Intent(getActivity(), CollectionDemoActivity.class);
+                            startActivity(intent);
+                        }
+                    });
+
+            // Demonstration of navigating to external activities.
+            rootView.findViewById(R.id.demo_external_activity)
+                    .setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            // Create an intent that asks the user to pick a photo, but using
+                            // FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET, ensures that relaunching
+                            // the application from the device home screen does not return
+                            // to the external activity.
+                            Intent externalActivityIntent = new Intent(Intent.ACTION_PICK);
+                            externalActivityIntent.setType("image/*");
+                            externalActivityIntent.addFlags(
+                                    Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+                            startActivity(externalActivityIntent);
+                        }
+                    });
+
+            return rootView;
+        }
+    }
+
+    /**
+     * A dummy fragment representing a section of the app, but that simply displays dummy text.
+     */
+    public static class DummySectionFragment extends Fragment {
+
+        public static final String ARG_SECTION_NUMBER = "section_number";
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+            View rootView = inflater.inflate(R.layout.fragment_section_dummy, container, false);
+            Bundle args = getArguments();
+            ((TextView) rootView.findViewById(android.R.id.text1)).setText(
+                    getString(R.string.dummy_section_text, args.getInt(ARG_SECTION_NUMBER)));
+            return rootView;
+        }
     }
 
     /**
@@ -225,65 +300,6 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_section_stat, container, false);
 
-            return rootView;
-        }
-    }
-
-    /**
-     * A fragment that launches other parts of the demo application.
-     */
-    public static class LaunchpadSectionFragment extends Fragment {
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_section_launchpad, container, false);
-
-            // Demonstration of a collection-browsing activity.
-            rootView.findViewById(R.id.demo_collection_button)
-                    .setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            Intent intent = new Intent(getActivity(), CollectionDemoActivity.class);
-                            startActivity(intent);
-                        }
-                    });
-
-            // Demonstration of navigating to external activities.
-            rootView.findViewById(R.id.demo_external_activity)
-                    .setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            // Create an intent that asks the user to pick a photo, but using
-                            // FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET, ensures that relaunching
-                            // the application from the device home screen does not return
-                            // to the external activity.
-                            Intent externalActivityIntent = new Intent(Intent.ACTION_PICK);
-                            externalActivityIntent.setType("image/*");
-                            externalActivityIntent.addFlags(
-                                    Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
-                            startActivity(externalActivityIntent);
-                        }
-                    });
-
-            return rootView;
-        }
-    }
-
-    /**
-     * A dummy fragment representing a section of the app, but that simply displays dummy text.
-     */
-    public static class DummySectionFragment extends Fragment {
-
-        public static final String ARG_SECTION_NUMBER = "section_number";
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_section_dummy, container, false);
-            Bundle args = getArguments();
-            ((TextView) rootView.findViewById(android.R.id.text1)).setText(
-                    getString(R.string.dummy_section_text, args.getInt(ARG_SECTION_NUMBER)));
             return rootView;
         }
     }

@@ -20,64 +20,55 @@ import ua.kpi.campus.api.jsonparsers.*;
 import ua.kpi.campus.loaders.HttpResponse;
 import ua.kpi.campus.loaders.HttpStringLoader;
 
-public class LoginActivity extends Activity implements LoaderManager.LoaderCallbacks<HttpResponse>{
-	private EditText firstNumber;
-	private EditText secondNumber;
-	private Button sumButton;
+public class LoginActivity extends Activity implements LoaderManager.LoaderCallbacks<HttpResponse> {
     private final static int AUTH_LOADER_ID = 1;
-    private final static int PERMISSIONS_LOADER_ID = 2;
-    private final static int USER_DATA_LOADER_ID = 3;
-    private final static int USER_LOADER_ID = 4;
+    private final static int CURRENT_USER_LOADER_ID = 4;
+    private EditText firstNumber;
+    private EditText secondNumber;
+    private Button sumButton;
     private LoaderManager.LoaderCallbacks<HttpResponse> mCallbacks;
     private LoaderManager loaderManager;
-    private Permissions permissions;
-    private UserData userData;
-    private UserData currentUserData;
+    private OnClickListener sumButtonListener = new OnClickListener() {
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-        
-        firstNumber = (EditText)findViewById(R.id.firstNumberEdit);
-        secondNumber = (EditText)findViewById(R.id.secondNumberEdit);
-        sumButton = (Button)findViewById(R.id.sumButton);
-        sumButton.setOnClickListener(sumButtonListener);
-
-        mCallbacks = this;
-        loaderManager = getLoaderManager();
-    }
-
-    private OnClickListener sumButtonListener  = new OnClickListener() {
-		
-		@Override
-		public void onClick(View arg0) {
+        @Override
+        public void onClick(View arg0) {
             Log.d(this.getClass().getName(), hashCode() + " click!");
-            if(firstNumber.getText().length() == 0
-					|| secondNumber.getText().length() == 0) {
+            if (firstNumber.getText().length() == 0
+                    || secondNumber.getText().length() == 0) {
                 showToastLong(getResources().getString(R.string.login_activity_fill_warning));
-			} else {
+            } else {
                 final String login = firstNumber.getText().toString();
                 final String password = secondNumber.getText().toString();
                 String Url = CampusApiURL.getAuth(login, password);
                 Bundle authData = new Bundle();
                 authData.putString(HttpStringLoader.URL_STRING, Url);
                 loaderManager.restartLoader(AUTH_LOADER_ID, authData, mCallbacks).onContentChanged();
-			}
-		}
-	};
+            }
+        }
+    };
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_login);
+
+        firstNumber = (EditText) findViewById(R.id.firstNumberEdit);
+        secondNumber = (EditText) findViewById(R.id.secondNumberEdit);
+        sumButton = (Button) findViewById(R.id.sumButton);
+        sumButton.setOnClickListener(sumButtonListener);
+
+        mCallbacks = this;
+        loaderManager = getLoaderManager();
+    }
 
     private void checkAuth(HttpResponse httpResponse) {
         final int statusCode = httpResponse.getStatusCode();
         final String response = httpResponse.getEntity();
-        if(statusCode == HttpStatus.SC_OK) {
+        if (statusCode == HttpStatus.SC_OK) {
             try {
                 //showToastLong(response);
                 Authorization authorization = JSONAuthorizationParser.parse(response);
-                startPermissionsLoader(authorization.getData());
-                startUserLoader(authorization.getData());
-                startUserDataLoader(authorization.getData());
-
+                startCurrentUserLoader(authorization.getData());
             } catch (JSONException e) {
                 showToastLong(getResources().getString(R.string.login_activity_json_error));
                 Log.e(this.getClass().getName(), hashCode() + getResources().getString(R.string.login_activity_json_error));
@@ -87,34 +78,14 @@ public class LoginActivity extends Activity implements LoaderManager.LoaderCallb
         }
     }
 
-    private void startPermissionsLoader(String data) {
-        startHttpLoader(PERMISSIONS_LOADER_ID,CampusApiURL.getPermission(data));
-    }
-
-    private void startUserDataLoader(String data) {
-        startHttpLoader(USER_DATA_LOADER_ID,CampusApiURL.getUserData(data,"11"));
-    }
-
-    private void startUserLoader(String sessionId) {
-        startHttpLoader(USER_LOADER_ID,CampusApiURL.getCurrentUser(sessionId));
+    private void startCurrentUserLoader(String sessionId) {
+        startHttpLoader(CURRENT_USER_LOADER_ID, CampusApiURL.getCurrentUser(sessionId));
     }
 
     private void startHttpLoader(int id, String url) {
         Bundle permissionsData = new Bundle();
         permissionsData.putString(HttpStringLoader.URL_STRING, url);
         loaderManager.initLoader(id, permissionsData, mCallbacks).onContentChanged();
-    }
-
-    private Permissions parsePermissions(HttpResponse httpResponse) {
-        final String permissionsStr = httpResponse.getEntity();
-        try {
-            return JSONGetPermissionsParser.parse(permissionsStr);
-        } catch (JSONException e) {
-            showToastLong(getResources().getString(R.string.login_activity_json_error));
-            Log.e(this.getClass().getName(), hashCode() + getResources().getString(R.string.login_activity_json_error));
-        }
-        //it`s ok because of checking for null further
-        return null;
     }
 
     private UserData parseUser(HttpResponse httpResponse) {
@@ -129,27 +100,11 @@ public class LoginActivity extends Activity implements LoaderManager.LoaderCallb
         return null;
     }
 
-    private UserData parseUserData(HttpResponse httpResponse) {
-        final String userDataStr = httpResponse.getEntity();
-        try {
-            return JSONUserDataParser.parse(userDataStr);
-        } catch (JSONException e) {
-            showToastLong(getResources().getString(R.string.login_activity_json_error));
-            Log.e(this.getClass().getName(), hashCode() + getResources().getString(R.string.login_activity_json_error));
-        }
-        //it`s ok because of checking for null further
-        return null;
-    }
-
-    private void startMainActivity() {
-        if(permissions != null && userData != null){
-            Intent intent = new Intent(getOuter(), MainActivity.class);
-            startActivity(intent);
-        }
-    }
-
-    private LoginActivity getOuter() {
-        return this;
+    private void startMainActivity(String currentUserJson) {
+        Intent intent = new Intent(this, MainActivity.class);
+        Log.d(this.getClass().getName(), hashCode() + " starting new activity... " + MainActivity.class.getName());
+        intent.putExtra(MainActivity.EXTRA_CURRENT_USER, currentUserJson);
+        startActivity(intent);
     }
 
     private void showToastLong(String text) {
@@ -161,13 +116,13 @@ public class LoginActivity extends Activity implements LoaderManager.LoaderCallb
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
-        return true;
+        return false;
     }
 
     @Override
     public Loader<HttpResponse> onCreateLoader(int i, Bundle bundle) {
-        Log.d(this.getClass().getName(), hashCode() + " load starts");
-        return new HttpStringLoader(LoginActivity.this,bundle.getString(HttpStringLoader.URL_STRING));
+        Log.d(this.getClass().getName(), hashCode() + " load started " + i);
+        return new HttpStringLoader(LoginActivity.this, bundle.getString(HttpStringLoader.URL_STRING));
     }
 
     @Override
@@ -179,23 +134,17 @@ public class LoginActivity extends Activity implements LoaderManager.LoaderCallb
             case AUTH_LOADER_ID:
                 checkAuth(httpResponse);
                 break;
-            case PERMISSIONS_LOADER_ID:
-                permissions = parsePermissions(httpResponse);
-                startMainActivity();
-                break;
-            case USER_DATA_LOADER_ID:
-                userData = parseUserData(httpResponse);
-                startMainActivity();
-                break;
-            case USER_LOADER_ID:
-                currentUserData = parseUser(httpResponse);
-
+            case CURRENT_USER_LOADER_ID:
+                if (httpResponse.getStatusCode() == HttpStatus.SC_OK) {
+                    Log.d(this.getClass().getName(), hashCode() + " starting new activity... ");
+                    parseUser(httpResponse);  //check correctness of JSON
+                    startMainActivity(httpResponse.getEntity());
+                } else {
+                    showToastLong(getResources().getString(R.string.login_activity_access_denied));
+                }
                 break;
         }
-
-
     }
-
 
     @Override
     public void onLoaderReset(Loader<HttpResponse> httpResponseLoader) {
