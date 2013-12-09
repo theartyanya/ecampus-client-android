@@ -88,7 +88,7 @@ public class LoginActivity extends Activity implements LoaderManager.LoaderCallb
         loaderManager.initLoader(id, permissionsData, mCallbacks).onContentChanged();
     }
 
-    private UserData parseUser(HttpResponse httpResponse) {
+    private User parseUser(HttpResponse httpResponse) {
         final String userDataStr = httpResponse.getEntity();
         try {
             return JSONUserDataParser.parse(userDataStr);
@@ -116,7 +116,7 @@ public class LoginActivity extends Activity implements LoaderManager.LoaderCallb
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
-        return false;
+        return true;
     }
 
     @Override

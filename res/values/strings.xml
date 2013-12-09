@@ -17,5 +17,5 @@
     <string name="login_activity_json_error">Помилка обробки даних!\nСпробуйте здійснити вхід пізніше.</string>
     <string name="login_activity_access_denied">Помилка доступу</string>
 
-
+    <string name="main_activity_avatar">Фото</string>
 </resources>

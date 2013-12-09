@@ -10,12 +10,46 @@
             android:id="@+id/myProfileTitle" android:layout_alignParentLeft="true" android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:layout_alignParentTop="true" android:layout_marginTop="@dimen/activity_vertical_margin" android:singleLine="true"
             android:typeface="sans" android:textSize="@dimen/title_text"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="#name"
+            android:id="@+id/FullName"
+            android:layout_alignLeft="@+id/myProfileTitle" android:layout_below="@+id/myProfileTitle"
+            android:singleLine="true"/>
     <ImageView
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:id="@+id/avatar"
-            android:background="@drawable/no_avatar"
             android:layout_alignParentLeft="false"
             android:layout_below="@+id/myProfileTitle" android:layout_marginRight="@dimen/activity_horizontal_margin"
-            android:layout_alignParentRight="true" android:layout_marginTop="@dimen/activity_vertical_margin"/>
+            android:layout_alignParentRight="true" android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:contentDescription="@string/main_activity_avatar"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="#SubdivisionName"
+            android:id="@+id/SubdivisionName"
+            android:layout_below="@+id/avatar" android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:singleLine="false"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="#Position"
+            android:id="@+id/Position"
+            android:layout_below="@+id/SubdivisionName" android:singleLine="true"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="#AcademicDegree"
+            android:id="@+id/AcademicDegree"
+            android:layout_below="@+id/Position" android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:singleLine="true"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="#AcademicStatus"
+            android:id="@+id/AcademicStatus" android:layout_alignParentLeft="true"
+            android:layout_below="@+id/AcademicDegree" android:layout_marginLeft="@dimen/activity_horizontal_margin"/>
 </RelativeLayout>

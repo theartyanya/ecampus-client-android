@@ -43,11 +43,6 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     public final static String EXTRA_CURRENT_USER = "user";
     private final static int COUNT_TABS = 4;
     private UserData currentUser;
-    private TextView tFullName;
-    private TextView tSubdivisionName;
-    private TextView tPosition;
-    private TextView tAcademicDegree;
-    private TextView tAcademicStatus;
     /**
      * The {@link ViewPager} that will display the three primary sections of the app, one at a
      * time.
@@ -102,6 +97,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                             .setText(mAppSectionsPagerAdapter.getPageTitle(i))
                             .setTabListener(this));
         }
+
         Intent intent = getIntent();
         String permissionsStr = intent.getStringExtra(EXTRA_CURRENT_USER);
         try {
@@ -112,23 +108,8 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         } catch (JSONException e) {
             Log.e(MainActivity.class.getName(), hashCode() + " parsing failed\n" + permissionsStr);
         }
-        tFullName = (TextView) findViewById(R.id.FullName);
-        tSubdivisionName = (TextView) findViewById(R.id.SubdivisionName);
-        tPosition = (TextView) findViewById(R.id.Position);
-        tAcademicDegree = (TextView) findViewById(R.id.AcademicDegree);
-        tAcademicStatus = (TextView) findViewById(R.id.AcademicStatus);
-
-        setTextProfileInfo();
     }
 
-    private void setTextProfileInfo() {
-        Employee currentEmployee = currentUser.getEmployees().get(0);
-        tFullName.setText(currentUser.getFullName());
-        tSubdivisionName.setText(currentEmployee.getSubDivisionName());
-        tPosition.setText(currentEmployee.getPosition());
-        tAcademicDegree.setText(currentEmployee.getAcademicDegree());
-        tAcademicStatus.setText(currentEmployee.getAcademicStatus());
-    }
 
     private void showToastLong(String text) {
         Toast.makeText(getApplicationContext(), text, Toast.LENGTH_LONG).show();
@@ -279,6 +260,19 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_section_my_profile, container, false);
             avatar = (ImageView) findViewById(R.id.avatar);
+
+            TextView tFullName = (TextView) rootView.findViewById(R.id.FullName);
+            TextView tSubdivisionName = (TextView) rootView.findViewById(R.id.SubdivisionName);
+            TextView tPosition = (TextView) rootView.findViewById(R.id.Position);
+            TextView tAcademicDegree = (TextView) rootView.findViewById(R.id.AcademicDegree);
+            TextView tAcademicStatus = (TextView) rootView.findViewById(R.id.AcademicStatus);
+
+            Employee currentEmployee = currentUser.getEmployees().get(0);
+            tFullName.setText(currentUser.getFullName());
+            tSubdivisionName.setText(currentEmployee.getSubDivisionName());
+            tPosition.setText(currentEmployee.getPosition());
+            tAcademicDegree.setText(currentEmployee.getAcademicDegree());
+            tAcademicStatus.setText(currentEmployee.getAcademicStatus());
 
             return rootView;
         }
