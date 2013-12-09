@@ -1,7 +1,6 @@
 package ua.kpi.campus.api.jsonparsers;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
 
 /**
  * Created with IntelliJ IDEA.
@@ -10,14 +9,14 @@ import java.util.ArrayList;
  * Time: 0:26
  * To change this template use File | Settings | File Templates.
  */
-public class SessionID {
+public class UserData {
     private final int statusCode;
     private final Timestamp timeStamp;
     private final String guid;
     private final Object padding;
     private final SessionIDData data;
 
-    public SessionID(int statusCode, Timestamp timeStamp, String guid, Object padding, SessionIDData data) {
+    public UserData(int statusCode, Timestamp timeStamp, String guid, Object padding, SessionIDData data) {
         this.statusCode = statusCode;
         this.timeStamp = timeStamp;
         this.guid = guid;

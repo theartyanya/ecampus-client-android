@@ -16,13 +16,9 @@ import org.apache.http.HttpStatus;
 import org.json.JSONException;
 import ua.kpi.campus.R;
 import ua.kpi.campus.api.CampusApiURL;
-import ua.kpi.campus.api.jsonparsers.Authorization;
-import ua.kpi.campus.api.jsonparsers.JSONAuthorizationParser;
-import ua.kpi.campus.api.jsonparsers.JSONGetPermissionsParser;
-import ua.kpi.campus.api.jsonparsers.Permissions;
+import ua.kpi.campus.api.jsonparsers.*;
 import ua.kpi.campus.loaders.HttpResponse;
 import ua.kpi.campus.loaders.HttpStringLoader;
-import ua.kpi.campus.session.Session;
 
 public class LoginActivity extends Activity implements LoaderManager.LoaderCallbacks<HttpResponse>{
 	private EditText firstNumber;
@@ -34,6 +30,7 @@ public class LoginActivity extends Activity implements LoaderManager.LoaderCallb
     private LoaderManager.LoaderCallbacks<HttpResponse> mCallbacks;
     private LoaderManager loaderManager;
     private Permissions permissions;
+    private UserData userData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,8 +109,21 @@ public class LoginActivity extends Activity implements LoaderManager.LoaderCallb
         return null;
     }
 
-    private void startMainActivity(Session session) {
-        if(permissions != null){
+
+    private UserData parseUserData(HttpResponse httpResponse) {
+        final String userDataStr = httpResponse.getEntity();
+        try {
+            return JSONUserDataParser.parse(userDataStr);
+        } catch (JSONException e) {
+            showToastLong(getResources().getString(R.string.login_activity_json_error));
+            Log.e(this.getClass().getName(), hashCode() + getResources().getString(R.string.login_activity_json_error));
+        }
+        //it`s ok because of checking for null further
+        return null;
+    }
+
+    private void startMainActivity() {
+        if(permissions != null && userData != null){
             Intent intent = new Intent(getOuter(), MainActivity.class);
             startActivity(intent);
         }
@@ -151,14 +161,17 @@ public class LoginActivity extends Activity implements LoaderManager.LoaderCallb
                 break;
             case 2:
                 permissions = parsePermissions(httpResponse);
-
+                startMainActivity();
                 break;
             case 3:
-
+                userData = parseUserData(httpResponse);
+                startMainActivity();
+                break;
         }
 
 
     }
+
 
     @Override
     public void onLoaderReset(Loader<HttpResponse> httpResponseLoader) {

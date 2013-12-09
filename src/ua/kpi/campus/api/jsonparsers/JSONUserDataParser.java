@@ -14,13 +14,13 @@ import java.util.ArrayList;
  * Time: 0:25
  * To change this template use File | Settings | File Templates.
  */
-public class JSONSessionIDParser {
+public class JSONUserDataParser {
     private static final String STATUS_CODE_ATTRIBUTE_NAME = "StatusCode";
     private static final String TIMESTAMP_ATTRIBUTE_NAME = "TimeStamp";
     private static final String GUID_ATTRIBUTE_NAME = "Guid";
     private static final String PAGING_ATTRIBUTE_NAME = "Paging";
 
-    public static SessionID parse(String jsonString) throws JSONException {
+    public static UserData parse(String jsonString) throws JSONException {
         JSONObject getPermissionsObj = new JSONObject(jsonString);
         String timeStampString = getPermissionsObj.getString(
                 TIMESTAMP_ATTRIBUTE_NAME).replace('T', ' ');
@@ -33,8 +33,8 @@ public class JSONSessionIDParser {
 
 
 
-
-        return new SessionID(
+        //TODO personalities
+        return new UserData(
                 getPermissionsObj.getInt(STATUS_CODE_ATTRIBUTE_NAME),
                 Timestamp.valueOf(timeStampString),
                 getPermissionsObj.getString(GUID_ATTRIBUTE_NAME),
@@ -43,6 +43,7 @@ public class JSONSessionIDParser {
                         data.getString("FullName"),data.get("ScientificInterest"),null,
                         dataArrayEmployees,dataArrayProfiles));
     }
+
 
     private static ArrayList<Employee> parseEmployees(JSONObject getPermissionsObj) throws JSONException {
         JSONArray dataJSONArray = getPermissionsObj.getJSONArray("Employees");
