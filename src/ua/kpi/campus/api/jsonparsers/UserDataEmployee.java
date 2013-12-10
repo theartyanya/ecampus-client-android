@@ -11,6 +11,10 @@ import java.util.ArrayList;
  * To change this template use File | Settings | File Templates.
  */
 public final class UserDataEmployee extends UserData {
+    public ArrayList<Employee> getEmployees() {
+        return employees;
+    }
+
     private final ArrayList<Employee> employees;
     public UserDataEmployee(int userAccountID, String photo, String fullName, Object scientificInterest, ArrayList<Employee> employees, ArrayList<Profile> profiles) {
         super(userAccountID, photo, fullName, scientificInterest, profiles);
