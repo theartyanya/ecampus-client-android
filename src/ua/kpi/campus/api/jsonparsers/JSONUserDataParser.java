@@ -28,20 +28,30 @@ public class JSONUserDataParser {
                 timeStampString.length() - 6);
         JSONObject data=getPermissionsObj.getJSONObject("Data");
         ArrayList<Employee> dataArrayEmployees = parseEmployees(data);
+        ArrayList<Personality> dataArrayPersonalities = parsePersonalities(data);
         ArrayList<Profile> dataArrayProfiles = parseProfiles(data);
+        UserData userData;
+                   if (dataArrayEmployees==null){
 
-
-
+              userData= new UserDataPersonalities(data.getInt("UserAccountId"),data.getString("Photo"),
+                       data.getString("FullName"),data.get("ScientificInterest"),
+                       dataArrayPersonalities,dataArrayProfiles) ;
+                       userData.setIsEmployee(false);
+                       }
+        else {
+              userData=new UserDataEmployee(data.getInt("UserAccountId"),data.getString("Photo"),
+                      data.getString("FullName"),data.get("ScientificInterest"),
+                      dataArrayEmployees,dataArrayProfiles);
+                       userData.setIsEmployee(true);
+                   }
 
         //TODO personalities
         return new User(
                 getPermissionsObj.getInt(STATUS_CODE_ATTRIBUTE_NAME),
                 Timestamp.valueOf(timeStampString),
                 getPermissionsObj.getString(GUID_ATTRIBUTE_NAME),
-                getPermissionsObj.getString(PAGING_ATTRIBUTE_NAME),
-                new UserData(data.getInt("UserAccountId"),data.getString("Photo"),
-                        data.getString("FullName"),data.get("ScientificInterest"),null,
-                        dataArrayEmployees,dataArrayProfiles));
+                getPermissionsObj.getString(PAGING_ATTRIBUTE_NAME), userData
+               );
     }
 
 
@@ -57,6 +67,22 @@ public class JSONUserDataParser {
                     .getString("Position"), childJSONObject
                     .getString("AcademicDegree"), childJSONObject
                     .getString("AcademicStatus")));
+        }
+        return dataArray;
+
+    }
+    private static ArrayList<Personality> parsePersonalities(JSONObject getPermissionsObj) throws JSONException {
+        JSONArray dataJSONArray = getPermissionsObj.getJSONArray("Personalities");
+        ArrayList<Personality> dataArray = new ArrayList<Personality>();
+
+        for (int i = 0; i < dataJSONArray.length(); i++) {
+            JSONObject childJSONObject = dataJSONArray.getJSONObject(i);
+            dataArray.add(new Personality(childJSONObject
+                    .getInt("SubdivisionId"), childJSONObject
+                    .getString("SubdivisionName"), childJSONObject
+                    .getString("StudyGroupName"), childJSONObject
+                    .getBoolean("IsContract"), childJSONObject
+                    .getString("Specialty")));
         }
         return dataArray;
 
