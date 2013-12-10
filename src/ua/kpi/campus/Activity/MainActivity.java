@@ -19,11 +19,10 @@ package ua.kpi.campus.Activity;
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.*;
+import android.support.v4.content.Loader;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -38,6 +37,8 @@ import ua.kpi.campus.api.jsonparsers.Employee;
 import ua.kpi.campus.api.jsonparsers.JSONUserDataParser;
 import ua.kpi.campus.api.jsonparsers.User;
 import ua.kpi.campus.api.jsonparsers.UserData;
+import ua.kpi.campus.loaders.HttpBitmapLoader;
+import ua.kpi.campus.loaders.HttpStringLoader;
 
 public class MainActivity extends FragmentActivity implements ActionBar.TabListener {
     public final static String EXTRA_CURRENT_USER = "user";
@@ -108,6 +109,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         } catch (JSONException e) {
             Log.e(MainActivity.class.getName(), hashCode() + " parsing failed\n" + permissionsStr);
         }
+
     }
 
 
@@ -231,6 +233,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
             return COUNT_TABS;
         }
 
+
         @Override
         public CharSequence getPageTitle(int position) {
 
@@ -252,20 +255,32 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     /**
      * Main profile for user
      */
-    public class MyProfileSectionFragment extends Fragment {
-        ImageView avatar;
+    public class MyProfileSectionFragment extends Fragment implements LoaderManager.LoaderCallbacks<Bitmap>{
+        private final static int AVATAR_LOADER_ID = 1;
+        private ImageView avatar;
+        private LoaderManager.LoaderCallbacks<Bitmap> mCallbacks;
+        private LoaderManager loaderManager;
+
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_section_my_profile, container, false);
-            avatar = (ImageView) findViewById(R.id.avatar);
 
+            loaderManager = this.getLoaderManager();
+            mCallbacks = this;
+            Bundle avatarUrl = new Bundle();
+            avatarUrl.putString(HttpStringLoader.URL_STRING, currentUser.getPhoto());
+            loaderManager.initLoader(AVATAR_LOADER_ID, avatarUrl, mCallbacks).onContentChanged();
+
+
+            avatar = (ImageView) rootView.findViewById(R.id.avatar);
             TextView tFullName = (TextView) rootView.findViewById(R.id.FullName);
             TextView tSubdivisionName = (TextView) rootView.findViewById(R.id.SubdivisionName);
             TextView tPosition = (TextView) rootView.findViewById(R.id.Position);
             TextView tAcademicDegree = (TextView) rootView.findViewById(R.id.AcademicDegree);
             TextView tAcademicStatus = (TextView) rootView.findViewById(R.id.AcademicStatus);
+            //TextView tOther = (TextView) rootView.findViewById(R.id.OtherInformation);
 
             Employee currentEmployee = currentUser.getEmployees().get(0);
             tFullName.setText(currentUser.getFullName());
@@ -273,8 +288,27 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
             tPosition.setText(currentEmployee.getPosition());
             tAcademicDegree.setText(currentEmployee.getAcademicDegree());
             tAcademicStatus.setText(currentEmployee.getAcademicStatus());
+            //tOther.setText(String.format("%s\n%s",currentUser.getProfiles().get(0).toString(),currentEmployee.toString()));
 
             return rootView;
+        }
+
+        @Override
+        public Loader<Bitmap> onCreateLoader(int i, Bundle bundle) {
+            Log.d(this.getClass().getName(), hashCode() + " load started " + i);
+            return new HttpBitmapLoader(MainActivity.this, bundle.getString(HttpStringLoader.URL_STRING));
+        }
+
+        @Override
+        public void onLoadFinished(Loader<Bitmap> httpResponseLoader, Bitmap bitmap) {
+            int currentLoaderId = httpResponseLoader.getId();
+            Log.d(this.getClass().getName(), hashCode() + " load finished/loader " + currentLoaderId);
+            avatar.setImageBitmap(bitmap);
+        }
+
+        @Override
+        public void onLoaderReset(Loader<Bitmap> bitmapLoader) {
+            //To change body of implemented methods use File | Settings | File Templates.
         }
     }
 
