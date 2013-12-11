@@ -14,6 +14,15 @@ public class Profile {
     private final boolean isUpdate;
     private final boolean isDelete;
 
+    @Override
+    public String toString() {
+        return subSystemName +                           "\n" +
+                "isCreate=" + isCreate +                 "\n" +
+                "isRead=" + isRead +                     "\n" +
+                "isUpdate=" + isUpdate +                 "\n" +
+                "isDelete=" + isDelete;
+    }
+
     public String getSubSystemName() {
         return subSystemName;
     }

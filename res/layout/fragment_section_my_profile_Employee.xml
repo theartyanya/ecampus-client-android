@@ -35,7 +35,8 @@
             android:text="#SubdivisionName"
             android:id="@+id/SubdivisionName"
             android:layout_below="@+id/avatar" android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:singleLine="false" android:layout_marginTop="@dimen/activity_vertical_margin"/>
+            android:singleLine="false" android:layout_marginTop="@dimen/activity_vertical_margin"
+            />
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

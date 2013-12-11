@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+<RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/section1_main_info"
+            android:id="@+id/myProfileTitle" android:layout_alignParentLeft="true" android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_alignParentTop="true" android:layout_marginTop="@dimen/activity_vertical_margin" android:singleLine="true"
+            android:typeface="sans" android:textSize="@dimen/title_text"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="#name"
+            android:id="@+id/FullName"
+            android:layout_alignLeft="@+id/myProfileTitle" android:layout_below="@+id/myProfileTitle"
+            android:singleLine="false" android:textSize="@dimen/h1_text"/>
+    <ImageView
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:id="@+id/avatar"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/FullName"
+            android:layout_alignParentRight="false" android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:contentDescription="@string/main_activity_avatar"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="#SubdivisionName"
+            android:id="@+id/SubdivisionName"
+            android:layout_below="@+id/avatar" android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:singleLine="false" android:layout_marginTop="@dimen/activity_vertical_margin"
+            />
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="#Position"
+            android:id="@+id/Position"
+            android:layout_below="@+id/SubdivisionName" android:singleLine="true"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="#AcademicDegree"
+            android:id="@+id/AcademicDegree"
+            android:layout_below="@+id/Position" android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:singleLine="true"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="#AcademicStatus"
+        android:id="@+id/AcademicStatus" android:layout_alignParentLeft="true"
+        android:layout_below="@+id/AcademicDegree" android:layout_marginLeft="@dimen/activity_horizontal_margin"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="#Other"
+            android:id="@+id/OtherInformation" android:layout_alignParentLeft="true"
+            android:layout_below="@+id/AcademicStatus" android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="@dimen/activity_vertical_margin"/>
+
+</RelativeLayout>
+    </ScrollView>

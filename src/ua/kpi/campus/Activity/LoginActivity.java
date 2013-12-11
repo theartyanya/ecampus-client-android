@@ -85,7 +85,7 @@ public class LoginActivity extends Activity implements LoaderManager.LoaderCallb
     private void startHttpLoader(int id, String url) {
         Bundle permissionsData = new Bundle();
         permissionsData.putString(HttpStringLoader.URL_STRING, url);
-        loaderManager.initLoader(id, permissionsData, mCallbacks).onContentChanged();
+        loaderManager.restartLoader(id, permissionsData, mCallbacks).onContentChanged();
     }
 
     private User parseUser(HttpResponse httpResponse) {

@@ -20,6 +20,7 @@ import android.app.ActionBar;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.*;
 import android.support.v4.content.Loader;
@@ -33,10 +34,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import org.json.JSONException;
 import ua.kpi.campus.R;
-import ua.kpi.campus.api.jsonparsers.Employee;
-import ua.kpi.campus.api.jsonparsers.JSONUserDataParser;
-import ua.kpi.campus.api.jsonparsers.User;
-import ua.kpi.campus.api.jsonparsers.UserData;
+import ua.kpi.campus.api.jsonparsers.*;
 import ua.kpi.campus.loaders.HttpBitmapLoader;
 import ua.kpi.campus.loaders.HttpStringLoader;
 
@@ -44,6 +42,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     public final static String EXTRA_CURRENT_USER = "user";
     private final static int COUNT_TABS = 4;
     private UserData currentUser;
+
     /**
      * The {@link ViewPager} that will display the three primary sections of the app, one at a
      * time.
@@ -210,7 +209,11 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         public Fragment getItem(int i) {
             switch (i) {
                 case 0:
-                    return new MyProfileSectionFragment();
+                    if (currentUser.isEmployee()) {
+                        return new MyProfileEmployeeSectionFragment();
+                    } else {
+                        return new MyProfileStudentSectionFragment();
+                    }
                 case 1:
                     return new DeskSectionFragment();
                 case 2:
@@ -255,17 +258,16 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     /**
      * Main profile for user
      */
-    public class MyProfileSectionFragment extends Fragment implements LoaderManager.LoaderCallbacks<Bitmap>{
-        private final static int AVATAR_LOADER_ID = 1;
-        private ImageView avatar;
-        private LoaderManager.LoaderCallbacks<Bitmap> mCallbacks;
-        private LoaderManager loaderManager;
-
+    public class MyProfileEmployeeSectionFragment extends Fragment implements LoaderManager.LoaderCallbacks<Bitmap>{
+        protected final static int AVATAR_LOADER_ID = 1;
+        protected ImageView avatar;
+        protected LoaderManager.LoaderCallbacks<Bitmap> mCallbacks;
+        protected LoaderManager loaderManager;
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_section_my_profile, container, false);
+            View rootView = inflater.inflate(R.layout.fragment_section_my_profile_Employee, container, false);
 
             loaderManager = this.getLoaderManager();
             mCallbacks = this;
@@ -280,15 +282,16 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
             TextView tPosition = (TextView) rootView.findViewById(R.id.Position);
             TextView tAcademicDegree = (TextView) rootView.findViewById(R.id.AcademicDegree);
             TextView tAcademicStatus = (TextView) rootView.findViewById(R.id.AcademicStatus);
-            //TextView tOther = (TextView) rootView.findViewById(R.id.OtherInformation);
+            TextView tOther = (TextView) rootView.findViewById(R.id.OtherInformation);
 
-            Employee currentEmployee = currentUser.getEmployees().get(0);
+            Employee currentEmployee = ((UserDataEmployee) currentUser).getEmployees().get(0);
             tFullName.setText(currentUser.getFullName());
             tSubdivisionName.setText(currentEmployee.getSubDivisionName());
+            tSubdivisionName.setTypeface(null, Typeface.BOLD);
             tPosition.setText(currentEmployee.getPosition());
             tAcademicDegree.setText(currentEmployee.getAcademicDegree());
             tAcademicStatus.setText(currentEmployee.getAcademicStatus());
-            //tOther.setText(String.format("%s\n%s",currentUser.getProfiles().get(0).toString(),currentEmployee.toString()));
+            tOther.setText(String.format("%s",currentUser.getProfiles().get(0).toString()));
 
             return rootView;
         }
@@ -304,11 +307,48 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
             int currentLoaderId = httpResponseLoader.getId();
             Log.d(this.getClass().getName(), hashCode() + " load finished/loader " + currentLoaderId);
             avatar.setImageBitmap(bitmap);
+            httpResponseLoader.stopLoading();
         }
 
         @Override
         public void onLoaderReset(Loader<Bitmap> bitmapLoader) {
             //To change body of implemented methods use File | Settings | File Templates.
+        }
+    }
+
+    public class MyProfileStudentSectionFragment extends MyProfileEmployeeSectionFragment {
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+            View rootView = inflater.inflate(R.layout.fragment_section_my_profile_Employee, container, false);
+
+            loaderManager = this.getLoaderManager();
+            mCallbacks = this;
+            Bundle avatarUrl = new Bundle();
+            avatarUrl.putString(HttpStringLoader.URL_STRING, currentUser.getPhoto());
+            loaderManager.initLoader(AVATAR_LOADER_ID, avatarUrl, mCallbacks).onContentChanged();
+
+
+            avatar = (ImageView) rootView.findViewById(R.id.avatar);
+            //TODO змінити імена полів відповідно до класу і виводити гавнєцо на екран -> res/layout/fragment_section_my_profile_student.xml
+            TextView tFullName = (TextView) rootView.findViewById(R.id.FullName);
+            TextView tSubdivisionName = (TextView) rootView.findViewById(R.id.SubdivisionName);
+            TextView tPosition = (TextView) rootView.findViewById(R.id.Position);
+            TextView tAcademicDegree = (TextView) rootView.findViewById(R.id.AcademicDegree);
+            TextView tAcademicStatus = (TextView) rootView.findViewById(R.id.AcademicStatus);
+            TextView tOther = (TextView) rootView.findViewById(R.id.OtherInformation);
+
+            Employee currentEmployee = ((UserDataEmployee) currentUser).getEmployees().get(0);
+            tFullName.setText(currentUser.getFullName());
+            tSubdivisionName.setText(currentEmployee.getSubDivisionName());
+            tSubdivisionName.setTypeface(null, Typeface.BOLD);
+            tPosition.setText(currentEmployee.getPosition());
+            tAcademicDegree.setText(currentEmployee.getAcademicDegree());
+            tAcademicStatus.setText(currentEmployee.getAcademicStatus());
+            tOther.setText(String.format("%s",currentUser.getProfiles().get(0).toString()));
+
+            return rootView;
         }
     }
 

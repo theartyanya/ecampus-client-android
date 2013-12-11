@@ -12,9 +12,9 @@ import java.util.ArrayList;
  */
 public final class Permissions {
 	private final int statusCode;
-	private final Timestamp timeStamp;
-	private final String guid;
-	private final Object padding;
+    private final Timestamp timeStamp;
+    private final String guid;
+    private final Object padding;
 	private final ArrayList<SubsystemData> data;
 	
 	
