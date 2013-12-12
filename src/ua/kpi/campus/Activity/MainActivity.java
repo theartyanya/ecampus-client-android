@@ -321,7 +321,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_section_my_profile_Employee, container, false);
+            View rootView = inflater.inflate(R.layout.fragment_section_my_profile_student, container, false);
 
             loaderManager = this.getLoaderManager();
             mCallbacks = this;
