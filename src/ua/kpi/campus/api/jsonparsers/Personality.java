@@ -21,4 +21,24 @@ public final class Personality {
         isContract = contract;
         this.speciality = speciality;
     }
+
+    public int getSubdivisionID() {
+        return subdivisionID;
+    }
+
+    public String getSubdivisionName() {
+        return subdivisionName;
+    }
+
+    public String getStudyGroupName() {
+        return studyGroupName;
+    }
+
+    public boolean isContract() {
+        return isContract;
+    }
+
+    public String getSpeciality() {
+        return speciality;
+    }
 }

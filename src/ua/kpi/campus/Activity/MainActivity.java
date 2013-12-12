@@ -334,24 +334,29 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
             //TODO змінити імена полів відповідно до класу і виводити гавнєцо на екран -> res/layout/fragment_section_my_profile_student.xml
             TextView tFullName = (TextView) rootView.findViewById(R.id.FullName);
             TextView tSubdivisionName = (TextView) rootView.findViewById(R.id.SubdivisionName);
-            TextView tPosition = (TextView) rootView.findViewById(R.id.Position);
-            TextView tAcademicDegree = (TextView) rootView.findViewById(R.id.AcademicDegree);
-            TextView tAcademicStatus = (TextView) rootView.findViewById(R.id.AcademicStatus);
+            TextView tStudyGroupName = (TextView) rootView.findViewById(R.id.StudyGroupName);
+            TextView tIsContract = (TextView) rootView.findViewById(R.id.IsContract);
+            TextView tSpecialty = (TextView) rootView.findViewById(R.id.Specialty);
             TextView tOther = (TextView) rootView.findViewById(R.id.OtherInformation);
 
-            Employee currentEmployee = ((UserDataEmployee) currentUser).getEmployees().get(0);
+
+            Personality currentPersonality = ((UserDataPersonalities)currentUser).getPersonalities().get(0);
             tFullName.setText(currentUser.getFullName());
-            tSubdivisionName.setText(currentEmployee.getSubDivisionName());
+            tSubdivisionName.setText(currentPersonality.getSubdivisionName());
             tSubdivisionName.setTypeface(null, Typeface.BOLD);
-            tPosition.setText(currentEmployee.getPosition());
-            tAcademicDegree.setText(currentEmployee.getAcademicDegree());
-            tAcademicStatus.setText(currentEmployee.getAcademicStatus());
+            tStudyGroupName.setText(currentPersonality.getStudyGroupName());
+            tIsContract.setText(boolUkr(currentPersonality.isContract()));
+            tSpecialty.setText(currentPersonality.getSpeciality());
             tOther.setText(String.format("%s",currentUser.getProfiles().get(0).toString()));
 
             return rootView;
         }
     }
-
+      public static String boolUkr(boolean var){
+                if (var==true) {
+                    return "Так";}
+          else{return "Ні";}
+      }
     /**
      * Дошка оголошень
      */
