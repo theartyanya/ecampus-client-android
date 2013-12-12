@@ -31,7 +31,7 @@ public class JSONUserDataParser {
         ArrayList<Personality> dataArrayPersonalities = parsePersonalities(data);
         ArrayList<Profile> dataArrayProfiles = parseProfiles(data);
         UserData userData;
-                   if (dataArrayEmployees==null){
+                   if (dataArrayEmployees.size()==0){
 
               userData= new UserDataPersonalities(data.getInt("UserAccountId"),data.getString("Photo"),
                        data.getString("FullName"),data.get("ScientificInterest"),
