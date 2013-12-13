@@ -11,6 +11,10 @@
     <string name="section2_desk">Дошка оголошень</string>
     <string name="section3_message">Повідомлення</string>
     <string name="section4_stat">Статистика</string>
+    <string name="yes">Так</string>
+    <string name="no">Ні</string>
+
+
 
     <string name="login_activity_auth_fail">Авторизація невдала!</string>
     <string name="login_activity_fill_warning">Заповните всі поля, будь ласка</string>
@@ -18,4 +22,12 @@
     <string name="login_activity_access_denied">Помилка доступу</string>
 
     <string name="main_activity_avatar">Фото</string>
+    <string name="main_activity_profile_group">Група</string>
+    <string name="main_activity_profile_contract">Контракт</string>
+    <string name="main_activity_profile_speciality">Спеціальність</string>
+    <string name="main_activity_profile_academic_degree">Вчена ступінь</string>
+    <string name="main_activity_profile_academic_status">Вчене звання</string>
+
+
+
 </resources>

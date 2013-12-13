@@ -42,7 +42,6 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     public final static String EXTRA_CURRENT_USER = "user";
     private final static int COUNT_TABS = 4;
     private UserData currentUser;
-
     /**
      * The {@link ViewPager} that will display the three primary sections of the app, one at a
      * time.
@@ -60,7 +59,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
       three primary sections of the app. We use a {@link android.support.v4.app.FragmentPagerAdapter}
       derivative, which will keep every loaded fragment in memory. If this becomes too memory
       intensive, it may be best to switch to a {@link android.support.v4.app.FragmentStatePagerAdapter}.
-     */
+    */
         AppSectionsPagerAdapter mAppSectionsPagerAdapter = new AppSectionsPagerAdapter(getSupportFragmentManager());
 
         // Set up the action bar.
@@ -110,7 +109,6 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         }
 
     }
-
 
     private void showToastLong(String text) {
         Toast.makeText(getApplicationContext(), text, Toast.LENGTH_LONG).show();
@@ -236,7 +234,6 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
             return COUNT_TABS;
         }
 
-
         @Override
         public CharSequence getPageTitle(int position) {
 
@@ -258,7 +255,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     /**
      * Main profile for user
      */
-    public class MyProfileEmployeeSectionFragment extends Fragment implements LoaderManager.LoaderCallbacks<Bitmap>{
+    public class MyProfileEmployeeSectionFragment extends Fragment implements LoaderManager.LoaderCallbacks<Bitmap> {
         protected final static int AVATAR_LOADER_ID = 1;
         protected ImageView avatar;
         protected LoaderManager.LoaderCallbacks<Bitmap> mCallbacks;
@@ -267,7 +264,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_section_my_profile_Employee, container, false);
+            View rootView = inflater.inflate(R.layout.fragment_section_my_profile_employee, container, false);
 
             loaderManager = this.getLoaderManager();
             mCallbacks = this;
@@ -289,11 +286,22 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
             tSubdivisionName.setText(currentEmployee.getSubDivisionName());
             tSubdivisionName.setTypeface(null, Typeface.BOLD);
             tPosition.setText(currentEmployee.getPosition());
-            tAcademicDegree.setText(currentEmployee.getAcademicDegree());
-            tAcademicStatus.setText(currentEmployee.getAcademicStatus());
-            tOther.setText(String.format("%s",currentUser.getProfiles().get(0).toString()));
-
+            tAcademicDegree.setText(String.format("%s: %s",
+                    rootView.getResources().getString(R.string.main_activity_profile_academic_degree),
+                    currentEmployee.getAcademicDegree()));
+            tAcademicStatus.setText(String.format("%s: %s",
+                    rootView.getResources().getString(R.string.main_activity_profile_academic_status),
+                    currentEmployee.getAcademicStatus()));
+            tOther.setText(getTextOther());
             return rootView;
+        }
+
+        protected String getTextOther() {
+            StringBuilder otherStb = new StringBuilder();
+            for (Profile profile : currentUser.getProfiles()) {
+                otherStb.append(String.format("%s\n\n", profile.toString()));
+            }
+            return otherStb.toString();
         }
 
         @Override
@@ -331,7 +339,6 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
 
             avatar = (ImageView) rootView.findViewById(R.id.avatar);
-            //TODO змінити імена полів відповідно до класу і виводити гавнєцо на екран -> res/layout/fragment_section_my_profile_student.xml
             TextView tFullName = (TextView) rootView.findViewById(R.id.FullName);
             TextView tSubdivisionName = (TextView) rootView.findViewById(R.id.SubdivisionName);
             TextView tStudyGroupName = (TextView) rootView.findViewById(R.id.StudyGroupName);
@@ -340,23 +347,32 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
             TextView tOther = (TextView) rootView.findViewById(R.id.OtherInformation);
 
 
-            Personality currentPersonality = ((UserDataPersonalities)currentUser).getPersonalities().get(0);
+            Personality currentPersonality = ((UserDataPersonalities) currentUser).getPersonalities().get(0);
             tFullName.setText(currentUser.getFullName());
             tSubdivisionName.setText(currentPersonality.getSubdivisionName());
             tSubdivisionName.setTypeface(null, Typeface.BOLD);
-            tStudyGroupName.setText(currentPersonality.getStudyGroupName());
-            tIsContract.setText(boolUkr(currentPersonality.isContract()));
-            tSpecialty.setText(currentPersonality.getSpeciality());
-            tOther.setText(String.format("%s",currentUser.getProfiles().get(0).toString()));
+            tStudyGroupName.setText(String.format("%s: %s",
+                    rootView.getResources().getString(R.string.main_activity_profile_group),
+                    currentPersonality.getStudyGroupName()));
+            tIsContract.setText(String.format("%s: %s",
+                    rootView.getResources().getString(R.string.main_activity_profile_contract),
+                    toString(currentPersonality.isContract())));
+            tSpecialty.setText(String.format("%s: %s",
+                    rootView.getResources().getString(R.string.main_activity_profile_speciality),
+                    currentPersonality.getSpeciality()));
+            tOther.setText(getTextOther());
 
             return rootView;
         }
+
+
+        private String toString(boolean var) {
+            return var ?
+                    getResources().getString(R.string.yes) :
+                    getResources().getString(R.string.no);
+        }
     }
-      public static String boolUkr(boolean var){
-                if (var==true) {
-                    return "Так";}
-          else{return "Ні";}
-      }
+
     /**
      * Дошка оголошень
      */
