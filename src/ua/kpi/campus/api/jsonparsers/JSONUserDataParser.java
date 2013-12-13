@@ -3,6 +3,7 @@ package ua.kpi.campus.api.jsonparsers;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import ua.kpi.campus.api.jsonparsers.user.*;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;

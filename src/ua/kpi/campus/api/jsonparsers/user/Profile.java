@@ -1,4 +1,4 @@
-package ua.kpi.campus.api.jsonparsers;
+package ua.kpi.campus.api.jsonparsers.user;
 
 /**
  * Created with IntelliJ IDEA.
