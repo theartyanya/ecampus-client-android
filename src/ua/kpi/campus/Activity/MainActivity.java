@@ -35,6 +35,7 @@ import android.widget.Toast;
 import org.json.JSONException;
 import ua.kpi.campus.R;
 import ua.kpi.campus.api.jsonparsers.*;
+import ua.kpi.campus.api.jsonparsers.user.*;
 import ua.kpi.campus.loaders.HttpBitmapLoader;
 import ua.kpi.campus.loaders.HttpStringLoader;
 
@@ -100,7 +101,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         Intent intent = getIntent();
         String permissionsStr = intent.getStringExtra(EXTRA_CURRENT_USER);
         try {
-            User currentUser = parseUser(permissionsStr);
+            JsonObject<UserData> currentUser = parseUser(permissionsStr);
             this.currentUser = currentUser.getData();
             Log.d(MainActivity.class.getName(), hashCode() + " parsed.");
             //showToastLong(permissionsStr);
@@ -115,7 +116,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         Log.d(this.getClass().getName(), hashCode() + " ToastLong:\n" + text);
     }
 
-    private User parseUser(String jsonUser) throws JSONException {
+    private JsonObject<UserData> parseUser(String jsonUser) throws JSONException {
         Log.d(MainActivity.class.getName(), hashCode() + " parsing\n" + jsonUser);
         return JSONUserDataParser.parse(jsonUser);
     }
@@ -298,7 +299,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
         protected String getTextOther() {
             StringBuilder otherStb = new StringBuilder();
-            for (Profile profile : currentUser.getProfiles()) {
+            for (SubsystemData profile : currentUser.getProfiles()) {
                 otherStb.append(String.format("%s\n\n", profile.toString()));
             }
             return otherStb.toString();

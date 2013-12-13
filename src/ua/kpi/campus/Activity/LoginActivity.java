@@ -16,7 +16,10 @@ import org.apache.http.HttpStatus;
 import org.json.JSONException;
 import ua.kpi.campus.R;
 import ua.kpi.campus.api.CampusApiURL;
-import ua.kpi.campus.api.jsonparsers.*;
+import ua.kpi.campus.api.jsonparsers.JSONAuthorizationParser;
+import ua.kpi.campus.api.jsonparsers.JSONUserDataParser;
+import ua.kpi.campus.api.jsonparsers.JsonObject;
+import ua.kpi.campus.api.jsonparsers.user.UserData;
 import ua.kpi.campus.loaders.HttpResponse;
 import ua.kpi.campus.loaders.HttpStringLoader;
 
@@ -67,7 +70,7 @@ public class LoginActivity extends Activity implements LoaderManager.LoaderCallb
         if (statusCode == HttpStatus.SC_OK) {
             try {
                 //showToastLong(response);
-                Authorization authorization = JSONAuthorizationParser.parse(response);
+                JsonObject<String> authorization = JSONAuthorizationParser.parse(response);
                 startCurrentUserLoader(authorization.getData());
             } catch (JSONException e) {
                 showToastLong(getResources().getString(R.string.login_activity_json_error));
@@ -88,7 +91,7 @@ public class LoginActivity extends Activity implements LoaderManager.LoaderCallb
         loaderManager.restartLoader(id, permissionsData, mCallbacks).onContentChanged();
     }
 
-    private User parseUser(HttpResponse httpResponse) {
+    private JsonObject<UserData> parseUser(HttpResponse httpResponse) {
         final String userDataStr = httpResponse.getEntity();
         try {
             return JSONUserDataParser.parse(userDataStr);

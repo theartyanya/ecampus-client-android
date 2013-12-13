@@ -9,14 +9,15 @@ import java.util.ArrayList;
  * Time: 23:55
  * To change this template use File | Settings | File Templates.
  */
-public class UserDataPersonalities extends UserData {
-    public ArrayList<Personality> getPersonalities() {
-        return personalities;
+public final class UserDataPersonalities extends UserData {
+    private final ArrayList<Personality> personalities;
+
+    public UserDataPersonalities(int userAccountID, String photo, String fullName, Object scientificInterest, ArrayList<Personality> personalities, ArrayList<SubsystemData> profiles) {
+        super(userAccountID, photo, fullName, scientificInterest, profiles);
+        this.personalities = personalities;
     }
 
-    private final ArrayList<Personality> personalities;
-    public UserDataPersonalities(int userAccountID, String photo, String fullName, Object scientificInterest, ArrayList<Personality> personalities, ArrayList<Profile> profiles) {
-        super(userAccountID, photo, fullName, scientificInterest, profiles);
-        this.personalities=personalities;
+    public final ArrayList<Personality> getPersonalities() {
+        return personalities;
     }
 }

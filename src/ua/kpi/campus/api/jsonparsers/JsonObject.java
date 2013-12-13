@@ -9,7 +9,7 @@ import java.sql.Timestamp;
  * @version 13/12/13
  * @param <T> - data type
  */
-public class JsonObject<T> {
+public final class JsonObject<T> {
 	private final int statusCode;
 	private final Timestamp timeStamp;
 	private final String guid;

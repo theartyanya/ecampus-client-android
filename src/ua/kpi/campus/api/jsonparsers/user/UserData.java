@@ -9,15 +9,19 @@ import java.util.ArrayList;
  * Time: 0:42
  * To change this template use File | Settings | File Templates.
  */
-public  class UserData {
+public class UserData {
     private final int userAccountID;
-    private final String  photo;
+    private final String photo;
     private final String fullName;
     private final Object scientificInterest;
-    private final ArrayList<Profile> profiles;
-    private  boolean isEmployee=false;
+    private final ArrayList<SubsystemData> profiles;
+    private boolean isEmployee;
 
-    public UserData(int userAccountID, String photo, String fullName, Object scientificInterest, ArrayList<Profile> profiles) {
+    public UserData(int userAccountID,
+                    String photo,
+                    String fullName,
+                    Object scientificInterest,
+                    ArrayList<SubsystemData> profiles) {
         this.userAccountID = userAccountID;
         this.photo = photo;
         this.fullName = fullName;
@@ -41,11 +45,12 @@ public  class UserData {
     public boolean isEmployee() {
         return isEmployee;
     }
-    public void setIsEmployee(boolean isEmployee){
-        this.isEmployee=isEmployee;
+
+    public void setIsEmployee(boolean isEmployee) {
+        this.isEmployee = isEmployee;
     }
 
-    public ArrayList<Profile> getProfiles() {
+    public ArrayList<SubsystemData> getProfiles() {
         return profiles;
     }
 

@@ -3,7 +3,6 @@ package ua.kpi.campus.api.jsonparsers;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import ua.kpi.campus.api.jsonparsers.user.Permissions;
 import ua.kpi.campus.api.jsonparsers.user.SubsystemData;
 
 import java.sql.Timestamp;
@@ -20,7 +19,7 @@ public class JSONGetPermissionsParser {
     private static final String GUID_ATTRIBUTE_NAME = "Guid";
     private static final String PAGING_ATTRIBUTE_NAME = "Paging";
 
-    public static Permissions parse(String jsonString) throws JSONException {
+    public static JsonObject parse(String jsonString) throws JSONException {
         JSONObject getPermissionsObj = new JSONObject(jsonString);
         String timeStampString = getPermissionsObj.getString(
                 TIMESTAMP_ATTRIBUTE_NAME).replace('T', ' ');
@@ -28,7 +27,7 @@ public class JSONGetPermissionsParser {
                 timeStampString.length() - 6);
         ArrayList<SubsystemData> dataArray = parseChild(getPermissionsObj);
 
-        return new Permissions(
+        return new JsonObject<ArrayList<SubsystemData>>(
                 getPermissionsObj.getInt(STATUS_CODE_ATTRIBUTE_NAME),
                 Timestamp.valueOf(timeStampString),
                 getPermissionsObj.getString(GUID_ATTRIBUTE_NAME),

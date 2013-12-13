@@ -15,7 +15,7 @@ public final class UserDataEmployee extends UserData {
     }
 
     private final ArrayList<Employee> employees;
-    public UserDataEmployee(int userAccountID, String photo, String fullName, Object scientificInterest, ArrayList<Employee> employees, ArrayList<Profile> profiles) {
+    public UserDataEmployee(int userAccountID, String photo, String fullName, Object scientificInterest, ArrayList<Employee> employees, ArrayList<SubsystemData> profiles) {
         super(userAccountID, photo, fullName, scientificInterest, profiles);
         this.employees=employees;
     }
