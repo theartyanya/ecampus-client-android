@@ -34,13 +34,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 import org.json.JSONException;
 import ua.kpi.campus.R;
+import ua.kpi.campus.Session;
 import ua.kpi.campus.api.jsonparsers.*;
 import ua.kpi.campus.api.jsonparsers.user.*;
 import ua.kpi.campus.loaders.HttpBitmapLoader;
 import ua.kpi.campus.loaders.HttpStringLoader;
 
 public class MainActivity extends FragmentActivity implements ActionBar.TabListener {
-    public final static String EXTRA_CURRENT_USER = "user";
     private final static int COUNT_TABS = 4;
     private UserData currentUser;
     /**
@@ -98,17 +98,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                             .setTabListener(this));
         }
 
-        Intent intent = getIntent();
-        String permissionsStr = intent.getStringExtra(EXTRA_CURRENT_USER);
-        try {
-            JsonObject<UserData> currentUser = parseUser(permissionsStr);
-            this.currentUser = currentUser.getData();
-            Log.d(MainActivity.class.getName(), hashCode() + " parsed.");
-            //showToastLong(permissionsStr);
-        } catch (JSONException e) {
-            Log.e(MainActivity.class.getName(), hashCode() + " parsing failed\n" + permissionsStr);
-        }
-
+        currentUser = Session.getCurrentUser();
     }
 
     private void showToastLong(String text) {

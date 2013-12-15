@@ -1,13 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout
+<ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent" xmlns:android="http://schemas.android.com/apk/res/android">
-    <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/section3_message"
-            android:id="@+id/messageTitle" android:layout_alignParentLeft="true" android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:layout_alignParentTop="true" android:layout_marginTop="@dimen/activity_vertical_margin" android:singleLine="true"
-            android:typeface="sans" android:textSize="@dimen/title_text"/>
-</RelativeLayout>
+        android:layout_height="fill_parent"
+        android:id="@+id/scrollView" android:fillViewport="false">
+    <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/section3_message"
+                android:id="@+id/messageTitle" android:layout_alignParentLeft="true"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_alignParentTop="true" android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:singleLine="true"
+                android:typeface="sans" android:textSize="@dimen/title_text"/>
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" android:layout_alignParentLeft="true"
+                android:layout_below="@+id/messageTitle">
+            <FrameLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent" android:clickable="true">
+                <RelativeLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent">
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="#Suject"
+                            android:id="@+id/subject" android:layout_marginLeft="@dimen/activity_horizontal_margin"/>
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="#Last Message"
+                            android:id="@+id/lastMessage"
+                            android:layout_below="@+id/subject"
+                            android:layout_marginLeft="@dimen/message_text_big_margin"/>
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="#Last date"
+                            android:id="@+id/lastDate"
+                            android:layout_below="@+id/lastMessage"
+                            android:layout_marginLeft="@dimen/message_text_big_margin"/>
+                </RelativeLayout>
+            </FrameLayout>
+            <FrameLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent" android:clickable="true">
+                <RelativeLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent">
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="#Suject"
+                            android:id="@+id/subject" android:layout_marginLeft="@dimen/activity_horizontal_margin"/>
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="#Last Message"
+                            android:id="@+id/lastMessage"
+                            android:layout_below="@+id/subject"
+                            android:layout_marginLeft="@dimen/message_text_big_margin"/>
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="#Last date"
+                            android:id="@+id/lastDate"
+                            android:layout_below="@+id/lastMessage"
+                            android:layout_marginLeft="@dimen/message_text_big_margin"/>
+                </RelativeLayout>
+            </FrameLayout>
+        </LinearLayout>
+    </RelativeLayout>
+</ScrollView>

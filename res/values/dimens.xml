@@ -5,4 +5,5 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="title_text">30dp</dimen>
     <dimen name="h1_text">20dp</dimen>
+    <dimen name="message_text_big_margin">40dp</dimen>
 </resources>

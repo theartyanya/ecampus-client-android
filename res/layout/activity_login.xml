@@ -9,7 +9,7 @@
     tools:context=".Activity.LoginActivity" >
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/lastMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -21,12 +21,12 @@
         android:id="@+id/firstNumberEdit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView1"
-        android:layout_below="@+id/textView1"
+        android:layout_alignLeft="@+id/lastMessage"
+        android:layout_below="@+id/lastMessage"
         android:ems="10" android:text="123"/>
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/lastDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/firstNumberEdit"
@@ -38,8 +38,8 @@
         android:id="@+id/secondNumberEdit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView2"
-        android:layout_below="@+id/textView2"
+        android:layout_alignLeft="@+id/lastDate"
+        android:layout_below="@+id/lastDate"
         android:layout_marginTop="14dp"
         android:ems="10" 
         android:inputType="textPassword" android:text="123">

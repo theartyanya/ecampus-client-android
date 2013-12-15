@@ -15,6 +15,7 @@ import android.widget.Toast;
 import org.apache.http.HttpStatus;
 import org.json.JSONException;
 import ua.kpi.campus.R;
+import ua.kpi.campus.Session;
 import ua.kpi.campus.api.CampusApiURL;
 import ua.kpi.campus.api.jsonparsers.JSONAuthorizationParser;
 import ua.kpi.campus.api.jsonparsers.JSONUserDataParser;
@@ -70,8 +71,8 @@ public class LoginActivity extends Activity implements LoaderManager.LoaderCallb
         if (statusCode == HttpStatus.SC_OK) {
             try {
                 //showToastLong(response);
-                JsonObject<String> authorization = JSONAuthorizationParser.parse(response);
-                startCurrentUserLoader(authorization.getData());
+                Session.setSessionId(JSONAuthorizationParser.parse(response).getData());
+                startCurrentUserLoader(Session.getSessionId());
             } catch (JSONException e) {
                 showToastLong(getResources().getString(R.string.login_activity_json_error));
                 Log.e(this.getClass().getName(), hashCode() + getResources().getString(R.string.login_activity_json_error));
@@ -103,10 +104,9 @@ public class LoginActivity extends Activity implements LoaderManager.LoaderCallb
         return null;
     }
 
-    private void startMainActivity(String currentUserJson) {
+    private void startMainActivity() {
         Intent intent = new Intent(this, MainActivity.class);
         Log.d(this.getClass().getName(), hashCode() + " starting new activity... " + MainActivity.class.getName());
-        intent.putExtra(MainActivity.EXTRA_CURRENT_USER, currentUserJson);
         startActivity(intent);
     }
 
@@ -139,9 +139,8 @@ public class LoginActivity extends Activity implements LoaderManager.LoaderCallb
                 break;
             case CURRENT_USER_LOADER_ID:
                 if (httpResponse.getStatusCode() == HttpStatus.SC_OK) {
-                    Log.d(this.getClass().getName(), hashCode() + " starting new activity... ");
-                    parseUser(httpResponse);  //check correctness of JSON
-                    startMainActivity(httpResponse.getEntity());
+                    Session.setCurrentUser(parseUser(httpResponse).getData());
+                    startMainActivity();
                 } else {
                     showToastLong(getResources().getString(R.string.login_activity_access_denied));
                 }

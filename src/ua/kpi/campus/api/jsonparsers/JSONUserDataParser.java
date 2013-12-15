@@ -1,6 +1,5 @@
 package ua.kpi.campus.api.jsonparsers;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import ua.kpi.campus.api.jsonparsers.user.*;
@@ -21,7 +20,7 @@ public class JSONUserDataParser {
     private static final String GUID_ATTRIBUTE_NAME = "Guid";
     private static final String PAGING_ATTRIBUTE_NAME = "Paging";
 
-    public static JsonObject parse(String jsonString) throws JSONException {
+    public static JsonObject<UserData> parse(String jsonString) throws JSONException {
         JSONObject getPermissionsObj = new JSONObject(jsonString);
         String timeStampString = getPermissionsObj.getString(
                 TIMESTAMP_ATTRIBUTE_NAME).replace('T', ' ');
@@ -54,7 +53,7 @@ public class JSONUserDataParser {
             userData.setIsEmployee(true);
         }
 
-        return new JsonObject<UserData>(
+        return new JsonObject<>(
                 getPermissionsObj.getInt(STATUS_CODE_ATTRIBUTE_NAME),
                 Timestamp.valueOf(timeStampString),
                 getPermissionsObj.getString(GUID_ATTRIBUTE_NAME),
