@@ -3,6 +3,8 @@ package ua.kpi.campus.api.jsonparsers;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import ua.kpi.campus.api.jsonparsers.message.User;
+import ua.kpi.campus.api.jsonparsers.message.UserConversationData;
 import ua.kpi.campus.api.jsonparsers.user.*;
 
 import java.util.ArrayList;

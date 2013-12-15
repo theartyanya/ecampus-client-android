@@ -1,4 +1,8 @@
-package ua.kpi.campus.api.jsonparsers.user;
+package ua.kpi.campus.api.jsonparsers.message;
+
+import ua.kpi.campus.api.jsonparsers.user.Employee;
+import ua.kpi.campus.api.jsonparsers.user.Personality;
+import ua.kpi.campus.api.jsonparsers.user.SubsystemData;
 
 import java.util.ArrayList;
 
