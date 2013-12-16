@@ -33,12 +33,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import org.json.JSONException;
+import ua.kpi.campus.Mock;
 import ua.kpi.campus.R;
 import ua.kpi.campus.Session;
-import ua.kpi.campus.api.jsonparsers.*;
+import ua.kpi.campus.api.jsonparsers.JSONConversationParser;
+import ua.kpi.campus.api.jsonparsers.JSONUserDataParser;
+import ua.kpi.campus.api.jsonparsers.JsonObject;
+import ua.kpi.campus.api.jsonparsers.message.UserConversationData;
 import ua.kpi.campus.api.jsonparsers.user.*;
 import ua.kpi.campus.loaders.HttpBitmapLoader;
 import ua.kpi.campus.loaders.HttpStringLoader;
+
+import java.util.ArrayList;
 
 public class MainActivity extends FragmentActivity implements ActionBar.TabListener {
     private final static int COUNT_TABS = 4;
@@ -373,9 +379,22 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_section_desk, container, false);
+            ArrayList<UserConversationData> userConversations= parseConversation(Mock.getUSER_CONVERSATION());
+            for(UserConversationData conversation : userConversations) {
 
+            }
             return rootView;
         }
+    }
+
+    private ArrayList<UserConversationData> parseConversation (String JsonConversation) {
+        try {
+            return JSONConversationParser.parse(JsonConversation).getData();
+        } catch (JSONException e) {
+            showToastLong(getResources().getString(R.string.login_activity_json_error));
+            Log.e(this.getClass().getName(), hashCode() + getResources().getString(R.string.login_activity_json_error));
+        }
+        return new ArrayList<>();
     }
 
     /**
