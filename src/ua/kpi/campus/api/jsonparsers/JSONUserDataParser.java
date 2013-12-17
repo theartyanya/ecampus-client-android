@@ -53,7 +53,7 @@ public class JSONUserDataParser {
             userData.setIsEmployee(true);
         }
 
-        return new JsonObject<>(
+        return new JsonObject<UserData>(
                 getPermissionsObj.getInt(STATUS_CODE_ATTRIBUTE_NAME),
                 Timestamp.valueOf(timeStampString),
                 getPermissionsObj.getString(GUID_ATTRIBUTE_NAME),

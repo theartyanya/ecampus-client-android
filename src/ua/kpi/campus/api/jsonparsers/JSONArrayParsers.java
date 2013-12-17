@@ -5,6 +5,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import ua.kpi.campus.api.jsonparsers.message.User;
 import ua.kpi.campus.api.jsonparsers.message.UserConversationData;
+import ua.kpi.campus.api.jsonparsers.timetable.Parameter;
+import ua.kpi.campus.api.jsonparsers.timetable.TimeTableData;
 import ua.kpi.campus.api.jsonparsers.user.*;
 
 import java.util.ArrayList;
@@ -89,6 +91,26 @@ class JSONArrayParsers {
             dataArray.add(new UserConversationData(
                     childJSONObject.getString("Subject"),users,childJSONObject.getString("LastMessageText"),
                     childJSONObject.getString("LastMessageDate"),childJSONObject.getInt("GroupId")));
+
+        }
+        return dataArray;
+    }
+    protected static ArrayList<TimeTableData> parseTimeTable(JSONObject getPermissionsObj) throws JSONException {
+        JSONArray dataJSONArray = getPermissionsObj.getJSONArray("Data");
+        ArrayList<TimeTableData> dataArray = new ArrayList<TimeTableData>();
+
+        for (int i = 0; i < dataJSONArray.length(); i++) {
+            JSONObject childJSONObject = dataJSONArray.getJSONObject(i);
+
+            JSONArray  dataJSONArray1  =childJSONObject.getJSONArray("Parameters");
+                     ArrayList<Parameter> parameters=new ArrayList<Parameter>();
+            for (int j = 0; j < dataJSONArray1.length(); j++) {
+                JSONObject childJSONObject1 = dataJSONArray1.getJSONObject(j);
+
+                parameters.add(new Parameter(childJSONObject1.getString("Name"),childJSONObject1.getString("Type")));
+
+            }
+            dataArray.add(new TimeTableData(childJSONObject.getString("Name"),parameters));
 
         }
         return dataArray;

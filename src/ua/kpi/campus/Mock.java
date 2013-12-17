@@ -180,4 +180,127 @@ public class Mock {
             "    }\n" +
             "  ]\n" +
             "}";
+    private static final String TIMETABLE="{\n" +
+            "  \"StatusCode\": 200,\n" +
+            "  \"TimeStamp\": \"2013-12-17T17:25:52.3132095-08:00\",\n" +
+            "  \"Guid\": \"0f440f61-5a58-468b-b65b-5261ef36ddc8\",\n" +
+            "  \"Paging\": null,\n" +
+            "  \"Data\": [\n" +
+            "    {\n" +
+            "      \"Name\": \"GetTimeTable\",\n" +
+            "      \"Parameters\": [\n" +
+            "        {\n" +
+            "          \"Name\": \"sessionId\",\n" +
+            "          \"Type\": \"System.String\"\n" +
+            "        },\n" +
+            "        {\n" +
+            "          \"Name\": \"subdivisionId\",\n" +
+            "          \"Type\": \"System.Int32\"\n" +
+            "        },\n" +
+            "        {\n" +
+            "          \"Name\": \"profile\",\n" +
+            "          \"Type\": \"System.String\"\n" +
+            "        }\n" +
+            "      ]\n" +
+            "    },\n" +
+            "    {\n" +
+            "      \"Name\": \"SaveSubject\",\n" +
+            "      \"Parameters\": [\n" +
+            "        {\n" +
+            "          \"Name\": \"sessionId\",\n" +
+            "          \"Type\": \"System.String\"\n" +
+            "        },\n" +
+            "        {\n" +
+            "          \"Name\": \"employeeId\",\n" +
+            "          \"Type\": \"System.Nullable`1[System.Int32]\"\n" +
+            "        },\n" +
+            "        {\n" +
+            "          \"Name\": \"studyGroup\",\n" +
+            "          \"Type\": \"System.Int32\"\n" +
+            "        },\n" +
+            "        {\n" +
+            "          \"Name\": \"subjectId\",\n" +
+            "          \"Type\": \"System.Int32\"\n" +
+            "        },\n" +
+            "        {\n" +
+            "          \"Name\": \"buildingId\",\n" +
+            "          \"Type\": \"System.Int32\"\n" +
+            "        },\n" +
+            "        {\n" +
+            "          \"Name\": \"timeId\",\n" +
+            "          \"Type\": \"System.Int32\"\n" +
+            "        },\n" +
+            "        {\n" +
+            "          \"Name\": \"weekdayId\",\n" +
+            "          \"Type\": \"System.Int32\"\n" +
+            "        }\n" +
+            "      ]\n" +
+            "    },\n" +
+            "    {\n" +
+            "      \"Name\": \"GetStudyGroup\",\n" +
+            "      \"Parameters\": [\n" +
+            "        {\n" +
+            "          \"Name\": \"sessionId\",\n" +
+            "          \"Type\": \"System.String\"\n" +
+            "        },\n" +
+            "        {\n" +
+            "          \"Name\": \"subdivionId\",\n" +
+            "          \"Type\": \"System.Int32\"\n" +
+            "        }\n" +
+            "      ]\n" +
+            "    },\n" +
+            "    {\n" +
+            "      \"Name\": \"GetBuildings\",\n" +
+            "      \"Parameters\": [\n" +
+            "        {\n" +
+            "          \"Name\": \"sessionId\",\n" +
+            "          \"Type\": \"System.String\"\n" +
+            "        }\n" +
+            "      ]\n" +
+            "    },\n" +
+            "    {\n" +
+            "      \"Name\": \"GetStudyForms\",\n" +
+            "      \"Parameters\": [\n" +
+            "        {\n" +
+            "          \"Name\": \"sessionId\",\n" +
+            "          \"Type\": \"System.String\"\n" +
+            "        }\n" +
+            "      ]\n" +
+            "    },\n" +
+            "    {\n" +
+            "      \"Name\": \"GetSpecialities\",\n" +
+            "      \"Parameters\": [\n" +
+            "        {\n" +
+            "          \"Name\": \"sessionId\",\n" +
+            "          \"Type\": \"System.String\"\n" +
+            "        },\n" +
+            "        {\n" +
+            "          \"Name\": \"subdivisionId\",\n" +
+            "          \"Type\": \"System.Int32\"\n" +
+            "        }\n" +
+            "      ]\n" +
+            "    },\n" +
+            "    {\n" +
+            "      \"Name\": \"GetSubjects\",\n" +
+            "      \"Parameters\": [\n" +
+            "        {\n" +
+            "          \"Name\": \"sessionId\",\n" +
+            "          \"Type\": \"System.String\"\n" +
+            "        },\n" +
+            "        {\n" +
+            "          \"Name\": \"course\",\n" +
+            "          \"Type\": \"System.Int32\"\n" +
+            "        },\n" +
+            "        {\n" +
+            "          \"Name\": \"specialityId\",\n" +
+            "          \"Type\": \"System.Int32\"\n" +
+            "        },\n" +
+            "        {\n" +
+            "          \"Name\": \"studyFormId\",\n" +
+            "          \"Type\": \"System.Int32\"\n" +
+            "        }\n" +
+            "      ]\n" +
+            "    }\n" +
+            "  ]\n" +
+            "}";
 }
