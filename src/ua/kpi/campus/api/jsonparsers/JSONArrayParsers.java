@@ -8,7 +8,6 @@ import ua.kpi.campus.api.jsonparsers.message.UserConversationData;
 import ua.kpi.campus.api.jsonparsers.user.*;
 
 import java.util.ArrayList;
-
 /**
  * Created with IntelliJ IDEA.
  * User: Serhii Hokhalenko
@@ -16,7 +15,7 @@ import java.util.ArrayList;
  * Time: 18:23
  * To change this template use File | Settings | File Templates.
  */
-public class JSONArrayParsers {
+class JSONArrayParsers {
     protected static ArrayList<Employee> parseEmployees(JSONObject getPermissionsObj) throws JSONException {
         JSONArray dataJSONArray = getPermissionsObj.getJSONArray("Employees");
         ArrayList<Employee> dataArray = new ArrayList<Employee>();
@@ -66,12 +65,12 @@ public class JSONArrayParsers {
         }
         return dataArray;
     }
-   //TODO    LastMessageDate as timestamp
+    //TODO    LastMessageDate as timestamp
 
     protected static ArrayList<UserConversationData> parseUsers(JSONObject getPermissionsObj) throws JSONException {
         JSONArray dataJSONArray = getPermissionsObj.getJSONArray("Data");
         ArrayList<UserConversationData> dataArray = new ArrayList<UserConversationData>();
-          ArrayList<User> users=new ArrayList<User>();
+        ArrayList<User> users=new ArrayList<User>();
 
         for (int i = 0; i < dataJSONArray.length(); i++) {
             JSONObject childJSONObject = dataJSONArray.getJSONObject(i);
@@ -82,12 +81,10 @@ public class JSONArrayParsers {
                 JSONObject childJSONObject1 = dataJSONArray1.getJSONObject(j);
 
 
-            ArrayList<Employee> dataArrayEmployees = JSONArrayParsers.parseEmployees(childJSONObject1);
-            ArrayList<Personality> dataArrayPersonalities = JSONArrayParsers.parsePersonalities(childJSONObject1);
-            ArrayList<SubsystemData> dataArrayProfiles = JSONArrayParsers.parseProfiles(childJSONObject1);
-                    users.add(new User(childJSONObject1.getInt("UserAccountId"),childJSONObject1.getString("Photo"),
-                            childJSONObject1.getString("FullName"),childJSONObject1.get("ScientificInterest"), dataArrayProfiles
-                            ,dataArrayEmployees,dataArrayPersonalities));
+
+                users.add(new User(childJSONObject1.getInt("UserAccountId"),childJSONObject1.getString("Photo"),
+                        childJSONObject1.getString("FullName"),childJSONObject1.get("ScientificInterest"), childJSONObject1.get("Profiles")
+                        ,childJSONObject1.get("Employees"),childJSONObject1.get("Personalities")));
             }
             dataArray.add(new UserConversationData(
                     childJSONObject.getString("Subject"),users,childJSONObject.getString("LastMessageText"),

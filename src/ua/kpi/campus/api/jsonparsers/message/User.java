@@ -1,11 +1,5 @@
 package ua.kpi.campus.api.jsonparsers.message;
 
-import ua.kpi.campus.api.jsonparsers.user.Employee;
-import ua.kpi.campus.api.jsonparsers.user.Personality;
-import ua.kpi.campus.api.jsonparsers.user.SubsystemData;
-
-import java.util.ArrayList;
-
 /**
  * Created with IntelliJ IDEA.
  * User: Serhii Hokhalenko
@@ -18,12 +12,12 @@ public class User {
     private final String photo;
     private final String fullName;
     private final Object scientificInterest;
-    private final ArrayList<SubsystemData> profiles;
+    private final Object profiles;
     private boolean isEmployee;
-    private final ArrayList<Employee> employees;
-    private final ArrayList<Personality> personalities;
+    private final Object employees;
+    private final Object personalities;
 
-    public User(int userAccountID, String photo, String fullName, Object scientificInterest, ArrayList<SubsystemData> profiles, ArrayList<Employee> employees, ArrayList<Personality> personalities) {
+    public User(int userAccountID, String photo, String fullName, Object scientificInterest, Object profiles, Object employees, Object personalities) {
         this.userAccountID = userAccountID;
         this.photo = photo;
         this.fullName = fullName;
@@ -53,7 +47,7 @@ public class User {
         this.isEmployee = isEmployee;
     }
 
-    public ArrayList<SubsystemData> getProfiles() {
+    public Object getProfiles() {
         return profiles;
     }
 
