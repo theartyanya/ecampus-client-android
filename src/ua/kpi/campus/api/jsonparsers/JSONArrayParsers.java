@@ -3,6 +3,7 @@ package ua.kpi.campus.api.jsonparsers;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import ua.kpi.campus.api.jsonparsers.message.MessageGetItemData;
 import ua.kpi.campus.api.jsonparsers.message.User;
 import ua.kpi.campus.api.jsonparsers.message.UserConversationData;
@@ -11,6 +12,13 @@ import ua.kpi.campus.api.jsonparsers.timetable.TimeTableData;
 import ua.kpi.campus.api.jsonparsers.user.Employee;
 import ua.kpi.campus.api.jsonparsers.user.Personality;
 import ua.kpi.campus.api.jsonparsers.user.SubsystemData;
+
+import ua.kpi.campus.api.jsonparsers.message.*;
+import ua.kpi.campus.api.jsonparsers.timetable.Parameter;
+import ua.kpi.campus.api.jsonparsers.timetable.TimeTableData;
+import ua.kpi.campus.api.jsonparsers.user.*;
+import ua.kpi.campus.api.jsonparsers.message.MessageDetail;
+
 
 import java.util.ArrayList;
 /**
@@ -125,10 +133,19 @@ class JSONArrayParsers {
 
         for (int i = 0; i < dataJSONArray.length(); i++) {
             JSONObject childJSONObject = dataJSONArray.getJSONObject(i);
+            MessageDetail messageDetail=null;
+          /*  MessageDetail messageDetail=new MessageDetail(childJSONObject.getJSONObject("MessageDetail").getInt("MessageDetailsId"),
+                    childJSONObject.getJSONObject("MessageDetail").getString("DateView"));
+                     */
+
 
 
 
             //dataArray.add(new MessageGetItemData(childJSONObject.);
+
+            dataArray.add(new MessageGetItemData(childJSONObject.getInt("SenderUserAccountId"),childJSONObject.getInt("MessageId"),
+                    childJSONObject.getInt("MassageGroupId"),messageDetail,childJSONObject.getString("DateSent"),childJSONObject.getString("Subject"),childJSONObject.getString("Text")));
+
 
         }
         return dataArray;

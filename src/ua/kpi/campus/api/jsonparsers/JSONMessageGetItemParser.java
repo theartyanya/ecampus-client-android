@@ -27,7 +27,7 @@ public class JSONMessageGetItemParser {
                 TIMESTAMP_ATTRIBUTE_NAME).replace('T', ' ');
         timeStampString = timeStampString.substring(0,
                 timeStampString.length() - 6);
-        JSONObject JSONPadding=jsonObj.getJSONObject("Padding");
+        JSONObject JSONPadding=jsonObj.getJSONObject("Paging");
         Padding padding=new Padding(JSONPadding.getInt("PageCount"),JSONPadding.getInt("TotalItemCount"),
                 JSONPadding.getInt("PageNumber"),JSONPadding.getInt("PageSize"),
                 JSONPadding.getBoolean("HasPreviousPage"),JSONPadding.getBoolean("HasNextPage"),

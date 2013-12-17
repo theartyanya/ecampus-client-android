@@ -54,20 +54,3 @@ public class MessageGetItemData {
         return text;
     }
 }
-   class MessageDetail {
-       private  final int MessageDetailsID;
-       private  final String dataView;
-
-       MessageDetail(int messageDetailsID, String dataView) {
-           MessageDetailsID = messageDetailsID;
-           this.dataView = dataView;
-       }
-
-       int getMessageDetailsID() {
-           return MessageDetailsID;
-       }
-
-       String getDataSent() {
-           return dataView;
-       }
-   }
