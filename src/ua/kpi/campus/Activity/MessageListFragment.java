@@ -21,8 +21,8 @@ import ua.kpi.campus.Session;
 import ua.kpi.campus.api.CampusApiURL;
 import ua.kpi.campus.api.jsonparsers.JSONConversationParser;
 import ua.kpi.campus.api.jsonparsers.message.UserConversationData;
-import ua.kpi.campus.loaders.HttpStringLoader;
 import ua.kpi.campus.loaders.HttpResponse;
+import ua.kpi.campus.loaders.HttpStringLoader;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
