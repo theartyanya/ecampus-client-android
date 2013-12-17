@@ -1,5 +1,6 @@
 package ua.kpi.campus.Activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -14,7 +15,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 import org.apache.http.HttpStatus;
 import org.json.JSONException;
-import ua.kpi.campus.Mock;
 import ua.kpi.campus.R;
 import ua.kpi.campus.Session;
 import ua.kpi.campus.api.CampusApiURL;
@@ -22,8 +22,8 @@ import ua.kpi.campus.api.jsonparsers.JSONAuthorizationParser;
 import ua.kpi.campus.api.jsonparsers.JSONUserDataParser;
 import ua.kpi.campus.api.jsonparsers.JsonObject;
 import ua.kpi.campus.api.jsonparsers.user.UserData;
-import ua.kpi.campus.loaders.HttpResponse;
 import ua.kpi.campus.loaders.HttpStringLoader;
+import ua.kpi.campus.loaders.HttpResponse;
 
 public class LoginActivity extends FragmentActivity implements LoaderManager.LoaderCallbacks<HttpResponse> {
     private final static int AUTH_LOADER_ID = 1;
@@ -33,6 +33,8 @@ public class LoginActivity extends FragmentActivity implements LoaderManager.Loa
     private Button sumButton;
     private LoaderManager.LoaderCallbacks<HttpResponse> mCallbacks;
     private LoaderManager loaderManager;
+    private Context context;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +48,7 @@ public class LoginActivity extends FragmentActivity implements LoaderManager.Loa
 
         mCallbacks = this;
         loaderManager = getSupportLoaderManager();
+        context = this;
     }
 
     private OnClickListener sumButtonListener = new OnClickListener() {
@@ -61,9 +64,9 @@ public class LoginActivity extends FragmentActivity implements LoaderManager.Loa
                 final String password = secondNumber.getText().toString();
                 String Url = CampusApiURL.getAuth(login, password);
                 //TODO changed to load from mock
-                //startSessionIdLoader(Url);
-                Session.setCurrentUser(parseUser(Mock.getUSER_EMPLOYEE()).getData());
-                startMainActivity();
+                startSessionIdLoader(Url);
+                //Session.setCurrentUser(parseUser(Mock.getUSER_EMPLOYEE()).getData());
+                //startMainActivity();
             }
         }
     };

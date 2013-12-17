@@ -38,8 +38,8 @@ import ua.kpi.campus.Session;
 import ua.kpi.campus.api.jsonparsers.JSONUserDataParser;
 import ua.kpi.campus.api.jsonparsers.JsonObject;
 import ua.kpi.campus.api.jsonparsers.user.*;
-import ua.kpi.campus.loaders.HttpBitmapLoader;
 import ua.kpi.campus.loaders.HttpStringLoader;
+import ua.kpi.campus.loaders.HttpBitmapLoader;
 
 public class MainActivity extends FragmentActivity implements ActionBar.TabListener {
     private final static int COUNT_TABS = 4;

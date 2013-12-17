@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <integer name="message_max_length_string">25</integer>
-    <integer name="message_max_length_theme_string">70</integer>
+    <integer name="message_max_length_theme_string">50</integer>
 </resources>
