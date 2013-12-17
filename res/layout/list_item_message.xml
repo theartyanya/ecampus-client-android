@@ -7,20 +7,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="#Suject"
-            android:id="@+id/subject" android:layout_marginLeft="@dimen/activity_horizontal_margin"/>
+            android:id="@+id/messageListSubject"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"/>
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="#Last Message"
-            android:id="@+id/lastMessage"
-            android:layout_below="@+id/subject"
+            android:id="@+id/messageListLastMessage"
+            android:layout_below="@+id/messageListSubject"
             android:layout_marginLeft="@dimen/message_text_big_margin"/>
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="#Last date"
-            android:id="@+id/lastDate"
-            android:layout_below="@+id/lastMessage"
+            android:id="@+id/messageListLastDate"
+            android:layout_below="@+id/messageListLastMessage"
             android:layout_marginLeft="@dimen/message_text_big_margin"/>
 
 </RelativeLayout>

@@ -9,17 +9,11 @@
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/section1_main_info"
-            android:id="@+id/myProfileTitle" android:layout_alignParentLeft="true" android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:layout_alignParentTop="true" android:layout_marginTop="@dimen/activity_vertical_margin" android:singleLine="true"
-            android:typeface="sans" android:textSize="@dimen/title_text"/>
-    <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:text="#name"
             android:id="@+id/FullName"
-            android:layout_alignLeft="@+id/myProfileTitle" android:layout_below="@+id/myProfileTitle"
-            android:singleLine="false" android:textSize="@dimen/h1_text"/>
+            android:singleLine="false" android:textSize="@dimen/h1_text"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="@dimen/activity_vertical_margin"/>
     <ImageView
             android:layout_width="150dp"
             android:layout_height="150dp"
