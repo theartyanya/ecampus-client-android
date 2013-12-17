@@ -33,22 +33,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import org.json.JSONException;
-import ua.kpi.campus.Mock;
 import ua.kpi.campus.R;
 import ua.kpi.campus.Session;
-import ua.kpi.campus.api.jsonparsers.JSONConversationParser;
 import ua.kpi.campus.api.jsonparsers.JSONUserDataParser;
 import ua.kpi.campus.api.jsonparsers.JsonObject;
-import ua.kpi.campus.api.jsonparsers.message.UserConversationData;
 import ua.kpi.campus.api.jsonparsers.user.*;
 import ua.kpi.campus.loaders.HttpBitmapLoader;
 import ua.kpi.campus.loaders.HttpStringLoader;
 
-import java.util.ArrayList;
-
 public class MainActivity extends FragmentActivity implements ActionBar.TabListener {
     private final static int COUNT_TABS = 4;
-    private UserData currentUser;
+    private static UserData currentUser;
     /**
      * The {@link ViewPager} that will display the three primary sections of the app, one at a
      * time.
@@ -184,8 +179,8 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_section_dummy, container, false);
             Bundle args = getArguments();
-            ((TextView) rootView.findViewById(android.R.id.text1)).setText(
-                    getString(R.string.dummy_section_text, args.getInt(ARG_SECTION_NUMBER)));
+            //((TextView) rootView.findViewById(android.R.id.text1)).setText(
+            //        getString(R.string.dummy_section_text, args.getInt(ARG_SECTION_NUMBER)));
             return rootView;
         }
     }
@@ -204,15 +199,16 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         public Fragment getItem(int i) {
             switch (i) {
                 case 0:
-                    if (currentUser.isEmployee()) {
+                if (currentUser.isEmployee()) {
                         return new MyProfileEmployeeSectionFragment();
                     } else {
                         return new MyProfileStudentSectionFragment();
                     }
+                    //return new DummySectionFragment();
                 case 1:
                     return new DeskSectionFragment();
                 case 2:
-                    return new MessageSectionFragment();
+                    return new MessageListFragment();
                 case 3:
                     return new StatSectionFragment();
 
@@ -252,7 +248,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     /**
      * Main profile for user
      */
-    public class MyProfileEmployeeSectionFragment extends Fragment implements LoaderManager.LoaderCallbacks<Bitmap> {
+    public static class MyProfileEmployeeSectionFragment extends Fragment implements LoaderManager.LoaderCallbacks<Bitmap> {
         protected final static int AVATAR_LOADER_ID = 1;
         protected ImageView avatar;
         protected LoaderManager.LoaderCallbacks<Bitmap> mCallbacks;
@@ -261,6 +257,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
+            super.onCreateView(inflater, container, savedInstanceState);
             View rootView = inflater.inflate(R.layout.fragment_section_my_profile_employee, container, false);
 
             loaderManager = this.getLoaderManager();
@@ -304,7 +301,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         @Override
         public Loader<Bitmap> onCreateLoader(int i, Bundle bundle) {
             Log.d(this.getClass().getName(), hashCode() + " load started " + i);
-            return new HttpBitmapLoader(MainActivity.this, bundle.getString(HttpStringLoader.URL_STRING));
+            return new HttpBitmapLoader(getActivity(), bundle.getString(HttpStringLoader.URL_STRING));
         }
 
         @Override
@@ -321,7 +318,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         }
     }
 
-    public class MyProfileStudentSectionFragment extends MyProfileEmployeeSectionFragment {
+    public static class MyProfileStudentSectionFragment extends MyProfileEmployeeSectionFragment {
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -373,39 +370,12 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     /**
      * Дошка оголошень
      */
-    public class DeskSectionFragment extends Fragment {
+    public static class DeskSectionFragment extends Fragment {
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_section_desk, container, false);
-            ArrayList<UserConversationData> userConversations= parseConversation(Mock.getUSER_CONVERSATION());
-            for(UserConversationData conversation : userConversations) {
-
-            }
-            return rootView;
-        }
-    }
-
-    private ArrayList<UserConversationData> parseConversation (String JsonConversation) {
-        try {
-            return JSONConversationParser.parse(JsonConversation).getData();
-        } catch (JSONException e) {
-            showToastLong(getResources().getString(R.string.login_activity_json_error));
-            Log.e(this.getClass().getName(), hashCode() + getResources().getString(R.string.login_activity_json_error));
-        }
-        return new ArrayList<>();
-    }
-
-    /**
-     * Messages
-     */
-    public class MessageSectionFragment extends Fragment {
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_section_message, container, false);
 
             return rootView;
         }
@@ -414,7 +384,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     /**
      * Statistics
      */
-    public class StatSectionFragment extends Fragment {
+    public static class StatSectionFragment extends Fragment {
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
