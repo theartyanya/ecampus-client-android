@@ -17,6 +17,8 @@ public class CampusApiURL {
 	private final static String GET_PERMISSION_PATH = "User/GetPermissions?";
     private final static String GET_USER_DATA_PATH =  "User/Get?";
     private final static String GET_CURRENT_USER_DATA_PATH =  "User/GetCurrentUser?";
+    private final static String GET_CONVERSATIONS_PATH = "message/GetUserConversations?";
+    private final static String GET_CONVERSATION_PATH = "message/GetUserConversation?";
 
 
     /**
@@ -55,4 +57,23 @@ public class CampusApiURL {
         return String.format("%s%ssessionId=%s&userId=%s", API_URL, GET_USER_DATA_PATH, sessionId, userId);
     }
 
+    /**
+     * Getting message list
+     *
+     * @return URL
+     */
+    public static String getConversations(String sessionId) {
+        return String.format("%s%ssessionId=%s", API_URL, GET_CONVERSATIONS_PATH, sessionId);
+    }
+
+    /**
+     * Getting current conversation
+     *
+     * @return URL
+     */
+    public static String getConversation(String sessionId, String groupId, int page, int size) {
+        return String.format("%s%ssessionId=%s&groupId=%s&page=%d&size=%d",
+                API_URL, GET_CONVERSATION_PATH,
+                sessionId, groupId, page, size);
+    }
 }
