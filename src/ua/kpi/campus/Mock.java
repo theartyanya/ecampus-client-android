@@ -303,4 +303,45 @@ public class Mock {
             "    }\n" +
             "  ]\n" +
             "}";
+    public  static final String MESSAGE_GET_ITEM="\n" +
+            "{\n" +
+            "  \"StatusCode\": 200,\n" +
+            "  \"TimeStamp\": \"2013-12-17T20:03:24.6974117-08:00\",\n" +
+            "  \"Guid\": \"651a0b20-bea6-4db6-9529-b1f597a2b118\",\n" +
+            "  \"Paging\": {\n" +
+            "    \"PageCount\": 1,\n" +
+            "    \"TotalItemCount\": 2,\n" +
+            "    \"PageNumber\": 1,\n" +
+            "    \"PageSize\": 20,\n" +
+            "    \"HasPreviousPage\": false,\n" +
+            "    \"HasNextPage\": false,\n" +
+            "    \"IsFirstPage\": true,\n" +
+            "    \"IsLastPage\": true,\n" +
+            "    \"FirstItemOnPage\": 1,\n" +
+            "    \"LastItemOnPage\": 2\n" +
+            "  },\n" +
+            "  \"Data\": [\n" +
+            "    {\n" +
+            "      \"SenderUserAccountId\": 11,\n" +
+            "      \"MessageId\": 3,\n" +
+            "      \"MassageGroupId\": 3,\n" +
+            "      \"MessageDetail\": {\n" +
+            "        \"MessageDetailsId\": 7,\n" +
+            "        \"DateView\": \"12/10/2013 12:29:08 AM\"\n" +
+            "      },\n" +
+            "      \"DateSent\": \"2013-12-09T11:32:32.693\",\n" +
+            "      \"Subject\": \"-\",\n" +
+            "      \"Text\": \"hello\"\n" +
+            "    },\n" +
+            "    {\n" +
+            "      \"SenderUserAccountId\": 11,\n" +
+            "      \"MessageId\": 4,\n" +
+            "      \"MassageGroupId\": 3,\n" +
+            "      \"MessageDetail\": null,\n" +
+            "      \"DateSent\": \"2013-12-09T13:25:51.607\",\n" +
+            "      \"Subject\": \"-\",\n" +
+            "      \"Text\": \"hello\"\n" +
+            "    }\n" +
+            "  ]\n" +
+            "}";
 }
