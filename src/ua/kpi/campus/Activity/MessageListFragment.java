@@ -6,18 +6,24 @@ import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+import android.support.v4.widget.DrawerLayout.LayoutParams;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import org.json.JSONException;
-import ua.kpi.campus.Mock;
 import ua.kpi.campus.R;
+import ua.kpi.campus.Session;
+import ua.kpi.campus.api.CampusApiURL;
 import ua.kpi.campus.api.jsonparsers.JSONConversationParser;
 import ua.kpi.campus.api.jsonparsers.message.UserConversationData;
+import ua.kpi.campus.loaders.HttpResponse;
+import ua.kpi.campus.loaders.HttpStringLoader;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -30,9 +36,9 @@ import java.util.Date;
  * @author Artur Dzidzoiev
  * @version 12/16/13
  */
-public class MessageListFragment extends ListFragment implements LoaderManager.LoaderCallbacks<String>{
+public class MessageListFragment extends ListFragment implements LoaderManager.LoaderCallbacks<HttpResponse>{
     private final static int CONVERSATION_LOADER_ID = 153;
-    private LoaderManager.LoaderCallbacks<String> mCallbacks;
+    private LoaderManager.LoaderCallbacks<HttpResponse> mCallbacks;
     private LoaderManager loaderManager;
     private ArrayAdapter mAdapter;
     private ListView messagesList;
@@ -40,9 +46,18 @@ public class MessageListFragment extends ListFragment implements LoaderManager.L
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        ArrayList<UserConversationData> conversations = parseConversation(Mock.getUSER_CONVERSATION());
-        mAdapter = new ConversationListAdapter(getActivity(), conversations);
-        setListAdapter(mAdapter);
+
+        ProgressBar progressBar = new ProgressBar(getActivity());
+        progressBar.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT,
+                LayoutParams.WRAP_CONTENT, Gravity.CENTER));
+        progressBar.setIndeterminate(true);
+        getListView().setEmptyView(progressBar);
+
+        mCallbacks = this;
+        loaderManager = getLoaderManager();
+        Bundle url = new Bundle();
+        url.putString(HttpStringLoader.URL_STRING, CampusApiURL.getConversations(Session.getSessionId()));
+        loaderManager.initLoader(CONVERSATION_LOADER_ID, url, mCallbacks).onContentChanged();
     }
 
 
@@ -55,20 +70,25 @@ public class MessageListFragment extends ListFragment implements LoaderManager.L
         return new ArrayList<>();
     }
 
+
     @Override
-    public Loader<String> onCreateLoader(int i, Bundle bundle) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    public Loader<HttpResponse> onCreateLoader(int i, Bundle bundle) {
+        Log.d(this.getClass().getName(), hashCode() + " load started " + i);
+        return new HttpStringLoader(getActivity(), bundle.getString(HttpStringLoader.URL_STRING));
     }
 
     @Override
-    public void onLoadFinished(Loader<String> stringLoader, String s) {
+    public void onLoadFinished(Loader<HttpResponse> httpResponseLoader, HttpResponse httpResponse) {
+        String unparsed = httpResponse.getEntity();
+        ArrayList<UserConversationData> conversations = parseConversation(unparsed);
+        mAdapter = new ConversationListAdapter(getActivity(), conversations);
+        setListAdapter(mAdapter);    }
+
+    @Override
+    public void onLoaderReset(Loader<HttpResponse> httpResponseLoader) {
         //To change body of implemented methods use File | Settings | File Templates.
     }
 
-    @Override
-    public void onLoaderReset(Loader<String> stringLoader) {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
 
 
     private class ConversationListAdapter extends ArrayAdapter<UserConversationData> {
@@ -94,9 +114,9 @@ public class MessageListFragment extends ListFragment implements LoaderManager.L
             final int maxLength = getResources().getInteger(R.integer.message_max_length_string);
             final int maxLengthTheme = getResources().getInteger(R.integer.message_max_length_theme_string);
             UserConversationData currentConversation = values.get(position);
-            tSubject.setText(formatString(currentConversation.getSubject(),maxLengthTheme));
+            tSubject.setText(formatString(currentConversation.getSubject(), maxLengthTheme));
             tSubject.setTypeface(null, Typeface.BOLD);
-            tLastMessageText.setText(formatString(currentConversation.getLastMessageText(),maxLength));
+            tLastMessageText.setText(formatString(currentConversation.getLastMessageText(), maxLength));
             tLastDateText.setText(formatDate(currentConversation));
 
             return rowView;

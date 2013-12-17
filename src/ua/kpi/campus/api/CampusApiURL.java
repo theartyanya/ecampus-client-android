@@ -76,4 +76,19 @@ public class CampusApiURL {
                 API_URL, GET_CONVERSATION_PATH,
                 sessionId, groupId, page, size);
     }
+
+    /**
+     * CreateGroup
+     *
+     * @return URL
+     * @deprecated
+     */
+    //TODO need rewriting
+    public static String getConversationCreateGroupPath(String sessionId, String groupId, int page, int size) {
+        return String.format("%s%ssessionId=%s&groupId=%s&page=%d&size=%d",
+                API_URL, GET_CONVERSATION_PATH,
+                sessionId, groupId, page, size);
+    }
+
+
 }

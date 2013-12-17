@@ -1,10 +1,10 @@
 package ua.kpi.campus.Activity;
 
-import android.app.Activity;
-import android.app.LoaderManager;
 import android.content.Intent;
-import android.content.Loader;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -25,7 +25,7 @@ import ua.kpi.campus.api.jsonparsers.user.UserData;
 import ua.kpi.campus.loaders.HttpResponse;
 import ua.kpi.campus.loaders.HttpStringLoader;
 
-public class LoginActivity extends Activity implements LoaderManager.LoaderCallbacks<HttpResponse> {
+public class LoginActivity extends FragmentActivity implements LoaderManager.LoaderCallbacks<HttpResponse> {
     private final static int AUTH_LOADER_ID = 1;
     private final static int CURRENT_USER_LOADER_ID = 4;
     private EditText firstNumber;
@@ -45,7 +45,7 @@ public class LoginActivity extends Activity implements LoaderManager.LoaderCallb
         sumButton.setOnClickListener(sumButtonListener);
 
         mCallbacks = this;
-        loaderManager = getLoaderManager();
+        loaderManager = getSupportLoaderManager();
     }
 
     private OnClickListener sumButtonListener = new OnClickListener() {
