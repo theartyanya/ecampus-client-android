@@ -3,6 +3,8 @@ package ua.kpi.campus.api.jsonparsers;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import ua.kpi.campus.api.jsonparsers.message.MessageGetItemData;
+import ua.kpi.campus.api.jsonparsers.message.Padding;
 import ua.kpi.campus.api.jsonparsers.message.User;
 import ua.kpi.campus.api.jsonparsers.message.UserConversationData;
 import ua.kpi.campus.api.jsonparsers.timetable.Parameter;
@@ -111,6 +113,21 @@ class JSONArrayParsers {
 
             }
             dataArray.add(new TimeTableData(childJSONObject.getString("Name"),parameters));
+
+        }
+        return dataArray;
+    }
+    protected static ArrayList<MessageGetItemData> parseMessageGetItem(JSONObject JsonObj) throws JSONException {
+        JSONArray dataJSONArray = JsonObj.getJSONArray("Data");
+        ArrayList<MessageGetItemData> dataArray = new ArrayList<MessageGetItemData>();
+
+
+        for (int i = 0; i < dataJSONArray.length(); i++) {
+            JSONObject childJSONObject = dataJSONArray.getJSONObject(i);
+
+
+
+            dataArray.add(new MessageGetItemData(childJSONObject.);
 
         }
         return dataArray;
