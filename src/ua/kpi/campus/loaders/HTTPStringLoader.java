@@ -1,7 +1,7 @@
 package ua.kpi.campus.loaders;
 
-import android.content.AsyncTaskLoader;
 import android.content.Context;
+import android.support.v4.content.AsyncTaskLoader;
 import android.util.Log;
 
 
@@ -25,7 +25,7 @@ public class HttpStringLoader extends AsyncTaskLoader<HttpResponse> {
     @Override
     public HttpResponse loadInBackground() {
         Log.d(LOG_TAG, hashCode() + " loadInBackground start");
-        return Http.getString(URL_ADDRESS);
+        return HTTP.getString(URL_ADDRESS);
     }
 
     @Override

@@ -26,7 +26,7 @@ public class HttpBitmapLoader extends AsyncTaskLoader<Bitmap> {
     @Override
     public Bitmap loadInBackground() {
         Log.d(LOG_TAG, hashCode() + " loadInBackground start");
-        return Http.getBitmap(URL_ADDRESS);
+        return HTTP.getBitmap(URL_ADDRESS);
     }
 
     @Override
