@@ -26,9 +26,8 @@ public class JSONConversationParser {
                 TIMESTAMP_ATTRIBUTE_NAME).replace('T', ' ');
         timeStampString = timeStampString.substring(0,
                 timeStampString.length() - 6);
-        JSONObject data = getPermissionsObj.getJSONObject("Data");
 
-        ArrayList<UserConversationData> userData=JSONArrayParsers.parseUsers(data);
+        ArrayList<UserConversationData> userData=JSONArrayParsers.parseUsers(getPermissionsObj);
 
 
 
@@ -38,5 +37,7 @@ public class JSONConversationParser {
                 getPermissionsObj.getString(GUID_ATTRIBUTE_NAME),
                 getPermissionsObj.getString(PAGING_ATTRIBUTE_NAME), userData
         );
+    }
 }
-}
+
+
