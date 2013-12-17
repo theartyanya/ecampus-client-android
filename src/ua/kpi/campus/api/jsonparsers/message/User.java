@@ -7,7 +7,7 @@ package ua.kpi.campus.api.jsonparsers.message;
  * Time: 18:31
  * To change this template use File | Settings | File Templates.
  */
-public class User {
+public final class User {
     private final int userAccountID;
     private final String photo;
     private final String fullName;

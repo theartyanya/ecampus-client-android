@@ -1,7 +1,5 @@
 package ua.kpi.campus.api.jsonparsers.message;
 
-import ua.kpi.campus.api.jsonparsers.message.User;
-
 import java.util.ArrayList;
 
 /**
@@ -11,12 +9,12 @@ import java.util.ArrayList;
  * Time: 18:13
  * To change this template use File | Settings | File Templates.
  */
-public class UserConversationData {
-    final String subject;
-   final ArrayList<User> users;
-    final String lastMessageText;
-    final String lastMessageDate;
-    final int groupId;
+public final class UserConversationData {
+    private final String subject;
+    private final ArrayList<User> users;
+    private final String lastMessageText;
+    private final String lastMessageDate;
+    private final int groupId;
 
     public UserConversationData(String subject, ArrayList<User> users, String lastMessageText, String lastMessageDate, int groupId) {
         this.subject = subject;
@@ -24,6 +22,18 @@ public class UserConversationData {
         this.lastMessageText = lastMessageText;
         this.lastMessageDate = lastMessageDate;
         this.groupId = groupId;
+    }
+
+    public int getGroupId() {
+        return groupId;
+    }
+
+    public String getLastMessageText() {
+        return lastMessageText;
+    }
+
+    public String getLastMessageDate() {
+        return lastMessageDate;
     }
 
     public String getSubject() {
