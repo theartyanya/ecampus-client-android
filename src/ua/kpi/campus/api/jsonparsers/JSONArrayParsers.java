@@ -18,7 +18,7 @@ import java.util.ArrayList;
  * To change this template use File | Settings | File Templates.
  */
 class JSONArrayParsers {
-    protected static ArrayList<Employee> parseEmployees(JSONObject getPermissionsObj) throws JSONException {
+    static ArrayList<Employee> parseEmployees(JSONObject getPermissionsObj) throws JSONException {
         JSONArray dataJSONArray = getPermissionsObj.getJSONArray("Employees");
         ArrayList<Employee> dataArray = new ArrayList<Employee>();
 
@@ -35,7 +35,7 @@ class JSONArrayParsers {
 
     }
 
-    protected static ArrayList<Personality> parsePersonalities(JSONObject getPermissionsObj) throws JSONException {
+    static ArrayList<Personality> parsePersonalities(JSONObject getPermissionsObj) throws JSONException {
         JSONArray dataJSONArray = getPermissionsObj.getJSONArray("Personalities");
         ArrayList<Personality> dataArray = new ArrayList<Personality>();
 
@@ -52,7 +52,7 @@ class JSONArrayParsers {
 
     }
 
-    protected static ArrayList<SubsystemData> parseProfiles(JSONObject getPermissionsObj) throws JSONException {
+    static ArrayList<SubsystemData> parseProfiles(JSONObject getPermissionsObj) throws JSONException {
         JSONArray dataJSONArray = getPermissionsObj.getJSONArray("Profiles");
         ArrayList<SubsystemData> dataArray = new ArrayList<SubsystemData>();
 
@@ -69,7 +69,7 @@ class JSONArrayParsers {
     }
     //TODO    LastMessageDate as timestamp
 
-    protected static ArrayList<UserConversationData> parseUsers(JSONObject getPermissionsObj) throws JSONException {
+    static ArrayList<UserConversationData> parseUsers(JSONObject getPermissionsObj) throws JSONException {
         JSONArray dataJSONArray = getPermissionsObj.getJSONArray("Data");
         ArrayList<UserConversationData> dataArray = new ArrayList<UserConversationData>();
         ArrayList<User> users=new ArrayList<User>();
@@ -95,7 +95,7 @@ class JSONArrayParsers {
         }
         return dataArray;
     }
-    protected static ArrayList<TimeTableData> parseTimeTable(JSONObject getPermissionsObj) throws JSONException {
+    static ArrayList<TimeTableData> parseTimeTable(JSONObject getPermissionsObj) throws JSONException {
         JSONArray dataJSONArray = getPermissionsObj.getJSONArray("Data");
         ArrayList<TimeTableData> dataArray = new ArrayList<TimeTableData>();
 
