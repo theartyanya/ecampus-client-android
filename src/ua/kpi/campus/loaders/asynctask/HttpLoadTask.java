@@ -8,7 +8,7 @@ import ua.kpi.campus.R;
 import ua.kpi.campus.loaders.HTTP;
 import ua.kpi.campus.loaders.HttpResponse;
 
-public class Task extends AsyncTask<Void, String, HttpResponse> {
+public class HttpLoadTask extends AsyncTask<Void, String, HttpResponse> {
 
     protected final Resources mResources;
     private HttpResponse mResult;
@@ -19,7 +19,7 @@ public class Task extends AsyncTask<Void, String, HttpResponse> {
     private int id;
 
     /* UI Thread */
-    public Task(Resources resources, String url, int workString) {
+    public HttpLoadTask(Resources resources, String url, int workString) {
         this.url = url;
         // Keep reference to resources
         mResources = resources;
@@ -30,7 +30,7 @@ public class Task extends AsyncTask<Void, String, HttpResponse> {
     }
 
     /* UI Thread */
-    public Task(Resources resources, String url, int workString, int id) {
+    public HttpLoadTask(Resources resources, String url, int workString, int id) {
         this.url = url;
         // Keep reference to resources
         mResources = resources;
@@ -88,7 +88,7 @@ public class Task extends AsyncTask<Void, String, HttpResponse> {
         mProgressTracker = null;
     }
 
-    private Task getInstance() {
+    private HttpLoadTask getInstance() {
         return this;
     }
 

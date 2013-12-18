@@ -9,7 +9,7 @@ public final class AsyncTaskManager implements IProgressTracker, OnCancelListene
 
     private final OnTaskCompleteListener mTaskCompleteListener;
     private final ProgressDialog mProgressDialog;
-    private Task mAsyncTask;
+    private HttpLoadTask mAsyncTask;
 
     public AsyncTaskManager(Context context, OnTaskCompleteListener taskCompleteListener) {
         // Save reference to complete listener (activity)
@@ -21,7 +21,7 @@ public final class AsyncTaskManager implements IProgressTracker, OnCancelListene
         mProgressDialog.setOnCancelListener(this);
     }
 
-    public void setupTask(Task asyncTask) {
+    public void setupTask(HttpLoadTask asyncTask) {
         // Keep task
         mAsyncTask = asyncTask;
         // Wire task to tracker (this)
@@ -71,8 +71,8 @@ public final class AsyncTaskManager implements IProgressTracker, OnCancelListene
 
     public void handleRetainedTask(Object instance) {
         // Restore retained task and attach it to tracker (this)
-        if (instance instanceof Task) {
-            mAsyncTask = (Task) instance;
+        if (instance instanceof HttpLoadTask) {
+            mAsyncTask = (HttpLoadTask) instance;
             mAsyncTask.setProgressTracker(this);
         }
     }
