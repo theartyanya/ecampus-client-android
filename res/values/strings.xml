@@ -13,6 +13,8 @@
     <string name="section4_stat">Статистика</string>
     <string name="yes">Так</string>
     <string name="no">Ні</string>
+    <string name="permission_yes">Дозволено</string>
+    <string name="permission_no">Не дозволено</string>
 
     <string name="task_working">Working (%1$d)…</string>
     <string name="task_starting">Починаємо завантаження…</string>
@@ -33,6 +35,13 @@
     <string name="main_activity_profile_speciality">Спеціальність</string>
     <string name="main_activity_profile_academic_degree">Вчена ступінь</string>
     <string name="main_activity_profile_academic_status">Вчене звання</string>
+
+    <string name="subsystem_isCreate">Створювати</string>
+    <string name="subsystem_isRead">Читати</string>
+    <string name="subsystem_isUpdate">Оновлювати</string>
+    <string name="subsystem_isDelete">Видаляти</string>
+
+
 
 
 
