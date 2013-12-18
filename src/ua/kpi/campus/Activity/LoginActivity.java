@@ -125,7 +125,10 @@ public class LoginActivity extends FragmentActivity implements LoaderManager.Loa
         final String response = httpResponse.getEntity();
         if (statusCode == HttpStatus.SC_OK) {
             try {
-                //showToastLong(response);
+                // Create new manager and set this activity as context and listener
+                mAsyncTaskManager = new AsyncTaskManager(this, this);
+                // Handle task that can be retained before
+                mAsyncTaskManager.handleRetainedTask(getLastCustomNonConfigurationInstance());
                 Session.setSessionId(JSONAuthorizationParser.parse(response).getData());
                 String Url = CampusApiURL.getCurrentUser(Session.getSessionId());
                 mAsyncTaskManager.setupTask(new Task(getResources(), Url, R.string.login_activity_getuser_work, CURRENT_USER_LOADER_ID));
