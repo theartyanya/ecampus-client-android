@@ -13,7 +13,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/subsystem_isCreate"
-            android:id="@id/myProfileIsCreate"
+            android:id="@+id/myProfileIsCreate"
             android:layout_below="@+id/myProfileSybsystem"
             />
     <TextView
@@ -21,13 +21,13 @@
             android:layout_height="wrap_content"
             android:text="#Last date"
             android:id="@+id/myProfileIsCreateValue"
-            android:layout_alignParentRight="true" android:layout_alignBaseline="@id/myProfileIsCreate"/>
+            android:layout_alignParentRight="true" android:layout_alignBaseline="@+id/myProfileIsCreate"/>
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/subsystem_isRead"
             android:id="@+id/myProfileIsRead"
-            android:layout_below="@id/myProfileIsCreate"
+            android:layout_below="@+id/myProfileIsCreate"
             />
     <TextView
             android:layout_width="wrap_content"
