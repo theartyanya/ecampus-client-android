@@ -25,8 +25,8 @@ import ua.kpi.campus.api.jsonparsers.user.UserData;
 import ua.kpi.campus.loaders.HttpResponse;
 import ua.kpi.campus.loaders.HttpStringLoader;
 import ua.kpi.campus.loaders.asynctask.AsyncTaskManager;
+import ua.kpi.campus.loaders.asynctask.HttpLoadTask;
 import ua.kpi.campus.loaders.asynctask.OnTaskCompleteListener;
-import ua.kpi.campus.loaders.asynctask.Task;
 
 public class LoginActivity extends FragmentActivity implements LoaderManager.LoaderCallbacks<HttpResponse>, OnTaskCompleteListener {
     public final static String LOG_TAG = LoginActivity.class.getName();
@@ -51,7 +51,7 @@ public class LoginActivity extends FragmentActivity implements LoaderManager.Loa
                 final String login = firstNumber.getText().toString();
                 final String password = secondNumber.getText().toString();
                 String Url = CampusApiURL.getAuth(login, password);
-                mAsyncTaskManager.setupTask(new Task(getResources(), Url, R.string.login_activity_auth_work, AUTH_LOADER_ID));
+                mAsyncTaskManager.setupTask(new HttpLoadTask(getResources(), Url, R.string.login_activity_auth_work, AUTH_LOADER_ID));
                 //TODO changed to load from mock
                 //startSessionIdLoader(Url);
                 //Session.setCurrentUser(parseUser(Mock.getUSER_EMPLOYEE()).getData());
@@ -87,7 +87,7 @@ public class LoginActivity extends FragmentActivity implements LoaderManager.Loa
     }
 
     @Override
-    public void onTaskComplete(Task task) {
+    public void onTaskComplete(HttpLoadTask task) {
         if (task.isCancelled()) {
             // Report about cancel
             Toast.makeText(this, R.string.task_cancelled, Toast.LENGTH_LONG)
@@ -131,7 +131,7 @@ public class LoginActivity extends FragmentActivity implements LoaderManager.Loa
                 mAsyncTaskManager.handleRetainedTask(getLastCustomNonConfigurationInstance());
                 Session.setSessionId(JSONAuthorizationParser.parse(response).getData());
                 String Url = CampusApiURL.getCurrentUser(Session.getSessionId());
-                mAsyncTaskManager.setupTask(new Task(getResources(), Url, R.string.login_activity_getuser_work, CURRENT_USER_LOADER_ID));
+                mAsyncTaskManager.setupTask(new HttpLoadTask(getResources(), Url, R.string.login_activity_getuser_work, CURRENT_USER_LOADER_ID));
             } catch (JSONException e) {
                 showToastLong(getResources().getString(R.string.login_activity_json_error));
                 Log.e(this.getClass().getName(), hashCode() + getResources().getString(R.string.login_activity_json_error));
@@ -221,7 +221,7 @@ public class LoginActivity extends FragmentActivity implements LoaderManager.Loa
     public class AuthListener implements OnTaskCompleteListener {
 
         @Override
-        public void onTaskComplete(Task task) {
+        public void onTaskComplete(HttpLoadTask task) {
             //To change body of implemented methods use File | Settings | File Templates.
         }
     }
