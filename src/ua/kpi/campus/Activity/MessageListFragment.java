@@ -51,6 +51,7 @@ public class MessageListFragment extends ListFragment implements LoaderManager.L
         progressBar.setIndeterminate(true);
         getListView().setEmptyView(progressBar);
 
+        Log.d(MainActivity.TAG, hashCode() + " onCreateView: fragment " + this.getClass().getName());
         mCallbacks = this;
         loaderManager = getLoaderManager();
         Bundle url = new Bundle();
@@ -80,7 +81,8 @@ public class MessageListFragment extends ListFragment implements LoaderManager.L
         String unparsed = httpResponse.getEntity();
         ArrayList<UserConversationData> conversations = parseConversation(unparsed);
         mAdapter = new ConversationListAdapter(getActivity(), conversations);
-        setListAdapter(mAdapter);    }
+        setListAdapter(mAdapter);
+    }
 
     @Override
     public void onLoaderReset(Loader<HttpResponse> httpResponseLoader) {
@@ -109,6 +111,7 @@ public class MessageListFragment extends ListFragment implements LoaderManager.L
             TextView tLastMessageText = (TextView) rowView.findViewById(R.id.messageListLastMessage);
             TextView tLastDateText = (TextView) rowView.findViewById(R.id.messageListLastDate);
 
+            Log.d(MainActivity.TAG, hashCode() + " created subsystem view " + position);
             final int maxLength = getResources().getInteger(R.integer.message_max_length_string);
             final int maxLengthTheme = getResources().getInteger(R.integer.message_max_length_theme_string);
             UserConversationData currentConversation = values.get(position);

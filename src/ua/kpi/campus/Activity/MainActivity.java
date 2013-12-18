@@ -42,6 +42,7 @@ import ua.kpi.campus.loaders.HttpStringLoader;
 import ua.kpi.campus.loaders.HttpBitmapLoader;
 
 public class MainActivity extends FragmentActivity implements ActionBar.TabListener {
+    public static final String TAG = MainActivity.class.getName();
     private final static int COUNT_TABS = 4;
     private static UserData currentUser;
     /**
@@ -200,10 +201,11 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
             switch (i) {
                 case 0:
                 if (currentUser.isEmployee()) {
-                        return new MyProfileEmployeeSectionFragment();
+                        //return new MyProfileEmployeeSectionFragment();
                     } else {
-                        return new MyProfileStudentSectionFragment();
+                        //return new MyProfileStudentSectionFragment();
                     }
+                    return new MyProfileFragment();
                     //return new DummySectionFragment();
                 case 1:
                     return new DeskSectionFragment();
