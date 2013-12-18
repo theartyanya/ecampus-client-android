@@ -15,8 +15,8 @@ import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 
-class HTTP {
-    static HttpResponse getString(String URL) {
+public class HTTP {
+    public static HttpResponse getString(String URL) {
         Log.d(HttpStringLoader.class.getName(), " httpStartedLoad");
         try {
             HttpClient client = new DefaultHttpClient();

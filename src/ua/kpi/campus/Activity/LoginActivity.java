@@ -22,10 +22,14 @@ import ua.kpi.campus.api.jsonparsers.JSONAuthorizationParser;
 import ua.kpi.campus.api.jsonparsers.JSONUserDataParser;
 import ua.kpi.campus.api.jsonparsers.JsonObject;
 import ua.kpi.campus.api.jsonparsers.user.UserData;
-import ua.kpi.campus.loaders.HttpStringLoader;
 import ua.kpi.campus.loaders.HttpResponse;
+import ua.kpi.campus.loaders.HttpStringLoader;
+import ua.kpi.campus.loaders.asynctask.AsyncTaskManager;
+import ua.kpi.campus.loaders.asynctask.OnTaskCompleteListener;
+import ua.kpi.campus.loaders.asynctask.Task;
 
-public class LoginActivity extends FragmentActivity implements LoaderManager.LoaderCallbacks<HttpResponse> {
+public class LoginActivity extends FragmentActivity implements LoaderManager.LoaderCallbacks<HttpResponse>, OnTaskCompleteListener {
+    public final static String LOG_TAG = LoginActivity.class.getName();
     private final static int AUTH_LOADER_ID = 1;
     private final static int CURRENT_USER_LOADER_ID = 4;
     private EditText firstNumber;
@@ -34,7 +38,27 @@ public class LoginActivity extends FragmentActivity implements LoaderManager.Loa
     private LoaderManager.LoaderCallbacks<HttpResponse> mCallbacks;
     private LoaderManager loaderManager;
     private Context context;
+    private AsyncTaskManager mAsyncTaskManager;
+    private OnClickListener sumButtonListener = new OnClickListener() {
 
+        @Override
+        public void onClick(View arg0) {
+            Log.d(this.getClass().getName(), hashCode() + " click!");
+            if (firstNumber.getText().length() == 0
+                    || secondNumber.getText().length() == 0) {
+                showToastLong(getResources().getString(R.string.login_activity_fill_warning));
+            } else {
+                final String login = firstNumber.getText().toString();
+                final String password = secondNumber.getText().toString();
+                String Url = CampusApiURL.getAuth(login, password);
+                mAsyncTaskManager.setupTask(new Task(getResources(), Url, R.string.login_activity_auth_work, AUTH_LOADER_ID));
+                //TODO changed to load from mock
+                //startSessionIdLoader(Url);
+                //Session.setCurrentUser(parseUser(Mock.getUSER_EMPLOYEE()).getData());
+                //startMainActivity();
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,27 +73,52 @@ public class LoginActivity extends FragmentActivity implements LoaderManager.Loa
         mCallbacks = this;
         loaderManager = getSupportLoaderManager();
         context = this;
+
+        // Create manager and set this activity as context and listener
+        mAsyncTaskManager = new AsyncTaskManager(this, this);
+        // Handle task that can be retained before
+        mAsyncTaskManager.handleRetainedTask(getLastCustomNonConfigurationInstance());
     }
 
-    private OnClickListener sumButtonListener = new OnClickListener() {
+    @Override
+    public Object onRetainCustomNonConfigurationInstance() {
+        // Delegate task retain to manager
+        return mAsyncTaskManager.retainTask();
+    }
 
-        @Override
-        public void onClick(View arg0) {
-            Log.d(this.getClass().getName(), hashCode() + " click!");
-            if (firstNumber.getText().length() == 0
-                    || secondNumber.getText().length() == 0) {
-                showToastLong(getResources().getString(R.string.login_activity_fill_warning));
-            } else {
-                final String login = firstNumber.getText().toString();
-                final String password = secondNumber.getText().toString();
-                String Url = CampusApiURL.getAuth(login, password);
-                //TODO changed to load from mock
-                startSessionIdLoader(Url);
-                //Session.setCurrentUser(parseUser(Mock.getUSER_EMPLOYEE()).getData());
-                //startMainActivity();
+    @Override
+    public void onTaskComplete(Task task) {
+        if (task.isCancelled()) {
+            // Report about cancel
+            Toast.makeText(this, R.string.task_cancelled, Toast.LENGTH_LONG)
+                    .show();
+        } else {
+            // Get result
+            HttpResponse httpResponse = null;
+            try {
+                httpResponse = task.get();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            int currentLoaderId = task.getId();
+            final String userDataStr = httpResponse.getEntity();
+            Log.d(this.getClass().getName(), hashCode() + " load finished (loader)" + currentLoaderId
+                    + "\n---------\n" + httpResponse);
+            switch (currentLoaderId) {
+                case AUTH_LOADER_ID:
+                    checkAuth(httpResponse);
+                    break;
+                case CURRENT_USER_LOADER_ID:
+                    if (httpResponse.getStatusCode() == HttpStatus.SC_OK) {
+                        Session.setCurrentUser(parseUser(userDataStr).getData());
+                        startMainActivity();
+                    } else {
+                        showToastLong(getResources().getString(R.string.login_activity_access_denied));
+                    }
+                    break;
             }
         }
-    };
+    }
 
     private void checkAuth(HttpResponse httpResponse) {
         final int statusCode = httpResponse.getStatusCode();
@@ -78,7 +127,8 @@ public class LoginActivity extends FragmentActivity implements LoaderManager.Loa
             try {
                 //showToastLong(response);
                 Session.setSessionId(JSONAuthorizationParser.parse(response).getData());
-                startCurrentUserLoader(Session.getSessionId());
+                String Url = CampusApiURL.getCurrentUser(Session.getSessionId());
+                mAsyncTaskManager.setupTask(new Task(getResources(), Url, R.string.login_activity_getuser_work, CURRENT_USER_LOADER_ID));
             } catch (JSONException e) {
                 showToastLong(getResources().getString(R.string.login_activity_json_error));
                 Log.e(this.getClass().getName(), hashCode() + getResources().getString(R.string.login_activity_json_error));
@@ -163,5 +213,13 @@ public class LoginActivity extends FragmentActivity implements LoaderManager.Loa
     @Override
     public void onLoaderReset(Loader<HttpResponse> httpResponseLoader) {
 
+    }
+
+    public class AuthListener implements OnTaskCompleteListener {
+
+        @Override
+        public void onTaskComplete(Task task) {
+            //To change body of implemented methods use File | Settings | File Templates.
+        }
     }
 }

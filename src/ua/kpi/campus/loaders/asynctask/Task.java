@@ -2,21 +2,46 @@ package ua.kpi.campus.loaders.asynctask;
 
 import android.content.res.Resources;
 import android.os.AsyncTask;
+import android.util.Log;
+import ua.kpi.campus.Activity.LoginActivity;
 import ua.kpi.campus.R;
+import ua.kpi.campus.loaders.HTTP;
+import ua.kpi.campus.loaders.HttpResponse;
 
-public class Task extends AsyncTask<Void, String, Boolean> {
+public class Task extends AsyncTask<Void, String, HttpResponse> {
 
     protected final Resources mResources;
-    private Boolean mResult;
+    private HttpResponse mResult;
     private String mProgressMessage;
     private IProgressTracker mProgressTracker;
+    private String url;
+    private int mWorkString;
+    private int id;
 
     /* UI Thread */
-    public Task(Resources resources) {
+    public Task(Resources resources, String url, int workString) {
+        this.url = url;
         // Keep reference to resources
         mResources = resources;
         // Initialise initial pre-execute message
         mProgressMessage = resources.getString(R.string.task_starting);
+        this.mWorkString = workString;
+        id = 0;
+    }
+
+    /* UI Thread */
+    public Task(Resources resources, String url, int workString, int id) {
+        this.url = url;
+        // Keep reference to resources
+        mResources = resources;
+        // Initialise initial pre-execute message
+        mProgressMessage = resources.getString(R.string.task_starting);
+        this.mWorkString = workString;
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
     }
 
     /* UI Thread */
@@ -52,7 +77,7 @@ public class Task extends AsyncTask<Void, String, Boolean> {
 
     /* UI Thread */
     @Override
-    protected void onPostExecute(Boolean result) {
+    protected void onPostExecute(HttpResponse result) {
         // Update result
         mResult = result;
         // And send it to progress tracker
@@ -63,28 +88,34 @@ public class Task extends AsyncTask<Void, String, Boolean> {
         mProgressTracker = null;
     }
 
+    private Task getInstance() {
+        return this;
+    }
+
     /* Separate Thread */
     @Override
-    protected Boolean doInBackground(Void... arg0) {
+    protected HttpResponse doInBackground(Void... arg0) {
         // Working in separate thread
-        for (int i = 10; i > 0; --i) {
-            // Check if task is cancelled
-            if (isCancelled()) {
-                // This return causes onPostExecute call on UI thread
-                return false;
-            }
 
-            try {
-                // This call causes onProgressUpdate call on UI thread
-                publishProgress(mResources.getString(R.string.task_working, i));
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-                // This return causes onPostExecute call on UI thread
-                return false;
+/*        new Thread() {
+            @Override
+            public synchronized void start() {
+                int i = 0;
+                while (isCancelled()) {
+                    i++;
+                    try {
+                        // This call causes onProgressUpdate call on UI thread
+                        publishProgress(mResources.getString(R.string.task_working, i));
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
-        }
-        // This return causes onPostExecute call on UI thread
-        return true;
+        };*/
+
+        publishProgress(mResources.getString(mWorkString));
+        Log.d(LoginActivity.LOG_TAG, hashCode() + " loadInBackground start");
+        return HTTP.getString(url);
     }
 }
