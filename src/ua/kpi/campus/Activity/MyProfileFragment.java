@@ -1,20 +1,24 @@
 package ua.kpi.campus.Activity;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import ua.kpi.campus.R;
 import ua.kpi.campus.Session;
 import ua.kpi.campus.api.jsonparsers.user.*;
+import ua.kpi.campus.loaders.HttpBitmapLoader;
 import ua.kpi.campus.loaders.HttpStringLoader;
 
 import java.util.ArrayList;
@@ -25,11 +29,13 @@ import java.util.ArrayList;
  * @author Artur Dzidzoiev
  * @version 12/18/13
  */
-public class MyProfileFragment extends Fragment {
-    private final static int AVATAR_LOADER_ID = 1;
+public class MyProfileFragment extends Fragment implements  LoaderManager.LoaderCallbacks<Bitmap>{
+    protected final static int AVATAR_LOADER_ID = 1;
+    protected ImageView avatar;
+    protected LoaderManager.LoaderCallbacks<Bitmap> mCallbacks;
+    protected LoaderManager loaderManager;
+    private ProgressBar avatarProgress;
     private static UserData currentUser;
-    private ImageView avatar;
-    private ArrayAdapter mAdapter;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -45,11 +51,9 @@ public class MyProfileFragment extends Fragment {
         Log.d(MainActivity.TAG, hashCode() + " onCreateView: fragment " + this.getClass().getName());
 
         currentUser = Session.getCurrentUser();
-        Bundle avatarUrl = new Bundle();
-        avatarUrl.putString(HttpStringLoader.URL_STRING, currentUser.getPhoto());
-
 
         avatar = (ImageView) rootView.findViewById(R.id.avatar);
+        avatarProgress = (ProgressBar) rootView.findViewById(R.id.avatar_progress);
         TextView tFullName = (TextView) rootView.findViewById(R.id.FullName);
         TextView tSubdivisionName = (TextView) rootView.findViewById(R.id.SubdivisionName);
         TextView tPosition = (TextView) rootView.findViewById(R.id.Position);
@@ -57,7 +61,8 @@ public class MyProfileFragment extends Fragment {
         TextView tAcademicStatus = (TextView) rootView.findViewById(R.id.AcademicStatus);
         LinearLayout permissionsContainer = (LinearLayout) rootView.findViewById(R.id.permissionsContainer);
 
-                tFullName.setText(currentUser.getFullName());
+        tFullName.setText(currentUser.getFullName());
+        tFullName.setTypeface(null, Typeface.BOLD);
         if (currentUser.isEmployee()) {
             Employee currentEmployee = ((UserDataEmployee) currentUser).getEmployees().get(0);
             tSubdivisionName.setText(currentEmployee.getSubDivisionName());
@@ -78,7 +83,7 @@ public class MyProfileFragment extends Fragment {
                     currentPersonality.getStudyGroupName()));
             tAcademicDegree.setText(String.format("%s: %s",
                     rootView.getResources().getString(R.string.main_activity_profile_contract),
-                    toString(currentPersonality.isContract())));
+                    toStringYN(currentPersonality.isContract())));
             tAcademicStatus.setText(String.format("%s: %s",
                     rootView.getResources().getString(R.string.main_activity_profile_speciality),
                     currentPersonality.getSpeciality()));
@@ -89,6 +94,12 @@ public class MyProfileFragment extends Fragment {
             permissionsContainer.addView(getView(currentProfile));
         }
         Log.d(MainActivity.TAG, hashCode() + profiles.toString());
+
+        loaderManager = this.getLoaderManager();
+        mCallbacks = this;
+        Bundle avatarUrl = new Bundle();
+        avatarUrl.putString(HttpStringLoader.URL_STRING, currentUser.getPhoto());
+        loaderManager.initLoader(AVATAR_LOADER_ID, avatarUrl, mCallbacks).onContentChanged();
 
         return rootView;
     }
@@ -121,10 +132,32 @@ public class MyProfileFragment extends Fragment {
                 getResources().getString(R.string.permission_yes) :
                 getResources().getString(R.string.permission_no);
     }
+
     private String toStringYN(boolean var) {
         return var ?
                 getResources().getString(R.string.yes) :
                 getResources().getString(R.string.no);
+    }
+
+    @Override
+    public Loader<Bitmap> onCreateLoader(int i, Bundle bundle) {
+        Log.d(this.getClass().getName(), hashCode() + " load started " + i);
+        avatarProgress.setVisibility(View.VISIBLE);
+        return new HttpBitmapLoader(getActivity(), bundle.getString(HttpStringLoader.URL_STRING));
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Bitmap> httpResponseLoader, Bitmap bitmap) {
+        int currentLoaderId = httpResponseLoader.getId();
+        Log.d(this.getClass().getName(), hashCode() + " load finished/loader " + currentLoaderId);
+        avatarProgress.setVisibility(View.INVISIBLE);
+        avatar.setImageBitmap(bitmap);
+        httpResponseLoader.stopLoading();
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Bitmap> bitmapLoader) {
+        //To change body of implemented methods use File | Settings | File Templates.
     }
 
 

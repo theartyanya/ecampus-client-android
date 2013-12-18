@@ -55,5 +55,11 @@
         android:layout_below="@+id/secondNumberEdit"
         android:layout_marginTop="22dp"
         android:text="Увійти" />
+    <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TEST"
+            android:id="@+id/testButton" android:layout_alignLeft="@+id/lastMessage" android:layout_below="@+id/sumButton"
+            android:layout_alignRight="@+id/sumButton"/>
 
 </RelativeLayout>

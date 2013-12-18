@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 import org.apache.http.HttpStatus;
 import org.json.JSONException;
+import ua.kpi.campus.Mock;
 import ua.kpi.campus.R;
 import ua.kpi.campus.Session;
 import ua.kpi.campus.api.CampusApiURL;
@@ -39,6 +40,7 @@ public class LoginActivity extends FragmentActivity implements LoaderManager.Loa
     private LoaderManager loaderManager;
     private Context context;
     private AsyncTaskManager mAsyncTaskManager;
+
     private OnClickListener sumButtonListener = new OnClickListener() {
 
         @Override
@@ -60,6 +62,26 @@ public class LoginActivity extends FragmentActivity implements LoaderManager.Loa
         }
     };
 
+    private OnClickListener testButtonListener = new OnClickListener() {
+
+        @Override
+        public void onClick(View arg0) {
+            Log.d(this.getClass().getName(), hashCode() + " click!");
+            if (firstNumber.getText().length() == 0
+                    || secondNumber.getText().length() == 0) {
+                showToastLong(getResources().getString(R.string.login_activity_fill_warning));
+            } else {
+                final String login = firstNumber.getText().toString();
+                final String password = secondNumber.getText().toString();
+                String Url = CampusApiURL.getAuth(login, password);
+                //mAsyncTaskManager.setupTask(new HttpLoadTask(getResources(), Url, R.string.login_activity_auth_work, AUTH_LOADER_ID));
+                //startSessionIdLoader(Url);
+                Session.setCurrentUser(parseUser(Mock.getUSER_EMPLOYEE()).getData());
+                startMainActivity();
+            }
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,6 +91,8 @@ public class LoginActivity extends FragmentActivity implements LoaderManager.Loa
         secondNumber = (EditText) findViewById(R.id.secondNumberEdit);
         sumButton = (Button) findViewById(R.id.sumButton);
         sumButton.setOnClickListener(sumButtonListener);
+        Button testButton = (Button) findViewById(R.id.testButton);
+        testButton.setOnClickListener(testButtonListener);
 
         mCallbacks = this;
         loaderManager = getSupportLoaderManager();
@@ -218,11 +242,4 @@ public class LoginActivity extends FragmentActivity implements LoaderManager.Loa
 
     }
 
-    public class AuthListener implements OnTaskCompleteListener {
-
-        @Override
-        public void onTaskComplete(HttpLoadTask task) {
-            //To change body of implemented methods use File | Settings | File Templates.
-        }
-    }
 }
