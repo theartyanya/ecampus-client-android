@@ -1,24 +1,30 @@
 package ua.kpi.campus.Activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
+import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import org.json.JSONException;
-import ua.kpi.campus.Mock;
 import ua.kpi.campus.R;
 import ua.kpi.campus.Session;
+import ua.kpi.campus.api.CampusApiURL;
 import ua.kpi.campus.api.jsonparsers.JSONMessageGetItemParser;
 import ua.kpi.campus.api.jsonparsers.message.MessageItem;
 import ua.kpi.campus.api.jsonparsers.user.UserData;
 import ua.kpi.campus.loaders.HttpResponse;
+import ua.kpi.campus.loaders.HttpStringLoader;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -31,7 +37,8 @@ import java.util.Date;
  * @author Artur Dzidzoiev
  * @version 12/19/13
  */
-public class MessagesFragment extends ListFragment {
+public class MessagesFragment extends ListFragment implements LoaderManager.LoaderCallbacks<HttpResponse>{
+    public  final static String EXTRA_GROUP_ID = "groupId";
     private final static int MESSAGE_ITEMS_LOADER = 23;
     private LoaderManager.LoaderCallbacks<HttpResponse> mCallbacks;
     private LoaderManager loaderManager;
@@ -51,12 +58,20 @@ public class MessagesFragment extends ListFragment {
         super.onActivityCreated(savedInstanceState);
         currentUser = Session.getCurrentUser();
         currentUserID = currentUser.getUserAccountID();
+        Intent intent = getActivity().getIntent();
+        int groupId = (int) intent.getExtras().get(EXTRA_GROUP_ID);
 
-        ArrayList<MessageItem> messageItems = parseConversation(Mock.getMessageItem());
+        ProgressBar progressBar = new ProgressBar(getActivity());
+        progressBar.setLayoutParams(new DrawerLayout.LayoutParams(DrawerLayout.LayoutParams.WRAP_CONTENT,
+                DrawerLayout.LayoutParams.WRAP_CONTENT, Gravity.CENTER));
+        progressBar.setIndeterminate(true);
+        getListView().setEmptyView(progressBar);
 
-
-        mAdapter = new ConversationListAdapter(getActivity(), messageItems);
-        setListAdapter(mAdapter);
+        mCallbacks = this;
+        loaderManager = getLoaderManager();
+        Bundle url = new Bundle();
+        url.putString(HttpStringLoader.URL_STRING, CampusApiURL.getConversation(Session.getSessionId(),groupId,1,10));
+        loaderManager.initLoader(MESSAGE_ITEMS_LOADER, url, mCallbacks).onContentChanged();
     }
 
     private ArrayList<MessageItem> parseConversation (String JsonConversation) {
@@ -67,8 +82,28 @@ public class MessagesFragment extends ListFragment {
         }
         return new ArrayList<>();
     }
-    
-    
+
+    @Override
+    public Loader<HttpResponse> onCreateLoader(int i, Bundle bundle) {
+        Log.d(MainActivity.TAG, hashCode() + " load started " + i+ " on URL: " + bundle.getString(HttpStringLoader.URL_STRING));
+        return new HttpStringLoader(getActivity(), bundle.getString(HttpStringLoader.URL_STRING));
+    }
+
+    @Override
+    public void onLoadFinished(Loader<HttpResponse> httpResponseLoader, HttpResponse httpResponse) {
+        Log.d(MainActivity.TAG, hashCode() + " load finished");
+        Log.d(MainActivity.TAG, hashCode() + " entity: \n" + httpResponse.getEntity());
+        ArrayList<MessageItem> messageItems = parseConversation(httpResponse.getEntity());
+        mAdapter = new ConversationListAdapter(getActivity(), messageItems);
+        setListAdapter(mAdapter);
+    }
+
+    @Override
+    public void onLoaderReset(Loader<HttpResponse> httpResponseLoader) {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+
     private class ConversationListAdapter extends ArrayAdapter<MessageItem> {
         private final Context context;
         private final ArrayList<MessageItem> values;
@@ -81,6 +116,7 @@ public class MessagesFragment extends ListFragment {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
+            position = getCount() - position - 1;
             MessageItem currentMessage = values.get(position);
             LayoutInflater inflater = (LayoutInflater) context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -113,15 +149,28 @@ public class MessagesFragment extends ListFragment {
         }
 
         private String formatDate(MessageItem currentMessage) {
-            SimpleDateFormat inputDate = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss a");
-            SimpleDateFormat longDate = new SimpleDateFormat("HH:mm E', 'dd");
-            Date lastDate = new Date();
+            SimpleDateFormat inputDate = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss a");
+            SimpleDateFormat longDate = new SimpleDateFormat("HH:mm:ss E', 'dd");
+            SimpleDateFormat shortDate = new SimpleDateFormat("HH:mm:ss");
+
+            //Date today = getTodayDate();
+            Date newDate = new Date();
+            Date today = newDate;
             try {
-                lastDate = inputDate.parse(currentMessage.getDateSent());
+                newDate = inputDate.parse(currentMessage.getDateSent());
             } catch (ParseException e) {
                 Log.e(MainActivity.class.getName(), MessageListFragment.class.hashCode() + e.toString());
             }
-            return longDate.format(lastDate);
+
+            return today.after(newDate) ? longDate.format(newDate) : shortDate.format(newDate);
+        }
+
+        private Date getTodayDate() {
+            Date today = new Date();
+            today.setHours(0);
+            today.setMinutes(0);
+            today.setSeconds(0);
+            return today;
         }
     }
 }

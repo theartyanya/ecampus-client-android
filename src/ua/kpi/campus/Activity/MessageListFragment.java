@@ -1,6 +1,7 @@
 package ua.kpi.campus.Activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
@@ -72,9 +73,12 @@ public class MessageListFragment extends ListFragment implements LoaderManager.L
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
-        //String item = (String) getListAdapter().getItem(position);
+        UserConversationData item = (UserConversationData) getListAdapter().getItem(position);
         Log.d(MainActivity.TAG, hashCode() + " clicked on "+ "l:" + l +" "+ "v:" + v +" "+ "position:" + position +" "+ "id:" + id +" ");
-
+        Intent intent = new Intent(getActivity(), MessageActivity.class);
+        Log.d(MainActivity.TAG, hashCode() + " starting new activity... " + MessageActivity.class.getName());
+        intent.putExtra(MessagesFragment.EXTRA_GROUP_ID, item.getGroupId());
+        startActivity(intent);
     }
 
     @Override

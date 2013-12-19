@@ -78,6 +78,7 @@ public class LoginActivity extends FragmentActivity implements LoaderManager.Loa
                 //startSessionIdLoader(Url);
                 Session.setCurrentUser(parseUser(Mock.getUSER_EMPLOYEE()).getData());
                 Intent intent = new Intent(LoginActivity.this, MessageActivity.class);
+                intent.putExtra(MessagesFragment.EXTRA_GROUP_ID, 1);
                 Log.d(MainActivity.TAG, hashCode() + " starting new activity... " + MessageActivity.class.getName());
                 startActivity(intent);
                 //startMainActivity();
