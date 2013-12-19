@@ -85,7 +85,7 @@ public class MessagesFragment extends ListFragment {
             LayoutInflater inflater = (LayoutInflater) context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View rowView;
-            if(currentMessage.getSendlerUserAccountID() == currentUserID) {
+            if(currentMessage.getSenderUserAccountID() == currentUserID) {
                 rowView = inflater.inflate(R.layout.message_sent, parent, false);
             } else {
                 rowView = inflater.inflate(R.layout.message_received, parent, false);
@@ -96,7 +96,7 @@ public class MessagesFragment extends ListFragment {
             TextView tTextMessage = (TextView) rowView.findViewById(R.id.textMessage);
             ImageView avatar = (ImageView) rowView.findViewById(R.id.avatar_small);
 
-            tName.setText(currentMessage.getSendlerUserAccountID());
+            tName.setText(Integer.toString(currentMessage.getSenderUserAccountID()));
             tDate.setText(formatDate(currentMessage));
             tTextMessage.setText(currentMessage.getText());
 
@@ -113,7 +113,7 @@ public class MessagesFragment extends ListFragment {
         }
 
         private String formatDate(MessageItem currentMessage) {
-            SimpleDateFormat inputDate = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
+            SimpleDateFormat inputDate = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss a");
             SimpleDateFormat longDate = new SimpleDateFormat("HH:mm E', 'dd");
             Date lastDate = new Date();
             try {

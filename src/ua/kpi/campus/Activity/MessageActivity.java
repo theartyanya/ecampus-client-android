@@ -5,7 +5,8 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import ua.kpi.campus.R;
+import android.widget.FrameLayout;
+import android.widget.FrameLayout.LayoutParams;
 
 /**
  * Class
@@ -21,10 +22,14 @@ public class MessageActivity extends FragmentActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FrameLayout frame = new FrameLayout(this);
+        frame.setId(CONTENT_VIEW_ID);
+        setContentView(frame, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         MessagesFragment fragment = new MessagesFragment();
-        fragmentTransaction.add(R.layout.activity_message, fragment);
+        fragmentTransaction.add(CONTENT_VIEW_ID, fragment);
         fragmentTransaction.commit();
     }
 

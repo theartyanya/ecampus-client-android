@@ -8,7 +8,7 @@ package ua.kpi.campus.api.jsonparsers.message;
  * To change this template use File | Settings | File Templates.
  */
 public class MessageItem {
-    private  final int sendlerUserAccountID;
+    private  final int senderUserAccountID;
     private  final int messageID;
     private  final int messageGroupID;
     private  final MessageDetail messageDetail;
@@ -16,8 +16,8 @@ public class MessageItem {
     private final String subject;
     private final String text;
 
-    public MessageItem(int sendlerUserAccountID, int messageID, int messageGroupID, MessageDetail messageDetail, String dateSent, String subject, String text) {
-        this.sendlerUserAccountID = sendlerUserAccountID;
+    public MessageItem(int senderUserAccountID, int messageID, int messageGroupID, MessageDetail messageDetail, String dateSent, String subject, String text) {
+        this.senderUserAccountID = senderUserAccountID;
         this.messageID = messageID;
         this.messageGroupID = messageGroupID;
         this.messageDetail = messageDetail;
@@ -26,8 +26,8 @@ public class MessageItem {
         this.text = text;
     }
 
-    public int getSendlerUserAccountID() {
-        return sendlerUserAccountID;
+    public int getSenderUserAccountID() {
+        return senderUserAccountID;
     }
 
     public int getMessageID() {
