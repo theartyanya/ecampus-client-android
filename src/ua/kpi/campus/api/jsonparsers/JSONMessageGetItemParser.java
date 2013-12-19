@@ -2,7 +2,7 @@ package ua.kpi.campus.api.jsonparsers;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import ua.kpi.campus.api.jsonparsers.message.MessageGetItemData;
+import ua.kpi.campus.api.jsonparsers.message.MessageItem;
 import ua.kpi.campus.api.jsonparsers.message.Padding;
 
 import java.sql.Timestamp;
@@ -21,7 +21,7 @@ public class JSONMessageGetItemParser {
     private static final String GUID_ATTRIBUTE_NAME = "Guid";
     private static final String PAGING_ATTRIBUTE_NAME = "Paging";
 
-    public static JsonObject<ArrayList<MessageGetItemData>> parse(String jsonString) throws JSONException {
+    public static JsonObject<ArrayList<MessageItem>> parse(String jsonString) throws JSONException {
         JSONObject jsonObj = new JSONObject(jsonString);
         String timeStampString = jsonObj.getString(
                 TIMESTAMP_ATTRIBUTE_NAME).replace('T', ' ');
@@ -34,7 +34,7 @@ public class JSONMessageGetItemParser {
                 JSONPadding.getBoolean("IsFirstPage"),JSONPadding.getBoolean("IsLastPage"),
                 JSONPadding.getInt("FirstItemOnPage"),JSONPadding.getInt("LastItemOnPage"));
 
-        return new JsonObject<ArrayList<MessageGetItemData>>(
+        return new JsonObject<ArrayList<MessageItem>>(
                 jsonObj.getInt(STATUS_CODE_ATTRIBUTE_NAME),
                 Timestamp.valueOf(timeStampString),
                 jsonObj.getString(GUID_ATTRIBUTE_NAME),

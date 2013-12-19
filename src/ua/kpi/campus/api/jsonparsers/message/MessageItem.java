@@ -7,7 +7,7 @@ package ua.kpi.campus.api.jsonparsers.message;
  * Time: 20:46
  * To change this template use File | Settings | File Templates.
  */
-public class MessageGetItemData {
+public class MessageItem {
     private  final int sendlerUserAccountID;
     private  final int messageID;
     private  final int messageGroupID;
@@ -16,7 +16,7 @@ public class MessageGetItemData {
     private final String subject;
     private final String text;
 
-    public MessageGetItemData(int sendlerUserAccountID, int messageID, int messageGroupID, MessageDetail messageDetail, String dateSent, String subject, String text) {
+    public MessageItem(int sendlerUserAccountID, int messageID, int messageGroupID, MessageDetail messageDetail, String dateSent, String subject, String text) {
         this.sendlerUserAccountID = sendlerUserAccountID;
         this.messageID = messageID;
         this.messageGroupID = messageGroupID;
