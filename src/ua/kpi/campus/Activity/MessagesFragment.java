@@ -12,10 +12,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
+import android.widget.*;
 import org.json.JSONException;
 import ua.kpi.campus.R;
 import ua.kpi.campus.Session;
@@ -29,6 +26,7 @@ import ua.kpi.campus.loaders.HttpStringLoader;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 
 /**
@@ -45,33 +43,58 @@ public class MessagesFragment extends ListFragment implements LoaderManager.Load
     private ArrayAdapter mAdapter;
     private int currentUserID;
     private UserData currentUser;
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_messages, container, false);
-    }
+    private ArrayList<MessageItem> messages;
+    private Button sendButton;
+    private EditText messageInput;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         Log.d(MainActivity.TAG, hashCode() + " onActivityCreated: fragment " + this.getClass().getName());
         super.onActivityCreated(savedInstanceState);
-        currentUser = Session.getCurrentUser();
-        currentUserID = currentUser.getUserAccountID();
-        Intent intent = getActivity().getIntent();
-        int groupId = (int) intent.getExtras().get(EXTRA_GROUP_ID);
+        View footer = getLayoutInflater(savedInstanceState).inflate(R.layout.messages_footer, null);
+        ListView listView = getListView();
+        listView.addFooterView(footer);
+        listView.setStackFromBottom(true);
 
+        sendButton = (Button) getActivity().findViewById(R.id.sendButton);
+        sendButton.setOnClickListener(sendButtonListener);
+        messageInput = (EditText) getActivity().findViewById(R.id.input_message);
+
+        //loading progress bar
         ProgressBar progressBar = new ProgressBar(getActivity());
         progressBar.setLayoutParams(new DrawerLayout.LayoutParams(DrawerLayout.LayoutParams.WRAP_CONTENT,
                 DrawerLayout.LayoutParams.WRAP_CONTENT, Gravity.CENTER));
         progressBar.setIndeterminate(true);
         getListView().setEmptyView(progressBar);
 
+        //loading stored data
+        currentUser = Session.getCurrentUser();
+        currentUserID = currentUser.getUserAccountID();
+        Intent intent = getActivity().getIntent();
+        int groupId = (int) intent.getExtras().get(EXTRA_GROUP_ID);
+
+        //init loader
         mCallbacks = this;
         loaderManager = getLoaderManager();
         Bundle url = new Bundle();
         url.putString(HttpStringLoader.URL_STRING, CampusApiURL.getConversation(Session.getSessionId(),groupId,1,10));
         loaderManager.initLoader(MESSAGE_ITEMS_LOADER, url, mCallbacks).onContentChanged();
+    }
+
+    private View.OnClickListener sendButtonListener = new View.OnClickListener() {
+
+        @Override
+        public void onClick(View arg0) {
+            Log.d(MainActivity.TAG, hashCode() + " send click!");
+            String input = messageInput.getText().toString();
+            messageInput.setText("");
+            Log.d(MainActivity.TAG, hashCode() + " sending message: "+ input);
+            sendMessage(input);
+        }
+    };
+
+    private void sendMessage(String input) {
+
     }
 
     private ArrayList<MessageItem> parseConversation (String JsonConversation) {
@@ -92,9 +115,15 @@ public class MessagesFragment extends ListFragment implements LoaderManager.Load
     @Override
     public void onLoadFinished(Loader<HttpResponse> httpResponseLoader, HttpResponse httpResponse) {
         Log.d(MainActivity.TAG, hashCode() + " load finished");
-        Log.d(MainActivity.TAG, hashCode() + " entity: \n" + httpResponse.getEntity());
+        //Log.d(MainActivity.TAG, hashCode() + " entity: \n" + httpResponse.getEntity());
         ArrayList<MessageItem> messageItems = parseConversation(httpResponse.getEntity());
-        mAdapter = new ConversationListAdapter(getActivity(), messageItems);
+        Collections.reverse(messageItems);
+        messages = messageItems;
+        showMessagesListView();
+    }
+
+    private void showMessagesListView() {
+        mAdapter = new ConversationListAdapter(getActivity(), messages);
         setListAdapter(mAdapter);
     }
 
@@ -116,7 +145,7 @@ public class MessagesFragment extends ListFragment implements LoaderManager.Load
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            position = getCount() - position - 1;
+            //position = getCount() - position - 1;
             MessageItem currentMessage = values.get(position);
             LayoutInflater inflater = (LayoutInflater) context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -153,9 +182,8 @@ public class MessagesFragment extends ListFragment implements LoaderManager.Load
             SimpleDateFormat longDate = new SimpleDateFormat("HH:mm:ss E', 'dd");
             SimpleDateFormat shortDate = new SimpleDateFormat("HH:mm:ss");
 
-            //Date today = getTodayDate();
+            Date today = getTodayDate();
             Date newDate = new Date();
-            Date today = newDate;
             try {
                 newDate = inputDate.parse(currentMessage.getDateSent());
             } catch (ParseException e) {

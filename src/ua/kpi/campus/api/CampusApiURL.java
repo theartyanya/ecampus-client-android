@@ -71,7 +71,7 @@ public class CampusApiURL {
      *
      * @return URL
      */
-    public static String getConversation(String sessionId, String groupId, int page, int size) {
+    public static String getConversation(String sessionId, int groupId, int page, int size) {
         return String.format("%s%ssessionId=%s&groupId=%s&page=%d&size=%d",
                 API_URL, GET_CONVERSATION_PATH,
                 sessionId, groupId, page, size);
@@ -90,5 +90,14 @@ public class CampusApiURL {
                 sessionId, groupId, page, size);
     }
 
-
+    /**
+     * SendingMessage
+     *
+     * @return URL
+     */
+    public static String sendMessage(String sessionId, int groupId, int page, int size) {
+        return String.format("%s%ssessionId=%s&groupId=%s&page=%d&size=%d",
+                API_URL, GET_CONVERSATION_PATH,
+                sessionId, groupId, page, size);
+    }
 }

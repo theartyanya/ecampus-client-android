@@ -9,4 +9,5 @@
     <dimen name="message_text_big_margin">40dp</dimen>
 
     <dimen name="avatar_message">20dp</dimen>
+    <dimen name="text_small">10dp</dimen>
 </resources>

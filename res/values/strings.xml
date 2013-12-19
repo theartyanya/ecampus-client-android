@@ -40,7 +40,7 @@
     <string name="subsystem_isCreate">Створювати</string>
     <string name="subsystem_isRead">Читати</string>
     <string name="subsystem_isUpdate">Оновлювати</string>
-    <string name="subsystem_isDelete">Видаляти</string>
+    <string name="subsystem_isDelete">Видаляти</string><string name="send">Надіслати</string>
 
 
 

@@ -28,9 +28,11 @@ public class MessageActivity extends FragmentActivity {
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        MessagesFragment fragment = new MessagesFragment();
-        fragmentTransaction.add(CONTENT_VIEW_ID, fragment);
+        MessagesFragment messagesFragment = new MessagesFragment();
+        fragmentTransaction.add(CONTENT_VIEW_ID, messagesFragment);
+        //fragmentTransaction.add(CONTENT_VIEW_ID, keyboardFragment);
         fragmentTransaction.commit();
     }
+
 
 }
