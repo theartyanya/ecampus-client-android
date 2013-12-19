@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" android:padding="@dimen/activity_vertical_margin_small">
+
+    <ImageView
+            android:layout_width="@dimen/avatar_message"
+            android:layout_height="@dimen/avatar_message"
+            android:id="@+id/avatar_small" android:layout_alignParentRight="true" android:layout_alignParentTop="true"
+            android:padding="@dimen/activity_vertical_margin_small" android:contentDescription="avatar_small"/>
+    <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true" android:layout_toLeftOf="@+id/avatar_small"
+            android:layout_marginRight="@dimen/activity_vertical_margin_small">
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="#timeSended"
+                android:id="@+id/timeSent" android:layout_alignParentLeft="false"
+                android:layout_alignParentRight="true" android:textStyle="italic"/>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="#senderName"
+                android:id="@+id/senderName" android:textStyle="bold"/>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="#textMessage"
+                android:id="@+id/textMessage" android:layout_below="@+id/senderName"
+                android:layout_alignParentRight="true" android:gravity="right"/>
+    </RelativeLayout>
+</RelativeLayout>

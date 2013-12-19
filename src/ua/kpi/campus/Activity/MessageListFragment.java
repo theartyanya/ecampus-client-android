@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import org.json.JSONException;
@@ -69,6 +70,12 @@ public class MessageListFragment extends ListFragment implements LoaderManager.L
         return new ArrayList<>();
     }
 
+    @Override
+    public void onListItemClick(ListView l, View v, int position, long id) {
+        //String item = (String) getListAdapter().getItem(position);
+        Log.d(MainActivity.TAG, hashCode() + " clicked on "+ "l:" + l +" "+ "v:" + v +" "+ "position:" + position +" "+ "id:" + id +" ");
+
+    }
 
     @Override
     public Loader<HttpResponse> onCreateLoader(int i, Bundle bundle) {

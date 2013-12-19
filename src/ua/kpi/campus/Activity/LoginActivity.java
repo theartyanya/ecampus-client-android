@@ -66,7 +66,7 @@ public class LoginActivity extends FragmentActivity implements LoaderManager.Loa
 
         @Override
         public void onClick(View arg0) {
-            Log.d(this.getClass().getName(), hashCode() + " click!");
+            Log.d(this.getClass().getName(), hashCode() + " test click!");
             if (firstNumber.getText().length() == 0
                     || secondNumber.getText().length() == 0) {
                 showToastLong(getResources().getString(R.string.login_activity_fill_warning));
@@ -77,7 +77,10 @@ public class LoginActivity extends FragmentActivity implements LoaderManager.Loa
                 //mAsyncTaskManager.setupTask(new HttpLoadTask(getResources(), Url, R.string.login_activity_auth_work, AUTH_LOADER_ID));
                 //startSessionIdLoader(Url);
                 Session.setCurrentUser(parseUser(Mock.getUSER_EMPLOYEE()).getData());
-                startMainActivity();
+                Intent intent = new Intent(LoginActivity.this, MessageActivity.class);
+                Log.d(MainActivity.TAG, hashCode() + " starting new activity... " + MessageActivity.class.getName());
+                startActivity(intent);
+                //startMainActivity();
             }
         }
     };

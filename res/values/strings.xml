@@ -7,6 +7,7 @@
     <string name="dummy_section_text">Section %1d is just a dummy section.</string>
     <string name="demo_external_activity">Demo External Activity</string>
     <string name="demo_collection">Demo Collection</string>
+    <string name="message_view">Перегляд повідомлення</string>
     <string name="section1_main_info">Мій профіль</string>
     <string name="section2_desk">Дошка оголошень</string>
     <string name="section3_message">Повідомлення</string>
