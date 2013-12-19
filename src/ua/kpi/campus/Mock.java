@@ -303,14 +303,18 @@ public class Mock {
             "    }\n" +
             "  ]\n" +
             "}";
-    public  static final String MESSAGE_GET_ITEM="\n" +
-            "{\n" +
+
+    public static String getMessageItem() {
+        return MESSAGE_ITEM;
+    }
+
+    private   static final String MESSAGE_ITEM ="{\n" +
             "  \"StatusCode\": 200,\n" +
-            "  \"TimeStamp\": \"2013-12-17T20:03:24.6974117-08:00\",\n" +
-            "  \"Guid\": \"651a0b20-bea6-4db6-9529-b1f597a2b118\",\n" +
+            "  \"TimeStamp\": \"2013-12-19T16:57:05.4428835-08:00\",\n" +
+            "  \"Guid\": \"50e8104b-51ab-47ec-97ff-d53c7d04e2b7\",\n" +
             "  \"Paging\": {\n" +
             "    \"PageCount\": 1,\n" +
-            "    \"TotalItemCount\": 2,\n" +
+            "    \"TotalItemCount\": 4,\n" +
             "    \"PageNumber\": 1,\n" +
             "    \"PageSize\": 20,\n" +
             "    \"HasPreviousPage\": false,\n" +
@@ -318,9 +322,42 @@ public class Mock {
             "    \"IsFirstPage\": true,\n" +
             "    \"IsLastPage\": true,\n" +
             "    \"FirstItemOnPage\": 1,\n" +
-            "    \"LastItemOnPage\": 2\n" +
+            "    \"LastItemOnPage\": 4\n" +
             "  },\n" +
             "  \"Data\": [\n" +
+            "    {\n" +
+            "      \"SenderUserAccountId\": 11,\n" +
+            "      \"MessageId\": 96,\n" +
+            "      \"MassageGroupId\": 3,\n" +
+            "      \"MessageDetail\": {\n" +
+            "        \"MessageDetailsId\": 84,\n" +
+            "        \"DateView\": \"12/18/2013 1:10:45 PM\"\n" +
+            "      },\n" +
+            "      \"DateSent\": \"12/18/2013 1:10:45 PM\",\n" +
+            "      \"Subject\": \"-\",\n" +
+            "      \"Text\": \"лплпд\"\n" +
+            "    },\n" +
+            "    {\n" +
+            "      \"SenderUserAccountId\": 11,\n" +
+            "      \"MessageId\": 95,\n" +
+            "      \"MassageGroupId\": 3,\n" +
+            "      \"MessageDetail\": {\n" +
+            "        \"MessageDetailsId\": 83,\n" +
+            "        \"DateView\": \"12/18/2013 1:10:25 PM\"\n" +
+            "      },\n" +
+            "      \"DateSent\": \"12/18/2013 1:10:25 PM\",\n" +
+            "      \"Subject\": \"-\",\n" +
+            "      \"Text\": \"добрый день!\"\n" +
+            "    },\n" +
+            "    {\n" +
+            "      \"SenderUserAccountId\": 11,\n" +
+            "      \"MessageId\": 4,\n" +
+            "      \"MassageGroupId\": 3,\n" +
+            "      \"MessageDetail\": null,\n" +
+            "      \"DateSent\": \"12/9/2013 1:25:51 PM\",\n" +
+            "      \"Subject\": \"-\",\n" +
+            "      \"Text\": \"hello\"\n" +
+            "    },\n" +
             "    {\n" +
             "      \"SenderUserAccountId\": 11,\n" +
             "      \"MessageId\": 3,\n" +
@@ -329,16 +366,7 @@ public class Mock {
             "        \"MessageDetailsId\": 7,\n" +
             "        \"DateView\": \"12/10/2013 12:29:08 AM\"\n" +
             "      },\n" +
-            "      \"DateSent\": \"2013-12-09T11:32:32.693\",\n" +
-            "      \"Subject\": \"-\",\n" +
-            "      \"Text\": \"hello\"\n" +
-            "    },\n" +
-            "    {\n" +
-            "      \"SenderUserAccountId\": 11,\n" +
-            "      \"MessageId\": 4,\n" +
-            "      \"MassageGroupId\": 3,\n" +
-            "      \"MessageDetail\": null,\n" +
-            "      \"DateSent\": \"2013-12-09T13:25:51.607\",\n" +
+            "      \"DateSent\": \"12/9/2013 11:32:32 AM\",\n" +
             "      \"Subject\": \"-\",\n" +
             "      \"Text\": \"hello\"\n" +
             "    }\n" +
