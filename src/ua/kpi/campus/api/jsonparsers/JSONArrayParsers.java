@@ -3,7 +3,7 @@ package ua.kpi.campus.api.jsonparsers;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
+import ua.kpi.campus.api.jsonparsers.message.MessageDetail;
 import ua.kpi.campus.api.jsonparsers.message.MessageGetItemData;
 import ua.kpi.campus.api.jsonparsers.message.User;
 import ua.kpi.campus.api.jsonparsers.message.UserConversationData;
@@ -13,14 +13,8 @@ import ua.kpi.campus.api.jsonparsers.user.Employee;
 import ua.kpi.campus.api.jsonparsers.user.Personality;
 import ua.kpi.campus.api.jsonparsers.user.SubsystemData;
 
-import ua.kpi.campus.api.jsonparsers.message.*;
-import ua.kpi.campus.api.jsonparsers.timetable.Parameter;
-import ua.kpi.campus.api.jsonparsers.timetable.TimeTableData;
-import ua.kpi.campus.api.jsonparsers.user.*;
-import ua.kpi.campus.api.jsonparsers.message.MessageDetail;
-
-
 import java.util.ArrayList;
+
 /**
  * Created with IntelliJ IDEA.
  * User: Serhii Hokhalenko
@@ -83,29 +77,29 @@ class JSONArrayParsers {
     static ArrayList<UserConversationData> parseUsers(JSONObject getPermissionsObj) throws JSONException {
         JSONArray dataJSONArray = getPermissionsObj.getJSONArray("Data");
         ArrayList<UserConversationData> dataArray = new ArrayList<UserConversationData>();
-        ArrayList<User> users=new ArrayList<User>();
+        ArrayList<User> users = new ArrayList<User>();
 
         for (int i = 0; i < dataJSONArray.length(); i++) {
             JSONObject childJSONObject = dataJSONArray.getJSONObject(i);
 
-            JSONArray  dataJSONArray1  =childJSONObject.getJSONArray("Users");
+            JSONArray dataJSONArray1 = childJSONObject.getJSONArray("Users");
 
             for (int j = 0; j < dataJSONArray1.length(); j++) {
                 JSONObject childJSONObject1 = dataJSONArray1.getJSONObject(j);
 
 
-
-                users.add(new User(childJSONObject1.getInt("UserAccountId"),childJSONObject1.getString("Photo"),
-                        childJSONObject1.getString("FullName"),childJSONObject1.get("ScientificInterest"), childJSONObject1.get("Profiles")
-                        ,childJSONObject1.get("Employees"),childJSONObject1.get("Personalities")));
+                users.add(new User(childJSONObject1.getInt("UserAccountId"), childJSONObject1.getString("Photo"),
+                        childJSONObject1.getString("FullName"), childJSONObject1.get("ScientificInterest"), childJSONObject1.get("Profiles")
+                        , childJSONObject1.get("Employees"), childJSONObject1.get("Personalities")));
             }
             dataArray.add(new UserConversationData(
-                    childJSONObject.getString("Subject"),users,childJSONObject.getString("LastMessageText"),
-                    childJSONObject.getString("LastMessageDate"),childJSONObject.getInt("GroupId")));
+                    childJSONObject.getString("Subject"), users, childJSONObject.getString("LastMessageText"),
+                    childJSONObject.getString("LastMessageDate"), childJSONObject.getInt("GroupId")));
 
         }
         return dataArray;
     }
+
     static ArrayList<TimeTableData> parseTimeTable(JSONObject getPermissionsObj) throws JSONException {
         JSONArray dataJSONArray = getPermissionsObj.getJSONArray("Data");
         ArrayList<TimeTableData> dataArray = new ArrayList<TimeTableData>();
@@ -113,19 +107,20 @@ class JSONArrayParsers {
         for (int i = 0; i < dataJSONArray.length(); i++) {
             JSONObject childJSONObject = dataJSONArray.getJSONObject(i);
 
-            JSONArray  dataJSONArray1  =childJSONObject.getJSONArray("Parameters");
-                     ArrayList<Parameter> parameters=new ArrayList<Parameter>();
+            JSONArray dataJSONArray1 = childJSONObject.getJSONArray("Parameters");
+            ArrayList<Parameter> parameters = new ArrayList<Parameter>();
             for (int j = 0; j < dataJSONArray1.length(); j++) {
                 JSONObject childJSONObject1 = dataJSONArray1.getJSONObject(j);
 
-                parameters.add(new Parameter(childJSONObject1.getString("Name"),childJSONObject1.getString("Type")));
+                parameters.add(new Parameter(childJSONObject1.getString("Name"), childJSONObject1.getString("Type")));
 
             }
-            dataArray.add(new TimeTableData(childJSONObject.getString("Name"),parameters));
+            dataArray.add(new TimeTableData(childJSONObject.getString("Name"), parameters));
 
         }
         return dataArray;
     }
+
     protected static ArrayList<MessageGetItemData> parseMessageGetItem(JSONObject JsonObj) throws JSONException {
         JSONArray dataJSONArray = JsonObj.getJSONArray("Data");
         ArrayList<MessageGetItemData> dataArray = new ArrayList<MessageGetItemData>();
@@ -133,18 +128,9 @@ class JSONArrayParsers {
 
         for (int i = 0; i < dataJSONArray.length(); i++) {
             JSONObject childJSONObject = dataJSONArray.getJSONObject(i);
-            MessageDetail messageDetail=null;
-          /*  MessageDetail messageDetail=new MessageDetail(childJSONObject.getJSONObject("MessageDetail").getInt("MessageDetailsId"),
-                    childJSONObject.getJSONObject("MessageDetail").getString("DateView"));
-                     */
-
-
-
-
-            //dataArray.add(new MessageGetItemData(childJSONObject.);
-
-            dataArray.add(new MessageGetItemData(childJSONObject.getInt("SenderUserAccountId"),childJSONObject.getInt("MessageId"),
-                    childJSONObject.getInt("MassageGroupId"),messageDetail,childJSONObject.getString("DateSent"),childJSONObject.getString("Subject"),childJSONObject.getString("Text")));
+            MessageDetail messageDetail = new MessageDetail(0, "");
+            dataArray.add(new MessageGetItemData(childJSONObject.getInt("SenderUserAccountId"), childJSONObject.getInt("MessageId"),
+                    childJSONObject.getInt("MassageGroupId"), messageDetail, childJSONObject.getString("DateSent"), childJSONObject.getString("Subject"), childJSONObject.getString("Text")));
 
 
         }
