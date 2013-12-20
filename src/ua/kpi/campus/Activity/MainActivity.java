@@ -210,7 +210,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                 case 1:
                     return new DeskSectionFragment();
                 case 2:
-                    return new MessageListFragment();
+                    return new ConversationListFragment();
                 case 3:
                     return new StatSectionFragment();
 

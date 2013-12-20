@@ -37,7 +37,7 @@ import java.util.Date;
  * @author Artur Dzidzoiev
  * @version 12/19/13
  */
-public class MessagesFragment extends ListFragment implements LoaderManager.LoaderCallbacks<HttpResponse>{
+public class ConversationViewFragment extends ListFragment implements LoaderManager.LoaderCallbacks<HttpResponse>{
     public  final static String EXTRA_GROUP_ID = "groupId";
     private final static int MESSAGE_ITEMS_LOADER = 23;
     private LoaderManager.LoaderCallbacks<HttpResponse> mCallbacks;
@@ -84,7 +84,7 @@ public class MessagesFragment extends ListFragment implements LoaderManager.Load
 
     private void initLoader() {
         Bundle url = new Bundle();
-        url.putString(HttpStringLoader.URL_STRING, CampusApiURL.getConversation(Session.getSessionId(), groupId, 1, 10));
+        url.putString(HttpStringLoader.URL_STRING, CampusApiURL.getConversation(Session.getSessionId(), groupId, 1, getResources().getInteger(R.integer.messages_size_page)));
         loaderManager.initLoader(MESSAGE_ITEMS_LOADER, url, mCallbacks).onContentChanged();
     }
 
@@ -109,7 +109,9 @@ public class MessagesFragment extends ListFragment implements LoaderManager.Load
 
             @Override
             public void onSuccess(String response) {
-                Log.d(MainActivity.TAG, hashCode() + " response: "+ response);
+                Log.d(MainActivity.TAG, hashCode() + " sent... ");
+
+                //Log.d(MainActivity.TAG, hashCode() + " response: "+ response);
                 initLoader();
             }
         });
@@ -205,7 +207,7 @@ public class MessagesFragment extends ListFragment implements LoaderManager.Load
             try {
                 newDate = inputDate.parse(currentMessage.getDateSent());
             } catch (ParseException e) {
-                Log.e(MainActivity.class.getName(), MessageListFragment.class.hashCode() + e.toString());
+                Log.e(MainActivity.class.getName(), ConversationListFragment.class.hashCode() + e.toString());
             }
 
             return today.after(newDate) ? longDate.format(newDate) : shortDate.format(newDate);

@@ -28,8 +28,8 @@ public class MessageActivity extends FragmentActivity {
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        MessagesFragment messagesFragment = new MessagesFragment();
-        fragmentTransaction.add(CONTENT_VIEW_ID, messagesFragment);
+        ConversationViewFragment conversationViewFragment = new ConversationViewFragment();
+        fragmentTransaction.add(CONTENT_VIEW_ID, conversationViewFragment);
         //fragmentTransaction.add(CONTENT_VIEW_ID, keyboardFragment);
         fragmentTransaction.commit();
     }
