@@ -17,6 +17,6 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:id="@+id/messageText" android:layout_alignParentLeft="true"
-            android:layout_toLeftOf="@+id/input_message"
+            android:layout_toLeftOf="@+id/sendButton"
             android:singleLine="false" android:layout_alignParentBottom="true"/>
 </RelativeLayout>

@@ -26,6 +26,6 @@
             android:layout_height="wrap_content"
             android:text="#textMessage"
             android:id="@+id/textMessage"
-            android:layout_alignParentRight="false" android:layout_alignParentLeft="false" android:gravity="left"
-            android:layout_below="@+id/senderName" android:layout_toLeftOf="@+id/avatar_small"/>
+            android:layout_alignParentRight="false" android:layout_alignParentLeft="false"
+            android:layout_below="@+id/senderName" android:layout_toLeftOf="@+id/avatar_small" android:gravity="right"/>
 </RelativeLayout>

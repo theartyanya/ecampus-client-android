@@ -13,6 +13,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
 import org.json.JSONException;
 import ua.kpi.campus.R;
 import ua.kpi.campus.Session;
@@ -42,6 +44,7 @@ public class MessagesFragment extends ListFragment implements LoaderManager.Load
     private LoaderManager loaderManager;
     private ArrayAdapter mAdapter;
     private int currentUserID;
+    private int groupId;
     private UserData currentUser;
     private ArrayList<MessageItem> messages;
     private Button sendButton;
@@ -58,7 +61,7 @@ public class MessagesFragment extends ListFragment implements LoaderManager.Load
 
         sendButton = (Button) getActivity().findViewById(R.id.sendButton);
         sendButton.setOnClickListener(sendButtonListener);
-        messageInput = (EditText) getActivity().findViewById(R.id.input_message);
+        messageInput = (EditText) getActivity().findViewById(R.id.messageText);
 
         //loading progress bar
         ProgressBar progressBar = new ProgressBar(getActivity());
@@ -71,13 +74,17 @@ public class MessagesFragment extends ListFragment implements LoaderManager.Load
         currentUser = Session.getCurrentUser();
         currentUserID = currentUser.getUserAccountID();
         Intent intent = getActivity().getIntent();
-        int groupId = (int) intent.getExtras().get(EXTRA_GROUP_ID);
+        groupId = (int) intent.getExtras().get(EXTRA_GROUP_ID);
 
         //init loader
         mCallbacks = this;
         loaderManager = getLoaderManager();
+        initLoader();
+    }
+
+    private void initLoader() {
         Bundle url = new Bundle();
-        url.putString(HttpStringLoader.URL_STRING, CampusApiURL.getConversation(Session.getSessionId(),groupId,1,10));
+        url.putString(HttpStringLoader.URL_STRING, CampusApiURL.getConversation(Session.getSessionId(), groupId, 1, 10));
         loaderManager.initLoader(MESSAGE_ITEMS_LOADER, url, mCallbacks).onContentChanged();
     }
 
@@ -94,7 +101,18 @@ public class MessagesFragment extends ListFragment implements LoaderManager.Load
     };
 
     private void sendMessage(String input) {
+        input = input.replaceAll("\\s+","%20");
 
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.get(CampusApiURL.sendMessage(Session.getSessionId(), groupId, input, ""), new AsyncHttpResponseHandler() {
+
+
+            @Override
+            public void onSuccess(String response) {
+                Log.d(MainActivity.TAG, hashCode() + " response: "+ response);
+                initLoader();
+            }
+        });
     }
 
     private ArrayList<MessageItem> parseConversation (String JsonConversation) {
