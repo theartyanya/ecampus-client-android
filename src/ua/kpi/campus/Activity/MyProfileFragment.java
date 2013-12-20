@@ -5,8 +5,6 @@ import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.Loader;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,11 +13,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.assist.ImageLoadingListener;
 import ua.kpi.campus.R;
 import ua.kpi.campus.Session;
 import ua.kpi.campus.api.jsonparsers.user.*;
-import ua.kpi.campus.loaders.HttpBitmapLoader;
-import ua.kpi.campus.loaders.HttpStringLoader;
 
 import java.util.ArrayList;
 
@@ -29,11 +28,9 @@ import java.util.ArrayList;
  * @author Artur Dzidzoiev
  * @version 12/18/13
  */
-public class MyProfileFragment extends Fragment implements  LoaderManager.LoaderCallbacks<Bitmap>{
+public class MyProfileFragment extends Fragment implements ImageLoadingListener {
     protected final static int AVATAR_LOADER_ID = 1;
     protected ImageView avatar;
-    protected LoaderManager.LoaderCallbacks<Bitmap> mCallbacks;
-    protected LoaderManager loaderManager;
     private ProgressBar avatarProgress;
     private static UserData currentUser;
 
@@ -93,13 +90,10 @@ public class MyProfileFragment extends Fragment implements  LoaderManager.Loader
         for (SubsystemData currentProfile : profiles) {
             permissionsContainer.addView(getView(currentProfile));
         }
-        Log.d(MainActivity.TAG, hashCode() + profiles.toString());
+        //Log.d(MainActivity.TAG, hashCode() + profiles.toString());
 
-        loaderManager = this.getLoaderManager();
-        mCallbacks = this;
-        Bundle avatarUrl = new Bundle();
-        avatarUrl.putString(HttpStringLoader.URL_STRING, currentUser.getPhoto());
-        loaderManager.initLoader(AVATAR_LOADER_ID, avatarUrl, mCallbacks).onContentChanged();
+        ImageLoader imageLoader = ImageLoader.getInstance();
+        imageLoader.displayImage(currentUser.getPhoto(), avatar, this);
 
         return rootView;
     }
@@ -140,25 +134,26 @@ public class MyProfileFragment extends Fragment implements  LoaderManager.Loader
     }
 
     @Override
-    public Loader<Bitmap> onCreateLoader(int i, Bundle bundle) {
-        Log.d(this.getClass().getName(), hashCode() + " load started " + i);
+    public void onLoadingStarted(String s, View view) {
+        Log.d(MainActivity.TAG, hashCode() + " image load started.");
         avatarProgress.setVisibility(View.VISIBLE);
-        return new HttpBitmapLoader(getActivity(), bundle.getString(HttpStringLoader.URL_STRING));
     }
 
     @Override
-    public void onLoadFinished(Loader<Bitmap> httpResponseLoader, Bitmap bitmap) {
-        int currentLoaderId = httpResponseLoader.getId();
-        Log.d(this.getClass().getName(), hashCode() + " load finished/loader " + currentLoaderId);
+    public void onLoadingFailed(String s, View view, FailReason failReason) {
+        Log.d(MainActivity.TAG, hashCode() + " image load failed.");
         avatarProgress.setVisibility(View.INVISIBLE);
-        avatar.setImageBitmap(bitmap);
-        httpResponseLoader.stopLoading();
     }
 
     @Override
-    public void onLoaderReset(Loader<Bitmap> bitmapLoader) {
-        //To change body of implemented methods use File | Settings | File Templates.
+    public void onLoadingComplete(String s, View view, Bitmap bitmap) {
+        Log.d(MainActivity.TAG, hashCode() + " image load completed.");
+        avatarProgress.setVisibility(View.INVISIBLE);
     }
 
-
+    @Override
+    public void onLoadingCancelled(String s, View view) {
+        Log.d(MainActivity.TAG, hashCode() + " image load cancelled.");
+        avatarProgress.setVisibility(View.INVISIBLE);
+    }
 }

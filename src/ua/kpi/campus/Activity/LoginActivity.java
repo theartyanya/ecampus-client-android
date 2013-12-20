@@ -77,11 +77,11 @@ public class LoginActivity extends FragmentActivity implements LoaderManager.Loa
                 //mAsyncTaskManager.setupTask(new HttpLoadTask(getResources(), Url, R.string.login_activity_auth_work, AUTH_LOADER_ID));
                 //startSessionIdLoader(Url);
                 Session.setCurrentUser(parseUser(Mock.getUSER_EMPLOYEE()).getData());
-                Intent intent = new Intent(LoginActivity.this, MessageActivity.class);
-                intent.putExtra(MessagesFragment.EXTRA_GROUP_ID, 1);
-                Log.d(MainActivity.TAG, hashCode() + " starting new activity... " + MessageActivity.class.getName());
-                startActivity(intent);
-                //startMainActivity();
+                //Intent intent = new Intent(LoginActivity.this, MessageActivity.class);
+                //intent.putExtra(MessagesFragment.EXTRA_GROUP_ID, 1);
+                //Log.d(MainActivity.TAG, hashCode() + " starting new activity... " + MessageActivity.class.getName());
+                //startActivity(intent);
+                startMainActivity();
             }
         }
     };
@@ -102,9 +102,7 @@ public class LoginActivity extends FragmentActivity implements LoaderManager.Loa
         loaderManager = getSupportLoaderManager();
         context = this;
 
-        // Create manager and set this activity as context and listener
         mAsyncTaskManager = new AsyncTaskManager(this, this);
-        // Handle task that can be retained before
         mAsyncTaskManager.handleRetainedTask(getLastCustomNonConfigurationInstance());
     }
 
