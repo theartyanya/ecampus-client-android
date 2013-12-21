@@ -12,6 +12,17 @@ public class Message {
     private int timeSent;
     private String text;
     private String subject;
+    private int senderId;
+
+    public Message(int messageId, int groupId, int timeSent, String text, String subject, int senderId) {
+        this.messageId = messageId;
+        this.groupId = groupId;
+        this.timeSent = timeSent;
+        this.text = text;
+        this.subject = subject;
+        this.senderId = senderId;
+    }
+
 
     public Message() {
     }
@@ -54,5 +65,9 @@ public class Message {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    public int getSenderId() {
+        return senderId;
     }
 }

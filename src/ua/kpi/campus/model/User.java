@@ -14,6 +14,12 @@ public class User {
     public User() {
     }
 
+    public User(int id, String fullname, String photo) {
+        this.id = id;
+        this.fullname = fullname;
+        this.photo = photo;
+    }
+
     public String getPhoto() {
         return photo;
     }

@@ -11,6 +11,12 @@ public class Conversation {
     private String subject;
     private int lastMessageId;
 
+    public Conversation(int groupId, String subject, int lastMessageId) {
+        this.groupId = groupId;
+        this.subject = subject;
+        this.lastMessageId = lastMessageId;
+    }
+
     public Conversation() {
     }
 
