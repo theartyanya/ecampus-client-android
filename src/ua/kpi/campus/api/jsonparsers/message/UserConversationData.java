@@ -11,12 +11,12 @@ import java.util.ArrayList;
  */
 public final class UserConversationData {
     private final String subject;
-    private final ArrayList<User> users;
+    private final ArrayList<UserMessage> users;
     private final String lastMessageText;
     private final String lastMessageDate;
     private final int groupId;
 
-    public UserConversationData(String subject, ArrayList<User> users, String lastMessageText, String lastMessageDate, int groupId) {
+    public UserConversationData(String subject, ArrayList<UserMessage> users, String lastMessageText, String lastMessageDate, int groupId) {
         this.subject = subject;
         this.users = users;
         this.lastMessageText = lastMessageText;
@@ -40,7 +40,7 @@ public final class UserConversationData {
         return subject;
     }
 
-    public ArrayList<User> getUsers() {
+    public ArrayList<UserMessage> getUsers() {
         return users;
     }
 }

@@ -5,7 +5,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import ua.kpi.campus.api.jsonparsers.message.MessageDetail;
 import ua.kpi.campus.api.jsonparsers.message.MessageItem;
-import ua.kpi.campus.api.jsonparsers.message.User;
+import ua.kpi.campus.api.jsonparsers.message.UserMessage;
 import ua.kpi.campus.api.jsonparsers.message.UserConversationData;
 import ua.kpi.campus.api.jsonparsers.timetable.Parameter;
 import ua.kpi.campus.api.jsonparsers.timetable.TimeTableData;
@@ -77,7 +77,7 @@ class JSONArrayParsers {
     static ArrayList<UserConversationData> parseUsers(JSONObject getPermissionsObj) throws JSONException {
         JSONArray dataJSONArray = getPermissionsObj.getJSONArray("Data");
         ArrayList<UserConversationData> dataArray = new ArrayList<UserConversationData>();
-        ArrayList<User> users = new ArrayList<User>();
+        ArrayList<UserMessage> users = new ArrayList<UserMessage>();
 
         for (int i = 0; i < dataJSONArray.length(); i++) {
             JSONObject childJSONObject = dataJSONArray.getJSONObject(i);
@@ -88,7 +88,7 @@ class JSONArrayParsers {
                 JSONObject childJSONObject1 = dataJSONArray1.getJSONObject(j);
 
 
-                users.add(new User(childJSONObject1.getInt("UserAccountId"), childJSONObject1.getString("Photo"),
+                users.add(new UserMessage(childJSONObject1.getInt("UserAccountId"), childJSONObject1.getString("Photo"),
                         childJSONObject1.getString("FullName"), childJSONObject1.get("ScientificInterest"), childJSONObject1.get("Profiles")
                         , childJSONObject1.get("Employees"), childJSONObject1.get("Personalities")));
             }
