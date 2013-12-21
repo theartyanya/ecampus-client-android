@@ -23,13 +23,17 @@ import ua.kpi.campus.Session;
 import ua.kpi.campus.api.CampusApiURL;
 import ua.kpi.campus.api.jsonparsers.JSONConversationParser;
 import ua.kpi.campus.api.jsonparsers.message.UserConversationData;
+import ua.kpi.campus.api.jsonparsers.message.UserMessage;
 import ua.kpi.campus.loaders.HttpResponse;
 import ua.kpi.campus.loaders.HttpStringLoader;
+import ua.kpi.campus.model.Conversation;
+import ua.kpi.campus.model.dbhelper.DatabaseHelper;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 
 /**
  * Message list
@@ -38,6 +42,7 @@ import java.util.Date;
  * @version 12/16/13
  */
 public class ConversationListFragment extends ListFragment implements LoaderManager.LoaderCallbacks<HttpResponse>{
+    public final static String TAG = MainActivity.TAG;
     private final static int CONVERSATION_LOADER_ID = 153;
     private LoaderManager.LoaderCallbacks<HttpResponse> mCallbacks;
     private LoaderManager loaderManager;
@@ -91,9 +96,35 @@ public class ConversationListFragment extends ListFragment implements LoaderMana
     public void onLoadFinished(Loader<HttpResponse> httpResponseLoader, HttpResponse httpResponse) {
         String unparsed = httpResponse.getEntity();
         ArrayList<UserConversationData> conversations = parseConversation(unparsed);
+        updateDB(conversations);
         mAdapter = new ConversationListAdapter(getActivity(), conversations);
         setListAdapter(mAdapter);
     }
+
+    private void updateDB(ArrayList<UserConversationData> conversations) {
+        DatabaseHelper db = new DatabaseHelper(getActivity().getApplicationContext());
+        HashSet<UserMessage> users = new HashSet<>();
+        db.refreshConversations();
+        Log.d(TAG, hashCode() + db.getPath());
+
+        //adding conversations to db and users to set
+        for(UserConversationData conversation : conversations) {
+            db.createConversation(new Conversation(conversation));
+            for(UserMessage user : conversation.getUsers()){
+                users.add(user);
+            }
+        }
+        db.addAllUsers(users);
+        try{
+        Log.d(TAG, hashCode() + "User DB\n" + db.getUser(11).toString());
+        } catch (Throwable e) {
+            Log.d(TAG, hashCode() + " no such element");
+        }
+        Log.d(TAG, hashCode() + "User DB\n" + db.getAllUsersSet().toString());
+        Log.d(TAG, hashCode() + "Conv DB\n" + db.getAllConversations().toString());
+        db.close();
+    }
+
 
     @Override
     public void onLoaderReset(Loader<HttpResponse> httpResponseLoader) {

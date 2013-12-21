@@ -23,21 +23,14 @@ public final class UserMessage {
 
         UserMessage that = (UserMessage) o;
 
-        if (isEmployee != that.isEmployee) return false;
         if (userAccountID != that.userAccountID) return false;
-        if (fullName != null ? !fullName.equals(that.fullName) : that.fullName != null) return false;
-        if (photo != null ? !photo.equals(that.photo) : that.photo != null) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = userAccountID;
-        result = 31 * result + (photo != null ? photo.hashCode() : 0);
-        result = 31 * result + (fullName != null ? fullName.hashCode() : 0);
-        result = 31 * result + (isEmployee ? 1 : 0);
-        return result;
+        return userAccountID;
     }
 
     private final Object personalities;

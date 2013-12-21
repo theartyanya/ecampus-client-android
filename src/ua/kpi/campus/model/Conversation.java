@@ -1,15 +1,17 @@
 package ua.kpi.campus.model;
 
+import ua.kpi.campus.api.jsonparsers.message.UserConversationData;
+
 /**
  * Class
  *
  * @author Artur Dzidzoiev
  * @version 12/21/13
  */
-public class Conversation {
-    private int groupId;
-    private String subject;
-    private String lastMessageText;
+public final class Conversation {
+    private final int groupId;
+    private final String subject;
+    private final String lastMessageText;
 
     public Conversation(int groupId, String subject, String lastMessageText) {
         this.groupId = groupId;
@@ -17,30 +19,21 @@ public class Conversation {
         this.lastMessageText = lastMessageText;
     }
 
-    public Conversation() {
+    public Conversation(UserConversationData data) {
+        groupId = data.getGroupId();
+        subject = data.getSubject();
+        lastMessageText = data.getLastMessageText();
     }
 
     public String getLastMessageText() {
         return lastMessageText;
     }
 
-    public void setLastMessageText(String lastMessageText) {
-        this.lastMessageText = lastMessageText;
-    }
-
     public int getGroupId() {
         return groupId;
     }
 
-    public void setGroupId(int groupId) {
-        this.groupId = groupId;
-    }
-
     public String getSubject() {
         return subject;
-    }
-
-    public void setSubject(String subject) {
-        this.subject = subject;
     }
 }
