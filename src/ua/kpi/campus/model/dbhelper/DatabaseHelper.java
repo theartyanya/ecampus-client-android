@@ -35,7 +35,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     //TABLE_CONVERSATIONS
     private static final String KEY_CONVERSATIONS_GROUP_ID = "group_id";
     private static final String KEY_CONVERSATIONS_SUBJECT = "grup_subject";
-    private static final String KEY_CONVERSATIONS_LAST_MESSAGE_ID = "last_message_id";
+    private static final String KEY_CONVERSATIONS_LAST_MESSAGE_TEXT = "last_message_text";
     //TABLE_MESSAGES
     private static final String KEY_MESSAGES_ID = "message_id";
     private static final String KEY_MESSAGES_DATE_SENT = "date_sent";
@@ -60,7 +60,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             CREATE_TABLE + TABLE_CONVERSATIONS + "(" +
                     KEY_CONVERSATIONS_GROUP_ID + INTEGER + PRIMARY_KEY + "," +
                     KEY_CONVERSATIONS_SUBJECT + TEXT + "," +
-                    KEY_CONVERSATIONS_LAST_MESSAGE_ID + INTEGER + ")";
+                    KEY_CONVERSATIONS_LAST_MESSAGE_TEXT + TEXT + ")";
     private static final String CREATE_TABLE_CONVERSATIONS_USERS =
             CREATE_TABLE + TABLE_CONVERSATIONS_USERS + "(" +
                     KEY_CONVERSATIONS_GROUP_ID + INTEGER + "," +
@@ -171,7 +171,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         values.put(KEY_CONVERSATIONS_GROUP_ID, conversation.getGroupId());
         values.put(KEY_CONVERSATIONS_SUBJECT, conversation.getSubject());
-        values.put(KEY_CONVERSATIONS_LAST_MESSAGE_ID, conversation.getLastMessageId());
+        values.put(KEY_CONVERSATIONS_LAST_MESSAGE_TEXT, conversation.getLastMessageText());
         return (int) db.insert(TABLE_USERS, null, values);
     }
 
@@ -188,7 +188,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 Conversation conversation = new Conversation(
                         c.getInt(c.getColumnIndex(KEY_CONVERSATIONS_GROUP_ID)),
                         c.getString(c.getColumnIndex(KEY_CONVERSATIONS_SUBJECT)),
-                        c.getInt(c.getColumnIndex(KEY_CONVERSATIONS_LAST_MESSAGE_ID)));
+                        c.getString(c.getColumnIndex(KEY_CONVERSATIONS_LAST_MESSAGE_TEXT)));
 
                 conversations.add(conversation);
             } while (c.moveToNext());

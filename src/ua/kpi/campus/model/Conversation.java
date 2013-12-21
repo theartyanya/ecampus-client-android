@@ -9,23 +9,23 @@ package ua.kpi.campus.model;
 public class Conversation {
     private int groupId;
     private String subject;
-    private int lastMessageId;
+    private String lastMessageText;
 
-    public Conversation(int groupId, String subject, int lastMessageId) {
+    public Conversation(int groupId, String subject, String lastMessageText) {
         this.groupId = groupId;
         this.subject = subject;
-        this.lastMessageId = lastMessageId;
+        this.lastMessageText = lastMessageText;
     }
 
     public Conversation() {
     }
 
-    public int getLastMessageId() {
-        return lastMessageId;
+    public String getLastMessageText() {
+        return lastMessageText;
     }
 
-    public void setLastMessageId(int lastMessageId) {
-        this.lastMessageId = lastMessageId;
+    public void setLastMessageText(String lastMessageText) {
+        this.lastMessageText = lastMessageText;
     }
 
     public int getGroupId() {
