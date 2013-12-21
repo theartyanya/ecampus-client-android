@@ -37,8 +37,8 @@ import java.util.Date;
  * @author Artur Dzidzoiev
  * @version 12/19/13
  */
-public class ConversationViewFragment extends ListFragment implements LoaderManager.LoaderCallbacks<HttpResponse>{
-    public  final static String EXTRA_GROUP_ID = "groupId";
+public class ConversationViewFragment extends ListFragment implements LoaderManager.LoaderCallbacks<HttpResponse> {
+    public final static String EXTRA_GROUP_ID = "groupId";
     private final static int MESSAGE_ITEMS_LOADER = 23;
     private LoaderManager.LoaderCallbacks<HttpResponse> mCallbacks;
     private LoaderManager loaderManager;
@@ -49,6 +49,17 @@ public class ConversationViewFragment extends ListFragment implements LoaderMana
     private ArrayList<MessageItem> messages;
     private Button sendButton;
     private EditText messageInput;
+    private View.OnClickListener sendButtonListener = new View.OnClickListener() {
+
+        @Override
+        public void onClick(View arg0) {
+            Log.d(MainActivity.TAG, hashCode() + " send click!");
+            String input = messageInput.getText().toString();
+            messageInput.setText("");
+            Log.d(MainActivity.TAG, hashCode() + " sending message: " + input);
+            sendMessage(input);
+        }
+    };
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -88,36 +99,25 @@ public class ConversationViewFragment extends ListFragment implements LoaderMana
         loaderManager.initLoader(MESSAGE_ITEMS_LOADER, url, mCallbacks).onContentChanged();
     }
 
-    private View.OnClickListener sendButtonListener = new View.OnClickListener() {
-
-        @Override
-        public void onClick(View arg0) {
-            Log.d(MainActivity.TAG, hashCode() + " send click!");
-            String input = messageInput.getText().toString();
-            messageInput.setText("");
-            Log.d(MainActivity.TAG, hashCode() + " sending message: "+ input);
-            sendMessage(input);
-        }
-    };
-
     private void sendMessage(String input) {
-        input = input.replaceAll("\\s+","%20");
+        input = input.replaceAll("\\s+", "%20");
+        if (!input.isEmpty()) {
+            AsyncHttpClient client = new AsyncHttpClient();
+            client.get(CampusApiURL.sendMessage(Session.getSessionId(), groupId, input, ""), new AsyncHttpResponseHandler() {
 
-        AsyncHttpClient client = new AsyncHttpClient();
-        client.get(CampusApiURL.sendMessage(Session.getSessionId(), groupId, input, ""), new AsyncHttpResponseHandler() {
 
+                @Override
+                public void onSuccess(String response) {
+                    Log.d(MainActivity.TAG, hashCode() + " sent... ");
 
-            @Override
-            public void onSuccess(String response) {
-                Log.d(MainActivity.TAG, hashCode() + " sent... ");
-
-                //Log.d(MainActivity.TAG, hashCode() + " response: "+ response);
-                initLoader();
-            }
-        });
+                    //Log.d(MainActivity.TAG, hashCode() + " response: "+ response);
+                    initLoader();
+                }
+            });
+        }
     }
 
-    private ArrayList<MessageItem> parseConversation (String JsonConversation) {
+    private ArrayList<MessageItem> parseConversation(String JsonConversation) {
         try {
             return JSONMessageGetItemParser.parse(JsonConversation).getData();
         } catch (JSONException e) {
@@ -128,7 +128,7 @@ public class ConversationViewFragment extends ListFragment implements LoaderMana
 
     @Override
     public Loader<HttpResponse> onCreateLoader(int i, Bundle bundle) {
-        Log.d(MainActivity.TAG, hashCode() + " load started " + i+ " on URL: " + bundle.getString(HttpStringLoader.URL_STRING));
+        Log.d(MainActivity.TAG, hashCode() + " load started " + i + " on URL: " + bundle.getString(HttpStringLoader.URL_STRING));
         return new HttpStringLoader(getActivity(), bundle.getString(HttpStringLoader.URL_STRING));
     }
 
@@ -152,7 +152,6 @@ public class ConversationViewFragment extends ListFragment implements LoaderMana
         //To change body of implemented methods use File | Settings | File Templates.
     }
 
-
     private class ConversationListAdapter extends ArrayAdapter<MessageItem> {
         private final Context context;
         private final ArrayList<MessageItem> values;
@@ -170,7 +169,7 @@ public class ConversationViewFragment extends ListFragment implements LoaderMana
             LayoutInflater inflater = (LayoutInflater) context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View rowView;
-            if(currentMessage.getSenderUserAccountID() == currentUserID) {
+            if (currentMessage.getSenderUserAccountID() == currentUserID) {
                 rowView = inflater.inflate(R.layout.message_sent, parent, false);
             } else {
                 rowView = inflater.inflate(R.layout.message_received, parent, false);
