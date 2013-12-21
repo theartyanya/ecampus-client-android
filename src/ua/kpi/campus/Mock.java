@@ -68,247 +68,124 @@ public class Mock {
 
     private static final String USER_CONVERSATION =
             "{\n" +
-            "  \"StatusCode\": 200,\n" +
-            "  \"TimeStamp\": \"2013-12-13T15:16:51.3175353-08:00\",\n" +
-            "  \"Guid\": \"a70b4867-a7df-4f58-b422-4cc75e46f3ea\",\n" +
-            "  \"Paging\": null,\n" +
-            "  \"Data\": [\n" +
-            "    {\n" +
-            "      \"Subject\": \"Мелкумян Катерина Юріївна Савицький Артем Йосипович Свинаренко Дмитро Анатолійович \",\n" +
-            "      \"Users\": [\n" +
-            "        {\n" +
-            "          \"UserAccountId\": 11,\n" +
-            "          \"Photo\": \"http://api.ecampus.kpi.ua/Storage/GetUserProfileImage?userId=11\",\n" +
-            "          \"FullName\": \"Савицький Артем Йосипович\",\n" +
-            "          \"ScientificInterest\": null,\n" +
-            "          \"Personalities\": null,\n" +
-            "          \"Employees\": null,\n" +
-            "          \"Profiles\": null\n" +
-            "        },\n" +
-            "        {\n" +
-            "          \"UserAccountId\": 9,\n" +
-            "          \"Photo\": \"http://api.ecampus.kpi.ua/Storage/GetUserProfileImage?userId=9\",\n" +
-            "          \"FullName\": \"Мелкумян Катерина Юріївна\",\n" +
-            "          \"ScientificInterest\": \"интеллектуальные информационные системы\",\n" +
-            "          \"Personalities\": null,\n" +
-            "          \"Employees\": null,\n" +
-            "          \"Profiles\": null\n" +
-            "        },\n" +
-            "        {\n" +
-            "          \"UserAccountId\": 12,\n" +
-            "          \"Photo\": \"http://api.ecampus.kpi.ua/Storage/GetUserProfileImage?userId=12\",\n" +
-            "          \"FullName\": \"Свинаренко Дмитро Анатолійович\",\n" +
-            "          \"ScientificInterest\": null,\n" +
-            "          \"Personalities\": null,\n" +
-            "          \"Employees\": null,\n" +
-            "          \"Profiles\": null\n" +
-            "        }\n" +
-            "      ],\n" +
-            "      \"LastMessageText\": \"hello_to_all2\",\n" +
-            "      \"LastMessageDate\": \"2013-12-08T12:47:15.667\",\n" +
-            "      \"GroupId\": 2\n" +
-            "    },\n" +
-            "    {\n" +
-            "      \"Subject\": \"Мелкумян Катерина Юріївна Савицький Артем Йосипович \",\n" +
-            "      \"Users\": [\n" +
-            "        {\n" +
-            "          \"UserAccountId\": 11,\n" +
-            "          \"Photo\": \"http://api.ecampus.kpi.ua/Storage/GetUserProfileImage?userId=11\",\n" +
-            "          \"FullName\": \"Савицький Артем Йосипович\",\n" +
-            "          \"ScientificInterest\": null,\n" +
-            "          \"Personalities\": null,\n" +
-            "          \"Employees\": null,\n" +
-            "          \"Profiles\": null\n" +
-            "        },\n" +
-            "        {\n" +
-            "          \"UserAccountId\": 9,\n" +
-            "          \"Photo\": \"http://api.ecampus.kpi.ua/Storage/GetUserProfileImage?userId=9\",\n" +
-            "          \"FullName\": \"Мелкумян Катерина Юріївна\",\n" +
-            "          \"ScientificInterest\": \"интеллектуальные информационные системы\",\n" +
-            "          \"Personalities\": null,\n" +
-            "          \"Employees\": null,\n" +
-            "          \"Profiles\": null\n" +
-            "        }\n" +
-            "      ],\n" +
-            "      \"LastMessageText\": \"piska\",\n" +
-            "      \"LastMessageDate\": \"2013-12-09T13:25:51.607\",\n" +
-            "      \"GroupId\": 3\n" +
-            "    },\n" +
-            "    {\n" +
-            "      \"Subject\": \"super_Group\",\n" +
-            "      \"Users\": [\n" +
-            "        {\n" +
-            "          \"UserAccountId\": 11,\n" +
-            "          \"Photo\": \"http://api.ecampus.kpi.ua/Storage/GetUserProfileImage?userId=11\",\n" +
-            "          \"FullName\": \"Савицький Артем Йосипович\",\n" +
-            "          \"ScientificInterest\": null,\n" +
-            "          \"Personalities\": null,\n" +
-            "          \"Employees\": null,\n" +
-            "          \"Profiles\": null\n" +
-            "        },\n" +
-            "        {\n" +
-            "          \"UserAccountId\": 18,\n" +
-            "          \"Photo\": \"http://api.ecampus.kpi.ua/Storage/GetUserProfileImage?userId=18\",\n" +
-            "          \"FullName\": \"Тимошин Юрій Афанасійович\",\n" +
-            "          \"ScientificInterest\": null,\n" +
-            "          \"Personalities\": null,\n" +
-            "          \"Employees\": null,\n" +
-            "          \"Profiles\": null\n" +
-            "        },\n" +
-            "        {\n" +
-            "          \"UserAccountId\": 19,\n" +
-            "          \"Photo\": \"http://api.ecampus.kpi.ua/Storage/GetUserProfileImage?userId=19\",\n" +
-            "          \"FullName\": \"Шемсединов Тимур Гафарович\",\n" +
-            "          \"ScientificInterest\": null,\n" +
-            "          \"Personalities\": null,\n" +
-            "          \"Employees\": null,\n" +
-            "          \"Profiles\": null\n" +
-            "        },\n" +
-            "        {\n" +
-            "          \"UserAccountId\": 20,\n" +
-            "          \"Photo\": \"http://api.ecampus.kpi.ua/Storage/GetUserProfileImage?userId=20\",\n" +
-            "          \"FullName\": \"Габзовська Ольга  Борисівна\",\n" +
-            "          \"ScientificInterest\": null,\n" +
-            "          \"Personalities\": null,\n" +
-            "          \"Employees\": null,\n" +
-            "          \"Profiles\": null\n" +
-            "        }\n" +
-            "      ],\n" +
-            "      \"LastMessageText\": \"hello_my_dear_friend\",\n" +
-            "      \"LastMessageDate\": \"2013-12-10T11:05:08.193\",\n" +
-            "      \"GroupId\": 5\n" +
-            "    }\n" +
-            "  ]\n" +
-            "}";
-    private static final String TIMETABLE="{\n" +
-            "  \"StatusCode\": 200,\n" +
-            "  \"TimeStamp\": \"2013-12-17T17:25:52.3132095-08:00\",\n" +
-            "  \"Guid\": \"0f440f61-5a58-468b-b65b-5261ef36ddc8\",\n" +
-            "  \"Paging\": null,\n" +
-            "  \"Data\": [\n" +
-            "    {\n" +
-            "      \"Name\": \"GetTimeTable\",\n" +
-            "      \"Parameters\": [\n" +
-            "        {\n" +
-            "          \"Name\": \"sessionId\",\n" +
-            "          \"Type\": \"System.String\"\n" +
-            "        },\n" +
-            "        {\n" +
-            "          \"Name\": \"subdivisionId\",\n" +
-            "          \"Type\": \"System.Int32\"\n" +
-            "        },\n" +
-            "        {\n" +
-            "          \"Name\": \"profile\",\n" +
-            "          \"Type\": \"System.String\"\n" +
-            "        }\n" +
-            "      ]\n" +
-            "    },\n" +
-            "    {\n" +
-            "      \"Name\": \"SaveSubject\",\n" +
-            "      \"Parameters\": [\n" +
-            "        {\n" +
-            "          \"Name\": \"sessionId\",\n" +
-            "          \"Type\": \"System.String\"\n" +
-            "        },\n" +
-            "        {\n" +
-            "          \"Name\": \"employeeId\",\n" +
-            "          \"Type\": \"System.Nullable`1[System.Int32]\"\n" +
-            "        },\n" +
-            "        {\n" +
-            "          \"Name\": \"studyGroup\",\n" +
-            "          \"Type\": \"System.Int32\"\n" +
-            "        },\n" +
-            "        {\n" +
-            "          \"Name\": \"subjectId\",\n" +
-            "          \"Type\": \"System.Int32\"\n" +
-            "        },\n" +
-            "        {\n" +
-            "          \"Name\": \"buildingId\",\n" +
-            "          \"Type\": \"System.Int32\"\n" +
-            "        },\n" +
-            "        {\n" +
-            "          \"Name\": \"timeId\",\n" +
-            "          \"Type\": \"System.Int32\"\n" +
-            "        },\n" +
-            "        {\n" +
-            "          \"Name\": \"weekdayId\",\n" +
-            "          \"Type\": \"System.Int32\"\n" +
-            "        }\n" +
-            "      ]\n" +
-            "    },\n" +
-            "    {\n" +
-            "      \"Name\": \"GetStudyGroup\",\n" +
-            "      \"Parameters\": [\n" +
-            "        {\n" +
-            "          \"Name\": \"sessionId\",\n" +
-            "          \"Type\": \"System.String\"\n" +
-            "        },\n" +
-            "        {\n" +
-            "          \"Name\": \"subdivionId\",\n" +
-            "          \"Type\": \"System.Int32\"\n" +
-            "        }\n" +
-            "      ]\n" +
-            "    },\n" +
-            "    {\n" +
-            "      \"Name\": \"GetBuildings\",\n" +
-            "      \"Parameters\": [\n" +
-            "        {\n" +
-            "          \"Name\": \"sessionId\",\n" +
-            "          \"Type\": \"System.String\"\n" +
-            "        }\n" +
-            "      ]\n" +
-            "    },\n" +
-            "    {\n" +
-            "      \"Name\": \"GetStudyForms\",\n" +
-            "      \"Parameters\": [\n" +
-            "        {\n" +
-            "          \"Name\": \"sessionId\",\n" +
-            "          \"Type\": \"System.String\"\n" +
-            "        }\n" +
-            "      ]\n" +
-            "    },\n" +
-            "    {\n" +
-            "      \"Name\": \"GetSpecialities\",\n" +
-            "      \"Parameters\": [\n" +
-            "        {\n" +
-            "          \"Name\": \"sessionId\",\n" +
-            "          \"Type\": \"System.String\"\n" +
-            "        },\n" +
-            "        {\n" +
-            "          \"Name\": \"subdivisionId\",\n" +
-            "          \"Type\": \"System.Int32\"\n" +
-            "        }\n" +
-            "      ]\n" +
-            "    },\n" +
-            "    {\n" +
-            "      \"Name\": \"GetSubjects\",\n" +
-            "      \"Parameters\": [\n" +
-            "        {\n" +
-            "          \"Name\": \"sessionId\",\n" +
-            "          \"Type\": \"System.String\"\n" +
-            "        },\n" +
-            "        {\n" +
-            "          \"Name\": \"course\",\n" +
-            "          \"Type\": \"System.Int32\"\n" +
-            "        },\n" +
-            "        {\n" +
-            "          \"Name\": \"specialityId\",\n" +
-            "          \"Type\": \"System.Int32\"\n" +
-            "        },\n" +
-            "        {\n" +
-            "          \"Name\": \"studyFormId\",\n" +
-            "          \"Type\": \"System.Int32\"\n" +
-            "        }\n" +
-            "      ]\n" +
-            "    }\n" +
-            "  ]\n" +
-            "}";
+                    "  \"StatusCode\": 200,\n" +
+                    "  \"TimeStamp\": \"2013-12-13T15:16:51.3175353-08:00\",\n" +
+                    "  \"Guid\": \"a70b4867-a7df-4f58-b422-4cc75e46f3ea\",\n" +
+                    "  \"Paging\": null,\n" +
+                    "  \"Data\": [\n" +
+                    "    {\n" +
+                    "      \"Subject\": \"Мелкумян Катерина Юріївна Савицький Артем Йосипович Свинаренко Дмитро Анатолійович \",\n" +
+                    "      \"Users\": [\n" +
+                    "        {\n" +
+                    "          \"UserAccountId\": 11,\n" +
+                    "          \"Photo\": \"http://api.ecampus.kpi.ua/Storage/GetUserProfileImage?userId=11\",\n" +
+                    "          \"FullName\": \"Савицький Артем Йосипович\",\n" +
+                    "          \"ScientificInterest\": null,\n" +
+                    "          \"Personalities\": null,\n" +
+                    "          \"Employees\": null,\n" +
+                    "          \"Profiles\": null\n" +
+                    "        },\n" +
+                    "        {\n" +
+                    "          \"UserAccountId\": 9,\n" +
+                    "          \"Photo\": \"http://api.ecampus.kpi.ua/Storage/GetUserProfileImage?userId=9\",\n" +
+                    "          \"FullName\": \"Мелкумян Катерина Юріївна\",\n" +
+                    "          \"ScientificInterest\": \"интеллектуальные информационные системы\",\n" +
+                    "          \"Personalities\": null,\n" +
+                    "          \"Employees\": null,\n" +
+                    "          \"Profiles\": null\n" +
+                    "        },\n" +
+                    "        {\n" +
+                    "          \"UserAccountId\": 12,\n" +
+                    "          \"Photo\": \"http://api.ecampus.kpi.ua/Storage/GetUserProfileImage?userId=12\",\n" +
+                    "          \"FullName\": \"Свинаренко Дмитро Анатолійович\",\n" +
+                    "          \"ScientificInterest\": null,\n" +
+                    "          \"Personalities\": null,\n" +
+                    "          \"Employees\": null,\n" +
+                    "          \"Profiles\": null\n" +
+                    "        }\n" +
+                    "      ],\n" +
+                    "      \"LastMessageText\": \"hello_to_all2\",\n" +
+                    "      \"LastMessageDate\": \"2013-12-08T12:47:15.667\",\n" +
+                    "      \"GroupId\": 2\n" +
+                    "    },\n" +
+                    "    {\n" +
+                    "      \"Subject\": \"Мелкумян Катерина Юріївна Савицький Артем Йосипович \",\n" +
+                    "      \"Users\": [\n" +
+                    "        {\n" +
+                    "          \"UserAccountId\": 11,\n" +
+                    "          \"Photo\": \"http://api.ecampus.kpi.ua/Storage/GetUserProfileImage?userId=11\",\n" +
+                    "          \"FullName\": \"Савицький Артем Йосипович\",\n" +
+                    "          \"ScientificInterest\": null,\n" +
+                    "          \"Personalities\": null,\n" +
+                    "          \"Employees\": null,\n" +
+                    "          \"Profiles\": null\n" +
+                    "        },\n" +
+                    "        {\n" +
+                    "          \"UserAccountId\": 9,\n" +
+                    "          \"Photo\": \"http://api.ecampus.kpi.ua/Storage/GetUserProfileImage?userId=9\",\n" +
+                    "          \"FullName\": \"Мелкумян Катерина Юріївна\",\n" +
+                    "          \"ScientificInterest\": \"интеллектуальные информационные системы\",\n" +
+                    "          \"Personalities\": null,\n" +
+                    "          \"Employees\": null,\n" +
+                    "          \"Profiles\": null\n" +
+                    "        }\n" +
+                    "      ],\n" +
+                    "      \"LastMessageText\": \"piska\",\n" +
+                    "      \"LastMessageDate\": \"2013-12-09T13:25:51.607\",\n" +
+                    "      \"GroupId\": 3\n" +
+                    "    },\n" +
+                    "    {\n" +
+                    "      \"Subject\": \"super_Group\",\n" +
+                    "      \"Users\": [\n" +
+                    "        {\n" +
+                    "          \"UserAccountId\": 11,\n" +
+                    "          \"Photo\": \"http://api.ecampus.kpi.ua/Storage/GetUserProfileImage?userId=11\",\n" +
+                    "          \"FullName\": \"Савицький Артем Йосипович\",\n" +
+                    "          \"ScientificInterest\": null,\n" +
+                    "          \"Personalities\": null,\n" +
+                    "          \"Employees\": null,\n" +
+                    "          \"Profiles\": null\n" +
+                    "        },\n" +
+                    "        {\n" +
+                    "          \"UserAccountId\": 18,\n" +
+                    "          \"Photo\": \"http://api.ecampus.kpi.ua/Storage/GetUserProfileImage?userId=18\",\n" +
+                    "          \"FullName\": \"Тимошин Юрій Афанасійович\",\n" +
+                    "          \"ScientificInterest\": null,\n" +
+                    "          \"Personalities\": null,\n" +
+                    "          \"Employees\": null,\n" +
+                    "          \"Profiles\": null\n" +
+                    "        },\n" +
+                    "        {\n" +
+                    "          \"UserAccountId\": 19,\n" +
+                    "          \"Photo\": \"http://api.ecampus.kpi.ua/Storage/GetUserProfileImage?userId=19\",\n" +
+                    "          \"FullName\": \"Шемсединов Тимур Гафарович\",\n" +
+                    "          \"ScientificInterest\": null,\n" +
+                    "          \"Personalities\": null,\n" +
+                    "          \"Employees\": null,\n" +
+                    "          \"Profiles\": null\n" +
+                    "        },\n" +
+                    "        {\n" +
+                    "          \"UserAccountId\": 20,\n" +
+                    "          \"Photo\": \"http://api.ecampus.kpi.ua/Storage/GetUserProfileImage?userId=20\",\n" +
+                    "          \"FullName\": \"Габзовська Ольга  Борисівна\",\n" +
+                    "          \"ScientificInterest\": null,\n" +
+                    "          \"Personalities\": null,\n" +
+                    "          \"Employees\": null,\n" +
+                    "          \"Profiles\": null\n" +
+                    "        }\n" +
+                    "      ],\n" +
+                    "      \"LastMessageText\": \"hello_my_dear_friend\",\n" +
+                    "      \"LastMessageDate\": \"2013-12-10T11:05:08.193\",\n" +
+                    "      \"GroupId\": 5\n" +
+                    "    }\n" +
+                    "  ]\n" +
+                    "}";
 
     public static String getMessageItem() {
         return MESSAGE_ITEM;
     }
 
-    private   static final String MESSAGE_ITEM ="{\n" +
+    private static final String MESSAGE_ITEM = "{\n" +
             "  \"StatusCode\": 200,\n" +
             "  \"TimeStamp\": \"2013-12-19T16:57:05.4428835-08:00\",\n" +
             "  \"Guid\": \"50e8104b-51ab-47ec-97ff-d53c7d04e2b7\",\n" +
@@ -326,7 +203,7 @@ public class Mock {
             "  },\n" +
             "  \"Data\": [\n" +
             "    {\n" +
-            "      \"SenderUserAccountId\": 11,\n" +
+            "      \"SenderUserAccountId\": 14,\n" +
             "      \"MessageId\": 96,\n" +
             "      \"MassageGroupId\": 3,\n" +
             "      \"MessageDetail\": {\n" +
@@ -359,7 +236,7 @@ public class Mock {
             "      \"Text\": \"hello\"\n" +
             "    },\n" +
             "    {\n" +
-            "      \"SenderUserAccountId\": 11,\n" +
+            "      \"SenderUserAccountId\": 12,\n" +
             "      \"MessageId\": 3,\n" +
             "      \"MassageGroupId\": 3,\n" +
             "      \"MessageDetail\": {\n" +

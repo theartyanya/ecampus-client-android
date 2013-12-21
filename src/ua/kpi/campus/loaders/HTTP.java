@@ -15,6 +15,9 @@ import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 
+/**
+ * @deprecated
+ */
 public class HTTP {
     public static HttpResponse getString(String URL) {
         Log.d(HttpStringLoader.class.getName(), " httpStartedLoad");

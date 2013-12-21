@@ -11,6 +11,7 @@ import android.util.Log;
  *
  * @author Artur Dzidzoiev
  * @version 12/7/13
+ * @deprecated
  */
 public class HttpBitmapLoader extends AsyncTaskLoader<Bitmap> {
     public final static String URL_STRING = "URL";

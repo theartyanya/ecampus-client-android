@@ -99,11 +99,10 @@ public class MyProfileFragment extends Fragment implements ImageLoadingListener 
     }
 
     public View getView(SubsystemData currentData) {
-        ViewGroup parent = null;
         Context context = getActivity();
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View rowView = inflater.inflate(R.layout.list_item_subsystem, parent, false);
+        View rowView = inflater.inflate(R.layout.list_item_subsystem, null, false);
         TextView tSubsystem = (TextView) rowView.findViewById(R.id.myProfileSybsystem);
         TextView tIsCreateValue = (TextView) rowView.findViewById(R.id.myProfileIsCreateValue);
         TextView tIsReadValue = (TextView) rowView.findViewById(R.id.myProfileIsReadValue);
