@@ -38,8 +38,8 @@ import ua.kpi.campus.Session;
 import ua.kpi.campus.api.jsonparsers.JSONUserDataParser;
 import ua.kpi.campus.api.jsonparsers.JsonObject;
 import ua.kpi.campus.api.jsonparsers.user.*;
-import ua.kpi.campus.loaders.HttpStringLoader;
 import ua.kpi.campus.loaders.HttpBitmapLoader;
+import ua.kpi.campus.loaders.HttpStringLoader;
 
 public class MainActivity extends FragmentActivity implements ActionBar.TabListener {
     public static final String TAG = MainActivity.class.getName();
@@ -70,7 +70,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
         // Specify that the Home/Up button should not be enabled, since there is no hierarchical
         // parent.
-        actionBar.setHomeButtonEnabled(false);
+        //actionBar.setHomeButtonEnabled(false);
 
         // Specify that we will be displaying tabs in the action bar.
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
