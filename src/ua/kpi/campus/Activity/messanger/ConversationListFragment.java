@@ -110,8 +110,7 @@ public class ConversationListFragment extends ListFragment {
     }
 
     private void updateDB(ArrayList<UserConversationData> conversations) {
-        DatabaseHelper db = new DatabaseHelper(getActivity().getApplicationContext());
-        try {
+        try (DatabaseHelper db = new DatabaseHelper(getActivity().getApplicationContext())) {
             HashSet<UserMessage> users = new HashSet<>();
             db.refreshConversations();
             Log.d(TAG, hashCode() + db.getPath());
@@ -124,8 +123,6 @@ public class ConversationListFragment extends ListFragment {
                 }
             }
             db.addAllUsers(users);
-        } finally {
-            db.close();
         }
     }
 

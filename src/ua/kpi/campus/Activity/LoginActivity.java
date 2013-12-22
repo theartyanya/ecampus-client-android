@@ -29,6 +29,7 @@ import ua.kpi.campus.loaders.HttpStringSupportLoader;
 import ua.kpi.campus.loaders.asynctask.AsyncTaskManager;
 import ua.kpi.campus.loaders.asynctask.HttpLoadTask;
 import ua.kpi.campus.loaders.asynctask.OnTaskCompleteListener;
+import ua.kpi.campus.model.CurrentUser;
 import ua.kpi.campus.model.dbhelper.DatabaseHelper;
 
 public class LoginActivity extends FragmentActivity implements LoaderManager.LoaderCallbacks<HttpResponse>, OnTaskCompleteListener {
@@ -42,8 +43,9 @@ public class LoginActivity extends FragmentActivity implements LoaderManager.Loa
     private LoaderManager loaderManager;
     private Context context;
     private AsyncTaskManager mAsyncTaskManager;
-
-    private OnClickListener sumButtonListener = new OnClickListener() {
+    private CurrentUser currentUser;
+    private String sessionId;
+    private OnClickListener loginButtonListener = new OnClickListener() {
 
         @Override
         public void onClick(View arg0) {
@@ -56,14 +58,9 @@ public class LoginActivity extends FragmentActivity implements LoaderManager.Loa
                 final String password = secondNumber.getText().toString();
                 String Url = CampusApiURL.getAuth(login, password);
                 mAsyncTaskManager.setupTask(new HttpLoadTask(getResources(), Url, R.string.login_activity_auth_work, AUTH_LOADER_ID));
-                //TODO changed to load from mock
-                //startSessionIdLoader(Url);
-                //Session.setCurrentUser(parseUser(Mock.getUSER_EMPLOYEE()).getData());
-                //startMainActivity();
             }
         }
     };
-
     private OnClickListener testButtonListener = new OnClickListener() {
 
         @Override
@@ -96,7 +93,7 @@ public class LoginActivity extends FragmentActivity implements LoaderManager.Loa
         firstNumber = (EditText) findViewById(R.id.firstNumberEdit);
         secondNumber = (EditText) findViewById(R.id.secondNumberEdit);
         sumButton = (Button) findViewById(R.id.sumButton);
-        sumButton.setOnClickListener(sumButtonListener);
+        sumButton.setOnClickListener(loginButtonListener);
         Button testButton = (Button) findViewById(R.id.testButton);
         testButton.setOnClickListener(testButtonListener);
 
@@ -138,9 +135,19 @@ public class LoginActivity extends FragmentActivity implements LoaderManager.Loa
                     break;
                 case CURRENT_USER_LOADER_ID:
                     if (httpResponse.getStatusCode() == HttpStatus.SC_OK) {
+                        //TODO delete Session class
                         Session.setCurrentUser(parseUser(userDataStr).getData());
-                        DatabaseHelper db = new DatabaseHelper(getApplicationContext(), Session.getCurrentUser().getUserAccountID());
-
+                        try (DatabaseHelper db = new DatabaseHelper(getApplicationContext())) {
+                            final String login = firstNumber.getText().toString();
+                            final String password = secondNumber.getText().toString();
+                            int accountID = parseUser(userDataStr).getData().getUserAccountID();
+                            CurrentUser user = new CurrentUser(accountID, sessionId, login, password);
+                            if (user.equals(db.getCurrentUser())) {
+                                db.updateCurrentUser(user);
+                            } else {
+                                db.onUserChanged(user);
+                            }
+                        }
                         startMainActivity();
                     } else {
                         showToastLong(getResources().getString(R.string.login_activity_access_denied));
@@ -160,6 +167,7 @@ public class LoginActivity extends FragmentActivity implements LoaderManager.Loa
                 // Handle task that can be retained before
                 mAsyncTaskManager.handleRetainedTask(getLastCustomNonConfigurationInstance());
                 Session.setSessionId(JSONAuthorizationParser.parse(response).getData());
+                sessionId = JSONAuthorizationParser.parse(response).getData();
                 String Url = CampusApiURL.getCurrentUser(Session.getSessionId());
                 mAsyncTaskManager.setupTask(new HttpLoadTask(getResources(), Url, R.string.login_activity_getuser_work, CURRENT_USER_LOADER_ID));
             } catch (JSONException e) {

@@ -8,9 +8,11 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 import ua.kpi.campus.api.jsonparsers.message.UserMessage;
 import ua.kpi.campus.model.Conversation;
+import ua.kpi.campus.model.CurrentUser;
 import ua.kpi.campus.model.Message;
 import ua.kpi.campus.model.User;
 
+import java.io.Closeable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -22,15 +24,16 @@ import java.util.Set;
  * @author Artur Dzidzoiev
  * @version 12/21/13
  */
-public class DatabaseHelper extends SQLiteOpenHelper {
+public class DatabaseHelper extends SQLiteOpenHelper implements Closeable {
     public final static String TAG = DatabaseHelper.class.getName();
-    private static int DATABASE_VERSION = 7;
+    private static final int DATABASE_VERSION = 20;
     private static final String DATABASE_NAME = "eCampus";
     // Table Names
     private static final String TABLE_USERS = "users";
     private static final String TABLE_CONVERSATIONS_USERS = "conversations_users";
     private static final String TABLE_CONVERSATIONS = "conversations";
     private static final String TABLE_MESSAGES = "messages";
+    private static final String TABLE_CURRENT_USER = "current_user";
     // TABLE_USERS - column names
     private static final String KEY_USER_ACCOUN_ID = "user_account_id";
     private static final String KEY_USER_FULLNAME = "fullname";
@@ -40,7 +43,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String KEY_CONVERSATIONS_SUBJECT = "group_subject";
     private static final String KEY_CONVERSATIONS_LAST_MESSAGE_TEXT = "last_message_text";
     private static final String KEY_CONVERSATIONS_LAST_MESSAGE_DATE = "last_message_date";
-
+    //TABLE_CURRENT_USER
+    private static final String KEY_CURRENT_USER_ID = "user_id";
+    private static final String KEY_CURRENT_USER_SESSION_ID = "session_id";
+    private static final String KEY_CURRENT_USER_LOGIN = "login";
+    private static final String KEY_CURRENT_USER_PASSWORD = "password";
     //TABLE_MESSAGES
     private static final String KEY_MESSAGES_ID = "message_id";
     private static final String KEY_MESSAGES_DATE_SENT = "date_sent";
@@ -62,6 +69,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     KEY_USER_FULLNAME + TEXT + "," +
                     KEY_USER_PHOTO + TEXT + "," +
                     PRIMARY_KEY + "(" + KEY_USER_ACCOUN_ID + ")" + ")";
+    private static final String CREATE_TABLE_CURRENT_USER =
+            CREATE_TABLE + TABLE_CURRENT_USER + "(" +
+                    KEY_CURRENT_USER_ID + INTEGER + "," +
+                    KEY_CURRENT_USER_SESSION_ID + TEXT + "," +
+                    KEY_CURRENT_USER_LOGIN + TEXT + "," +
+                    KEY_CURRENT_USER_PASSWORD + TEXT + "," +
+                    PRIMARY_KEY + "(" + KEY_CURRENT_USER_ID + ")" + ")";
     private static final String CREATE_TABLE_CONVERSATIONS =
             CREATE_TABLE + TABLE_CONVERSATIONS + "(" +
                     KEY_CONVERSATIONS_GROUP_ID + INTEGER + "," +
@@ -69,7 +83,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     KEY_CONVERSATIONS_LAST_MESSAGE_TEXT + TEXT + "," +
                     KEY_CONVERSATIONS_LAST_MESSAGE_DATE + INTEGER + "," +
                     PRIMARY_KEY + "(" + KEY_CONVERSATIONS_GROUP_ID + ")" + ")";
-    ;
     private static final String CREATE_TABLE_CONVERSATIONS_USERS =
             CREATE_TABLE + TABLE_CONVERSATIONS_USERS + "(" +
                     KEY_CONVERSATIONS_GROUP_ID + INTEGER + "," +
@@ -93,18 +106,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
-        Log.d(TAG, hashCode() + " instance of db " + DATABASE_NAME + "created.");
-    }
-
-    public DatabaseHelper(Context context, int userId) {
-        super(context, DATABASE_NAME, null, userId);
-        DATABASE_VERSION = userId;
-        Log.d(TAG, hashCode() + " instance of db " + DATABASE_NAME + "created.");
+        Log.d(TAG, hashCode() + " instance of db " + DATABASE_NAME + DATABASE_VERSION + "created.");
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
         Log.d(TAG, hashCode() + " creating db. Path " + db.getPath());
+        db.execSQL(CREATE_TABLE_CURRENT_USER);
+        Log.d(TAG, hashCode() + " SQL query: " + CREATE_TABLE_CURRENT_USER);
         db.execSQL(CREATE_TABLE_CONVERSATIONS);
         Log.d(TAG, hashCode() + " SQL query: " + CREATE_TABLE_CONVERSATIONS);
         db.execSQL(CREATE_TABLE_USERS);
@@ -120,21 +129,87 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int i, int i2) {
         Log.d(TAG, hashCode() + " updating db.");
-
-        // on upgrade drop older tables
-        db.execSQL(DROP_TABLE_IF_EXISTS + TABLE_CONVERSATIONS);
-        db.execSQL(DROP_TABLE_IF_EXISTS + TABLE_USERS);
-        db.execSQL(DROP_TABLE_IF_EXISTS + TABLE_CONVERSATIONS_USERS);
-        db.execSQL(DROP_TABLE_IF_EXISTS + TABLE_MESSAGES);
-        Log.d(TAG, hashCode() + " tables dropped.");
-
-        // create new tables
+        dropAllTables(db);
         onCreate(db);
     }
 
     public String getPath() {
         SQLiteDatabase db = this.getWritableDatabase();
         return db.getPath();
+    }
+
+    private void dropAllTables(SQLiteDatabase db) {
+        // on upgrade drop older tables
+        db.execSQL(DROP_TABLE_IF_EXISTS + TABLE_CURRENT_USER);
+        db.execSQL(DROP_TABLE_IF_EXISTS + TABLE_CONVERSATIONS);
+        db.execSQL(DROP_TABLE_IF_EXISTS + TABLE_USERS);
+        db.execSQL(DROP_TABLE_IF_EXISTS + TABLE_CONVERSATIONS_USERS);
+        db.execSQL(DROP_TABLE_IF_EXISTS + TABLE_MESSAGES);
+        Log.d(TAG, hashCode() + " tables dropped.");
+    }
+
+    public void onUserChanged(CurrentUser currentUser) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        dropAllTables(db);
+        onCreate(db);
+        setCurrentUser(currentUser);
+    }
+
+    public CurrentUser getCurrentUser() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String selectQuery = "SELECT * FROM " + TABLE_CURRENT_USER;
+        Log.d(TAG, hashCode() + " SQL query: " + selectQuery);
+
+        Cursor c = db.rawQuery(selectQuery, null);
+
+        if (c != null) {
+            c.moveToFirst();
+            return new CurrentUser(
+                    c.getInt(c.getColumnIndex(KEY_CURRENT_USER_ID)),
+                    c.getString(c.getColumnIndex(KEY_CURRENT_USER_SESSION_ID)),
+                    c.getString(c.getColumnIndex(KEY_CURRENT_USER_LOGIN)),
+                    c.getString(c.getColumnIndex(KEY_CURRENT_USER_PASSWORD)));
+        } else return null;
+    }
+
+    private void setCurrentUser(CurrentUser user) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(KEY_CURRENT_USER_ID, user.getId());
+        values.put(KEY_CURRENT_USER_SESSION_ID, user.getSessionId());
+        values.put(KEY_CURRENT_USER_LOGIN, user.getLogin());
+        values.put(KEY_CURRENT_USER_PASSWORD, user.getPassword());
+        db.insert(TABLE_CURRENT_USER, null, values);
+    }
+
+    //TODO change this method to update login and password
+    public void updateCurrentUser(CurrentUser user) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_CURRENT_USER_SESSION_ID, user.getSessionId());
+
+        // updating row
+        db.update(TABLE_CURRENT_USER, values, KEY_CURRENT_USER_SESSION_ID + " = ?",
+                new String[]{String.valueOf(user.getSessionId())});
+        Log.d(TAG, hashCode() + " sessionId updated");
+    }
+
+
+
+    public String getSessionId() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String selectQuery = "SELECT " + KEY_CURRENT_USER_SESSION_ID + " FROM " + TABLE_CURRENT_USER;
+        Log.d(TAG, hashCode() + " SQL query: " + selectQuery);
+
+        Cursor c = db.rawQuery(selectQuery, null);
+        if (c != null) {
+            c.moveToFirst();
+        }
+
+        return c.getString(c.getColumnIndex(KEY_CURRENT_USER_SESSION_ID));
+
     }
 
     /*
@@ -156,11 +231,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Set<User> userSet = getAllUsersSet();
         for (UserMessage user : users) {
             if (!userSet.contains(user)) {
-                createUser(new User(user)); }
+                createUser(new User(user));
+            }
         }
     }
 
-    public User getUser(int id) throws IllegalArgumentException{
+    public User getUser(int id) throws IllegalArgumentException {
         SQLiteDatabase db = this.getReadableDatabase();
         String selectQuery = String.format(SELECT_SELECT_FROM_S_WHERE_S, TABLE_USERS, KEY_USER_ACCOUN_ID + " = " + Integer.toString(id));
         Log.d(TAG, hashCode() + " SQL query: " + selectQuery);
