@@ -25,6 +25,7 @@ import ua.kpi.campus.api.jsonparsers.JsonObject;
 import ua.kpi.campus.api.jsonparsers.user.UserData;
 import ua.kpi.campus.loaders.HttpResponse;
 import ua.kpi.campus.loaders.HttpStringLoader;
+import ua.kpi.campus.loaders.HttpStringSupportLoader;
 import ua.kpi.campus.loaders.asynctask.AsyncTaskManager;
 import ua.kpi.campus.loaders.asynctask.HttpLoadTask;
 import ua.kpi.campus.loaders.asynctask.OnTaskCompleteListener;
@@ -215,7 +216,7 @@ public class LoginActivity extends FragmentActivity implements LoaderManager.Loa
     @Override
     public Loader<HttpResponse> onCreateLoader(int i, Bundle bundle) {
         Log.d(this.getClass().getName(), hashCode() + " load started " + i);
-        return new HttpStringLoader(LoginActivity.this, bundle.getString(HttpStringLoader.URL_STRING));
+        return new HttpStringSupportLoader(LoginActivity.this, bundle.getString(HttpStringLoader.URL_STRING));
     }
 
     @Override

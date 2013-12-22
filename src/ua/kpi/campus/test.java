@@ -1,12 +1,5 @@
 package ua.kpi.campus;
 
-import org.json.JSONException;
-import ua.kpi.campus.api.jsonparsers.JSONConversationParser;
-import ua.kpi.campus.api.jsonparsers.JsonObject;
-import ua.kpi.campus.api.jsonparsers.message.UserConversationData;
-
-import java.util.ArrayList;
-
 /**
  * Created with IntelliJ IDEA.
  * User: Serhii Hokhalenko
@@ -16,8 +9,9 @@ import java.util.ArrayList;
  */
 public class test {
     public static void main(String[] args){
-        try{
-        JsonObject<ArrayList<UserConversationData>> u= JSONConversationParser.parse(Mock.getUSER_CONVERSATION());
-        }catch (JSONException e){}
+
+        //String newStr = CampusApiURL.getConversation("23","23",2,1);
+        //System.out.print(newStr);
+
     }
 }

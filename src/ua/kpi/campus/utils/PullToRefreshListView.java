@@ -10,13 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
-import android.widget.AbsListView;
-import android.widget.ImageView;
-import android.widget.ListAdapter;
-import android.widget.ListView;
-import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
+import android.widget.*;
 import android.widget.AbsListView.OnScrollListener;
 import ua.kpi.campus.R;
 
@@ -132,7 +126,7 @@ public class PullToRefreshListView extends ListView implements OnScrollListener 
      * @param l The scroll listener. 
      */
     @Override
-    public void setOnScrollListener(OnScrollListener l) {
+    public void setOnScrollListener(AbsListView.OnScrollListener l) {
         mOnScrollListener = l;
     }
 
@@ -401,7 +395,7 @@ public class PullToRefreshListView extends ListView implements OnScrollListener 
         /**
          * Called when the list should be refreshed.
          * <p>
-         * A call to {@link ua.kpi.campus.utils.PullToRefreshListView #onRefreshComplete()} is
+         * A call to {@link PullToRefreshListView #onRefreshComplete()} is
          * expected to indicate that the refresh has completed.
          */
         public void onRefresh();

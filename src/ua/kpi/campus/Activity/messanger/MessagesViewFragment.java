@@ -25,6 +25,7 @@ import ua.kpi.campus.api.jsonparsers.message.MessageItem;
 import ua.kpi.campus.api.jsonparsers.user.UserData;
 import ua.kpi.campus.loaders.HttpResponse;
 import ua.kpi.campus.loaders.HttpStringLoader;
+import ua.kpi.campus.loaders.HttpStringSupportLoader;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -130,7 +131,7 @@ public class MessagesViewFragment extends ListFragment implements LoaderManager.
     @Override
     public Loader<HttpResponse> onCreateLoader(int i, Bundle bundle) {
         Log.d(MainActivity.TAG, hashCode() + " load started " + i + " on URL: " + bundle.getString(HttpStringLoader.URL_STRING));
-        return new HttpStringLoader(getActivity(), bundle.getString(HttpStringLoader.URL_STRING));
+        return new HttpStringSupportLoader(getActivity(), bundle.getString(HttpStringLoader.URL_STRING));
     }
 
     @Override
@@ -207,7 +208,7 @@ public class MessagesViewFragment extends ListFragment implements LoaderManager.
             try {
                 newDate = inputDate.parse(currentMessage.getDateSent());
             } catch (ParseException e) {
-                Log.e(MainActivity.class.getName(), ConversationListFragment.class.hashCode() + e.toString());
+                Log.e(MainActivity.class.getName(), MessagesViewFragment.class.hashCode() + e.toString());
             }
 
             return today.after(newDate) ? longDate.format(newDate) : shortDate.format(newDate);

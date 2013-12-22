@@ -9,7 +9,8 @@
     The PullToRefreshListView replaces a standard ListView widget.
     -->
     <ua.kpi.campus.utils.PullToRefreshListView
-            android:layout_width="fill_parent"
+            android:id="@+id/android:list"
             android:layout_height="fill_parent"
-            android:id="@android:id/list"/>
+            android:layout_width="fill_parent"
+            />
 </LinearLayout>

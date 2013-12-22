@@ -76,7 +76,7 @@ public class ConversationListAdapter extends ArrayAdapter<UserConversationData> 
         try {
             lastDate = inputDate.parse(currentConversation.getLastMessageDate());
         } catch (ParseException e) {
-            Log.e(MainActivity.class.getName(), ConversationListFragment.class.hashCode() + e.toString());
+            Log.e(MainActivity.class.getName(), MessagesViewFragment.class.hashCode() + e.toString());
         }
         return parsedDate.format(lastDate);
     }

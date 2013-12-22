@@ -24,6 +24,7 @@ import ua.kpi.campus.api.jsonparsers.message.UserConversationData;
 import ua.kpi.campus.api.jsonparsers.message.UserMessage;
 import ua.kpi.campus.loaders.HttpResponse;
 import ua.kpi.campus.loaders.HttpStringLoader;
+import ua.kpi.campus.loaders.HttpStringSupportLoader;
 import ua.kpi.campus.model.Conversation;
 import ua.kpi.campus.model.dbhelper.DatabaseHelper;
 import ua.kpi.campus.utils.PullToRefreshListView;
@@ -57,6 +58,9 @@ public class ConversationListFragment extends ListFragment implements LoaderMana
         Log.d(MainActivity.TAG, hashCode() + " onCreateView: fragment " + this.getClass().getName());
         mCallbacks = this;
         loaderManager = getLoaderManager();
+        Bundle url = new Bundle();
+        url.putString(HttpStringLoader.URL_STRING, CampusApiURL.getConversations(Session.getSessionId()));
+        loaderManager.initLoader(CONVERSATION_LOADER_ID, url, mCallbacks).onContentChanged();
 
         // Set a listener to be invoked when the list should be refreshed.
         ((PullToRefreshListView) getListView()).setOnRefreshListener(new PullToRefreshListView.OnRefreshListener() {
@@ -72,7 +76,7 @@ public class ConversationListFragment extends ListFragment implements LoaderMana
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_messages, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_section_conversation_list, container, false);
         return rootView;
     }
 
@@ -98,7 +102,7 @@ public class ConversationListFragment extends ListFragment implements LoaderMana
     @Override
     public Loader<HttpResponse> onCreateLoader(int i, Bundle bundle) {
         Log.d(this.getClass().getName(), hashCode() + " load started " + i);
-        return new HttpStringLoader(getActivity(), bundle.getString(HttpStringLoader.URL_STRING));
+        return new HttpStringSupportLoader(getActivity(), bundle.getString(HttpStringLoader.URL_STRING));
     }
 
     @Override
