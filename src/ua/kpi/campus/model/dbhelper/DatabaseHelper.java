@@ -334,17 +334,20 @@ public class DatabaseHelper extends SQLiteOpenHelper implements Closeable {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor c = db.rawQuery(selectQuery, null);
 
+        if(c.getCount() == 0) {
+            return conversations;
+        }
         // looping through all rows and adding to list
         if (c.moveToFirst()) {
-            while (c.moveToNext()) {
+            do {
                 Conversation conversation = new Conversation(
                         c.getInt(c.getColumnIndex(KEY_CONVERSATIONS_GROUP_ID)),
                         c.getString(c.getColumnIndex(KEY_CONVERSATIONS_SUBJECT)),
-                        c.getString(c.getColumnIndex(KEY_CONVERSATIONS_SUBJECT)),
-                        c.getLong(c.getColumnIndex(KEY_CONVERSATIONS_LAST_MESSAGE_TEXT)));
+                        c.getString(c.getColumnIndex(KEY_CONVERSATIONS_LAST_MESSAGE_TEXT)),
+                        c.getLong(c.getColumnIndex(KEY_CONVERSATIONS_LAST_MESSAGE_DATE)));
 
                 conversations.add(conversation);
-            }
+            } while (c.moveToNext());
         }
 
         return conversations;
