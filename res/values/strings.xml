@@ -42,7 +42,10 @@
     <string name="subsystem_isUpdate">Оновлювати</string>
     <string name="subsystem_isDelete">Видаляти</string><string name="send">Надіслати</string>
 
-
+    <string name="pull_to_refresh_pull_label">Pull to refresh...</string>
+    <string name="pull_to_refresh_release_label">Release to refresh...</string>
+    <string name="pull_to_refresh_refreshing_label">Loading...</string>
+    <string name="pull_to_refresh_tap_label">Tap to refresh...</string>
 
 
 

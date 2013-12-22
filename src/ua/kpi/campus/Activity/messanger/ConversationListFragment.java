@@ -8,7 +8,9 @@ import android.support.v4.content.Loader;
 import android.support.v4.widget.DrawerLayout.LayoutParams;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -24,6 +26,7 @@ import ua.kpi.campus.loaders.HttpResponse;
 import ua.kpi.campus.loaders.HttpStringLoader;
 import ua.kpi.campus.model.Conversation;
 import ua.kpi.campus.model.dbhelper.DatabaseHelper;
+import ua.kpi.campus.utils.PullToRefreshListView;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -54,11 +57,24 @@ public class ConversationListFragment extends ListFragment implements LoaderMana
         Log.d(MainActivity.TAG, hashCode() + " onCreateView: fragment " + this.getClass().getName());
         mCallbacks = this;
         loaderManager = getLoaderManager();
-        Bundle url = new Bundle();
-        url.putString(HttpStringLoader.URL_STRING, CampusApiURL.getConversations(Session.getSessionId()));
-        loaderManager.initLoader(CONVERSATION_LOADER_ID, url, mCallbacks).onContentChanged();
+
+        // Set a listener to be invoked when the list should be refreshed.
+        ((PullToRefreshListView) getListView()).setOnRefreshListener(new PullToRefreshListView.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                Bundle url = new Bundle();
+                url.putString(HttpStringLoader.URL_STRING, CampusApiURL.getConversations(Session.getSessionId()));
+                loaderManager.initLoader(CONVERSATION_LOADER_ID, url, mCallbacks).onContentChanged();
+            }
+        });
     }
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View rootView = inflater.inflate(R.layout.fragment_messages, container, false);
+        return rootView;
+    }
 
     private ArrayList<UserConversationData> parseConversation (String JsonConversation) {
         try {
