@@ -27,7 +27,9 @@ import ua.kpi.campus.loaders.HttpStringLoader;
 import ua.kpi.campus.loaders.HttpStringSupportLoader;
 import ua.kpi.campus.model.Conversation;
 import ua.kpi.campus.model.dbhelper.DatabaseHelper;
-import ua.kpi.campus.utils.PullToRefreshListView;
+import ua.kpi.campus.utils.pulltorefresh.PullToRefreshBase;
+import ua.kpi.campus.utils.pulltorefresh.PullToRefreshBase.OnRefreshListener;
+import ua.kpi.campus.utils.pulltorefresh.PullToRefreshListView;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -38,12 +40,20 @@ import java.util.HashSet;
  * @author Artur Dzidzoiev
  * @version 12/16/13
  */
-public class ConversationListFragment extends ListFragment implements LoaderManager.LoaderCallbacks<HttpResponse>{
+public class ConversationListFragment extends ListFragment implements LoaderManager.LoaderCallbacks<HttpResponse> {
     public final static String TAG = MainActivity.TAG;
     private final static int CONVERSATION_LOADER_ID = 153;
     private LoaderManager.LoaderCallbacks<HttpResponse> mCallbacks;
     private LoaderManager loaderManager;
     private ArrayAdapter mAdapter;
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View rootView = inflater.inflate(R.layout.fragment_section_conversation_list, container, false);
+
+        return rootView;
+    }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -63,22 +73,16 @@ public class ConversationListFragment extends ListFragment implements LoaderMana
         loaderManager.initLoader(CONVERSATION_LOADER_ID, url, mCallbacks).onContentChanged();
 
         // Set a listener to be invoked when the list should be refreshed.
-        ((PullToRefreshListView) getListView()).setOnRefreshListener(new PullToRefreshListView.OnRefreshListener() {
+        PullToRefreshListView pullToRefreshView = (PullToRefreshListView) getActivity().findViewById(R.id.pull_to_refresh_listview);
+        pullToRefreshView.setOnRefreshListener(new OnRefreshListener<ListView>() {
             @Override
-            public void onRefresh() {
-                Bundle url = new Bundle();
-                url.putString(HttpStringLoader.URL_STRING, CampusApiURL.getConversations(Session.getSessionId()));
-                loaderManager.initLoader(CONVERSATION_LOADER_ID, url, mCallbacks).onContentChanged();
+            public void onRefresh(PullToRefreshBase<ListView> refreshView) {
+                Log.d(MainActivity.TAG, hashCode() + " refreshing.");
             }
         });
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_section_conversation_list, container, false);
-        return rootView;
-    }
+
 
     private ArrayList<UserConversationData> parseConversation (String JsonConversation) {
         try {
@@ -143,5 +147,4 @@ public class ConversationListFragment extends ListFragment implements LoaderMana
     public void onLoaderReset(Loader<HttpResponse> httpResponseLoader) {
         //To change body of implemented methods use File | Settings | File Templates.
     }
-
 }
