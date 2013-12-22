@@ -268,16 +268,20 @@ public class DatabaseHelper extends SQLiteOpenHelper implements Closeable {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor c = db.rawQuery(selectQuery, null);
 
+        if(c.getCount() == 0) {
+            return users;
+        }
+
         // looping through all rows and adding to list
         if (c.moveToFirst()) {
-            while (c.moveToNext()) {
+            do {
                 User user = new User(
                         c.getInt(c.getColumnIndex(KEY_USER_ACCOUN_ID)),
                         c.getString(c.getColumnIndex(KEY_USER_FULLNAME)),
                         c.getString(c.getColumnIndex(KEY_USER_PHOTO)));
 
                 users.add(user);
-            }
+            } while (c.moveToNext());
         }
 
         return users;
@@ -291,16 +295,20 @@ public class DatabaseHelper extends SQLiteOpenHelper implements Closeable {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor c = db.rawQuery(selectQuery, null);
 
+        if(c.getCount() == 0) {
+            return users;
+        }
+
         // looping through all rows and adding to list
         if (c.moveToFirst()) {
-            while (c.moveToNext()) {
+            do {
                 User user = new User(
                         c.getInt(c.getColumnIndex(KEY_USER_ACCOUN_ID)),
                         c.getString(c.getColumnIndex(KEY_USER_FULLNAME)),
                         c.getString(c.getColumnIndex(KEY_USER_PHOTO)));
 
                 users.add(user);
-            }
+            } while (c.moveToNext());
         }
 
         return users;

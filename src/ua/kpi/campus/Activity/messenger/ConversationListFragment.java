@@ -1,4 +1,4 @@
-package ua.kpi.campus.Activity.messanger;
+package ua.kpi.campus.Activity.messenger;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,7 +17,6 @@ import com.loopj.android.http.TextHttpResponseHandler;
 import org.json.JSONException;
 import ua.kpi.campus.Activity.MainActivity;
 import ua.kpi.campus.R;
-import ua.kpi.campus.Session;
 import ua.kpi.campus.api.CampusApiURL;
 import ua.kpi.campus.api.jsonparsers.JSONConversationParser;
 import ua.kpi.campus.api.jsonparsers.message.UserConversationData;
@@ -41,6 +40,7 @@ import java.util.List;
 public class ConversationListFragment extends ListFragment {
     public final static String TAG = MainActivity.TAG;
     private ArrayAdapter mAdapter;
+    private String sessionId;
     private PullToRefreshListView mPullToRefreshView;
 
     @Override
@@ -62,6 +62,9 @@ public class ConversationListFragment extends ListFragment {
         progressBar.setIndeterminate(true);
         getListView().setEmptyView(progressBar);
 
+        try (DatabaseHelper db = new DatabaseHelper(getActivity().getApplicationContext())) {
+           sessionId = db.getSessionId();
+        }
 
         // Set a listener to be invoked when the list should be refreshed.
         mPullToRefreshView = (PullToRefreshListView) getActivity().findViewById(R.id.pull_to_refresh_listview);
@@ -71,6 +74,7 @@ public class ConversationListFragment extends ListFragment {
                 loadData();
             }
         });
+
         List<Conversation> conversations = getFromDB();
         if (conversations.isEmpty()) {
             loadData();
@@ -82,7 +86,7 @@ public class ConversationListFragment extends ListFragment {
     private void loadData() {
         AsyncHttpClient client = new AsyncHttpClient();
         Log.d(this.getClass().getName(), hashCode() + " load started ");
-        client.get(CampusApiURL.getConversations(Session.getSessionId()),
+        client.get(CampusApiURL.getConversations(sessionId),
                 new TextHttpResponseHandler() {
                     @Override
                     public void onSuccess(int statusCode, org.apache.http.Header[] headers, java.lang.String responseBody) {
@@ -108,7 +112,7 @@ public class ConversationListFragment extends ListFragment {
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
-        UserConversationData item = (UserConversationData) getListAdapter().getItem(position);
+        Conversation item = (Conversation) getListAdapter().getItem(position);
         Log.d(MainActivity.TAG, hashCode() + " clicked on " + "l:" + l + " " + "v:" + v + " " + "position:" + position + " " + "id:" + id + " ");
         Intent intent = new Intent(getActivity(), MessageActivity.class);
         Log.d(MainActivity.TAG, hashCode() + " starting new activity... " + MessageActivity.class.getName());
@@ -129,6 +133,7 @@ public class ConversationListFragment extends ListFragment {
                     users.add(user);
                 }
             }
+            //todo fix bug with adding existing users
             db.addAllUsers(users);
         }
     }
