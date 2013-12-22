@@ -1,4 +1,4 @@
-package ua.kpi.campus.Activity;
+package ua.kpi.campus.Activity.messanger;
 
 
 import android.os.Bundle;
@@ -28,8 +28,8 @@ public class MessageActivity extends FragmentActivity {
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        ConversationViewFragment conversationViewFragment = new ConversationViewFragment();
-        fragmentTransaction.add(CONTENT_VIEW_ID, conversationViewFragment);
+        MessagesViewFragment messagesViewFragment = new MessagesViewFragment();
+        fragmentTransaction.add(CONTENT_VIEW_ID, messagesViewFragment);
         //fragmentTransaction.add(CONTENT_VIEW_ID, keyboardFragment);
         fragmentTransaction.commit();
     }

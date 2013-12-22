@@ -1,8 +1,6 @@
-package ua.kpi.campus.Activity;
+package ua.kpi.campus.Activity.messanger;
 
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
@@ -10,14 +8,12 @@ import android.support.v4.content.Loader;
 import android.support.v4.widget.DrawerLayout.LayoutParams;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import org.json.JSONException;
+import ua.kpi.campus.Activity.MainActivity;
 import ua.kpi.campus.R;
 import ua.kpi.campus.Session;
 import ua.kpi.campus.api.CampusApiURL;
@@ -29,10 +25,7 @@ import ua.kpi.campus.loaders.HttpStringLoader;
 import ua.kpi.campus.model.Conversation;
 import ua.kpi.campus.model.dbhelper.DatabaseHelper;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashSet;
 
 /**
@@ -82,7 +75,7 @@ public class ConversationListFragment extends ListFragment implements LoaderMana
         Log.d(MainActivity.TAG, hashCode() + " clicked on "+ "l:" + l +" "+ "v:" + v +" "+ "position:" + position +" "+ "id:" + id +" ");
         Intent intent = new Intent(getActivity(), MessageActivity.class);
         Log.d(MainActivity.TAG, hashCode() + " starting new activity... " + MessageActivity.class.getName());
-        intent.putExtra(ConversationViewFragment.EXTRA_GROUP_ID, item.getGroupId());
+        intent.putExtra(MessagesViewFragment.EXTRA_GROUP_ID, item.getGroupId());
         startActivity(intent);
     }
 
@@ -131,58 +124,4 @@ public class ConversationListFragment extends ListFragment implements LoaderMana
         //To change body of implemented methods use File | Settings | File Templates.
     }
 
-
-
-    private class ConversationListAdapter extends ArrayAdapter<UserConversationData> {
-        private final Context context;
-        private final ArrayList<UserConversationData> values;
-
-
-        public ConversationListAdapter(Context context, ArrayList<UserConversationData> values) {
-            super(context, R.layout.list_item_message, values);
-            this.context = context;
-            this.values = values;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            LayoutInflater inflater = (LayoutInflater) context
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View rowView = inflater.inflate(R.layout.list_item_message, parent, false);
-            TextView tSubject = (TextView) rowView.findViewById(R.id.messageListSubject);
-            TextView tLastMessageText = (TextView) rowView.findViewById(R.id.messageListLastMessage);
-            TextView tLastDateText = (TextView) rowView.findViewById(R.id.messageListLastDate);
-
-            Log.d(MainActivity.TAG, hashCode() + " created subsystem view " + position);
-            final int maxLength = getResources().getInteger(R.integer.message_max_length_string);
-            final int maxLengthTheme = getResources().getInteger(R.integer.message_max_length_theme_string);
-            UserConversationData currentConversation = values.get(position);
-            tSubject.setText(formatString(currentConversation.getSubject(), maxLengthTheme));
-            tSubject.setTypeface(null, Typeface.BOLD);
-            tLastMessageText.setText(formatString(currentConversation.getLastMessageText(), maxLength));
-            tLastDateText.setText(formatDate(currentConversation));
-
-            return rowView;
-        }
-
-        private String formatString(String original, final int maxLength) {
-            if (original.length() > maxLength) {
-                original = original.substring(0, maxLength);
-                original = original + "...";
-            }
-            return original;
-        }
-
-        private String formatDate(UserConversationData currentConversation) {
-            SimpleDateFormat inputDate = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
-            SimpleDateFormat parsedDate = new SimpleDateFormat("HH:mm E', 'dd");
-            Date lastDate = new Date();
-            try {
-                lastDate = inputDate.parse(currentConversation.getLastMessageDate());
-            } catch (ParseException e) {
-                Log.e(MainActivity.class.getName(), ConversationListFragment.class.hashCode() + e.toString());
-            }
-            return parsedDate.format(lastDate);
-        }
-    }
 }

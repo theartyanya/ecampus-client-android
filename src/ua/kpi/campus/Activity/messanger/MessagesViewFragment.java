@@ -1,4 +1,4 @@
-package ua.kpi.campus.Activity;
+package ua.kpi.campus.Activity.messanger;
 
 import android.content.Context;
 import android.content.Intent;
@@ -16,6 +16,7 @@ import android.widget.*;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import org.json.JSONException;
+import ua.kpi.campus.Activity.MainActivity;
 import ua.kpi.campus.R;
 import ua.kpi.campus.Session;
 import ua.kpi.campus.api.CampusApiURL;
@@ -37,7 +38,7 @@ import java.util.Date;
  * @author Artur Dzidzoiev
  * @version 12/19/13
  */
-public class ConversationViewFragment extends ListFragment implements LoaderManager.LoaderCallbacks<HttpResponse> {
+public class MessagesViewFragment extends ListFragment implements LoaderManager.LoaderCallbacks<HttpResponse> {
     public final static String EXTRA_GROUP_ID = "groupId";
     private final static int MESSAGE_ITEMS_LOADER = 23;
     private LoaderManager.LoaderCallbacks<HttpResponse> mCallbacks;
