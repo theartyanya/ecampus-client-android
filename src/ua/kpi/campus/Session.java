@@ -7,6 +7,7 @@ import ua.kpi.campus.api.jsonparsers.user.UserData;
  *
  * @author Artur Dzidzoiev
  * @version 12/15/13
+ * @deprecated
  */
 public class Session {
     private static UserData currentUser;

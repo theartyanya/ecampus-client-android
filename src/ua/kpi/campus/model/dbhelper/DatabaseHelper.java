@@ -162,6 +162,10 @@ public class DatabaseHelper extends SQLiteOpenHelper implements Closeable {
 
         Cursor c = db.rawQuery(selectQuery, null);
 
+        if (c.getCount() == 0) {
+            return null;
+        }
+
         if (c != null) {
             c.moveToFirst();
             return new CurrentUser(

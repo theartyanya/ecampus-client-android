@@ -54,6 +54,7 @@ public class ConversationListFragment extends ListFragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        Log.d(MainActivity.TAG, hashCode() + " onCreateView: fragment " + this.getClass().getName());
 
         ProgressBar progressBar = new ProgressBar(getActivity());
         progressBar.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT,
@@ -61,33 +62,39 @@ public class ConversationListFragment extends ListFragment {
         progressBar.setIndeterminate(true);
         getListView().setEmptyView(progressBar);
 
-        Log.d(MainActivity.TAG, hashCode() + " onCreateView: fragment " + this.getClass().getName());
-        List<Conversation> conversations = getFromDB();
-        mAdapter = new ConversationListAdapter(getActivity(), conversations);
-        setListAdapter(mAdapter);
 
         // Set a listener to be invoked when the list should be refreshed.
         mPullToRefreshView = (PullToRefreshListView) getActivity().findViewById(R.id.pull_to_refresh_listview);
         mPullToRefreshView.setOnRefreshListener(new OnRefreshListener<ListView>() {
             @Override
             public void onRefresh(PullToRefreshBase<ListView> refreshView) {
-                AsyncHttpClient client = new AsyncHttpClient();
-                Log.d(this.getClass().getName(), hashCode() + " load started ");
-                client.get(CampusApiURL.getConversations(Session.getSessionId()),
-                        new TextHttpResponseHandler() {
-                            @Override
-                            public void onSuccess(int statusCode, org.apache.http.Header[] headers, java.lang.String responseBody) {
-                                Log.d(MainActivity.TAG, hashCode() + " received.");
-                                ArrayList<UserConversationData> userConversationDatas = parseConversation(responseBody);
-                                updateDB(userConversationDatas);
-                                List<Conversation> conversations = getFromDB();
-                                mAdapter = new ConversationListAdapter(getActivity(), conversations);
-                                setListAdapter(mAdapter);
-                                mPullToRefreshView.onRefreshComplete();
-                            }
-                        });
+                loadData();
             }
         });
+        List<Conversation> conversations = getFromDB();
+        if (conversations.isEmpty()) {
+            loadData();
+        }
+        mAdapter = new ConversationListAdapter(getActivity(), conversations);
+        setListAdapter(mAdapter);
+    }
+
+    private void loadData() {
+        AsyncHttpClient client = new AsyncHttpClient();
+        Log.d(this.getClass().getName(), hashCode() + " load started ");
+        client.get(CampusApiURL.getConversations(Session.getSessionId()),
+                new TextHttpResponseHandler() {
+                    @Override
+                    public void onSuccess(int statusCode, org.apache.http.Header[] headers, java.lang.String responseBody) {
+                        Log.d(MainActivity.TAG, hashCode() + " received.");
+                        ArrayList<UserConversationData> userConversationDatas = parseConversation(responseBody);
+                        updateDB(userConversationDatas);
+                        List<Conversation> conversations = getFromDB();
+                        mAdapter = new ConversationListAdapter(getActivity(), conversations);
+                        setListAdapter(mAdapter);
+                        mPullToRefreshView.onRefreshComplete();
+                    }
+                });
     }
 
     private ArrayList<UserConversationData> parseConversation(String JsonConversation) {
@@ -127,11 +134,8 @@ public class ConversationListFragment extends ListFragment {
     }
 
     private List<Conversation> getFromDB() {
-        DatabaseHelper db = new DatabaseHelper(getActivity().getApplicationContext());
-        try {
+        try (DatabaseHelper db = new DatabaseHelper(getActivity().getApplicationContext())) {
             return db.getAllConversations();
-        } finally {
-            db.close();
         }
     }
 
