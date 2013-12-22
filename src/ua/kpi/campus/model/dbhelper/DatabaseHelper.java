@@ -24,7 +24,7 @@ import java.util.Set;
  */
 public class DatabaseHelper extends SQLiteOpenHelper {
     public final static String TAG = DatabaseHelper.class.getName();
-    private static final int DATABASE_VERSION = 6;
+    private static int DATABASE_VERSION = 7;
     private static final String DATABASE_NAME = "eCampus";
     // Table Names
     private static final String TABLE_USERS = "users";
@@ -39,6 +39,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String KEY_CONVERSATIONS_GROUP_ID = "group_id";
     private static final String KEY_CONVERSATIONS_SUBJECT = "group_subject";
     private static final String KEY_CONVERSATIONS_LAST_MESSAGE_TEXT = "last_message_text";
+    private static final String KEY_CONVERSATIONS_LAST_MESSAGE_DATE = "last_message_date";
+
     //TABLE_MESSAGES
     private static final String KEY_MESSAGES_ID = "message_id";
     private static final String KEY_MESSAGES_DATE_SENT = "date_sent";
@@ -65,6 +67,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     KEY_CONVERSATIONS_GROUP_ID + INTEGER + "," +
                     KEY_CONVERSATIONS_SUBJECT + TEXT + "," +
                     KEY_CONVERSATIONS_LAST_MESSAGE_TEXT + TEXT + "," +
+                    KEY_CONVERSATIONS_LAST_MESSAGE_DATE + INTEGER + "," +
                     PRIMARY_KEY + "(" + KEY_CONVERSATIONS_GROUP_ID + ")" + ")";
     ;
     private static final String CREATE_TABLE_CONVERSATIONS_USERS =
@@ -90,6 +93,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        Log.d(TAG, hashCode() + " instance of db " + DATABASE_NAME + "created.");
+    }
+
+    public DatabaseHelper(Context context, int userId) {
+        super(context, DATABASE_NAME, null, userId);
+        DATABASE_VERSION = userId;
         Log.d(TAG, hashCode() + " instance of db " + DATABASE_NAME + "created.");
     }
 
@@ -233,6 +242,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(KEY_CONVERSATIONS_GROUP_ID, conversation.getGroupId());
         values.put(KEY_CONVERSATIONS_SUBJECT, conversation.getSubject());
         values.put(KEY_CONVERSATIONS_LAST_MESSAGE_TEXT, conversation.getLastMessageText());
+        values.put(KEY_CONVERSATIONS_LAST_MESSAGE_DATE, conversation.getLastMessageDate());
         return (int) db.insert(TABLE_CONVERSATIONS, null, values);
     }
 
@@ -250,7 +260,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 Conversation conversation = new Conversation(
                         c.getInt(c.getColumnIndex(KEY_CONVERSATIONS_GROUP_ID)),
                         c.getString(c.getColumnIndex(KEY_CONVERSATIONS_SUBJECT)),
-                        c.getString(c.getColumnIndex(KEY_CONVERSATIONS_LAST_MESSAGE_TEXT)));
+                        c.getString(c.getColumnIndex(KEY_CONVERSATIONS_SUBJECT)),
+                        c.getLong(c.getColumnIndex(KEY_CONVERSATIONS_LAST_MESSAGE_TEXT)));
 
                 conversations.add(conversation);
             }
@@ -293,7 +304,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 Message message = new Message(
                         c.getInt(c.getColumnIndex(KEY_MESSAGES_ID)),
                         c.getInt(c.getColumnIndex(KEY_CONVERSATIONS_GROUP_ID)),
-                        c.getInt(c.getColumnIndex(KEY_MESSAGES_DATE_SENT)),
+                        c.getLong(c.getColumnIndex(KEY_MESSAGES_DATE_SENT)),
                         c.getString(c.getColumnIndex(KEY_MESSAGES_TEXT)),
                         c.getString(c.getColumnIndex(KEY_MESSAGES_SUBJECT)),
                         c.getInt(c.getColumnIndex(KEY_USER_ACCOUN_ID)));

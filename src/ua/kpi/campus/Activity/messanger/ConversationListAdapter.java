@@ -1,7 +1,6 @@
 package ua.kpi.campus.Activity.messanger;
 
 import android.content.Context;
-import android.graphics.Typeface;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,12 +9,10 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import ua.kpi.campus.Activity.MainActivity;
 import ua.kpi.campus.R;
-import ua.kpi.campus.api.jsonparsers.message.UserConversationData;
+import ua.kpi.campus.model.Conversation;
+import ua.kpi.campus.utils.Time;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
+import java.util.List;
 
 /**
  * Class
@@ -23,13 +20,13 @@ import java.util.Date;
  * @author Artur Dzidzoiev
  * @version 12/22/13
  */
-public class ConversationListAdapter extends ArrayAdapter<UserConversationData> {
+public class ConversationListAdapter extends ArrayAdapter<Conversation> {
     private final Context context;
-    private final ArrayList<UserConversationData> values;
+    private final List<Conversation> values;
     private final int maxLength = getContext().getResources().getInteger(R.integer.message_max_length_string);
     private final int maxLengthTheme = getContext().getResources().getInteger(R.integer.message_max_length_theme_string);
 
-    public ConversationListAdapter(Context context, ArrayList<UserConversationData> values) {
+    public ConversationListAdapter(Context context, List<Conversation> values) {
         super(context, R.layout.list_item_message, values);
         this.context = context;
         this.values = values;
@@ -52,11 +49,10 @@ public class ConversationListAdapter extends ArrayAdapter<UserConversationData> 
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        UserConversationData currentConversation = values.get(position);
+        Conversation currentConversation = values.get(position);
         viewHolder.tSubject.setText(formatString(currentConversation.getSubject(), maxLengthTheme));
-        viewHolder.tSubject.setTypeface(null, Typeface.BOLD);
         viewHolder.tLastMessageText.setText(formatString(currentConversation.getLastMessageText(), maxLength));
-        viewHolder.tLastDateText.setText(formatDate(currentConversation));
+        viewHolder.tLastDateText.setText(Time.getShortWithDate(currentConversation.getLastMessageDate()));
 
         return convertView;
     }
@@ -67,18 +63,6 @@ public class ConversationListAdapter extends ArrayAdapter<UserConversationData> 
             original = original + "...";
         }
         return original;
-    }
-
-    private static String formatDate(UserConversationData currentConversation) {
-        SimpleDateFormat inputDate = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
-        SimpleDateFormat parsedDate = new SimpleDateFormat("HH:mm E', 'dd");
-        Date lastDate = new Date();
-        try {
-            lastDate = inputDate.parse(currentConversation.getLastMessageDate());
-        } catch (ParseException e) {
-            Log.e(MainActivity.class.getName(), MessagesViewFragment.class.hashCode() + e.toString());
-        }
-        return parsedDate.format(lastDate);
     }
 
     static class ViewHolder {

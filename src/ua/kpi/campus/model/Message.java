@@ -9,12 +9,12 @@ package ua.kpi.campus.model;
 public class Message {
     private int messageId;
     private int groupId;
-    private int timeSent;
+    private long timeSent;
     private String text;
     private String subject;
     private int senderId;
 
-    public Message(int messageId, int groupId, int timeSent, String text, String subject, int senderId) {
+    public Message(int messageId, int groupId, long timeSent, String text, String subject, int senderId) {
         this.messageId = messageId;
         this.groupId = groupId;
         this.timeSent = timeSent;
@@ -51,7 +51,7 @@ public class Message {
         this.groupId = groupId;
     }
 
-    public int getTimeSent() {
+    public long getTimeSent() {
         return timeSent;
     }
 

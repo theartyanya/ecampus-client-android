@@ -29,6 +29,7 @@ import ua.kpi.campus.loaders.HttpStringSupportLoader;
 import ua.kpi.campus.loaders.asynctask.AsyncTaskManager;
 import ua.kpi.campus.loaders.asynctask.HttpLoadTask;
 import ua.kpi.campus.loaders.asynctask.OnTaskCompleteListener;
+import ua.kpi.campus.model.dbhelper.DatabaseHelper;
 
 public class LoginActivity extends FragmentActivity implements LoaderManager.LoaderCallbacks<HttpResponse>, OnTaskCompleteListener {
     public final static String LOG_TAG = LoginActivity.class.getName();
@@ -138,6 +139,8 @@ public class LoginActivity extends FragmentActivity implements LoaderManager.Loa
                 case CURRENT_USER_LOADER_ID:
                     if (httpResponse.getStatusCode() == HttpStatus.SC_OK) {
                         Session.setCurrentUser(parseUser(userDataStr).getData());
+                        DatabaseHelper db = new DatabaseHelper(getApplicationContext(), Session.getCurrentUser().getUserAccountID());
+
                         startMainActivity();
                     } else {
                         showToastLong(getResources().getString(R.string.login_activity_access_denied));
