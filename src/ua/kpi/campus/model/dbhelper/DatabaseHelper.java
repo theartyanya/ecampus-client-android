@@ -106,7 +106,7 @@ public class DatabaseHelper extends SQLiteOpenHelper implements Closeable {
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
-        Log.d(TAG, hashCode() + " instance of db " + DATABASE_NAME + DATABASE_VERSION + "created.");
+        Log.d(TAG, hashCode() + " instance of db " + DATABASE_NAME + DATABASE_VERSION + " created.");
     }
 
     @Override

@@ -1,6 +1,5 @@
 package ua.kpi.campus.Activity.messenger;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
@@ -9,9 +8,7 @@ import android.support.v4.content.Loader;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.*;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -27,11 +24,8 @@ import ua.kpi.campus.loaders.HttpResponse;
 import ua.kpi.campus.loaders.HttpStringLoader;
 import ua.kpi.campus.loaders.HttpStringSupportLoader;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 
 /**
  * Class
@@ -145,81 +139,12 @@ public class MessagesViewFragment extends ListFragment implements LoaderManager.
     }
 
     private void showMessagesListView() {
-        mAdapter = new ConversationListAdapter(getActivity(), messages);
+        mAdapter = new MessagesViewAdapter(getActivity(), messages);
         setListAdapter(mAdapter);
     }
 
     @Override
     public void onLoaderReset(Loader<HttpResponse> httpResponseLoader) {
         //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    private class ConversationListAdapter extends ArrayAdapter<MessageItem> {
-        private final Context context;
-        private final ArrayList<MessageItem> values;
-
-        public ConversationListAdapter(Context context, ArrayList<MessageItem> values) {
-            super(context, R.layout.list_item_message, values);
-            this.context = context;
-            this.values = values;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            //position = getCount() - position - 1;
-            MessageItem currentMessage = values.get(position);
-            LayoutInflater inflater = (LayoutInflater) context
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View rowView;
-            if (currentMessage.getSenderUserAccountID() == currentUserID) {
-                rowView = inflater.inflate(R.layout.message_sent, parent, false);
-            } else {
-                rowView = inflater.inflate(R.layout.message_received, parent, false);
-            }
-
-            TextView tName = (TextView) rowView.findViewById(R.id.senderName);
-            TextView tDate = (TextView) rowView.findViewById(R.id.timeSent);
-            TextView tTextMessage = (TextView) rowView.findViewById(R.id.textMessage);
-            ImageView avatar = (ImageView) rowView.findViewById(R.id.avatar_small);
-
-            tName.setText(Integer.toString(currentMessage.getSenderUserAccountID()));
-            tDate.setText(formatDate(currentMessage));
-            tTextMessage.setText(currentMessage.getText());
-
-            Log.d(MainActivity.TAG, hashCode() + " created message view " + position);
-            return rowView;
-        }
-
-        private String formatString(String original, final int maxLength) {
-            if (original.length() > maxLength) {
-                original = original.substring(0, maxLength);
-                original = original + "...";
-            }
-            return original;
-        }
-
-        private String formatDate(MessageItem currentMessage) {
-            SimpleDateFormat inputDate = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss a");
-            SimpleDateFormat longDate = new SimpleDateFormat("HH:mm:ss E', 'dd");
-            SimpleDateFormat shortDate = new SimpleDateFormat("HH:mm:ss");
-
-            Date today = getTodayDate();
-            Date newDate = new Date();
-            try {
-                newDate = inputDate.parse(currentMessage.getDateSent());
-            } catch (ParseException e) {
-                Log.e(MainActivity.class.getName(), MessagesViewFragment.class.hashCode() + e.toString());
-            }
-
-            return today.after(newDate) ? longDate.format(newDate) : shortDate.format(newDate);
-        }
-
-        private Date getTodayDate() {
-            Date today = new Date();
-            today.setHours(0);
-            today.setMinutes(0);
-            today.setSeconds(0);
-            return today;
-        }
     }
 }
