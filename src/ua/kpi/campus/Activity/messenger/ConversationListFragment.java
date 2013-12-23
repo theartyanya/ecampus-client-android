@@ -84,6 +84,7 @@ public class ConversationListFragment extends ListFragment {
     }
 
     private void loadData() {
+        Log.d(this.getClass().getName(), hashCode() + " starting  AsyncHttpClient");
         AsyncHttpClient client = new AsyncHttpClient();
         Log.d(this.getClass().getName(), hashCode() + " load started ");
         client.get(CampusApiURL.getConversations(sessionId),

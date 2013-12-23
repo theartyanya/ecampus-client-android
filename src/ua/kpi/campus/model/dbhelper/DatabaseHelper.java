@@ -26,7 +26,7 @@ import java.util.Set;
  */
 public class DatabaseHelper extends SQLiteOpenHelper implements Closeable {
     public final static String TAG = DatabaseHelper.class.getName();
-    private static final int DATABASE_VERSION = 20;
+    private static final int DATABASE_VERSION = 21;
     private static final String DATABASE_NAME = "eCampus";
     // Table Names
     private static final String TABLE_USERS = "users";
@@ -336,7 +336,8 @@ public class DatabaseHelper extends SQLiteOpenHelper implements Closeable {
 
     public List<Conversation> getAllConversations() {
         List<Conversation> conversations = new ArrayList<>();
-        String selectQuery = "SELECT  * FROM " + TABLE_CONVERSATIONS;
+        String selectQuery = "SELECT  * FROM " + TABLE_CONVERSATIONS +
+                " ORDER BY " + KEY_CONVERSATIONS_LAST_MESSAGE_DATE + " DESC";
         Log.d(TAG, hashCode() + " SQL query: " + selectQuery);
 
         SQLiteDatabase db = this.getReadableDatabase();

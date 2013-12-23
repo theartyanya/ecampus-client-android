@@ -12,10 +12,23 @@ import java.util.Date;
  */
 public class Time {
     private static final String PATTEN_INPUT = "yyyy-MM-dd'T'HH:mm:ss.SSS";
+    private static final String PATTEN_INPUT_MESSAGE = "MM/dd/yyyy hh:mm:ss a";
     private static final String PATTERN_SHORT_DATE = "HH:mm E', 'dd";
+    private static final String PATTERN_SHORT = "HH:mm:ss";
 
     public static long getUnixTime(String dateStr) {
         SimpleDateFormat inputDate = new SimpleDateFormat(PATTEN_INPUT);
+        Date date = new Date();
+        try {
+            date = inputDate.parse(dateStr);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return date.getTime();
+    }
+
+    public static long getUnixTimeMessage(String dateStr) {
+        SimpleDateFormat inputDate = new SimpleDateFormat(PATTEN_INPUT_MESSAGE);
         Date date = new Date();
         try {
             date = inputDate.parse(dateStr);
@@ -31,5 +44,19 @@ public class Time {
         return inputDate.format(date);
     }
 
+    public static String getShortDependsOnToday(long unixtime) {
+        SimpleDateFormat longDate = new SimpleDateFormat(PATTERN_SHORT_DATE);
+        SimpleDateFormat shortDate = new SimpleDateFormat(PATTERN_SHORT);
+        Date newDate = new Date(unixtime);
+        long today = getTodayDate();
+        return unixtime < today ? longDate.format(newDate) : shortDate.format(newDate);
+    }
 
+    private static long getTodayDate() {
+        Date today = new Date();
+        today.setHours(0);
+        today.setMinutes(0);
+        today.setSeconds(0);
+        return today.getTime();
+    }
 }
