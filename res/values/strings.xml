@@ -16,6 +16,8 @@
     <string name="no">Ні</string>
     <string name="permission_yes">Дозволено</string>
     <string name="permission_no">Не дозволено</string>
+    <string name="time_today">сьогодні о </string>
+
 
     <string name="task_working">Working (%1$d)…</string>
     <string name="task_starting">Починаємо завантаження…</string>

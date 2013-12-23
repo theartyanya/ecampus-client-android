@@ -1,18 +1,21 @@
 package ua.kpi.campus.model;
 
+import ua.kpi.campus.api.jsonparsers.message.MessageItem;
+import ua.kpi.campus.utils.Time;
+
 /**
  * DB representation of message
  *
  * @author Artur Dzidzoiev
  * @version 12/21/13
  */
-public class Message {
-    private int messageId;
-    private int groupId;
-    private long timeSent;
-    private String text;
-    private String subject;
-    private int senderId;
+public final class Message {
+    private final int messageId;
+    private final int groupId;
+    private final long timeSent;
+    private final String text;
+    private final String subject;
+    private final int senderId;
 
     public Message(int messageId, int groupId, long timeSent, String text, String subject, int senderId) {
         this.messageId = messageId;
@@ -23,48 +26,50 @@ public class Message {
         this.senderId = senderId;
     }
 
+    public Message(MessageItem messageItem) {
+        this.messageId = messageItem.getMessageID();
+        this.groupId = messageItem.getMessageGroupID();
+        this.timeSent = Time.getUnixTimeMessage(messageItem.getDateSent());
+        this.text = messageItem.getText();
+        this.subject = messageItem.getSubject();
+        this.senderId = messageItem.getSenderUserAccountID();
+    }
 
-    public Message() {
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Message message = (Message) o;
+
+        if (messageId != message.messageId) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return messageId;
     }
 
     public String getSubject() {
         return subject;
     }
 
-    public void setSubject(String subject) {
-        this.subject = subject;
-    }
-
     public int getMessageId() {
         return messageId;
-    }
-
-    public void setMessageId(int messageId) {
-        this.messageId = messageId;
     }
 
     public int getGroupId() {
         return groupId;
     }
 
-    public void setGroupId(int groupId) {
-        this.groupId = groupId;
-    }
-
     public long getTimeSent() {
         return timeSent;
     }
 
-    public void setTimeSent(int timeSent) {
-        this.timeSent = timeSent;
-    }
-
     public String getText() {
         return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
     }
 
     public int getSenderId() {

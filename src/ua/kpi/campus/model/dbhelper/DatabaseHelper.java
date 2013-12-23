@@ -26,6 +26,7 @@ import java.util.Set;
  */
 public class DatabaseHelper extends SQLiteOpenHelper implements Closeable {
     public final static String TAG = DatabaseHelper.class.getName();
+    private static final int MESSAGES_SET_CAPACITY = 100;
     private static final int DATABASE_VERSION = 21;
     private static final String DATABASE_NAME = "eCampus";
     // Table Names
@@ -365,22 +366,31 @@ public class DatabaseHelper extends SQLiteOpenHelper implements Closeable {
     /*
      * TABLE_MESSAGES
      */
-    public int createMessage(Message message) {
+    private int createMessage(Message message) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
         values.put(KEY_MESSAGES_ID, message.getMessageId());
         values.put(KEY_CONVERSATIONS_GROUP_ID, message.getGroupId());
         values.put(KEY_MESSAGES_DATE_SENT, message.getTimeSent());
-        values.put(KEY_MESSAGES_SUBJECT, message.getSubject());
-        values.put(KEY_MESSAGES_TEXT, message.getText());
         values.put(KEY_USER_ACCOUN_ID, message.getSenderId());
-        return (int) db.insert(TABLE_USERS, null, values);
+        values.put(KEY_MESSAGES_TEXT, message.getText());
+        values.put(KEY_MESSAGES_SUBJECT, message.getSubject());
+        return (int) db.insert(TABLE_MESSAGES, null, values);
     }
 
-    public List<Message> getLastMessages(int groupId) {
-        List<Message> messages = new ArrayList<>();
-        String selectQuery = "SELECT * FROM " + TABLE_CONVERSATIONS +
+    public void addAllMessages(Set<Message> messages, int groupId) {
+        Set<Message> messageSet = getLastMessages(groupId);
+        for (Message message : messages) {
+            if (!messageSet.contains(message)) {
+                createMessage(message);
+            }
+        }
+    }
+
+    public Set<Message> getLastMessages(int groupId) {
+        Set<Message> messages = new HashSet<>(MESSAGES_SET_CAPACITY);
+        String selectQuery = "SELECT * FROM " + TABLE_MESSAGES +
                 " WHERE " + KEY_CONVERSATIONS_GROUP_ID + " = " + Integer.toString(groupId) +
                 " ORDER BY " + KEY_MESSAGES_DATE_SENT;
 
@@ -389,10 +399,12 @@ public class DatabaseHelper extends SQLiteOpenHelper implements Closeable {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor c = db.rawQuery(selectQuery, null);
 
-        // looping through all rows and adding to list
+        if(c.getCount() == 0) {
+            return messages;
+        }
 
         if (c.moveToFirst()) {
-            while (c.moveToNext()) {
+           do {
                 Message message = new Message(
                         c.getInt(c.getColumnIndex(KEY_MESSAGES_ID)),
                         c.getInt(c.getColumnIndex(KEY_CONVERSATIONS_GROUP_ID)),
@@ -401,9 +413,8 @@ public class DatabaseHelper extends SQLiteOpenHelper implements Closeable {
                         c.getString(c.getColumnIndex(KEY_MESSAGES_SUBJECT)),
                         c.getInt(c.getColumnIndex(KEY_USER_ACCOUN_ID)));
                 messages.add(message);
-            }
+            } while (c.moveToNext());
         }
-
 
         return messages;
     }

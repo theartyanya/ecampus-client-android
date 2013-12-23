@@ -53,4 +53,21 @@ public class MessageItem {
     public String getText() {
         return text;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        MessageItem that = (MessageItem) o;
+
+        if (messageID != that.messageID) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return messageID;
+    }
 }

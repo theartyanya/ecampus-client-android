@@ -3,29 +3,30 @@ package ua.kpi.campus.Activity.messenger;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.Loader;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.*;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.TextHttpResponseHandler;
 import org.json.JSONException;
 import ua.kpi.campus.Activity.MainActivity;
 import ua.kpi.campus.R;
-import ua.kpi.campus.Session;
 import ua.kpi.campus.api.CampusApiURL;
 import ua.kpi.campus.api.jsonparsers.JSONMessageGetItemParser;
 import ua.kpi.campus.api.jsonparsers.message.MessageItem;
-import ua.kpi.campus.api.jsonparsers.user.UserData;
-import ua.kpi.campus.loaders.HttpResponse;
-import ua.kpi.campus.loaders.HttpStringLoader;
-import ua.kpi.campus.loaders.HttpStringSupportLoader;
+import ua.kpi.campus.model.Message;
+import ua.kpi.campus.model.dbhelper.DatabaseHelper;
+import ua.kpi.campus.utils.pulltorefresh.PullToRefreshBase;
+import ua.kpi.campus.utils.pulltorefresh.PullToRefreshListView;
 
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Class
@@ -33,18 +34,19 @@ import java.util.Collections;
  * @author Artur Dzidzoiev
  * @version 12/19/13
  */
-public class MessagesViewFragment extends ListFragment implements LoaderManager.LoaderCallbacks<HttpResponse> {
+public class MessagesViewFragment extends ListFragment{
+    public final static String TAG = MainActivity.TAG;
     public final static String EXTRA_GROUP_ID = "groupId";
-    private final static int MESSAGE_ITEMS_LOADER = 23;
-    private LoaderManager.LoaderCallbacks<HttpResponse> mCallbacks;
-    private LoaderManager loaderManager;
-    private ArrayAdapter mAdapter;
-    private int currentUserID;
+
+    private BaseAdapter mAdapter;
+    private Set<Message> messages;
     private int groupId;
-    private UserData currentUser;
-    private ArrayList<MessageItem> messages;
+    private String sessionId;
+
     private Button sendButton;
     private EditText messageInput;
+    private PullToRefreshListView mPullToRefreshView;
+
     private View.OnClickListener sendButtonListener = new View.OnClickListener() {
 
         @Override
@@ -57,10 +59,18 @@ public class MessagesViewFragment extends ListFragment implements LoaderManager.
         }
     };
 
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View rootView = inflater.inflate(R.layout.fragment_messages, container, false);
+        return rootView;
+    }
+
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
-        Log.d(MainActivity.TAG, hashCode() + " onActivityCreated: fragment " + this.getClass().getName());
         super.onActivityCreated(savedInstanceState);
+        Log.d(MainActivity.TAG, hashCode() + " onActivityCreated: fragment " + this.getClass().getName());
         View footer = getLayoutInflater(savedInstanceState).inflate(R.layout.messages_footer, null);
         ListView listView = getListView();
         listView.addFooterView(footer);
@@ -78,36 +88,70 @@ public class MessagesViewFragment extends ListFragment implements LoaderManager.
         getListView().setEmptyView(progressBar);
 
         //loading stored data
-        currentUser = Session.getCurrentUser();
-        currentUserID = currentUser.getUserAccountID();
+        try (DatabaseHelper db = new DatabaseHelper(getActivity().getApplicationContext())) {
+            sessionId = db.getSessionId();
+        }
         Intent intent = getActivity().getIntent();
         groupId = (int) intent.getExtras().get(EXTRA_GROUP_ID);
 
-        //init loader
-        mCallbacks = this;
-        loaderManager = getLoaderManager();
-        initLoader();
+        // Set a listener to be invoked when the list should be refreshed.
+        mPullToRefreshView = (PullToRefreshListView) getActivity().findViewById(R.id.pull_to_refresh_listview);
+        mPullToRefreshView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
+            @Override
+            public void onRefresh(PullToRefreshBase<ListView> refreshView) {
+                loadDataToDB();
+                messages.addAll(getFromDB());
+            }
+        });
+
+        messages = getFromDB();
+        if (messages.isEmpty()) {
+            loadDataToDB();
+            messages.addAll(getFromDB());
+        }
+        mAdapter = new MessagesViewAdapter(getActivity(), messages);
+        setListAdapter(mAdapter);
     }
 
-    private void initLoader() {
-        Bundle url = new Bundle();
-        url.putString(HttpStringLoader.URL_STRING, CampusApiURL.getConversation(Session.getSessionId(), groupId, 1, getResources().getInteger(R.integer.messages_size_page)));
-        loaderManager.initLoader(MESSAGE_ITEMS_LOADER, url, mCallbacks).onContentChanged();
+    private Set<Message> getFromDB() {
+        Set<Message> messageSet;
+        try (DatabaseHelper db = new DatabaseHelper(getActivity().getApplicationContext())) {
+            messageSet = db.getLastMessages(groupId);
+        }
+        mPullToRefreshView.onRefreshComplete();
+        return messageSet;
+    }
+
+    private void loadDataToDB() {
+        Log.d(this.getClass().getName(), hashCode() + " starting  AsyncHttpClient");
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.get(CampusApiURL.getConversation(sessionId, groupId, 1, getResources().getInteger(R.integer.messages_size_page)),
+                new TextHttpResponseHandler() {
+                    @Override
+                    public void onSuccess(int statusCode, org.apache.http.Header[] headers, java.lang.String responseBody) {
+                        Log.d(MainActivity.TAG, hashCode() + " received.");
+                        ArrayList<MessageItem> userConversationDatas = parseConversation(responseBody);
+                        Set<Message> messageSet = new HashSet<>();
+                        for (MessageItem messageItem : userConversationDatas) {
+                            messageSet.add(new Message(messageItem));
+                        }
+                        try (DatabaseHelper db = new DatabaseHelper(getActivity().getApplicationContext())) {
+                            db.addAllMessages(messageSet,groupId);
+                        }
+                    }
+                });
     }
 
     private void sendMessage(String input) {
         input = input.replaceAll("\\s+", "%20");
         if (!input.isEmpty()) {
             AsyncHttpClient client = new AsyncHttpClient();
-            client.get(CampusApiURL.sendMessage(Session.getSessionId(), groupId, input, ""), new AsyncHttpResponseHandler() {
+            client.get(CampusApiURL.sendMessage(sessionId, groupId, input, ""), new AsyncHttpResponseHandler() {
 
 
                 @Override
                 public void onSuccess(String response) {
                     Log.d(MainActivity.TAG, hashCode() + " sent... ");
-
-                    //Log.d(MainActivity.TAG, hashCode() + " response: "+ response);
-                    initLoader();
                 }
             });
         }
@@ -122,29 +166,4 @@ public class MessagesViewFragment extends ListFragment implements LoaderManager.
         return new ArrayList<>();
     }
 
-    @Override
-    public Loader<HttpResponse> onCreateLoader(int i, Bundle bundle) {
-        Log.d(MainActivity.TAG, hashCode() + " load started " + i + " on URL: " + bundle.getString(HttpStringLoader.URL_STRING));
-        return new HttpStringSupportLoader(getActivity(), bundle.getString(HttpStringLoader.URL_STRING));
-    }
-
-    @Override
-    public void onLoadFinished(Loader<HttpResponse> httpResponseLoader, HttpResponse httpResponse) {
-        Log.d(MainActivity.TAG, hashCode() + " load finished");
-        //Log.d(MainActivity.TAG, hashCode() + " entity: \n" + httpResponse.getEntity());
-        ArrayList<MessageItem> messageItems = parseConversation(httpResponse.getEntity());
-        Collections.reverse(messageItems);
-        messages = messageItems;
-        showMessagesListView();
-    }
-
-    private void showMessagesListView() {
-        mAdapter = new MessagesViewAdapter(getActivity(), messages);
-        setListAdapter(mAdapter);
-    }
-
-    @Override
-    public void onLoaderReset(Loader<HttpResponse> httpResponseLoader) {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
 }

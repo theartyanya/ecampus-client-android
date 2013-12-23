@@ -5,21 +5,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import ua.kpi.campus.Activity.MainActivity;
 import ua.kpi.campus.R;
-import ua.kpi.campus.api.jsonparsers.message.MessageItem;
+import ua.kpi.campus.model.Message;
 import ua.kpi.campus.model.User;
 import ua.kpi.campus.model.dbhelper.DatabaseHelper;
 import ua.kpi.campus.utils.Time;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Set;
 
@@ -29,19 +24,19 @@ import java.util.Set;
  * @author Artur Dzidzoiev
  * @version 12/23/13
  */
-public class MessagesViewAdapter extends ArrayAdapter<MessageItem>{
+public class MessagesViewAdapter extends BaseAdapter {
     public final static String TAG = MessagesViewAdapter.class.getName();
     private final Context context;
-    private final ArrayList<MessageItem> values;
+    private final Set<Message> values;
     private final int currentUserID;
     private HashMap<Integer,User> users;
 
-    public MessagesViewAdapter(Context context, ArrayList<MessageItem> values) {
-        super(context, R.layout.list_item_message, values);
+    public MessagesViewAdapter(Context context, Set<Message> values) {
+        super();
         this.context = context;
         this.values = values;
         this.users = new HashMap<>();
-        try (DatabaseHelper db = new DatabaseHelper(getContext())) {
+        try (DatabaseHelper db = new DatabaseHelper(context)) {
             this.currentUserID = db.getCurrentUser().getId();
             Set<User> userset = db.getAllUsersSet();
             for (User user : userset) {
@@ -51,11 +46,26 @@ public class MessagesViewAdapter extends ArrayAdapter<MessageItem>{
     }
 
     @Override
+    public int getCount() {
+        return values.size();
+    }
+
+    @Override
+    public Object getItem(int i) {
+        return values.toArray()[i];
+    }
+
+    @Override
+    public long getItemId(int i) {
+        return i;
+    }
+
+    @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder;
-        MessageItem currentMessage;
-        currentMessage = values.get(position);
-        User sender = users.get(currentMessage.getSenderUserAccountID());
+        Message currentMessage;
+        currentMessage = (Message) values.toArray()[position];;
+        User sender = users.get(currentMessage.getSenderId());
         if (convertView == null) {
             viewHolder = new ViewHolder();
             LayoutInflater inflater = (LayoutInflater) context
@@ -66,7 +76,7 @@ public class MessagesViewAdapter extends ArrayAdapter<MessageItem>{
             viewHolder.tTextMessage = (TextView) convertView.findViewById(R.id.textMessage);
             viewHolder.avatar = (ImageView) convertView.findViewById(R.id.avatar_small);
 
-            if (currentMessage.getSenderUserAccountID() != currentUserID) {
+            if (currentMessage.getSenderId() != currentUserID) {
 
             }
             convertView.setTag(viewHolder);
@@ -76,7 +86,7 @@ public class MessagesViewAdapter extends ArrayAdapter<MessageItem>{
         }
 
         viewHolder.tName.setText(sender.getFullname());
-        viewHolder.tDate.setText(Time.getShortDependsOnToday(Time.getUnixTimeMessage(currentMessage.getDateSent())));
+        viewHolder.tDate.setText(Time.getShortDependsOnToday(currentMessage.getTimeSent()));
         viewHolder.tTextMessage.setText(currentMessage.getText());
         ImageLoader imageLoader = ImageLoader.getInstance();
         imageLoader.displayImage(sender.getPhoto(), viewHolder.avatar);
@@ -85,29 +95,6 @@ public class MessagesViewAdapter extends ArrayAdapter<MessageItem>{
         return convertView;
     }
 
-    private String getShortDependsOnToday(MessageItem currentMessage) {
-        SimpleDateFormat inputDate = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss a");
-        SimpleDateFormat longDate = new SimpleDateFormat("HH:mm:ss E', 'dd");
-        SimpleDateFormat shortDate = new SimpleDateFormat("HH:mm:ss");
-
-        Date today = getTodayDate();
-        Date newDate = new Date();
-        try {
-            newDate = inputDate.parse(currentMessage.getDateSent());
-        } catch (ParseException e) {
-            Log.e(MainActivity.class.getName(), MessagesViewFragment.class.hashCode() + e.toString());
-        }
-
-        return today.after(newDate) ? longDate.format(newDate) : shortDate.format(newDate);
-    }
-
-    private Date getTodayDate() {
-        Date today = new Date();
-        today.setHours(0);
-        today.setMinutes(0);
-        today.setSeconds(0);
-        return today;
-    }
     private static class ViewHolder {
         TextView tName;
         TextView tDate;

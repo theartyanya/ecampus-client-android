@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-<ListView
+<!--
+The PullToRefreshListView replaces a standard ListView widget.
+The ID CAN NOT be @+id/android:list
+-->
+<ua.kpi.campus.utils.pulltorefresh.PullToRefreshListView
         xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/pull_to_refresh_listview"
+        android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@android:id/list"
-        android:layout_alignParentTop="false"
-        android:stackFromBottom="true"
-        android:layout_above="@+id/keyboard_controls"/>
+        android:stackFromBottom="true"/>
