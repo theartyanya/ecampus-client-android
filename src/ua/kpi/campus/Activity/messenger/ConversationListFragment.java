@@ -112,8 +112,8 @@ public class ConversationListFragment extends ListFragment {
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
-        Conversation item = (Conversation) getListAdapter().getItem(position);
-        Log.d(MainActivity.TAG, hashCode() + " clicked on " + "l:" + l + " " + "v:" + v + " " + "position:" + position + " " + "id:" + id + " ");
+        Conversation item = (Conversation) getListAdapter().getItem(position-1);
+        Log.d(MainActivity.TAG, hashCode() + " clicked on " + "l:" + l + " " + "v:" + v + " " + "position:" + (position-1)  + " " + "id:" + id + " ");
         Intent intent = new Intent(getActivity(), MessageActivity.class);
         Log.d(MainActivity.TAG, hashCode() + " starting new activity... " + MessageActivity.class.getName());
         intent.putExtra(MessagesViewFragment.EXTRA_GROUP_ID, item.getGroupId());

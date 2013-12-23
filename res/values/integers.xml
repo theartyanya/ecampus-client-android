@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <integer name="message_max_length_string">25</integer>
+    <integer name="message_max_length_string">23</integer>
     <integer name="message_max_length_theme_string">50</integer>
     <integer name="messages_size_page">15</integer>
     <integer name="messages_list_size">100</integer>

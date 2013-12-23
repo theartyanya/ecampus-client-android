@@ -11,11 +11,11 @@ import java.util.Date;
  * @version 12/22/13
  */
 public class Time {
-    private static final String DATE_PATTERN_LONG = "yyyy-MM-dd'T'HH:mm:ss.SSS";
+    private static final String PATTEN_INPUT = "yyyy-MM-dd'T'HH:mm:ss.SSS";
     private static final String PATTERN_SHORT_DATE = "HH:mm E', 'dd";
 
     public static long getUnixTime(String dateStr) {
-        SimpleDateFormat inputDate = new SimpleDateFormat(DATE_PATTERN_LONG);
+        SimpleDateFormat inputDate = new SimpleDateFormat(PATTEN_INPUT);
         Date date = new Date();
         try {
             date = inputDate.parse(dateStr);
@@ -30,4 +30,6 @@ public class Time {
         Date date = new Date(unixtime);
         return inputDate.format(date);
     }
+
+
 }
