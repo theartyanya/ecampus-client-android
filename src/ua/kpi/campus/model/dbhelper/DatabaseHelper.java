@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import ua.kpi.campus.api.jsonparsers.message.MessageItem;
 import ua.kpi.campus.api.jsonparsers.message.UserMessage;
 import ua.kpi.campus.model.Conversation;
 import ua.kpi.campus.model.CurrentUser;
@@ -27,7 +28,7 @@ import java.util.Set;
 public class DatabaseHelper extends SQLiteOpenHelper implements Closeable {
     public final static String TAG = DatabaseHelper.class.getName();
     private static final int MESSAGES_SET_CAPACITY = 100;
-    private static final int DATABASE_VERSION = 21;
+    private static final int DATABASE_VERSION = 22;
     private static final String DATABASE_NAME = "eCampus";
     // Table Names
     private static final String TABLE_USERS = "users";
@@ -188,17 +189,21 @@ public class DatabaseHelper extends SQLiteOpenHelper implements Closeable {
         db.insert(TABLE_CURRENT_USER, null, values);
     }
 
-    //TODO change this method to update login and password
     public void updateCurrentUser(CurrentUser user) {
+        Log.d(TAG, hashCode() + " updating sessionId from " + getSessionId());
         SQLiteDatabase db = this.getWritableDatabase();
 
-        ContentValues values = new ContentValues();
-        values.put(KEY_CURRENT_USER_SESSION_ID, user.getSessionId());
+        //ContentValues values = new ContentValues();
+        //values.put(KEY_CURRENT_USER_ID, user.getId());
+        //values.put(KEY_CURRENT_USER_SESSION_ID, user.getSessionId());
+        //values.put(KEY_CURRENT_USER_LOGIN, user.getLogin());
+        //values.put(KEY_CURRENT_USER_PASSWORD, user.getPassword());
 
-        // updating row
-        db.update(TABLE_CURRENT_USER, values, KEY_CURRENT_USER_SESSION_ID + " = ?",
-                new String[]{String.valueOf(user.getSessionId())});
-        Log.d(TAG, hashCode() + " sessionId updated");
+        String selectQuery = "UPDATE " + TABLE_CURRENT_USER + " SET " +
+                KEY_CURRENT_USER_SESSION_ID + " = '" + user.getSessionId() + "'";
+        Log.d(TAG, hashCode() + " SQL query: " + selectQuery);
+        db.rawQuery(selectQuery, null).moveToFirst();
+        Log.d(TAG, hashCode() + " sessionId updated to " + getSessionId());
     }
 
 
@@ -397,9 +402,9 @@ public class DatabaseHelper extends SQLiteOpenHelper implements Closeable {
      * Adding messages without checking of presence them in Messages table
      * @param messages - set of messages
      */
-    public void addAllMessages(Set<Message> messages) {
-        for (Message message : messages) {
-                createMessage(message);
+    public void addAllMessages(List<MessageItem> messages) {
+        for (MessageItem message : messages) {
+            createMessage(new Message(message));
         }
     }
 
