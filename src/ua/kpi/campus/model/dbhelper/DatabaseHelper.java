@@ -380,6 +380,7 @@ public class DatabaseHelper extends SQLiteOpenHelper implements Closeable {
         values.put(KEY_USER_ACCOUN_ID, message.getSenderId());
         values.put(KEY_MESSAGES_TEXT, message.getText());
         values.put(KEY_MESSAGES_SUBJECT, message.getSubject());
+        Log.d(TAG, hashCode() + " adding message id" + message.getMessageId());
         return (int) db.insert(TABLE_MESSAGES, null, values);
     }
 
@@ -401,19 +402,22 @@ public class DatabaseHelper extends SQLiteOpenHelper implements Closeable {
      * Adding messages without checking of presence them in Messages table
      * @param messages - set of messages
      */
-    public void addAllMessages(List<MessageItem> messages) {
+    public synchronized void addAllMessages(List<MessageItem> messages) {
+        Log.d(TAG, hashCode() + " adding started.");
         for (MessageItem message : messages) {
             createMessage(new Message(message));
         }
+        Log.d(TAG, hashCode() + " adding finished.");
     }
 
-    public List<Message> getLastMessages(int groupId) {
+    public synchronized List<Message> getLastMessages(int groupId) {
         List<Message> messages = new ArrayList<>(MESSAGES_SET_CAPACITY);
         String selectQuery = "SELECT * FROM " + TABLE_MESSAGES +
                 " WHERE " + KEY_CONVERSATIONS_GROUP_ID + " = " + Integer.toString(groupId) +
                 " ORDER BY " + KEY_MESSAGES_DATE_SENT;
 
         Log.d(TAG, hashCode() + " SQL query: " + selectQuery);
+        Log.d(TAG, hashCode() + " getting last messages.");
 
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor c = db.rawQuery(selectQuery, null);

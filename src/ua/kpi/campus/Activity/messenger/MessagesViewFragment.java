@@ -68,17 +68,18 @@ public class MessagesViewFragment extends ListFragment {
         super.onActivityCreated(savedInstanceState);
         Log.d(TAG, hashCode() + " onActivityCreated: fragment " + this.getClass().getName());
         View footer = getLayoutInflater(savedInstanceState).inflate(R.layout.messages_footer, null);
-        ListView listView = getListView();
+        final ListView listView = getListView();
         listView.addFooterView(footer);
         listView.setStackFromBottom(true);
-
+        Intent intent = getActivity().getIntent();
+        mGroupId = (int) intent.getExtras().get(EXTRA_GROUP_ID);
         mContext = getActivity().getApplicationContext();
         mSendButton = (Button) getActivity().findViewById(R.id.sendButton);
         mSendButton.setOnClickListener(sendButtonListener);
         mMessageInput = (EditText) getActivity().findViewById(R.id.messageText);
 
         //loading progress bar
-        ProgressBar progressBar = new ProgressBar(getActivity());
+        final ProgressBar progressBar = new ProgressBar(getActivity());
         progressBar.setLayoutParams(new DrawerLayout.LayoutParams(DrawerLayout.LayoutParams.WRAP_CONTENT,
                 DrawerLayout.LayoutParams.WRAP_CONTENT, Gravity.CENTER));
         progressBar.setIndeterminate(true);
@@ -88,17 +89,17 @@ public class MessagesViewFragment extends ListFragment {
         try (DatabaseHelper db = new DatabaseHelper(getActivity().getApplicationContext())) {
             mSessionId = db.getSessionId();
         }
-        Intent intent = getActivity().getIntent();
-        mGroupId = (int) intent.getExtras().get(EXTRA_GROUP_ID);
 
         // Set a listener to be invoked when the list should be refreshed.
         mPullToRefreshView = (PullToRefreshListView) getActivity().findViewById(R.id.pull_to_refresh_listview);
         mPullToRefreshView.setOnRefreshListener(new OnRefreshListener());
+
         List<Message> messages = getFromDB();
         if (messages.isEmpty()) {
             loadDataToDB();
+        } else {
+            updateListView(messages);
         }
-        updateListView(messages);
     }
 
     private List<Message> getFromDB() {
@@ -106,13 +107,13 @@ public class MessagesViewFragment extends ListFragment {
         try (DatabaseHelper db = new DatabaseHelper(getActivity().getApplicationContext())) {
             messages = db.getLastMessages(mGroupId);
         }
-        mPullToRefreshView.onRefreshComplete();
         return messages;
     }
 
     private void updateListView(List<Message> messages) {
         mAdapter = new MessagesViewAdapter(getActivity(), messages);
         setListAdapter(mAdapter);
+        mPullToRefreshView.onRefreshComplete();
     }
 
     private void loadDataToDB() {
@@ -128,8 +129,8 @@ public class MessagesViewFragment extends ListFragment {
                         List<MessageItem> userConversationDatas = parseConversation(responseBody);
                         try (DatabaseHelper db = new DatabaseHelper(getActivity().getApplicationContext())) {
                             db.addAllMessages(userConversationDatas);
+                            updateListView(db.getLastMessages(mGroupId));
                         }
-                        mPullToRefreshView.onRefreshComplete();
                     }
 
                     @Override
