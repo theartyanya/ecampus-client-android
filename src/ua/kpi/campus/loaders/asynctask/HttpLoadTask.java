@@ -3,15 +3,17 @@ package ua.kpi.campus.loaders.asynctask;
 import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.util.Log;
-import ua.kpi.campus.Activity.LoginActivity;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.TextHttpResponseHandler;
+import ua.kpi.campus.Activity.MainActivity;
 import ua.kpi.campus.R;
-import ua.kpi.campus.loaders.HTTP;
 import ua.kpi.campus.loaders.HttpResponse;
 
 public class HttpLoadTask extends AsyncTask<Void, String, HttpResponse> {
-
+    public final static String TAG = MainActivity.TAG;
     protected final Resources mResources;
     private HttpResponse mResult;
+    private boolean mFinishedFlag;
     private String mProgressMessage;
     private IProgressTracker mProgressTracker;
     private String url;
@@ -95,27 +97,45 @@ public class HttpLoadTask extends AsyncTask<Void, String, HttpResponse> {
     /* Separate Thread */
     @Override
     protected HttpResponse doInBackground(Void... arg0) {
-        // Working in separate thread
+        mFinishedFlag = false;
+        AsyncHttpClient client = new AsyncHttpClient();
+        Log.d(MainActivity.TAG, hashCode() + " async task load started " + url);
+        client.get(url,
+                new TextHttpResponseHandler() {
+                    @Override
+                    public void onSuccess(int statusCode, org.apache.http.Header[] headers, java.lang.String responseBody) {
+                        Log.d(TAG, hashCode() + " received.");
+                        mFinishedFlag = true;
+                        mResult = new HttpResponse(statusCode,responseBody);
+                    }
 
-/*        new Thread() {
+                    @Override
+                    public void onFailure(int statusCode, org.apache.http.Header[] headers, java.lang.String responseBody, java.lang.Throwable error) {
+                        Log.d(TAG, hashCode() + " failed " + statusCode);
+                        mFinishedFlag = true;
+                        mResult = new HttpResponse(statusCode,responseBody);
+                    }
+                });
+
+
+    new Thread() {
             @Override
             public synchronized void start() {
                 int i = 0;
-                while (isCancelled()) {
+                while (!mFinishedFlag) {
                     i++;
                     try {
                         // This call causes onProgressUpdate call on UI thread
-                        publishProgress(mResources.getString(R.string.task_working, i));
+                        publishProgress(String.format("%s\n(%s)",mResources.getString(mWorkString), i));
                         Thread.sleep(1000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                 }
             }
-        };*/
+        }.start();
 
-        publishProgress(mResources.getString(mWorkString));
-        Log.d(LoginActivity.LOG_TAG, hashCode() + " loadInBackground start");
-        return HTTP.getString(url);
+        //publishProgress(mResources.getString(mWorkString));
+        return mResult;
     }
 }

@@ -48,10 +48,10 @@ public class MessagesViewFragment extends ListFragment {
 
         @Override
         public void onClick(View arg0) {
-            Log.d(MainActivity.TAG, hashCode() + " send click!");
+            Log.d(TAG, hashCode() + " send click!");
             String input = mMessageInput.getText().toString();
             mMessageInput.setText("");
-            Log.d(MainActivity.TAG, hashCode() + " sending message: " + input);
+            Log.d(TAG, hashCode() + " sending message: " + input);
             sendMessage(input);
         }
     };
@@ -66,7 +66,7 @@ public class MessagesViewFragment extends ListFragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        Log.d(MainActivity.TAG, hashCode() + " onActivityCreated: fragment " + this.getClass().getName());
+        Log.d(TAG, hashCode() + " onActivityCreated: fragment " + this.getClass().getName());
         View footer = getLayoutInflater(savedInstanceState).inflate(R.layout.messages_footer, null);
         ListView listView = getListView();
         listView.addFooterView(footer);
@@ -116,15 +116,15 @@ public class MessagesViewFragment extends ListFragment {
     }
 
     private void loadDataToDB() {
-        Log.d(this.getClass().getName(), hashCode() + " starting  AsyncHttpClient");
+        Log.d(TAG, hashCode() + " starting  AsyncHttpClient");
         AsyncHttpClient client = new AsyncHttpClient();
         String url = CampusApiURL.getConversation(mSessionId, mGroupId, 1, getResources().getInteger(R.integer.messages_size_page));
-        Log.d(this.getClass().getName(), hashCode() + " load started " + url);
+        Log.d(TAG, hashCode() + " load started " + url);
         client.get(url,
                 new TextHttpResponseHandler() {
                     @Override
                     public void onSuccess(int statusCode, org.apache.http.Header[] headers, java.lang.String responseBody) {
-                        Log.d(MainActivity.TAG, hashCode() + " received.");
+                        Log.d(TAG, hashCode() + " received.");
                         List<MessageItem> userConversationDatas = parseConversation(responseBody);
                         try (DatabaseHelper db = new DatabaseHelper(getActivity().getApplicationContext())) {
                             db.addAllMessages(userConversationDatas);
@@ -134,6 +134,7 @@ public class MessagesViewFragment extends ListFragment {
 
                     @Override
                     public void onFailure(int statusCode, org.apache.http.Header[] headers, java.lang.String responseBody, java.lang.Throwable error) {
+                        Log.d(TAG, hashCode() + " failed " + statusCode);
                         mPullToRefreshView.onRefreshComplete();
                         Toast.makeText(mContext, mContext.getString(R.string.access_denied_code, statusCode), Toast.LENGTH_LONG).show();
                     }
@@ -149,7 +150,7 @@ public class MessagesViewFragment extends ListFragment {
 
                 @Override
                 public void onSuccess(String response) {
-                    Log.d(MainActivity.TAG, hashCode() + " sent... ");
+                    Log.d(TAG, hashCode() + " sent... ");
                 }
             });
         }

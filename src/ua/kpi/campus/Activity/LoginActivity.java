@@ -33,7 +33,7 @@ import ua.kpi.campus.model.CurrentUser;
 import ua.kpi.campus.model.dbhelper.DatabaseHelper;
 
 public class LoginActivity extends FragmentActivity implements LoaderManager.LoaderCallbacks<HttpResponse>, OnTaskCompleteListener {
-    public final static String LOG_TAG = LoginActivity.class.getName();
+    public final static String TAG = MainActivity.TAG;
     private final static int AUTH_LOADER_ID = 1;
     private final static int CURRENT_USER_LOADER_ID = 4;
     private EditText firstNumber;
@@ -49,15 +49,16 @@ public class LoginActivity extends FragmentActivity implements LoaderManager.Loa
 
         @Override
         public void onClick(View arg0) {
-            Log.d(this.getClass().getName(), hashCode() + " click!");
+            Log.d(TAG, hashCode() + " click!");
             if (firstNumber.getText().length() == 0
                     || secondNumber.getText().length() == 0) {
                 showToastLong(getResources().getString(R.string.login_activity_fill_warning));
             } else {
                 final String login = firstNumber.getText().toString();
                 final String password = secondNumber.getText().toString();
-                String Url = CampusApiURL.getAuth(login, password);
-                mAsyncTaskManager.setupTask(new HttpLoadTask(getResources(), Url, R.string.login_activity_auth_work, AUTH_LOADER_ID));
+                String url = CampusApiURL.getAuth(login, password);
+                Log.d(TAG, hashCode() + " loading " + url);
+                mAsyncTaskManager.setupTask(new HttpLoadTask(getResources(), url, R.string.login_activity_auth_work, AUTH_LOADER_ID));
             }
         }
     };
@@ -127,7 +128,7 @@ public class LoginActivity extends FragmentActivity implements LoaderManager.Loa
             }
             int currentLoaderId = task.getId();
             final String userDataStr = httpResponse.getEntity();
-            Log.d(this.getClass().getName(), hashCode() + " load finished (loader)" + currentLoaderId
+            Log.d(TAG, hashCode() + " load finished (loader)" + currentLoaderId
                     + "\n---------\n" + httpResponse);
             switch (currentLoaderId) {
                 case AUTH_LOADER_ID:
@@ -150,7 +151,7 @@ public class LoginActivity extends FragmentActivity implements LoaderManager.Loa
                         }
                         startMainActivity();
                     } else {
-                        showToastLong(getResources().getString(R.string.login_activity_access_denied));
+                        showToastLong(getResources().getString(R.string.access_denied));
                     }
                     break;
             }
@@ -208,13 +209,13 @@ public class LoginActivity extends FragmentActivity implements LoaderManager.Loa
 
     private void startMainActivity() {
         Intent intent = new Intent(this, MainActivity.class);
-        Log.d(this.getClass().getName(), hashCode() + " starting new activity... " + MainActivity.class.getName());
+        Log.d(TAG, hashCode() + " starting new activity... " + MainActivity.class.getName());
         startActivity(intent);
     }
 
     private void showToastLong(String text) {
         Toast.makeText(getApplicationContext(), text, Toast.LENGTH_LONG).show();
-        Log.d(LoginActivity.class.getName(), hashCode() + " ToastLong:" + text);
+        Log.d(TAG, hashCode() + " ToastLong:" + text);
     }
 
     @Override
@@ -226,7 +227,7 @@ public class LoginActivity extends FragmentActivity implements LoaderManager.Loa
 
     @Override
     public Loader<HttpResponse> onCreateLoader(int i, Bundle bundle) {
-        Log.d(this.getClass().getName(), hashCode() + " load started " + i);
+        Log.d(TAG, hashCode() + " load started " + i);
         return new HttpStringSupportLoader(LoginActivity.this, bundle.getString(HttpStringLoader.URL_STRING));
     }
 
@@ -234,7 +235,7 @@ public class LoginActivity extends FragmentActivity implements LoaderManager.Loa
     public void onLoadFinished(Loader<HttpResponse> httpResponseLoader, HttpResponse httpResponse) {
         int currentLoaderId = httpResponseLoader.getId();
         final String userDataStr = httpResponse.getEntity();
-        Log.d(this.getClass().getName(), hashCode() + " load finished (loader)" + currentLoaderId
+        Log.d(TAG, hashCode() + " load finished (loader)" + currentLoaderId
                 + "\n---------\n" + httpResponse);
         switch (currentLoaderId) {
             case AUTH_LOADER_ID:
@@ -245,7 +246,7 @@ public class LoginActivity extends FragmentActivity implements LoaderManager.Loa
                     Session.setCurrentUser(parseUser(userDataStr).getData());
                     startMainActivity();
                 } else {
-                    showToastLong(getResources().getString(R.string.login_activity_access_denied));
+                    showToastLong(getResources().getString(R.string.access_denied));
                 }
                 break;
         }
