@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.TextHttpResponseHandler;
 import org.json.JSONException;
 import ua.kpi.campus.Activity.MainActivity;
@@ -37,11 +36,12 @@ import java.util.List;
 public class MessagesViewFragment extends ListFragment {
     public final static String TAG = MainActivity.TAG;
     public final static String EXTRA_GROUP_ID = "groupId";
+    private int mPageToLoad;
+    private final int mPageSize = 5;
+    private int mCurrentPageSize;
     private Context mContext;
-    private BaseAdapter mAdapter;
     private int mGroupId;
     private String mSessionId;
-    private Button mSendButton;
     private EditText mMessageInput;
     private PullToRefreshListView mPullToRefreshView;
     private View.OnClickListener sendButtonListener = new View.OnClickListener() {
@@ -74,9 +74,12 @@ public class MessagesViewFragment extends ListFragment {
         Intent intent = getActivity().getIntent();
         mGroupId = (int) intent.getExtras().get(EXTRA_GROUP_ID);
         mContext = getActivity().getApplicationContext();
-        mSendButton = (Button) getActivity().findViewById(R.id.sendButton);
+        Button mSendButton = (Button) getActivity().findViewById(R.id.sendButton);
         mSendButton.setOnClickListener(sendButtonListener);
         mMessageInput = (EditText) getActivity().findViewById(R.id.messageText);
+
+        mPageToLoad = 1;
+        //mPageSize = getResources().getInteger(R.integer.messages_size_page);
 
         //loading progress bar
         final ProgressBar progressBar = new ProgressBar(getActivity());
@@ -93,7 +96,16 @@ public class MessagesViewFragment extends ListFragment {
         // Set a listener to be invoked when the list should be refreshed.
         mPullToRefreshView = (PullToRefreshListView) getActivity().findViewById(R.id.pull_to_refresh_listview);
         mPullToRefreshView.setOnRefreshListener(new OnRefreshListener());
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 
+            public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
+                                           int pos, long id) {
+                mPageToLoad = 1;
+                loadDataToDB();
+                Log.v(TAG, "Long clicked, reload started pos: " + pos);
+                return true;
+            }
+        }); 
         List<Message> messages = getFromDB();
         if (messages.isEmpty()) {
             loadDataToDB();
@@ -103,23 +115,22 @@ public class MessagesViewFragment extends ListFragment {
     }
 
     private List<Message> getFromDB() {
-        List<Message> messages;
         try (DatabaseHelper db = new DatabaseHelper(getActivity().getApplicationContext())) {
-            messages = db.getLastMessages(mGroupId);
+            return db.getLastMessages(mGroupId);
         }
-        return messages;
     }
 
     private void updateListView(List<Message> messages) {
-        mAdapter = new MessagesViewAdapter(getActivity(), messages);
+        BaseAdapter mAdapter = new MessagesViewAdapter(getActivity(), messages);
         setListAdapter(mAdapter);
+        mCurrentPageSize = messages.size();
         mPullToRefreshView.onRefreshComplete();
     }
 
     private void loadDataToDB() {
         Log.d(TAG, hashCode() + " starting  AsyncHttpClient");
         AsyncHttpClient client = new AsyncHttpClient();
-        String url = CampusApiURL.getConversation(mSessionId, mGroupId, 1, getResources().getInteger(R.integer.messages_size_page));
+        String url = CampusApiURL.getConversation(mSessionId, mGroupId, mPageToLoad, mPageSize);
         Log.d(TAG, hashCode() + " load started " + url);
         client.get(url,
                 new TextHttpResponseHandler() {
@@ -146,12 +157,16 @@ public class MessagesViewFragment extends ListFragment {
         input = input.replaceAll("\\s+", "%20");
         if (!input.isEmpty()) {
             AsyncHttpClient client = new AsyncHttpClient();
-            client.get(CampusApiURL.sendMessage(mSessionId, mGroupId, input, ""), new AsyncHttpResponseHandler() {
-
+            client.get(CampusApiURL.sendMessage(mSessionId, mGroupId, input, ""), new TextHttpResponseHandler() {
 
                 @Override
-                public void onSuccess(String response) {
-                    Log.d(TAG, hashCode() + " sent... ");
+                public void onSuccess(int statusCode, org.apache.http.Header[] headers, java.lang.String responseBody) {
+                    Toast.makeText(mContext, mContext.getString(R.string.message_sent), Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onFailure(int statusCode, org.apache.http.Header[] headers, java.lang.String responseBody, java.lang.Throwable error) {
+                    Toast.makeText(mContext, mContext.getString(R.string.message_failed_sent_code, statusCode), Toast.LENGTH_SHORT).show();
                 }
             });
         }
@@ -169,6 +184,7 @@ public class MessagesViewFragment extends ListFragment {
     private class OnRefreshListener implements PullToRefreshBase.OnRefreshListener<ListView> {
         @Override
         public void onRefresh(PullToRefreshBase<ListView> refreshView) {
+            mPageToLoad = mCurrentPageSize / mPageSize;
             loadDataToDB();
         }
     }

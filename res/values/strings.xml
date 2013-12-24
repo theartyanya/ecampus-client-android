@@ -33,6 +33,9 @@
     <string name="access_denied">Помилка доступу</string>
     <string name="access_denied_code">Помилка доступу. Код %s</string>
 
+    <string name="message_sent">Надіслано</string>
+    <string name="message_failed_sent">Надіслати не вдалося</string>
+    <string name="message_failed_sent_code">Надіслати не вдалося. Код %s</string>
 
     <string name="main_activity_avatar">Фото</string>
     <string name="main_activity_profile_group">Група</string>
