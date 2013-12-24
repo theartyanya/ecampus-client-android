@@ -30,7 +30,7 @@
     <string name="login_activity_auth_fail">Авторизація невдала!</string>
     <string name="login_activity_fill_warning">Заповните всі поля, будь ласка</string>
     <string name="login_activity_json_error">Помилка обробки даних!\nСпробуйте здійснити вхід пізніше.</string>
-    <string name="login_activity_access_denied">Помилка доступу</string>
+    <string name="access_denied">Помилка доступу </string>
 
     <string name="main_activity_avatar">Фото</string>
     <string name="main_activity_profile_group">Група</string>

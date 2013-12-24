@@ -379,8 +379,13 @@ public class DatabaseHelper extends SQLiteOpenHelper implements Closeable {
         return (int) db.insert(TABLE_MESSAGES, null, values);
     }
 
+    /**
+     * Adding messages with checking of presence them in Messages table
+     * @param messages - set of messages
+     * @param groupId - id of group to search
+     */
     public void addAllMessages(Set<Message> messages, int groupId) {
-        Set<Message> messageSet = getLastMessages(groupId);
+        List<Message> messageSet = getLastMessages(groupId);
         for (Message message : messages) {
             if (!messageSet.contains(message)) {
                 createMessage(message);
@@ -388,8 +393,18 @@ public class DatabaseHelper extends SQLiteOpenHelper implements Closeable {
         }
     }
 
-    public Set<Message> getLastMessages(int groupId) {
-        Set<Message> messages = new HashSet<>(MESSAGES_SET_CAPACITY);
+    /**
+     * Adding messages without checking of presence them in Messages table
+     * @param messages - set of messages
+     */
+    public void addAllMessages(Set<Message> messages) {
+        for (Message message : messages) {
+                createMessage(message);
+        }
+    }
+
+    public List<Message> getLastMessages(int groupId) {
+        List<Message> messages = new ArrayList<>(MESSAGES_SET_CAPACITY);
         String selectQuery = "SELECT * FROM " + TABLE_MESSAGES +
                 " WHERE " + KEY_CONVERSATIONS_GROUP_ID + " = " + Integer.toString(groupId) +
                 " ORDER BY " + KEY_MESSAGES_DATE_SENT;
