@@ -30,7 +30,9 @@
     <string name="login_activity_auth_fail">Авторизація невдала!</string>
     <string name="login_activity_fill_warning">Заповните всі поля, будь ласка</string>
     <string name="login_activity_json_error">Помилка обробки даних!\nСпробуйте здійснити вхід пізніше.</string>
-    <string name="access_denied">Помилка доступу </string>
+    <string name="access_denied">Помилка доступу</string>
+    <string name="access_denied_code">Помилка доступу. Код %s</string>
+
 
     <string name="main_activity_avatar">Фото</string>
     <string name="main_activity_profile_group">Група</string>
@@ -44,10 +46,10 @@
     <string name="subsystem_isUpdate">Оновлювати</string>
     <string name="subsystem_isDelete">Видаляти</string><string name="send">Надіслати</string>
 
-    <string name="pull_to_refresh_release_label">Release to refresh...</string>
-    <string name="pull_to_refresh_refreshing_label">Loading...</string>
-    <string name="pull_to_refresh_tap_label">Tap to refresh...</string>
-    <string name="pull_to_refresh_pull_label">Pull to refresh…</string>
+    <string name="pull_to_refresh_release_label">Відпустіть для оновлення…</string>
+    <string name="pull_to_refresh_refreshing_label">Завантаження…</string>
+    <string name="pull_to_refresh_tap_label">Клацніть для оновлення…</string>
+    <string name="pull_to_refresh_pull_label">Протягніть донизу для оновлення…</string>
 
 
     <!-- Just use standard Pull Down String when pulling up. These can be set for languages which require it -->

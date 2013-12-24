@@ -28,7 +28,7 @@ import java.util.Set;
 public class DatabaseHelper extends SQLiteOpenHelper implements Closeable {
     public final static String TAG = DatabaseHelper.class.getName();
     private static final int MESSAGES_SET_CAPACITY = 100;
-    private static final int DATABASE_VERSION = 22;
+    private static final int DATABASE_VERSION = 23;
     private static final String DATABASE_NAME = "eCampus";
     // Table Names
     private static final String TABLE_USERS = "users";
@@ -210,6 +210,7 @@ public class DatabaseHelper extends SQLiteOpenHelper implements Closeable {
 
     public String getSessionId() {
         SQLiteDatabase db = this.getReadableDatabase();
+        db.enableWriteAheadLogging();
         String selectQuery = "SELECT " + KEY_CURRENT_USER_SESSION_ID + " FROM " + TABLE_CURRENT_USER;
         Log.d(TAG, hashCode() + " SQL query: " + selectQuery);
 
