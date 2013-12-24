@@ -1,11 +1,8 @@
 package ua.kpi.campus.Activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.Loader;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -24,55 +21,50 @@ import ua.kpi.campus.api.jsonparsers.JSONUserDataParser;
 import ua.kpi.campus.api.jsonparsers.JsonObject;
 import ua.kpi.campus.api.jsonparsers.user.UserData;
 import ua.kpi.campus.loaders.HttpResponse;
-import ua.kpi.campus.loaders.HttpStringLoader;
-import ua.kpi.campus.loaders.HttpStringSupportLoader;
 import ua.kpi.campus.loaders.asynctask.AsyncTaskManager;
 import ua.kpi.campus.loaders.asynctask.HttpLoadTask;
 import ua.kpi.campus.loaders.asynctask.OnTaskCompleteListener;
 import ua.kpi.campus.model.CurrentUser;
 import ua.kpi.campus.model.dbhelper.DatabaseHelper;
 
-public class LoginActivity extends FragmentActivity implements LoaderManager.LoaderCallbacks<HttpResponse>, OnTaskCompleteListener {
+public class LoginActivity extends FragmentActivity implements OnTaskCompleteListener {
     public final static String TAG = MainActivity.TAG;
     private final static int AUTH_LOADER_ID = 1;
     private final static int CURRENT_USER_LOADER_ID = 4;
-    private EditText firstNumber;
-    private EditText secondNumber;
-    private Button sumButton;
-    private LoaderManager.LoaderCallbacks<HttpResponse> mCallbacks;
-    private LoaderManager loaderManager;
-    private Context context;
+    private EditText mLogin;
+    private EditText mPassword;
     private AsyncTaskManager mAsyncTaskManager;
-    private CurrentUser currentUser;
     private String sessionId;
     private OnClickListener loginButtonListener = new OnClickListener() {
 
         @Override
         public void onClick(View arg0) {
             Log.d(TAG, hashCode() + " click!");
-            if (firstNumber.getText().length() == 0
-                    || secondNumber.getText().length() == 0) {
+            if (mLogin.getText().length() == 0
+                    || mPassword.getText().length() == 0) {
                 showToastLong(getResources().getString(R.string.login_activity_fill_warning));
             } else {
-                final String login = firstNumber.getText().toString();
-                final String password = secondNumber.getText().toString();
+                final String login = mLogin.getText().toString();
+                final String password = mPassword.getText().toString();
                 String url = CampusApiURL.getAuth(login, password);
                 Log.d(TAG, hashCode() + " loading " + url);
                 mAsyncTaskManager.setupTask(new HttpLoadTask(getResources(), url, R.string.login_activity_auth_work, AUTH_LOADER_ID));
             }
         }
     };
+
+    //TODO test button
     private OnClickListener testButtonListener = new OnClickListener() {
 
         @Override
         public void onClick(View arg0) {
             Log.d(this.getClass().getName(), hashCode() + " test click!");
-            if (firstNumber.getText().length() == 0
-                    || secondNumber.getText().length() == 0) {
+            if (mLogin.getText().length() == 0
+                    || mPassword.getText().length() == 0) {
                 showToastLong(getResources().getString(R.string.login_activity_fill_warning));
             } else {
-                final String login = firstNumber.getText().toString();
-                final String password = secondNumber.getText().toString();
+                final String login = mLogin.getText().toString();
+                final String password = mPassword.getText().toString();
                 String Url = CampusApiURL.getAuth(login, password);
                 //mAsyncTaskManager.setupTask(new HttpLoadTask(getResources(), Url, R.string.login_activity_auth_work, AUTH_LOADER_ID));
                 //startSessionIdLoader(Url);
@@ -91,16 +83,12 @@ public class LoginActivity extends FragmentActivity implements LoaderManager.Loa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        firstNumber = (EditText) findViewById(R.id.firstNumberEdit);
-        secondNumber = (EditText) findViewById(R.id.secondNumberEdit);
-        sumButton = (Button) findViewById(R.id.sumButton);
+        mLogin = (EditText) findViewById(R.id.firstNumberEdit);
+        mPassword = (EditText) findViewById(R.id.secondNumberEdit);
+        Button sumButton = (Button) findViewById(R.id.sumButton);
         sumButton.setOnClickListener(loginButtonListener);
         Button testButton = (Button) findViewById(R.id.testButton);
         testButton.setOnClickListener(testButtonListener);
-
-        mCallbacks = this;
-        loaderManager = getSupportLoaderManager();
-        context = this;
 
         mAsyncTaskManager = new AsyncTaskManager(this, this);
         mAsyncTaskManager.handleRetainedTask(getLastCustomNonConfigurationInstance());
@@ -114,6 +102,9 @@ public class LoginActivity extends FragmentActivity implements LoaderManager.Loa
 
     @Override
     public void onTaskComplete(HttpLoadTask task) {
+        int currentLoaderId = task.getId();
+        Log.d(TAG, hashCode() + " load finished, loader " + currentLoaderId);
+
         if (task.isCancelled()) {
             // Report about cancel
             Toast.makeText(this, R.string.task_cancelled, Toast.LENGTH_LONG)
@@ -124,37 +115,39 @@ public class LoginActivity extends FragmentActivity implements LoaderManager.Loa
             try {
                 httpResponse = task.get();
             } catch (Exception e) {
-                e.printStackTrace();
+                Log.e(TAG, hashCode() + " task problem", e);
             }
-            int currentLoaderId = task.getId();
-            final String userDataStr = httpResponse.getEntity();
-            Log.d(TAG, hashCode() + " load finished (loader)" + currentLoaderId
-                    + "\n---------\n" + httpResponse);
+
             switch (currentLoaderId) {
                 case AUTH_LOADER_ID:
                     checkAuth(httpResponse);
                     break;
                 case CURRENT_USER_LOADER_ID:
-                    if (httpResponse.getStatusCode() == HttpStatus.SC_OK) {
-                        //TODO delete Session class
-                        Session.setCurrentUser(parseUser(userDataStr).getData());
-                        try (DatabaseHelper db = new DatabaseHelper(getApplicationContext())) {
-                            final String login = firstNumber.getText().toString();
-                            final String password = secondNumber.getText().toString();
-                            int accountID = parseUser(userDataStr).getData().getUserAccountID();
-                            CurrentUser user = new CurrentUser(accountID, sessionId, login, password);
-                            if (user.equals(db.getCurrentUser())) {
-                                db.updateCurrentUser(user);
-                            } else {
-                                db.onUserChanged(user);
-                            }
-                        }
-                        startMainActivity();
-                    } else {
-                        showToastLong(getResources().getString(R.string.access_denied));
-                    }
+                    updateUser(httpResponse);
                     break;
             }
+        }
+    }
+
+    private void updateUser(HttpResponse httpResponse) {
+        String userDataStr = httpResponse.getEntity();
+        if (httpResponse.getStatusCode() == HttpStatus.SC_OK) {
+            //TODO delete Session class
+            Session.setCurrentUser(parseUser(userDataStr).getData());
+            try (DatabaseHelper db = new DatabaseHelper(getApplicationContext())) {
+                final String login = mLogin.getText().toString();
+                final String password = mPassword.getText().toString();
+                int accountID = parseUser(userDataStr).getData().getUserAccountID();
+                CurrentUser user = new CurrentUser(accountID, sessionId, login, password);
+                if (user.equals(db.getCurrentUser())) {
+                    db.updateCurrentUser(user);
+                } else {
+                    db.onUserChanged(user);
+                }
+            }
+            startMainActivity();
+        } else {
+            showToastLong(getResources().getString(R.string.access_denied));
         }
     }
 
@@ -178,22 +171,6 @@ public class LoginActivity extends FragmentActivity implements LoaderManager.Loa
         } else {
             showToastLong(getResources().getString(R.string.login_activity_auth_fail));
         }
-    }
-
-    private void startSessionIdLoader(String url) {
-        Bundle authData = new Bundle();
-        authData.putString(HttpStringLoader.URL_STRING, url);
-        loaderManager.restartLoader(AUTH_LOADER_ID, authData, mCallbacks).onContentChanged();
-    }
-
-    private void startCurrentUserLoader(String sessionId) {
-        startHttpLoader(CURRENT_USER_LOADER_ID, CampusApiURL.getCurrentUser(sessionId));
-    }
-
-    private void startHttpLoader(int id, String url) {
-        Bundle permissionsData = new Bundle();
-        permissionsData.putString(HttpStringLoader.URL_STRING, url);
-        loaderManager.restartLoader(id, permissionsData, mCallbacks).onContentChanged();
     }
 
     private JsonObject<UserData> parseUser(String userDataStr) {
@@ -224,37 +201,4 @@ public class LoginActivity extends FragmentActivity implements LoaderManager.Loa
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
-
-    @Override
-    public Loader<HttpResponse> onCreateLoader(int i, Bundle bundle) {
-        Log.d(TAG, hashCode() + " load started " + i);
-        return new HttpStringSupportLoader(LoginActivity.this, bundle.getString(HttpStringLoader.URL_STRING));
-    }
-
-    @Override
-    public void onLoadFinished(Loader<HttpResponse> httpResponseLoader, HttpResponse httpResponse) {
-        int currentLoaderId = httpResponseLoader.getId();
-        final String userDataStr = httpResponse.getEntity();
-        Log.d(TAG, hashCode() + " load finished (loader)" + currentLoaderId
-                + "\n---------\n" + httpResponse);
-        switch (currentLoaderId) {
-            case AUTH_LOADER_ID:
-                checkAuth(httpResponse);
-                break;
-            case CURRENT_USER_LOADER_ID:
-                if (httpResponse.getStatusCode() == HttpStatus.SC_OK) {
-                    Session.setCurrentUser(parseUser(userDataStr).getData());
-                    startMainActivity();
-                } else {
-                    showToastLong(getResources().getString(R.string.access_denied));
-                }
-                break;
-        }
-    }
-
-    @Override
-    public void onLoaderReset(Loader<HttpResponse> httpResponseLoader) {
-
-    }
-
 }
