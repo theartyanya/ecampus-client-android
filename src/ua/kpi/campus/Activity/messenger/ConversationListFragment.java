@@ -1,5 +1,6 @@
 package ua.kpi.campus.Activity.messenger;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
@@ -12,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.TextHttpResponseHandler;
 import org.json.JSONException;
@@ -42,6 +44,7 @@ public class ConversationListFragment extends ListFragment {
     private ArrayAdapter mAdapter;
     private String sessionId;
     private PullToRefreshListView mPullToRefreshView;
+    private Context mContext;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -54,7 +57,7 @@ public class ConversationListFragment extends ListFragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        Log.d(MainActivity.TAG, hashCode() + " onCreateView: fragment " + this.getClass().getName());
+        Log.d(TAG, hashCode() + " onCreateView: fragment " + this.getClass().getName());
 
         ProgressBar progressBar = new ProgressBar(getActivity());
         progressBar.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT,
@@ -74,6 +77,7 @@ public class ConversationListFragment extends ListFragment {
                 loadData();
             }
         });
+        mContext = getActivity().getApplicationContext();
 
         List<Conversation> conversations = getFromDB();
         if (conversations.isEmpty()) {
@@ -84,20 +88,27 @@ public class ConversationListFragment extends ListFragment {
     }
 
     private void loadData() {
-        Log.d(this.getClass().getName(), hashCode() + " starting  AsyncHttpClient");
+        Log.d(TAG, hashCode() + " starting  AsyncHttpClient");
         AsyncHttpClient client = new AsyncHttpClient();
-        Log.d(this.getClass().getName(), hashCode() + " load started ");
+        Log.d(TAG, hashCode() + " load started " + CampusApiURL.getConversations(sessionId));
         client.get(CampusApiURL.getConversations(sessionId),
                 new TextHttpResponseHandler() {
                     @Override
                     public void onSuccess(int statusCode, org.apache.http.Header[] headers, java.lang.String responseBody) {
-                        Log.d(MainActivity.TAG, hashCode() + " received.");
+                        Log.d(TAG, hashCode() + " received.");
                         ArrayList<UserConversationData> userConversationDatas = parseConversation(responseBody);
                         updateDB(userConversationDatas);
                         List<Conversation> conversations = getFromDB();
                         mAdapter = new ConversationListAdapter(getActivity(), conversations);
                         setListAdapter(mAdapter);
                         mPullToRefreshView.onRefreshComplete();
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, org.apache.http.Header[] headers, java.lang.String responseBody, java.lang.Throwable error) {
+                        Log.d(TAG, hashCode() + " fail " + statusCode);
+                        mPullToRefreshView.onRefreshComplete();
+                        Toast.makeText(mContext, mContext.getString(R.string.access_denied_code, statusCode), Toast.LENGTH_LONG).show();
                     }
                 });
     }
@@ -114,9 +125,9 @@ public class ConversationListFragment extends ListFragment {
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         Conversation item = (Conversation) getListAdapter().getItem(position-1);
-        Log.d(MainActivity.TAG, hashCode() + " clicked on " + "l:" + l + " " + "v:" + v + " " + "position:" + (position-1)  + " " + "id:" + id + " ");
+        Log.d(TAG, hashCode() + " clicked on " + "l:" + l + " " + "v:" + v + " " + "position:" + (position-1)  + " " + "id:" + id + " ");
         Intent intent = new Intent(getActivity(), MessageActivity.class);
-        Log.d(MainActivity.TAG, hashCode() + " starting new activity... " + MessageActivity.class.getName());
+        Log.d(TAG, hashCode() + " starting new activity... " + MessageActivity.class.getName());
         intent.putExtra(MessagesViewFragment.EXTRA_GROUP_ID, item.getGroupId());
         startActivity(intent);
     }

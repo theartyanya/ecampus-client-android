@@ -1,5 +1,6 @@
 package ua.kpi.campus.Activity.messenger;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
@@ -25,8 +26,7 @@ import ua.kpi.campus.utils.pulltorefresh.PullToRefreshBase;
 import ua.kpi.campus.utils.pulltorefresh.PullToRefreshListView;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 /**
  * Class
@@ -34,31 +34,27 @@ import java.util.Set;
  * @author Artur Dzidzoiev
  * @version 12/19/13
  */
-public class MessagesViewFragment extends ListFragment{
+public class MessagesViewFragment extends ListFragment {
     public final static String TAG = MainActivity.TAG;
     public final static String EXTRA_GROUP_ID = "groupId";
-
+    private Context mContext;
     private BaseAdapter mAdapter;
-    private Set<Message> messages;
-    private int groupId;
-    private String sessionId;
-
-    private Button sendButton;
-    private EditText messageInput;
+    private int mGroupId;
+    private String mSessionId;
+    private Button mSendButton;
+    private EditText mMessageInput;
     private PullToRefreshListView mPullToRefreshView;
-
     private View.OnClickListener sendButtonListener = new View.OnClickListener() {
 
         @Override
         public void onClick(View arg0) {
             Log.d(MainActivity.TAG, hashCode() + " send click!");
-            String input = messageInput.getText().toString();
-            messageInput.setText("");
+            String input = mMessageInput.getText().toString();
+            mMessageInput.setText("");
             Log.d(MainActivity.TAG, hashCode() + " sending message: " + input);
             sendMessage(input);
         }
     };
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -76,9 +72,10 @@ public class MessagesViewFragment extends ListFragment{
         listView.addFooterView(footer);
         listView.setStackFromBottom(true);
 
-        sendButton = (Button) getActivity().findViewById(R.id.sendButton);
-        sendButton.setOnClickListener(sendButtonListener);
-        messageInput = (EditText) getActivity().findViewById(R.id.messageText);
+        mContext = getActivity().getApplicationContext();
+        mSendButton = (Button) getActivity().findViewById(R.id.sendButton);
+        mSendButton.setOnClickListener(sendButtonListener);
+        mMessageInput = (EditText) getActivity().findViewById(R.id.messageText);
 
         //loading progress bar
         ProgressBar progressBar = new ProgressBar(getActivity());
@@ -89,55 +86,56 @@ public class MessagesViewFragment extends ListFragment{
 
         //loading stored data
         try (DatabaseHelper db = new DatabaseHelper(getActivity().getApplicationContext())) {
-            sessionId = db.getSessionId();
+            mSessionId = db.getSessionId();
         }
         Intent intent = getActivity().getIntent();
-        groupId = (int) intent.getExtras().get(EXTRA_GROUP_ID);
+        mGroupId = (int) intent.getExtras().get(EXTRA_GROUP_ID);
 
         // Set a listener to be invoked when the list should be refreshed.
         mPullToRefreshView = (PullToRefreshListView) getActivity().findViewById(R.id.pull_to_refresh_listview);
-        mPullToRefreshView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
-            @Override
-            public void onRefresh(PullToRefreshBase<ListView> refreshView) {
-                loadDataToDB();
-                messages.addAll(getFromDB());
-            }
-        });
-
-        messages = getFromDB();
+        mPullToRefreshView.setOnRefreshListener(new OnRefreshListener());
+        List<Message> messages = getFromDB();
         if (messages.isEmpty()) {
             loadDataToDB();
-            messages.addAll(getFromDB());
         }
-        mAdapter = new MessagesViewAdapter(getActivity(), messages);
-        setListAdapter(mAdapter);
+        updateListView(messages);
     }
 
-    private Set<Message> getFromDB() {
-        Set<Message> messageSet;
+    private List<Message> getFromDB() {
+        List<Message> messages;
         try (DatabaseHelper db = new DatabaseHelper(getActivity().getApplicationContext())) {
-            messageSet = db.getLastMessages(groupId);
+            messages = db.getLastMessages(mGroupId);
         }
         mPullToRefreshView.onRefreshComplete();
-        return messageSet;
+        return messages;
+    }
+
+    private void updateListView(List<Message> messages) {
+        mAdapter = new MessagesViewAdapter(getActivity(), messages);
+        setListAdapter(mAdapter);
     }
 
     private void loadDataToDB() {
         Log.d(this.getClass().getName(), hashCode() + " starting  AsyncHttpClient");
         AsyncHttpClient client = new AsyncHttpClient();
-        client.get(CampusApiURL.getConversation(sessionId, groupId, 1, getResources().getInteger(R.integer.messages_size_page)),
+        String url = CampusApiURL.getConversation(mSessionId, mGroupId, 1, getResources().getInteger(R.integer.messages_size_page));
+        Log.d(this.getClass().getName(), hashCode() + " load started " + url);
+        client.get(url,
                 new TextHttpResponseHandler() {
                     @Override
                     public void onSuccess(int statusCode, org.apache.http.Header[] headers, java.lang.String responseBody) {
                         Log.d(MainActivity.TAG, hashCode() + " received.");
-                        ArrayList<MessageItem> userConversationDatas = parseConversation(responseBody);
-                        Set<Message> messageSet = new HashSet<>();
-                        for (MessageItem messageItem : userConversationDatas) {
-                            messageSet.add(new Message(messageItem));
-                        }
+                        List<MessageItem> userConversationDatas = parseConversation(responseBody);
                         try (DatabaseHelper db = new DatabaseHelper(getActivity().getApplicationContext())) {
-                            db.addAllMessages(messageSet,groupId);
+                            db.addAllMessages(userConversationDatas);
                         }
+                        mPullToRefreshView.onRefreshComplete();
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, org.apache.http.Header[] headers, java.lang.String responseBody, java.lang.Throwable error) {
+                        mPullToRefreshView.onRefreshComplete();
+                        Toast.makeText(mContext, mContext.getString(R.string.access_denied_code, statusCode), Toast.LENGTH_LONG).show();
                     }
                 });
     }
@@ -146,7 +144,7 @@ public class MessagesViewFragment extends ListFragment{
         input = input.replaceAll("\\s+", "%20");
         if (!input.isEmpty()) {
             AsyncHttpClient client = new AsyncHttpClient();
-            client.get(CampusApiURL.sendMessage(sessionId, groupId, input, ""), new AsyncHttpResponseHandler() {
+            client.get(CampusApiURL.sendMessage(mSessionId, mGroupId, input, ""), new AsyncHttpResponseHandler() {
 
 
                 @Override
@@ -166,4 +164,10 @@ public class MessagesViewFragment extends ListFragment{
         return new ArrayList<>();
     }
 
+    private class OnRefreshListener implements PullToRefreshBase.OnRefreshListener<ListView> {
+        @Override
+        public void onRefresh(PullToRefreshBase<ListView> refreshView) {
+            loadDataToDB();
+        }
+    }
 }
