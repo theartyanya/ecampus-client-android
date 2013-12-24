@@ -5,7 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -16,6 +16,7 @@ import ua.kpi.campus.model.dbhelper.DatabaseHelper;
 import ua.kpi.campus.utils.Time;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -24,19 +25,19 @@ import java.util.Set;
  * @author Artur Dzidzoiev
  * @version 12/23/13
  */
-public class MessagesViewAdapter extends BaseAdapter {
+public class MessagesViewAdapter extends ArrayAdapter<Message>{
     public final static String TAG = MessagesViewAdapter.class.getName();
     private final Context context;
-    private final Set<Message> values;
+    private final List<Message> values;
     private final int currentUserID;
     private HashMap<Integer,User> users;
 
-    public MessagesViewAdapter(Context context, Set<Message> values) {
-        super();
+    public MessagesViewAdapter(Context context, List<Message> values) {
+        super(context, R.layout.list_item_message, values);
         this.context = context;
         this.values = values;
         this.users = new HashMap<>();
-        try (DatabaseHelper db = new DatabaseHelper(context)) {
+        try (DatabaseHelper db = new DatabaseHelper(getContext())) {
             this.currentUserID = db.getCurrentUser().getId();
             Set<User> userset = db.getAllUsersSet();
             for (User user : userset) {
@@ -46,25 +47,10 @@ public class MessagesViewAdapter extends BaseAdapter {
     }
 
     @Override
-    public int getCount() {
-        return values.size();
-    }
-
-    @Override
-    public Object getItem(int i) {
-        return values.toArray()[i];
-    }
-
-    @Override
-    public long getItemId(int i) {
-        return i;
-    }
-
-    @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder;
         Message currentMessage;
-        currentMessage = (Message) values.toArray()[position];;
+        currentMessage = values.get(position);
         User sender = users.get(currentMessage.getSenderId());
         if (convertView == null) {
             viewHolder = new ViewHolder();
@@ -77,7 +63,7 @@ public class MessagesViewAdapter extends BaseAdapter {
             viewHolder.avatar = (ImageView) convertView.findViewById(R.id.avatar_small);
 
             if (currentMessage.getSenderId() != currentUserID) {
-
+                //TODO another layout params for another user
             }
             convertView.setTag(viewHolder);
             Log.d(TAG, hashCode() + " created message view " + position);
