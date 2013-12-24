@@ -210,7 +210,6 @@ public class DatabaseHelper extends SQLiteOpenHelper implements Closeable {
 
     public String getSessionId() {
         SQLiteDatabase db = this.getReadableDatabase();
-        db.enableWriteAheadLogging();
         String selectQuery = "SELECT " + KEY_CURRENT_USER_SESSION_ID + " FROM " + TABLE_CURRENT_USER;
         Log.d(TAG, hashCode() + " SQL query: " + selectQuery);
 
@@ -220,7 +219,6 @@ public class DatabaseHelper extends SQLiteOpenHelper implements Closeable {
         }
 
         return c.getString(c.getColumnIndex(KEY_CURRENT_USER_SESSION_ID));
-
     }
 
     /*
