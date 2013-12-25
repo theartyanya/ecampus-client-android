@@ -29,6 +29,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import ua.kpi.campus.Activity.bulletinboard.BulletinBoardListFragment;
 import ua.kpi.campus.Activity.messenger.ConversationListFragment;
+import ua.kpi.campus.Activity.userlist.UserListFragment;
 import ua.kpi.campus.R;
 
 public class MainActivity extends FragmentActivity implements ActionBar.TabListener {
@@ -140,7 +141,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                 case 2:
                     return new ConversationListFragment();
                 case 3:
-                    return new StatSectionFragment();
+                    return new UserListFragment();
 
                 default:
                     // The other sections of the app are dummy placeholders.
@@ -168,7 +169,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                 case 2:
                     return getResources().getString(R.string.section3_message);
                 case 3:
-                    return getResources().getString(R.string.section4_stat);
+                    return getResources().getString(R.string.section4_userlist);
                 default:
                     return "Section " + (position + 1);
             }

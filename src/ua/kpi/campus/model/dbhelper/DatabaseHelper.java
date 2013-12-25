@@ -283,7 +283,7 @@ public class DatabaseHelper extends SQLiteOpenHelper implements Closeable {
     /*
      * TABLE_USERS
      */
-    private int createUser(User user) {
+    public int createUser(User user) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 

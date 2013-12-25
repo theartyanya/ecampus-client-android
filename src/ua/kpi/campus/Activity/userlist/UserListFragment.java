@@ -1,6 +1,7 @@
 package ua.kpi.campus.Activity.userlist;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
@@ -8,7 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import ua.kpi.campus.Activity.MainActivity;
+import ua.kpi.campus.Activity.messenger.CreateConversationActivity;
 import ua.kpi.campus.R;
 import ua.kpi.campus.model.User;
 import ua.kpi.campus.model.dbhelper.DatabaseHelper;
@@ -26,12 +29,26 @@ public class UserListFragment extends ListFragment {
     public final static String TAG = MainActivity.TAG;
     private ArrayAdapter mAdapter;
     private Context mContext;
+    private List<UserModel> mUserModels;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_userlist, container, false);
-
+        View rootView = inflater.inflate(R.layout.userlist, container, false);
+        Button button = (Button) rootView.findViewById(R.id.userlist_button_create_group);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                List <Integer> userIds = new ArrayList<>();
+                for(UserModel userModel: mUserModels){
+                    userIds.add(userModel.getId());
+                }
+                Intent intent = new Intent(getActivity(), CreateConversationActivity.class);
+                intent.putExtra(CreateConversationActivity.EXTRA_USERS, userIds.toArray());
+                Log.d(TAG, hashCode() + " starting new activity... " + CreateConversationActivity.class.getName());
+                startActivity(intent);
+            }
+        });
         return rootView;
     }
 
@@ -42,8 +59,8 @@ public class UserListFragment extends ListFragment {
 
         mContext = getActivity().getApplicationContext();
 
-        List<UserModel> userModels = getFromDB();
-        mAdapter = new InteractiveUserListAdapter(getActivity(), userModels);
+        mUserModels = getFromDB();
+        mAdapter = new InteractiveUserListAdapter(getActivity(), mUserModels);
         setListAdapter(mAdapter);
     }
 /*

@@ -11,6 +11,7 @@
     <string name="section1_main_info">Мій профіль</string>
     <string name="section2_desk">Дошка оголошень</string>
     <string name="section3_message">Повідомлення</string>
+    <string name="section4_userlist">Користувачі</string>
     <string name="section4_stat">Статистика</string>
     <string name="yes">Так</string>
     <string name="no">Ні</string>
@@ -61,7 +62,8 @@
     <!-- Just use standard Pull Down String when pulling up. These can be set for languages which require it -->
     <string name="pull_to_refresh_from_bottom_pull_label">@string/pull_to_refresh_pull_label</string>
     <string name="pull_to_refresh_from_bottom_release_label">@string/pull_to_refresh_release_label</string>
-    <string name="pull_to_refresh_from_bottom_refreshing_label">@string/pull_to_refresh_refreshing_label</string><string name="create_message">Створити групу</string>
+    <string name="pull_to_refresh_from_bottom_refreshing_label">@string/pull_to_refresh_refreshing_label</string>
+ <string name="create_message">Надіслати повідомлення</string>
 
 
 </resources>

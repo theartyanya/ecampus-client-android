@@ -2,22 +2,22 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:gravity="center"
-                android:orientation="vertical" >
+                android:layout_height="match_parent"
+                android:orientation="vertical" android:gravity="top">
 
     <ListView
-            android:id="@+id/lv"
+            android:id="@android:id/list"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_below="@+id/userlist_button_create_group" />
+            android:layout_above="@+id/userlist_button_create_group"/>
 
     <Button
             android:layout_width="fill_parent"
             android:layout_height="@dimen/button_high"
             android:text="@string/create_message"
-            android:id="@+id/userlist_button_create_group" android:layout_alignParentTop="true" android:layout_centerHorizontal="true"
-            android:gravity="center"/>
+            android:id="@+id/userlist_button_create_group" android:layout_alignParentTop="false" android:layout_centerHorizontal="true"
+            android:gravity="center" android:layout_alignParentBottom="true"
+            style="@android:style/Widget.Holo.Light.Button"/>
 
 </RelativeLayout>
