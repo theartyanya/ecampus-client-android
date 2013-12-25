@@ -13,6 +13,7 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
 import com.nostra13.universalimageloader.utils.StorageUtils;
 import ua.kpi.campus.Activity.MainActivity;
+import ua.kpi.campus.model.dbhelper.DatabaseHelper;
 
 import java.io.File;
 
@@ -22,8 +23,9 @@ import java.io.File;
  * @author Artur Dzidzoiev
  * @version 12/20/13
  */
-public class MyApplication extends Application {
-    private Context context;
+public class Campus extends Application {
+    public static final String TAG = MainActivity.TAG;
+    private Context mContext;
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
@@ -33,8 +35,8 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         ImageLoader imageLoader = ImageLoader.getInstance();
-        context = getApplicationContext();
-        File cacheDir = StorageUtils.getCacheDirectory(context, true);
+        mContext = getApplicationContext();
+        File cacheDir = StorageUtils.getCacheDirectory(mContext, true);
 
         Log.d(MainActivity.TAG, hashCode() + " image loader config initialized.");
 
@@ -42,18 +44,23 @@ public class MyApplication extends Application {
                 .cacheInMemory(true)
                 .cacheOnDisc(true)
                 .build();
-        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(context)
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(mContext)
                 .threadPoolSize(5)
                 .threadPriority(Thread.MIN_PRIORITY + 2)
                 .denyCacheImageMultipleSizesInMemory()
                 .memoryCache(new UsingFreqLimitedMemoryCache(2 * 1024 * 1024)) // 2 Mb
                 .discCache(new UnlimitedDiscCache(cacheDir))
                 .discCacheFileNameGenerator(new HashCodeFileNameGenerator())
-                .imageDownloader(new BaseImageDownloader(context, 5 * 1000, 30 * 1000)) // connectTimeout (5 s), readTimeout (30 s)
+                .imageDownloader(new BaseImageDownloader(mContext, 5 * 1000, 30 * 1000)) // connectTimeout (5 s), readTimeout (30 s)
                 .defaultDisplayImageOptions(defaultOptions)
                 .build();
 
         imageLoader.init(config);
+        Log.d(MainActivity.TAG, hashCode() + " image loader configurated.");
+        //initDB;
+        try (DatabaseHelper db = new DatabaseHelper(mContext)){
+            Log.d(MainActivity.TAG, hashCode() + " SQLite DB initialized.");
+        }
     }
 
     @Override

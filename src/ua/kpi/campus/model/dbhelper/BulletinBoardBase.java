@@ -6,7 +6,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import ua.kpi.campus.model.BulletinBoardSubject;
-import ua.kpi.campus.model.TimetableElement;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,15 +17,23 @@ import java.util.List;
  * @version 12/25/13
  */
 public class BulletinBoardBase extends DatabaseHelper {
-    public BulletinBoardBase(Context context) {
+    private static class LazyHolder {
+        private static final BulletinBoardBase INSTANCE = new BulletinBoardBase(mContext);
+    }
+
+    public static BulletinBoardBase getInstance() {
+        return LazyHolder.INSTANCE;
+    }
+
+    private BulletinBoardBase(Context context) {
         super(context);
     }
 
-    public int createTimetableLesson(BulletinBoardSubject bulletinBoardSubject) {
+    public int createBulletin (BulletinBoardSubject bulletinBoardSubject) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
-        values.put(BulletinBoardEntry.KEY_BULLETIN_BOARD_ID, bulletinBoardSubject.getBulletinBoardId());
+        values.put(BulletinBoardEntry.KEY_TEXT, bulletinBoardSubject.getText());
         values.put(BulletinBoardEntry.KEY_DATE_CREATE, bulletinBoardSubject.getDateCreate());
         values.put(BulletinBoardEntry.KEY_CREATOR_ID, bulletinBoardSubject.getCreatorUserAccountId());
         values.put(BulletinBoardEntry.KEY_CREATOR_NAME, bulletinBoardSubject.getCreatorUserAccountFullname());
@@ -35,11 +42,11 @@ public class BulletinBoardBase extends DatabaseHelper {
         values.put(BulletinBoardEntry.KEY_LINK_RECEPIENTS, bulletinBoardSubject.getBulletinBoardLinkRecipients());
         values.put(BulletinBoardEntry.KEY_SUBJECT, bulletinBoardSubject.getSubject());
         Log.d(TAG, hashCode() + " adding BB_Suject id " + bulletinBoardSubject.getBulletinBoardId());
-        return (int) db.insert(TABLE_TIMETABLE, null, values);
+        return (int) db.insert(BulletinBoardEntry.TABLE_NAME, null, values);
     }
 
-    public List<TimetableElement> getAllLessons() {
-        List<TimetableElement> subjects = new ArrayList<>();
+    public List<BulletinBoardSubject> getActualBulletins() {
+        List<BulletinBoardSubject> boardSubjects = new ArrayList<>();
         String selectQuery = "SELECT * FROM " + TABLE_TIMETABLE +
                 " ORDER BY " + KEY_TIMETABLE_DAY_ID;
         Log.d(TAG, hashCode() + " SQL query: " + selectQuery);
@@ -47,23 +54,23 @@ public class BulletinBoardBase extends DatabaseHelper {
         Cursor c = db.rawQuery(selectQuery, null);
 
         if(c.getCount() == 0) {
-            return subjects;
+            return boardSubjects;
         }
 
         if (c.moveToFirst()) {
             do {
-                TimetableElement timetableElement = new TimetableElement(
-                        c.getInt(c.getColumnIndex(KEY_TIMETABLE_LESSON_ID)),
-                        c.getString(c.getColumnIndex(KEY_TIMETABLE_EMPLOYEE)),
-                        c.getString(c.getColumnIndex(KEY_TIMETABLE_SUBJECT)),
-                        c.getString(c.getColumnIndex(KEY_TIMETABLE_BUILDING)),
-                        c.getString(c.getColumnIndex(KEY_TIMETABLE_EMPLOYEE_PHOTO_PATH)),
-                        c.getInt(c.getColumnIndex(KEY_TIMETABLE_WEEKEND_NUM)),
-                        c.getInt(c.getColumnIndex(KEY_TIMETABLE_DAY_ID)),
-                        c.getString(c.getColumnIndex(KEY_TIMETABLE_DAY_NAME)));
-                subjects.add(timetableElement);
+                BulletinBoardSubject boardSubject = new BulletinBoardSubject(
+                        c.getString(c.getColumnIndex(BulletinBoardEntry.KEY_TEXT)),
+                        c.getLong(c.getColumnIndex(BulletinBoardEntry.KEY_DATE_CREATE)),
+                        c.getInt(c.getColumnIndex(BulletinBoardEntry.KEY_CREATOR_ID)),
+                        c.getString(c.getColumnIndex(BulletinBoardEntry.KEY_CREATOR_NAME)),
+                        c.getInt(c.getColumnIndex(BulletinBoardEntry.KEY_SUBJECT_ID)),
+                        c.getInt(c.getColumnIndex(BulletinBoardEntry.KEY_BULLETIN_BOARD_ID)),
+                        c.getString(c.getColumnIndex(BulletinBoardEntry.KEY_LINK_RECEPIENTS)),
+                        c.getString(c.getColumnIndex(BulletinBoardEntry.KEY_SUBJECT)));
+                boardSubjects.add(boardSubject);
             } while (c.moveToNext());
         }
-        return subjects;
+        return boardSubjects;
     }
 }

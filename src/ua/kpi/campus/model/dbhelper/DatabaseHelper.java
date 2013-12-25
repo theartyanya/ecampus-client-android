@@ -28,6 +28,7 @@ import java.util.Set;
  */
 public class DatabaseHelper extends SQLiteOpenHelper implements Closeable {
     public final static String TAG = DatabaseHelper.class.getName();
+    protected static Context mContext;
     private static final int MESSAGES_SET_CAPACITY = 100;
     private static final int DATABASE_VERSION = 24;
     private static final String DATABASE_NAME = "eCampus";
@@ -142,6 +143,7 @@ public class DatabaseHelper extends SQLiteOpenHelper implements Closeable {
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        mContext = context;
         Log.d(TAG, hashCode() + " instance of db " + DATABASE_NAME + DATABASE_VERSION + " created.");
     }
 
