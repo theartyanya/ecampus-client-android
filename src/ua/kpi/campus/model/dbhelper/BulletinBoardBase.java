@@ -25,7 +25,7 @@ public class BulletinBoardBase extends DatabaseHelper {
         return LazyHolder.INSTANCE;
     }
 
-    private int createBulletin(BulletinBoardSubject bulletinBoardSubject) {
+    public int createBulletin(BulletinBoardSubject bulletinBoardSubject) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 

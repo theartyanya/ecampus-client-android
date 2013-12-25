@@ -15,6 +15,7 @@ public class Time {
     private static final String PATTEN_INPUT_MESSAGE = "MM/dd/yyyy hh:mm:ss a";
     private static final String PATTERN_SHORT_DATE = "HH:mm E', 'dd";
     private static final String PATTERN_SHORT = "HH:mm:ss";
+    private static final String PATTERN_DATE_ONLY = "dd/MM/yyyy";
 
     public static long getUnixTime(String dateStr) {
         SimpleDateFormat inputDate = new SimpleDateFormat(PATTEN_INPUT);
@@ -40,6 +41,12 @@ public class Time {
 
     public static String getShortWithDate(long unixtime) {
         SimpleDateFormat inputDate = new SimpleDateFormat(PATTERN_SHORT_DATE);
+        Date date = new Date(unixtime);
+        return inputDate.format(date);
+    }
+
+    public static String getDateOnly(long unixtime) {
+        SimpleDateFormat inputDate = new SimpleDateFormat(PATTERN_DATE_ONLY);
         Date date = new Date(unixtime);
         return inputDate.format(date);
     }

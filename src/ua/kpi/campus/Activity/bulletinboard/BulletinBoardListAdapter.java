@@ -10,6 +10,7 @@ import android.widget.TextView;
 import ua.kpi.campus.Activity.MainActivity;
 import ua.kpi.campus.R;
 import ua.kpi.campus.model.BulletinBoardSubject;
+import ua.kpi.campus.utils.Formatter;
 
 import java.util.List;
 
@@ -22,6 +23,7 @@ import java.util.List;
 public class BulletinBoardListAdapter extends ArrayAdapter<BulletinBoardSubject> {
     private final Context context;
     private final List<BulletinBoardSubject> values;
+    private final static int MAX_LENGTH = 150;
 
     public BulletinBoardListAdapter(Context context, List<BulletinBoardSubject> values) {
         super(context, R.layout.bulletin_item, values);
@@ -46,8 +48,8 @@ public class BulletinBoardListAdapter extends ArrayAdapter<BulletinBoardSubject>
         }
 
         BulletinBoardSubject bulletinBoardSubject = values.get(position);
-        viewHolder.tSubject.setText(bulletinBoardSubject.getSubject());
-        viewHolder.tLastMessageText.setText(bulletinBoardSubject.getText());
+        viewHolder.tSubject.setText(Formatter.get(bulletinBoardSubject.getSubject(),MAX_LENGTH));
+        viewHolder.tLastMessageText.setText(Formatter.get(bulletinBoardSubject.getText(),MAX_LENGTH));
 
         return convertView;
     }

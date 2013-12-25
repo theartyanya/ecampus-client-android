@@ -1,4 +1,4 @@
-package ua.kpi.campus.Activity.bulletinboard;
+package ua.kpi.campus.Activity.messenger;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,10 +16,9 @@ import ua.kpi.campus.utils.Time;
  * Class
  *
  * @author Artur Dzidzoiev
- * @version 12/25/13
+ * @version 12/26/13
  */
-public class BulletinFragment extends Fragment {
-    public static String EXTRA_BULLETIN_ID = "346";
+public class CreateConversationFragment extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

@@ -84,7 +84,7 @@ public class LoginActivity extends FragmentActivity implements OnTaskCompleteLis
                         bulletinBoardBase.addAllBulletins(parseBulletinBoard(Mock.getBulletinBoardActual()));
                     }
 
-                    db.createUser(new User(1818, "Карл Генрих Маркс", "http://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Karl_Marx_001.jpg/225px-Karl_Marx_001.jpg"));
+                    db.createUser(new User(1818, "Карл Генрих Маркс", "http://www.biography.com/imported/images/Biography/Images/Profiles/M/Karl-Marx-9401219-1-402.jpg"));
                     db.createUser(new User(12, "Бертран Рассел", "http://upload.wikimedia.org/wikipedia/commons/thumb/9/9b/Honourable_Bertrand_Russell.jpg/225px-Honourable_Bertrand_Russell.jpg"));
                     db.createUser(new User(156, "Иммануил Кант", "http://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Immanuel_Kant_%28painted_portrait%29.jpg/200px-Immanuel_Kant_%28painted_portrait%29.jpg"));
                     db.createUser(new User(1464, "Георг Вильгельм Фридрих Гегель", "http://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Hegel_portrait_by_Schlesinger_1831.jpg/250px-Hegel_portrait_by_Schlesinger_1831.jpg"));
@@ -96,10 +96,20 @@ public class LoginActivity extends FragmentActivity implements OnTaskCompleteLis
                     db.createUser(new User(523, "Фердина́нд де Соссю́р", "http://upload.wikimedia.org/wikipedia/commons/thumb/d/de/Ferdinand_de_Saussure_by_Jullien.png/200px-Ferdinand_de_Saussure_by_Jullien.png"));
                     db.createUser(new User(236, "Мишель Фуко", "http://upload.wikimedia.org/wikipedia/ru/thumb/1/12/Michel_Foucault2.jpg/220px-Michel_Foucault2.jpg"));
                     db.createUser(new User(11, "Фридрих Ницше", "http://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Nietzsche187a.jpg/220px-Nietzsche187a.jpg"));
+                    db.createUser(new User(9, "Марк Туллий Цицерон", "http://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/M-T-Cicero.jpg/200px-M-T-Cicero.jpg"));
                     //db.createUser(new User(236,"Мишель Фуко", ""));
 
                     try (EmployeeBase employeeBase = EmployeeBase.getInstance()) {
                         employeeBase.createEmployee(new Employee(1, "Базельский университет, Кафедра классической филологии", "Преподаватель", "Профессор классической филологии", "Профессор"), 11);
+                    }
+                    BulletinBoardSubject boardSubject = new BulletinBoardSubject("Що менше ви їсте, п'єте, купуєте книг, ходите до театру чи на бали, чи до шинку, і що менше ви думаєте, кохаєте, теоретизуєте, співаєте, малюєте, фехтуєте тощо, то більше ви зможете заощадити " +
+                            "і більше зростатиме ваш скарб, який не сточить ні міль, ні іржа — ваш капітал. " +
+                            "Що мізерніше ваше буття, що менше ви проявляєте своє життя, то більший ваш статок, то більше ваше відчужене життя, то більше ви накопичуєте своєї відчуженої сутності. Все що економіст відніме у вас у вигляді життя та людяності, він відшкодує вам у вигляді грошей та багатства. " +
+                            "І все те, чого не зможете ви, зможуть для вас ваші гроші: вони можуть їсти, пити, ходити на бали та до театру, вони можуть придбати мистецтво, освіту, історичні цінності, політичний вплив; вони можуть подорожувати. Все це вони можуть привласнити, все це вони можуть придбати; вони — " +
+                            "справжнє багатство. Та хоча вони можуть робити це все, вони бажають лише творити самих себе, купувати самих себе, адже все інше їм підпорядковано. Коли хто має пана, він має і слугу, і йому нема діла до слуги пана. Отже всі пристрасті та вся діяльність мусить втонути у зиску. Робітник " +
+                            "мусить мати лише те, що йому необхідно, аби хотіти жити, і мусить хотіти жити лише для того, аби те мати.", 3354220800l, 1818, "Карл Маркс", 11, 16, null, "Революції — локомотиви історії!");
+                    try (BulletinBoardBase employeeBase = BulletinBoardBase.getInstance()) {
+                        employeeBase.createBulletin(boardSubject);
                     }
                 }
                 Session.setCurrentUser(parseUser(Mock.getUSER_EMPLOYEE()).getData());

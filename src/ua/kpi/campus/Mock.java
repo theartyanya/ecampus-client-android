@@ -26,24 +26,24 @@ public class Mock {
             "  \"Paging\": null,\n" +
             "  \"Data\": [\n" +
             "    {\n" +
-            "      \"Text\": \"Увага всім викладачам кафедри Технічної кібернетики!\",\n" +
-            "      \"DateCreate\": \"2013-12-12T00:00:00\",\n" +
+            "      \"Text\": \"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\",\n" +
+            "      \"DateCreate\": \"0000-06-05T00:00:00\",\n" +
             "      \"CreatorUserAccountId\": 9,\n" +
-            "      \"CreatorUserFullName\": \"Мелкумян Катерина Юріївна\",\n" +
+            "      \"CreatorUserFullName\": \"Марк Туллий Цицерон\",\n" +
             "      \"BulletinBoardSubjectId\": 0,\n" +
-            "      \"BulletinBoardId\": 25,\n" +
+            "      \"BulletinBoardId\": 3,\n" +
             "      \"BulletinBoardLinkRecipients\": null,\n" +
-            "      \"Subject\": \"Об'ява для всіх викладачів кафедри Технічної кібернетики\"\n" +
+            "      \"Subject\": \"Lorem ipsum!\"\n" +
             "    },\n" +
             "    {\n" +
-            "      \"Text\": \"Увага Вкладачам НТУУ \\\"КПІ\\\"!\",\n" +
-            "      \"DateCreate\": \"2013-12-12T00:00:00\",\n" +
+            "      \"Text\": \"Ich möchte verschenken und austheilen, bis die Weisen unter den Menschen wieder einmal ihrer Thorheit und die Armen einmal ihres Reichthums froh geworden sind.\",\n" +
+            "      \"DateCreate\": \"1885-12-12T00:00:00\",\n" +
             "      \"CreatorUserAccountId\": 11,\n" +
-            "      \"CreatorUserFullName\": null,\n" +
+            "      \"CreatorUserFullName\": \"Фридрих Ницше\", \n" +
             "      \"BulletinBoardSubjectId\": 0,\n" +
-            "      \"BulletinBoardId\": 32,\n" +
+            "      \"BulletinBoardId\": 11,\n" +
             "      \"BulletinBoardLinkRecipients\": null,\n" +
-            "      \"Subject\": \"Об'ява для всіх викладачів НТУУ \\\"КПІ\\\"\"\n" +
+            "      \"Subject\": \"Zarathustra's Vorrede \"\n" +
             "    }\n" +
             "  ]\n" +
             "}";
