@@ -29,7 +29,7 @@ public class BulletinBoardBase extends DatabaseHelper {
         super(context);
     }
 
-    public int createBulletin (BulletinBoardSubject bulletinBoardSubject) {
+    private int createBulletin(BulletinBoardSubject bulletinBoardSubject) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
@@ -72,5 +72,13 @@ public class BulletinBoardBase extends DatabaseHelper {
             } while (c.moveToNext());
         }
         return boardSubjects;
+    }
+
+    public void addAllBulletins(List<BulletinBoardSubject> subjects) {
+        Log.d(TAG, hashCode() + " adding started.");
+        for (BulletinBoardSubject subject : subjects) {
+            createBulletin(subject);
+        }
+        Log.d(TAG, hashCode() + " adding finished.");
     }
 }

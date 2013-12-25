@@ -27,6 +27,7 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import ua.kpi.campus.Activity.bulletinboard.BulletinBoardListFragment;
 import ua.kpi.campus.Activity.messenger.ConversationListFragment;
 import ua.kpi.campus.R;
 
@@ -135,7 +136,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                 case 0:
                     return new MyProfileFragment();
                 case 1:
-                    return new DeskSectionFragment();
+                    return new BulletinBoardListFragment();
                 case 2:
                     return new ConversationListFragment();
                 case 3:
@@ -174,19 +175,6 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         }
     }
 
-    /**
-     * Дошка оголошень
-     */
-    public static class DeskSectionFragment extends Fragment {
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_section_desk, container, false);
-
-            return rootView;
-        }
-    }
 
     /**
      * Statistics

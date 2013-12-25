@@ -20,6 +20,8 @@ public class CampusApiURL {
     private final static String GET_CONVERSATIONS_PATH = "message/GetUserConversations?";
     private final static String GET_CONVERSATION_PATH = "message/GetUserConversation?";
     private final static String SEND_MESSAGE_PATH = "message/sendmessage?";
+    private final static String GET_ACTUAL = "bulletinboard/getactual?";
+
 
 
     /**
@@ -100,5 +102,14 @@ public class CampusApiURL {
         return String.format("%s%ssessionId=%s&groupId=%s&text=%s&subject=%s",
                 API_URL, SEND_MESSAGE_PATH,
                 sessionId, groupId, text, subject);
+    }
+
+    /**
+     * Getting message list
+     *
+     * @return URL
+     */
+    public static String getActual(String sessionId) {
+        return String.format("%s%ssessionId=%s", API_URL, GET_ACTUAL, sessionId);
     }
 }
