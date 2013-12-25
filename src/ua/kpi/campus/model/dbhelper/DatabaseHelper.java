@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.provider.BaseColumns;
 import android.util.Log;
 import ua.kpi.campus.api.jsonparsers.message.MessageItem;
 import ua.kpi.campus.api.jsonparsers.message.UserMessage;
@@ -127,10 +128,23 @@ public class DatabaseHelper extends SQLiteOpenHelper implements Closeable {
                     KEY_TIMETABLE_DAY_NAME + TEXT + "," +
                     PRIMARY_KEY + "(" + KEY_TIMETABLE_LESSON_ID + ")" + ")";
 
+    protected abstract static class BulletinBoardEntry implements BaseColumns{
+        protected static final String TABLE_NAME = "Bulletin_board";
+        protected static final String KEY_TEXT = "text";
+        protected static final String KEY_DATE_CREATE = "date_create";
+        protected static final String KEY_CREATOR_ID = "creator_id";
+        protected static final String KEY_CREATOR_NAME = "creator_fullname";
+        protected static final String KEY_SUBJECT_ID = "subject_id";
+        protected static final String KEY_BULLETIN_BOARD_ID = "bulletin_board_id";
+        protected static final String KEY_LINK_RECEPIENTS = "link_recepients";
+        protected static final String KEY_SUBJECT = "subject";
+    }
+
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         Log.d(TAG, hashCode() + " instance of db " + DATABASE_NAME + DATABASE_VERSION + " created.");
     }
+
 
     @Override
     public void onCreate(SQLiteDatabase db) {
