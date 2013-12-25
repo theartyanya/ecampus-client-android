@@ -1,7 +1,6 @@
 package ua.kpi.campus.Activity.bulletinboard;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.support.v4.widget.DrawerLayout;
@@ -18,23 +17,16 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.TextHttpResponseHandler;
 import org.json.JSONException;
 import ua.kpi.campus.Activity.MainActivity;
-import ua.kpi.campus.Activity.messenger.ConversationListAdapter;
-import ua.kpi.campus.Activity.messenger.MessageActivity;
-import ua.kpi.campus.Activity.messenger.MessagesViewFragment;
 import ua.kpi.campus.R;
 import ua.kpi.campus.api.CampusApiURL;
-import ua.kpi.campus.api.jsonparsers.JSONConversationParser;
-import ua.kpi.campus.api.jsonparsers.message.UserConversationData;
-import ua.kpi.campus.api.jsonparsers.message.UserMessage;
+import ua.kpi.campus.api.jsonparsers.JSONBulletinBoardParser;
 import ua.kpi.campus.model.BulletinBoardSubject;
-import ua.kpi.campus.model.Conversation;
 import ua.kpi.campus.model.dbhelper.BulletinBoardBase;
 import ua.kpi.campus.model.dbhelper.DatabaseHelper;
 import ua.kpi.campus.utils.pulltorefresh.PullToRefreshBase;
 import ua.kpi.campus.utils.pulltorefresh.PullToRefreshListView;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -100,7 +92,7 @@ public class BulletinBoardListFragment extends ListFragment {
                     @Override
                     public void onSuccess(int statusCode, org.apache.http.Header[] headers, java.lang.String responseBody) {
                         Log.d(TAG, hashCode() + " received.");
-                        ArrayList<BulletinBoardSubject> boardSubjects = parseConversation(responseBody);
+                        ArrayList<BulletinBoardSubject> boardSubjects = parseBulletinBoard(responseBody);
                         updateDB(boardSubjects);
                         List<BulletinBoardSubject> subjects = getFromDB();
                         mAdapter = new BulletinBoardListAdapter(getActivity(), subjects);
@@ -117,9 +109,9 @@ public class BulletinBoardListFragment extends ListFragment {
                 });
     }
 
-    private ArrayList<UserConversationData> parseConversation(String JsonConversation) {
+    private ArrayList<BulletinBoardSubject> parseBulletinBoard(String JsonConversation) {
         try {
-            return JSONConversationParser.parse(JsonConversation).getData();
+            return JSONBulletinBoardParser.parse(JsonConversation).getData();
         } catch (JSONException e) {
             Log.e(this.getClass().getName(), hashCode() + getResources().getString(R.string.login_activity_json_error));
         }

@@ -5,13 +5,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import ua.kpi.campus.api.jsonparsers.message.MessageDetail;
 import ua.kpi.campus.api.jsonparsers.message.MessageItem;
-import ua.kpi.campus.api.jsonparsers.message.UserMessage;
 import ua.kpi.campus.api.jsonparsers.message.UserConversationData;
-import ua.kpi.campus.api.jsonparsers.timetable.Parameter;
-import ua.kpi.campus.api.jsonparsers.timetable.TimeTableData;
+import ua.kpi.campus.api.jsonparsers.message.UserMessage;
 import ua.kpi.campus.api.jsonparsers.user.Employee;
 import ua.kpi.campus.api.jsonparsers.user.Personality;
 import ua.kpi.campus.api.jsonparsers.user.SubsystemData;
+import ua.kpi.campus.model.BulletinBoardSubject;
+import ua.kpi.campus.utils.Time;
 
 import java.util.ArrayList;
 
@@ -100,27 +100,6 @@ class JSONArrayParsers {
         return dataArray;
     }
 
-    static ArrayList<TimeTableData> parseTimeTable(JSONObject getPermissionsObj) throws JSONException {
-        JSONArray dataJSONArray = getPermissionsObj.getJSONArray("Data");
-        ArrayList<TimeTableData> dataArray = new ArrayList<TimeTableData>();
-
-        for (int i = 0; i < dataJSONArray.length(); i++) {
-            JSONObject childJSONObject = dataJSONArray.getJSONObject(i);
-
-            JSONArray dataJSONArray1 = childJSONObject.getJSONArray("Parameters");
-            ArrayList<Parameter> parameters = new ArrayList<Parameter>();
-            for (int j = 0; j < dataJSONArray1.length(); j++) {
-                JSONObject childJSONObject1 = dataJSONArray1.getJSONObject(j);
-
-                parameters.add(new Parameter(childJSONObject1.getString("Name"), childJSONObject1.getString("Type")));
-
-            }
-            dataArray.add(new TimeTableData(childJSONObject.getString("Name"), parameters));
-
-        }
-        return dataArray;
-    }
-
     protected static ArrayList<MessageItem> parseMessageGetItem(JSONObject JsonObj) throws JSONException {
         JSONArray dataJSONArray = JsonObj.getJSONArray("Data");
         ArrayList<MessageItem> dataArray = new ArrayList<MessageItem>();
@@ -133,6 +112,63 @@ class JSONArrayParsers {
                     childJSONObject.getInt("MassageGroupId"), messageDetail, childJSONObject.getString("DateSent"), childJSONObject.getString("Subject"), childJSONObject.getString("Text")));
 
 
+        }
+        return dataArray;
+    }
+
+    static ArrayList<BulletinBoardSubject> parseBulletinBoard(JSONObject getPermissionsObj) throws JSONException {
+        JSONArray dataJSONArray = getPermissionsObj.getJSONArray("Data");
+        ArrayList<BulletinBoardSubject> dataArray = new ArrayList<BulletinBoardSubject>();
+
+        for (int i = 0; i < dataJSONArray.length(); i++) {
+            JSONObject childJSONObject = dataJSONArray.getJSONObject(i);
+            long dateCreate = Time.getUnixTime(childJSONObject.getString("DateCreate"));
+            dataArray.add(new BulletinBoardSubject(childJSONObject
+                    .getString("Text"), dateCreate
+                    , childJSONObject
+                    .getInt("CreatorUserAccountId"),
+                    childJSONObject.getString("CreatorUserFullName"), childJSONObject
+                    .getInt("BulletinBoardSubjectId"), childJSONObject.getInt("BulletinBoardId"),
+                    childJSONObject.getString("BulletinBoardLinkRecipients"),
+                    childJSONObject.getString("Subject")));
+        }
+        return dataArray;
+
+    }
+
+    static ArrayList<TimeTableData> parseTimeTableData(JSONObject getPermissionsObj) throws JSONException {
+        JSONArray dataJSONArray = getPermissionsObj.getJSONArray("Data");
+        ArrayList<TimeTableData> dataArray = new ArrayList<TimeTableData>();
+
+        for (int i = 0; i < dataJSONArray.length(); i++) {
+            JSONObject childJSONObject = dataJSONArray.getJSONObject(i);
+            boolean isEmp = true;
+            String studOremp = " ";
+            try {
+                studOremp = childJSONObject.getString("Employee");
+            } catch (JSONException e) {
+                studOremp = childJSONObject.getString("Personality");
+                isEmp = false;
+
+            }
+
+            if (isEmp) {
+                dataArray.add(new TimeTableData(studOremp, "",
+                        childJSONObject.getString("Subject"), childJSONObject
+                        .getString("Building"), childJSONObject
+                        .getString("EmployeePhotoPath"),
+                        childJSONObject.getInt("WeekNum"),
+                        childJSONObject.getInt("DayId"), childJSONObject.getString("DayName"),
+                        childJSONObject.getInt("LessonId")));
+            } else {
+                dataArray.add(new TimeTableData("", studOremp,
+                        childJSONObject.getString("Subject"), childJSONObject
+                        .getString("Building"), childJSONObject
+                        .getString("EmployeePhotoPath"),
+                        childJSONObject.getInt("WeekNum"),
+                        childJSONObject.getInt("DayId"), childJSONObject.getString("DayName"),
+                        childJSONObject.getInt("LessonId")));
+            }
         }
         return dataArray;
     }

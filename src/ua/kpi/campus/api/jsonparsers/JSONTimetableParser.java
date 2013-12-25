@@ -2,8 +2,6 @@ package ua.kpi.campus.api.jsonparsers;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import ua.kpi.campus.api.jsonparsers.message.UserConversationData;
-import ua.kpi.campus.api.jsonparsers.timetable.TimeTableData;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -33,7 +31,7 @@ public class JSONTimetableParser {
                 jsonObj.getInt(STATUS_CODE_ATTRIBUTE_NAME),
                 Timestamp.valueOf(timeStampString),
                 jsonObj.getString(GUID_ATTRIBUTE_NAME),
-                jsonObj.getString(PAGING_ATTRIBUTE_NAME),JSONArrayParsers.parseTimeTable(jsonObj)
+                jsonObj.getString(PAGING_ATTRIBUTE_NAME),JSONArrayParsers.parseTimeTableData(jsonObj)
         );
     }
 }
