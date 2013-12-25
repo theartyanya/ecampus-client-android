@@ -13,7 +13,6 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
 import com.nostra13.universalimageloader.utils.StorageUtils;
 import ua.kpi.campus.Activity.MainActivity;
-import ua.kpi.campus.model.dbhelper.DatabaseHelper;
 
 import java.io.File;
 
@@ -57,10 +56,6 @@ public class Campus extends Application {
 
         imageLoader.init(config);
         Log.d(MainActivity.TAG, hashCode() + " image loader configurated.");
-        //initDB;
-        try (DatabaseHelper db = new DatabaseHelper(mContext)){
-            Log.d(MainActivity.TAG, hashCode() + " SQLite DB initialized.");
-        }
     }
 
     @Override

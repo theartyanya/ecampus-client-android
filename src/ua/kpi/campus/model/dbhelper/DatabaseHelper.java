@@ -30,7 +30,7 @@ public class DatabaseHelper extends SQLiteOpenHelper implements Closeable {
     public final static String TAG = DatabaseHelper.class.getName();
     protected static Context mContext;
     private static final int MESSAGES_SET_CAPACITY = 100;
-    private static final int DATABASE_VERSION = 24;
+    private static final int DATABASE_VERSION = 28;
     private static final String DATABASE_NAME = "eCampus";
     // Table Names
     private static final String TABLE_USERS = "users";
@@ -131,6 +131,7 @@ public class DatabaseHelper extends SQLiteOpenHelper implements Closeable {
 
     protected abstract static class BulletinBoardEntry implements BaseColumns{
         protected static final String TABLE_NAME = "Bulletin_board";
+
         protected static final String KEY_TEXT = "text";
         protected static final String KEY_DATE_CREATE = "date_create";
         protected static final String KEY_CREATOR_ID = "creator_id";
@@ -139,6 +140,18 @@ public class DatabaseHelper extends SQLiteOpenHelper implements Closeable {
         protected static final String KEY_BULLETIN_BOARD_ID = "bulletin_board_id";
         protected static final String KEY_LINK_RECEPIENTS = "link_recepients";
         protected static final String KEY_SUBJECT = "subject";
+
+        private static final String CREATE_TABLE_BB =
+                CREATE_TABLE + TABLE_NAME + "(" +
+                        KEY_TEXT + TEXT + "," +
+                        KEY_DATE_CREATE + INTEGER + "," +
+                        KEY_CREATOR_ID + INTEGER + "," +
+                        KEY_CREATOR_NAME + TEXT + "," +
+                        KEY_SUBJECT_ID + INTEGER + "," +
+                        KEY_BULLETIN_BOARD_ID + INTEGER + "," +
+                        KEY_LINK_RECEPIENTS + TEXT + "," +
+                        KEY_SUBJECT + TEXT + "," +
+                        PRIMARY_KEY + "(" + KEY_BULLETIN_BOARD_ID + ")" + ")";
     }
 
     public DatabaseHelper(Context context) {
@@ -147,6 +160,9 @@ public class DatabaseHelper extends SQLiteOpenHelper implements Closeable {
         Log.d(TAG, hashCode() + " instance of db " + DATABASE_NAME + DATABASE_VERSION + " created.");
     }
 
+    public void initContext(Context context){
+        mContext = context;
+    }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
@@ -163,6 +179,8 @@ public class DatabaseHelper extends SQLiteOpenHelper implements Closeable {
         Log.d(TAG, hashCode() + " SQL query: " + CREATE_TABLE_MESSAGES);
         db.execSQL(CREATE_TABLE_TIMETABLE);
         Log.d(TAG, hashCode() + " SQL query: " + CREATE_TABLE_TIMETABLE);
+        db.execSQL(BulletinBoardEntry.CREATE_TABLE_BB);
+        Log.d(TAG, hashCode() + " SQL query: " + BulletinBoardEntry.CREATE_TABLE_BB);
 
         Log.d(TAG, hashCode() + " created tables.");
     }
@@ -187,6 +205,7 @@ public class DatabaseHelper extends SQLiteOpenHelper implements Closeable {
         db.execSQL(DROP_TABLE_IF_EXISTS + TABLE_CONVERSATIONS_USERS);
         db.execSQL(DROP_TABLE_IF_EXISTS + TABLE_MESSAGES);
         db.execSQL(DROP_TABLE_IF_EXISTS + TABLE_TIMETABLE);
+        db.execSQL(DROP_TABLE_IF_EXISTS + BulletinBoardEntry.TABLE_NAME);
         Log.d(TAG, hashCode() + " tables dropped.");
     }
 
