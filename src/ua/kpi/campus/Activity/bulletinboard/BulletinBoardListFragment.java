@@ -1,6 +1,7 @@
 package ua.kpi.campus.Activity.bulletinboard;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.support.v4.widget.DrawerLayout;
@@ -121,6 +122,10 @@ public class BulletinBoardListFragment extends ListFragment {
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         Log.d(TAG, hashCode() + " clicked on " + "l:" + l + " " + "v:" + v + " " + "position:" + (position-1)  + " " + "id:" + id + " ");
+        Intent intent = new Intent(getActivity(), BulletinActivity.class);
+        Log.d(TAG, hashCode() + " starting new activity... " + BulletinActivity.class.getName());
+        intent.putExtra(BulletinFragment.EXTRA_BULLETIN_ID,((BulletinBoardSubject) l.getItemAtPosition(position)).getBulletinBoardId());
+        startActivity(intent);
     }
 
     private void updateDB(ArrayList<BulletinBoardSubject> subjects) {

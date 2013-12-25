@@ -24,7 +24,7 @@ public class BulletinBoardListAdapter extends ArrayAdapter<BulletinBoardSubject>
     private final List<BulletinBoardSubject> values;
 
     public BulletinBoardListAdapter(Context context, List<BulletinBoardSubject> values) {
-        super(context, R.layout.bulletin_list_item, values);
+        super(context, R.layout.bulletin_item, values);
         this.context = context;
         this.values = values;
     }
@@ -36,7 +36,7 @@ public class BulletinBoardListAdapter extends ArrayAdapter<BulletinBoardSubject>
             viewHolder = new ViewHolder();
             LayoutInflater inflater = (LayoutInflater) context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.bulletin_list_item, parent, false);
+            convertView = inflater.inflate(R.layout.bulletin_item, parent, false);
             viewHolder.tSubject = (TextView) convertView.findViewById(R.id.bulletin_board_subject);
             viewHolder.tLastMessageText = (TextView) convertView.findViewById(R.id.bulletin_board_text);
             convertView.setTag(viewHolder);

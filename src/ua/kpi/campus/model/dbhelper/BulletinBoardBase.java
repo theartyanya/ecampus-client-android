@@ -17,16 +17,12 @@ import java.util.List;
  * @version 12/25/13
  */
 public class BulletinBoardBase extends DatabaseHelper {
-    private static class LazyHolder {
-        private static final BulletinBoardBase INSTANCE = new BulletinBoardBase(mContext);
+    private BulletinBoardBase(Context context) {
+        super(context);
     }
 
     public static BulletinBoardBase getInstance() {
         return LazyHolder.INSTANCE;
-    }
-
-    private BulletinBoardBase(Context context) {
-        super(context);
     }
 
     private int createBulletin(BulletinBoardSubject bulletinBoardSubject) {
@@ -53,7 +49,7 @@ public class BulletinBoardBase extends DatabaseHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor c = db.rawQuery(selectQuery, null);
 
-        if(c.getCount() == 0) {
+        if (c.getCount() == 0) {
             return boardSubjects;
         }
 
@@ -74,11 +70,37 @@ public class BulletinBoardBase extends DatabaseHelper {
         return boardSubjects;
     }
 
+    public BulletinBoardSubject getBulletin(int id) {
+        String selectQuery = "SELECT * FROM " + BulletinBoardEntry.TABLE_NAME +
+                " WHERE " + BulletinBoardEntry.KEY_BULLETIN_BOARD_ID + " = " + id;
+        Log.d(TAG, hashCode() + " SQL query: " + selectQuery);
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.rawQuery(selectQuery, null);
+        BulletinBoardSubject boardSubject = null;
+        if (c.moveToFirst()) {
+            boardSubject = new BulletinBoardSubject(
+                    c.getString(c.getColumnIndex(BulletinBoardEntry.KEY_TEXT)),
+                    c.getLong(c.getColumnIndex(BulletinBoardEntry.KEY_DATE_CREATE)),
+                    c.getInt(c.getColumnIndex(BulletinBoardEntry.KEY_CREATOR_ID)),
+                    c.getString(c.getColumnIndex(BulletinBoardEntry.KEY_CREATOR_NAME)),
+                    c.getInt(c.getColumnIndex(BulletinBoardEntry.KEY_SUBJECT_ID)),
+                    c.getInt(c.getColumnIndex(BulletinBoardEntry.KEY_BULLETIN_BOARD_ID)),
+                    c.getString(c.getColumnIndex(BulletinBoardEntry.KEY_LINK_RECEPIENTS)),
+                    c.getString(c.getColumnIndex(BulletinBoardEntry.KEY_SUBJECT)));
+        }
+
+        return boardSubject;
+    }
+
     public void addAllBulletins(List<BulletinBoardSubject> subjects) {
         Log.d(TAG, hashCode() + " adding started.");
         for (BulletinBoardSubject subject : subjects) {
             createBulletin(subject);
         }
         Log.d(TAG, hashCode() + " adding finished.");
+    }
+
+    private static class LazyHolder {
+        private static final BulletinBoardBase INSTANCE = new BulletinBoardBase(mContext);
     }
 }
