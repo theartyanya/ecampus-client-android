@@ -19,6 +19,39 @@ public class Mock {
         return USER_CONVERSATION;
     }
 
+    private static final String BULLETIN_BOARD_ACTUAL = "{\n" +
+            "  \"StatusCode\": 200,\n" +
+            "  \"TimeStamp\": \"2013-12-25T12:16:22.4395979-08:00\",\n" +
+            "  \"Guid\": \"08f67e25-f4cb-4566-bf17-de41e6fe7854\",\n" +
+            "  \"Paging\": null,\n" +
+            "  \"Data\": [\n" +
+            "    {\n" +
+            "      \"Text\": \"Увага всім викладачам кафедри Технічної кібернетики!\",\n" +
+            "      \"DateCreate\": \"2013-12-12T00:00:00\",\n" +
+            "      \"CreatorUserAccountId\": 9,\n" +
+            "      \"CreatorUserFullName\": \"Мелкумян Катерина Юріївна\",\n" +
+            "      \"BulletinBoardSubjectId\": 0,\n" +
+            "      \"BulletinBoardId\": 25,\n" +
+            "      \"BulletinBoardLinkRecipients\": null,\n" +
+            "      \"Subject\": \"Об'ява для всіх викладачів кафедри Технічної кібернетики\"\n" +
+            "    },\n" +
+            "    {\n" +
+            "      \"Text\": \"Увага Вкладачам НТУУ \\\"КПІ\\\"!\",\n" +
+            "      \"DateCreate\": \"2013-12-12T00:00:00\",\n" +
+            "      \"CreatorUserAccountId\": 11,\n" +
+            "      \"CreatorUserFullName\": null,\n" +
+            "      \"BulletinBoardSubjectId\": 0,\n" +
+            "      \"BulletinBoardId\": 32,\n" +
+            "      \"BulletinBoardLinkRecipients\": null,\n" +
+            "      \"Subject\": \"Об'ява для всіх викладачів НТУУ \\\"КПІ\\\"\"\n" +
+            "    }\n" +
+            "  ]\n" +
+            "}";
+
+    public static String getBulletinBoardActual() {
+        return BULLETIN_BOARD_ACTUAL;
+    }
+
     private static final String AUTH = "{\n" +
             "  \"StatusCode\": 200,\n" +
             "  \"TimeStamp\": \"2013-12-08T19:44:36.428033-08:00\",\n" +

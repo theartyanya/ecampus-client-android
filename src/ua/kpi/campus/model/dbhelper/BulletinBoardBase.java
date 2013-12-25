@@ -47,8 +47,8 @@ public class BulletinBoardBase extends DatabaseHelper {
 
     public List<BulletinBoardSubject> getActualBulletins() {
         List<BulletinBoardSubject> boardSubjects = new ArrayList<>();
-        String selectQuery = "SELECT * FROM " + TABLE_TIMETABLE +
-                " ORDER BY " + KEY_TIMETABLE_DAY_ID;
+        String selectQuery = "SELECT * FROM " + BulletinBoardEntry.TABLE_NAME +
+                " ORDER BY " + BulletinBoardEntry.KEY_SUBJECT_ID;
         Log.d(TAG, hashCode() + " SQL query: " + selectQuery);
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor c = db.rawQuery(selectQuery, null);

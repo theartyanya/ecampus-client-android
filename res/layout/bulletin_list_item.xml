@@ -9,7 +9,7 @@
             android:layout_height="wrap_content"
             android:text="#Subject"
             android:id="@+id/bulletin_board_subject" android:layout_alignParentTop="true" android:layout_alignParentLeft="true"
-            android:textStyle="bold" android:textSize="@dimen/text_big"/>
+            android:textStyle="bold" android:textSize="@dimen/text_medium"/>
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
