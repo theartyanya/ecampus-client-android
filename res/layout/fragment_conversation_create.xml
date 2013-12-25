@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+    <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" android:padding="@dimen/activity_vertical_margin_small">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/create_conversation"
+                android:id="@+id/create_conversation_to" android:textStyle="bold"/>
+
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:id="@+id/create_conversation_user_list"
+                android:layout_height="fill_parent"
+                android:layout_alignTop="@+id/create_conversation_to"
+                android:layout_toRightOf="@+id/create_conversation_to"
+                android:layout_marginLeft="@dimen/activity_vertical_margin_small">
+        </LinearLayout>
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                  android:text="@string/create_conversation_subject" android:id="@+id/create_conversation_subject"
+                  android:textStyle="bold" android:layout_below="@+id/create_conversation_user_list"
+                  android:layout_marginTop="@dimen/activity_vertical_margin"/>
+        <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/create_conversation_subject_edit"
+                android:layout_below="@+id/create_conversation_subject" android:inputType="text"/>
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                  android:text="@string/create_conversation_text" android:id="@+id/create_conversation_text"
+                  android:textStyle="bold" android:layout_below="@+id/create_conversation_subject_edit"
+                  android:layout_marginTop="@dimen/activity_vertical_margin"/>
+        <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/create_conversation_text_edit"
+                android:layout_below="@+id/create_conversation_text"
+                android:inputType="text"/>
+
+
+    </RelativeLayout>
+</ScrollView>
