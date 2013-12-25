@@ -28,7 +28,7 @@ import java.util.Set;
 public class DatabaseHelper extends SQLiteOpenHelper implements Closeable {
     public final static String TAG = DatabaseHelper.class.getName();
     private static final int MESSAGES_SET_CAPACITY = 100;
-    private static final int DATABASE_VERSION = 23;
+    private static final int DATABASE_VERSION = 24;
     private static final String DATABASE_NAME = "eCampus";
     // Table Names
     private static final String TABLE_USERS = "users";
@@ -36,6 +36,7 @@ public class DatabaseHelper extends SQLiteOpenHelper implements Closeable {
     private static final String TABLE_CONVERSATIONS = "conversations";
     private static final String TABLE_MESSAGES = "messages";
     private static final String TABLE_CURRENT_USER = "current_user";
+    protected static final String TABLE_TIMETABLE = "timetable";
     // TABLE_USERS - column names
     private static final String KEY_USER_ACCOUN_ID = "user_account_id";
     private static final String KEY_USER_FULLNAME = "fullname";
@@ -55,6 +56,16 @@ public class DatabaseHelper extends SQLiteOpenHelper implements Closeable {
     private static final String KEY_MESSAGES_DATE_SENT = "date_sent";
     private static final String KEY_MESSAGES_TEXT = "text";
     private static final String KEY_MESSAGES_SUBJECT = "subject";
+    //TABLE_TIMETABLE
+    protected static final String KEY_TIMETABLE_EMPLOYEE = "employee";
+    protected static final String KEY_TIMETABLE_SUBJECT = "subject";
+    protected static final String KEY_TIMETABLE_BUILDING = "building";
+    protected static final String KEY_TIMETABLE_EMPLOYEE_PHOTO_PATH = "employee_photo_path";
+    protected static final String KEY_TIMETABLE_WEEKEND_NUM = "weekend_num";
+    protected static final String KEY_TIMETABLE_DAY_ID = "day_id";
+    protected static final String KEY_TIMETABLE_DAY_NAME = "day_name";
+    protected static final String KEY_TIMETABLE_LESSON_ID = "lesson_id";
+
     //SQL Statements
     private static final String CREATE_TABLE = "CREATE TABLE ";
     private static final String INTEGER = " INTEGER ";
@@ -104,7 +115,17 @@ public class DatabaseHelper extends SQLiteOpenHelper implements Closeable {
                     PRIMARY_KEY + "(" + KEY_MESSAGES_ID + ")" + ")";
     //   FOREIGN_KEY + "(" + KEY_CONVERSATIONS_GROUP_ID + ")" +
     //   REFERENCES + TABLE_CONVERSATIONS + "(" + KEY_CONVERSATIONS_GROUP_ID + ")"
-
+    private static final String CREATE_TABLE_TIMETABLE =
+            CREATE_TABLE + TABLE_TIMETABLE + "(" +
+                    KEY_TIMETABLE_LESSON_ID + INTEGER + "," +
+                    KEY_TIMETABLE_EMPLOYEE + TEXT + "," +
+                    KEY_TIMETABLE_SUBJECT + TEXT + "," +
+                    KEY_TIMETABLE_BUILDING + TEXT + "," +
+                    KEY_TIMETABLE_EMPLOYEE_PHOTO_PATH + TEXT + "," +
+                    KEY_TIMETABLE_WEEKEND_NUM + INTEGER + "," +
+                    KEY_TIMETABLE_DAY_ID + INTEGER + "," +
+                    KEY_TIMETABLE_DAY_NAME + TEXT + "," +
+                    PRIMARY_KEY + "(" + KEY_TIMETABLE_LESSON_ID + ")" + ")";
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -124,6 +145,8 @@ public class DatabaseHelper extends SQLiteOpenHelper implements Closeable {
         Log.d(TAG, hashCode() + " SQL query: " + CREATE_TABLE_CONVERSATIONS_USERS);
         db.execSQL(CREATE_TABLE_MESSAGES);
         Log.d(TAG, hashCode() + " SQL query: " + CREATE_TABLE_MESSAGES);
+        db.execSQL(CREATE_TABLE_TIMETABLE);
+        Log.d(TAG, hashCode() + " SQL query: " + CREATE_TABLE_TIMETABLE);
 
         Log.d(TAG, hashCode() + " created tables.");
     }
@@ -147,6 +170,7 @@ public class DatabaseHelper extends SQLiteOpenHelper implements Closeable {
         db.execSQL(DROP_TABLE_IF_EXISTS + TABLE_USERS);
         db.execSQL(DROP_TABLE_IF_EXISTS + TABLE_CONVERSATIONS_USERS);
         db.execSQL(DROP_TABLE_IF_EXISTS + TABLE_MESSAGES);
+        db.execSQL(DROP_TABLE_IF_EXISTS + TABLE_TIMETABLE);
         Log.d(TAG, hashCode() + " tables dropped.");
     }
 
