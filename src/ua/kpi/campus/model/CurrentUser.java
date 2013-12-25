@@ -11,13 +11,28 @@ public final class CurrentUser {
     private final String sessionId;
     private final String login;
     private final String password;
+    private final boolean isEmployee;
 
-    public CurrentUser(int id, String sessionId, String login, String password) {
+    public CurrentUser(int id, String sessionId, String login, String password, int isEmployee) {
 
         this.id = id;
         this.sessionId = sessionId;
         this.login = login;
         this.password = password;
+        this.isEmployee = isEmployee == 1;
+    }
+
+    public CurrentUser(int id, String sessionId, String login, String password, boolean isEmployee) {
+
+        this.id = id;
+        this.sessionId = sessionId;
+        this.login = login;
+        this.password = password;
+        this.isEmployee = isEmployee;
+    }
+
+    public boolean isEmployee() {
+        return isEmployee;
     }
 
     public int getId() {

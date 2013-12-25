@@ -20,7 +20,7 @@ import ua.kpi.campus.api.jsonparsers.JSONAuthorizationParser;
 import ua.kpi.campus.api.jsonparsers.JSONBulletinBoardParser;
 import ua.kpi.campus.api.jsonparsers.JSONUserDataParser;
 import ua.kpi.campus.api.jsonparsers.JsonObject;
-import ua.kpi.campus.api.jsonparsers.user.UserData;
+import ua.kpi.campus.api.jsonparsers.user.*;
 import ua.kpi.campus.loaders.HttpResponse;
 import ua.kpi.campus.loaders.asynctask.AsyncTaskManager;
 import ua.kpi.campus.loaders.asynctask.HttpLoadTask;
@@ -30,6 +30,8 @@ import ua.kpi.campus.model.CurrentUser;
 import ua.kpi.campus.model.User;
 import ua.kpi.campus.model.dbhelper.BulletinBoardBase;
 import ua.kpi.campus.model.dbhelper.DatabaseHelper;
+import ua.kpi.campus.model.dbhelper.EmployeeBase;
+import ua.kpi.campus.model.dbhelper.PeronalitiesBase;
 
 import java.util.ArrayList;
 
@@ -58,7 +60,6 @@ public class LoginActivity extends FragmentActivity implements OnTaskCompleteLis
             }
         }
     };
-
     //TODO test button
     private OnClickListener testButtonListener = new OnClickListener() {
 
@@ -77,23 +78,29 @@ public class LoginActivity extends FragmentActivity implements OnTaskCompleteLis
                 try (DatabaseHelper db = new DatabaseHelper(getApplicationContext())) {
 
                     int accountID = parseUser(Mock.getUSER_EMPLOYEE()).getData().getUserAccountID();
-                    CurrentUser user = new CurrentUser(accountID, "4344", login, password);
+                    CurrentUser user = new CurrentUser(accountID, "4344", login, password, 1);
                     db.onUserChanged(user);
-                    BulletinBoardBase bulletinBoardBase = BulletinBoardBase.getInstance();
-                    bulletinBoardBase.addAllBulletins(parseBulletinBoard(Mock.getBulletinBoardActual()));
-                    db.createUser(new User(1818,"Карл Генрих Маркс", "http://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Karl_Marx_001.jpg/225px-Karl_Marx_001.jpg"));
-                    db.createUser(new User(12,"Бертран Рассел", "http://upload.wikimedia.org/wikipedia/commons/thumb/9/9b/Honourable_Bertrand_Russell.jpg/225px-Honourable_Bertrand_Russell.jpg"));
-                    db.createUser(new User(156,"Иммануил Кант", "http://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Immanuel_Kant_%28painted_portrait%29.jpg/200px-Immanuel_Kant_%28painted_portrait%29.jpg"));
-                    db.createUser(new User(1464,"Георг Вильгельм Фридрих Гегель", "http://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Hegel_portrait_by_Schlesinger_1831.jpg/250px-Hegel_portrait_by_Schlesinger_1831.jpg"));
-                    db.createUser(new User(145,"Альбер Камю", "http://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Albert_Camus%2C_gagnant_de_prix_Nobel%2C_portrait_en_buste%2C_pos%C3%A9_au_bureau%2C_faisant_face_%C3%A0_gauche%2C_cigarette_de_tabagisme.jpg/220px-Albert_Camus%2C_gagnant_de_prix_Nobel%2C_portrait_en_buste%2C_pos%C3%A9_au_bureau%2C_faisant_face_%C3%A0_gauche%2C_cigarette_de_tabagisme.jpg"));
-                    db.createUser(new User(174,"Жан-Поль Сартр", "http://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Jean-Paul_Sartre_FP.JPG/220px-Jean-Paul_Sartre_FP.JPG"));
-                    db.createUser(new User(1364,"Освальд Шпенглер", "http://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Bundesarchiv_Bild_183-R06610%2C_Oswald_Spengler.jpg/200px-Bundesarchiv_Bild_183-R06610%2C_Oswald_Spengler.jpg"));
-                    db.createUser(new User(2,"Артур Шопенгауэр", "http://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Schopenhauer.jpg/220px-Schopenhauer.jpg"));
-                    db.createUser(new User(15,"Платон", "http://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/Head_Platon_Glyptothek_Munich_548.jpg/220px-Head_Platon_Glyptothek_Munich_548.jpg"));
-                    db.createUser(new User(523,"Фердина́нд де Соссю́р", "http://upload.wikimedia.org/wikipedia/commons/thumb/d/de/Ferdinand_de_Saussure_by_Jullien.png/200px-Ferdinand_de_Saussure_by_Jullien.png"));
-                    db.createUser(new User(236,"Мишель Фуко", "http://upload.wikimedia.org/wikipedia/ru/thumb/1/12/Michel_Foucault2.jpg/220px-Michel_Foucault2.jpg"));
-                    db.createUser(new User(1,"Фридрих Ницше", "http://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Nietzsche187a.jpg/220px-Nietzsche187a.jpg"));
+                    try (BulletinBoardBase bulletinBoardBase = BulletinBoardBase.getInstance()) {
+                        bulletinBoardBase.addAllBulletins(parseBulletinBoard(Mock.getBulletinBoardActual()));
+                    }
+
+                    db.createUser(new User(1818, "Карл Генрих Маркс", "http://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Karl_Marx_001.jpg/225px-Karl_Marx_001.jpg"));
+                    db.createUser(new User(12, "Бертран Рассел", "http://upload.wikimedia.org/wikipedia/commons/thumb/9/9b/Honourable_Bertrand_Russell.jpg/225px-Honourable_Bertrand_Russell.jpg"));
+                    db.createUser(new User(156, "Иммануил Кант", "http://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Immanuel_Kant_%28painted_portrait%29.jpg/200px-Immanuel_Kant_%28painted_portrait%29.jpg"));
+                    db.createUser(new User(1464, "Георг Вильгельм Фридрих Гегель", "http://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Hegel_portrait_by_Schlesinger_1831.jpg/250px-Hegel_portrait_by_Schlesinger_1831.jpg"));
+                    db.createUser(new User(145, "Альбер Камю", "http://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Albert_Camus%2C_gagnant_de_prix_Nobel%2C_portrait_en_buste%2C_pos%C3%A9_au_bureau%2C_faisant_face_%C3%A0_gauche%2C_cigarette_de_tabagisme.jpg/220px-Albert_Camus%2C_gagnant_de_prix_Nobel%2C_portrait_en_buste%2C_pos%C3%A9_au_bureau%2C_faisant_face_%C3%A0_gauche%2C_cigarette_de_tabagisme.jpg"));
+                    db.createUser(new User(174, "Жан-Поль Сартр", "http://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Jean-Paul_Sartre_FP.JPG/220px-Jean-Paul_Sartre_FP.JPG"));
+                    db.createUser(new User(1364, "Освальд Шпенглер", "http://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Bundesarchiv_Bild_183-R06610%2C_Oswald_Spengler.jpg/200px-Bundesarchiv_Bild_183-R06610%2C_Oswald_Spengler.jpg"));
+                    db.createUser(new User(2, "Артур Шопенгауэр", "http://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Schopenhauer.jpg/220px-Schopenhauer.jpg"));
+                    db.createUser(new User(15, "Платон", "http://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/Head_Platon_Glyptothek_Munich_548.jpg/220px-Head_Platon_Glyptothek_Munich_548.jpg"));
+                    db.createUser(new User(523, "Фердина́нд де Соссю́р", "http://upload.wikimedia.org/wikipedia/commons/thumb/d/de/Ferdinand_de_Saussure_by_Jullien.png/200px-Ferdinand_de_Saussure_by_Jullien.png"));
+                    db.createUser(new User(236, "Мишель Фуко", "http://upload.wikimedia.org/wikipedia/ru/thumb/1/12/Michel_Foucault2.jpg/220px-Michel_Foucault2.jpg"));
+                    db.createUser(new User(11, "Фридрих Ницше", "http://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Nietzsche187a.jpg/220px-Nietzsche187a.jpg"));
                     //db.createUser(new User(236,"Мишель Фуко", ""));
+
+                    try (EmployeeBase employeeBase = EmployeeBase.getInstance()) {
+                        employeeBase.createEmployee(new Employee(1, "Базельский университет, Кафедра классической филологии", "Преподаватель", "Профессор классической филологии", "Профессор"), 11);
+                    }
                 }
                 Session.setCurrentUser(parseUser(Mock.getUSER_EMPLOYEE()).getData());
                 //Intent intent = new Intent(LoginActivity.this, MessageActivity.class);
@@ -173,12 +180,28 @@ public class LoginActivity extends FragmentActivity implements OnTaskCompleteLis
             try (DatabaseHelper db = new DatabaseHelper(getApplicationContext())) {
                 final String login = mLogin.getText().toString();
                 final String password = mPassword.getText().toString();
-                int accountID = parseUser(userDataStr).getData().getUserAccountID();
-                CurrentUser user = new CurrentUser(accountID, sessionId, login, password);
-                if (user.equals(db.getCurrentUser())) {
-                    db.updateCurrentUser(user);
+                UserData userData = parseUser(userDataStr).getData();
+                int accountID = userData.getUserAccountID();
+                CurrentUser currentUser = new CurrentUser(accountID, sessionId, login, password, userData.isEmployee());
+                User user = new User(accountID, userData.getFullName(), userData.getPhoto());
+
+                if (currentUser.equals(db.getCurrentUser())) {
+                    db.updateCurrentUser(currentUser);
                 } else {
-                    db.onUserChanged(user);
+                    db.onUserChanged(currentUser);
+                    db.createUser(user);
+
+                    if (userData.isEmployee()) {
+                        try (EmployeeBase employeeBase = EmployeeBase.getInstance()) {
+                            Employee currentEmployee = ((UserDataEmployee) userData).getEmployees().get(0);
+                            employeeBase.createEmployee(currentEmployee, accountID);
+                        }
+                    } else {
+                        try (PeronalitiesBase peronalitiesBase = PeronalitiesBase.getInstance()) {
+                            Personality personality = ((UserDataPersonalities) userData).getPersonalities().get(0);
+                            peronalitiesBase.createPersonality(personality, accountID);
+                        }
+                    }
                 }
             }
             startMainActivity();

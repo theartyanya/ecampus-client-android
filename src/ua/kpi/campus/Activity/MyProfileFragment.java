@@ -19,6 +19,11 @@ import com.nostra13.universalimageloader.core.assist.ImageLoadingListener;
 import ua.kpi.campus.R;
 import ua.kpi.campus.Session;
 import ua.kpi.campus.api.jsonparsers.user.*;
+import ua.kpi.campus.model.CurrentUser;
+import ua.kpi.campus.model.User;
+import ua.kpi.campus.model.dbhelper.DatabaseHelper;
+import ua.kpi.campus.model.dbhelper.EmployeeBase;
+import ua.kpi.campus.model.dbhelper.PeronalitiesBase;
 
 import java.util.ArrayList;
 
@@ -29,10 +34,12 @@ import java.util.ArrayList;
  * @version 12/18/13
  */
 public class MyProfileFragment extends Fragment implements ImageLoadingListener {
-    protected final static int AVATAR_LOADER_ID = 1;
+    private static UserData currentUser;
     protected ImageView avatar;
     private ProgressBar avatarProgress;
-    private static UserData currentUser;
+    private CurrentUser mCurrentUser;
+    private int mCurrentUserId;
+    private User mProfile;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -46,8 +53,12 @@ public class MyProfileFragment extends Fragment implements ImageLoadingListener 
         super.onCreateView(inflater, container, savedInstanceState);
         View rootView = inflater.inflate(R.layout.fragment_section_my_profile, container, false);
         Log.d(MainActivity.TAG, hashCode() + " onCreateView: fragment " + this.getClass().getName());
-
-        currentUser = Session.getCurrentUser();
+        try (DatabaseHelper db = new DatabaseHelper(getActivity().getApplicationContext())) {
+            currentUser = Session.getCurrentUser();
+            mCurrentUser = db.getCurrentUser();
+            mCurrentUserId = mCurrentUser.getId();
+            mProfile = db.getUser(mCurrentUserId);
+        }
 
         avatar = (ImageView) rootView.findViewById(R.id.avatar);
         avatarProgress = (ProgressBar) rootView.findViewById(R.id.avatar_progress);
@@ -58,32 +69,38 @@ public class MyProfileFragment extends Fragment implements ImageLoadingListener 
         TextView tAcademicStatus = (TextView) rootView.findViewById(R.id.AcademicStatus);
         LinearLayout permissionsContainer = (LinearLayout) rootView.findViewById(R.id.permissionsContainer);
 
-        tFullName.setText(currentUser.getFullName());
+        tFullName.setText(mProfile.getFullname());
         tFullName.setTypeface(null, Typeface.BOLD);
-        if (currentUser.isEmployee()) {
-            Employee currentEmployee = ((UserDataEmployee) currentUser).getEmployees().get(0);
-            tSubdivisionName.setText(currentEmployee.getSubDivisionName());
-            tSubdivisionName.setTypeface(null, Typeface.BOLD);
-            tPosition.setText(currentEmployee.getPosition());
-            tAcademicDegree.setText(String.format("%s: %s",
-                    rootView.getResources().getString(R.string.main_activity_profile_academic_degree),
-                    currentEmployee.getAcademicDegree()));
-            tAcademicStatus.setText(String.format("%s: %s",
-                    rootView.getResources().getString(R.string.main_activity_profile_academic_status),
-                    currentEmployee.getAcademicStatus()));
+        if (mCurrentUser.isEmployee()) {
+            try (EmployeeBase employeeBase = EmployeeBase.getInstance()) {
+
+
+                Employee currentEmployee = employeeBase.getEmployee(mCurrentUserId);
+                tSubdivisionName.setText(currentEmployee.getSubDivisionName());
+                tSubdivisionName.setTypeface(null, Typeface.BOLD);
+                tPosition.setText(currentEmployee.getPosition());
+                tAcademicDegree.setText(String.format("%s: %s",
+                        rootView.getResources().getString(R.string.main_activity_profile_academic_degree),
+                        currentEmployee.getAcademicDegree()));
+                tAcademicStatus.setText(String.format("%s: %s",
+                        rootView.getResources().getString(R.string.main_activity_profile_academic_status),
+                        currentEmployee.getAcademicStatus()));
+            }
         } else {
-            Personality currentPersonality = ((UserDataPersonalities) currentUser).getPersonalities().get(0);
-            tSubdivisionName.setText(currentPersonality.getSubdivisionName());
-            tSubdivisionName.setTypeface(null, Typeface.BOLD);
-            tPosition.setText(String.format("%s: %s",
-                    rootView.getResources().getString(R.string.main_activity_profile_group),
-                    currentPersonality.getStudyGroupName()));
-            tAcademicDegree.setText(String.format("%s: %s",
-                    rootView.getResources().getString(R.string.main_activity_profile_contract),
-                    toStringYN(currentPersonality.isContract())));
-            tAcademicStatus.setText(String.format("%s: %s",
-                    rootView.getResources().getString(R.string.main_activity_profile_speciality),
-                    currentPersonality.getSpeciality()));
+            try (PeronalitiesBase employeeBase = PeronalitiesBase.getInstance()) {
+                Personality currentPersonality = employeeBase.getPersonality(mCurrentUserId);
+                tSubdivisionName.setText(currentPersonality.getSubdivisionName());
+                tSubdivisionName.setTypeface(null, Typeface.BOLD);
+                tPosition.setText(String.format("%s: %s",
+                        rootView.getResources().getString(R.string.main_activity_profile_group),
+                        currentPersonality.getStudyGroupName()));
+                tAcademicDegree.setText(String.format("%s: %s",
+                        rootView.getResources().getString(R.string.main_activity_profile_contract),
+                        toStringYN(currentPersonality.isContract())));
+                tAcademicStatus.setText(String.format("%s: %s",
+                        rootView.getResources().getString(R.string.main_activity_profile_speciality),
+                        currentPersonality.getSpeciality()));
+            }
         }
 
         ArrayList<SubsystemData> profiles = currentUser.getProfiles();
@@ -93,7 +110,7 @@ public class MyProfileFragment extends Fragment implements ImageLoadingListener 
         //Log.d(MainActivity.TAG, hashCode() + profiles.toString());
 
         ImageLoader imageLoader = ImageLoader.getInstance();
-        imageLoader.displayImage(currentUser.getPhoto(), avatar, this);
+        imageLoader.displayImage(mProfile.getPhoto(), avatar, this);
 
         return rootView;
     }

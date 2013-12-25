@@ -30,7 +30,7 @@ public class DatabaseHelper extends SQLiteOpenHelper implements Closeable {
     public final static String TAG = DatabaseHelper.class.getName();
     protected static Context mContext;
     private static final int MESSAGES_SET_CAPACITY = 100;
-    private static final int DATABASE_VERSION = 28;
+    private static final int DATABASE_VERSION = 29;
     private static final String DATABASE_NAME = "eCampus";
     // Table Names
     private static final String TABLE_USERS = "users";
@@ -53,6 +53,7 @@ public class DatabaseHelper extends SQLiteOpenHelper implements Closeable {
     private static final String KEY_CURRENT_USER_SESSION_ID = "session_id";
     private static final String KEY_CURRENT_USER_LOGIN = "login";
     private static final String KEY_CURRENT_USER_PASSWORD = "password";
+    private static final String KEY_CURRENT_USER_IS_EMPLOYEE = "employee";
     //TABLE_MESSAGES
     private static final String KEY_MESSAGES_ID = "message_id";
     private static final String KEY_MESSAGES_DATE_SENT = "date_sent";
@@ -69,7 +70,7 @@ public class DatabaseHelper extends SQLiteOpenHelper implements Closeable {
     protected static final String KEY_TIMETABLE_LESSON_ID = "lesson_id";
 
     //SQL Statements
-    private static final String CREATE_TABLE = "CREATE TABLE ";
+    private static final String CREATE_TABLE_SQL = "CREATE TABLE ";
     private static final String INTEGER = " INTEGER ";
     private static final String TEXT = " TEXT ";
     private static final String PRIMARY_KEY = " PRIMARY KEY ";
@@ -79,27 +80,28 @@ public class DatabaseHelper extends SQLiteOpenHelper implements Closeable {
     private static final String SELECT_SELECT_FROM_S_WHERE_S = "SELECT * FROM %s WHERE %s";
     // Table Create Statements
     private static final String CREATE_TABLE_USERS =
-            CREATE_TABLE + TABLE_USERS + "(" +
+            CREATE_TABLE_SQL + TABLE_USERS + "(" +
                     KEY_USER_ACCOUN_ID + INTEGER + "," +
                     KEY_USER_FULLNAME + TEXT + "," +
                     KEY_USER_PHOTO + TEXT + "," +
                     PRIMARY_KEY + "(" + KEY_USER_ACCOUN_ID + ")" + ")";
     private static final String CREATE_TABLE_CURRENT_USER =
-            CREATE_TABLE + TABLE_CURRENT_USER + "(" +
+            CREATE_TABLE_SQL + TABLE_CURRENT_USER + "(" +
                     KEY_CURRENT_USER_ID + INTEGER + "," +
                     KEY_CURRENT_USER_SESSION_ID + TEXT + "," +
                     KEY_CURRENT_USER_LOGIN + TEXT + "," +
                     KEY_CURRENT_USER_PASSWORD + TEXT + "," +
+                    KEY_CURRENT_USER_IS_EMPLOYEE + INTEGER + "," +
                     PRIMARY_KEY + "(" + KEY_CURRENT_USER_ID + ")" + ")";
     private static final String CREATE_TABLE_CONVERSATIONS =
-            CREATE_TABLE + TABLE_CONVERSATIONS + "(" +
+            CREATE_TABLE_SQL + TABLE_CONVERSATIONS + "(" +
                     KEY_CONVERSATIONS_GROUP_ID + INTEGER + "," +
                     KEY_CONVERSATIONS_SUBJECT + TEXT + "," +
                     KEY_CONVERSATIONS_LAST_MESSAGE_TEXT + TEXT + "," +
                     KEY_CONVERSATIONS_LAST_MESSAGE_DATE + INTEGER + "," +
                     PRIMARY_KEY + "(" + KEY_CONVERSATIONS_GROUP_ID + ")" + ")";
     private static final String CREATE_TABLE_CONVERSATIONS_USERS =
-            CREATE_TABLE + TABLE_CONVERSATIONS_USERS + "(" +
+            CREATE_TABLE_SQL + TABLE_CONVERSATIONS_USERS + "(" +
                     KEY_CONVERSATIONS_GROUP_ID + INTEGER + "," +
                     KEY_USER_ACCOUN_ID + INTEGER + "," +
                     FOREIGN_KEY + "(" + KEY_CONVERSATIONS_GROUP_ID + ")" +
@@ -107,7 +109,7 @@ public class DatabaseHelper extends SQLiteOpenHelper implements Closeable {
                     FOREIGN_KEY + "(" + KEY_USER_ACCOUN_ID + ")" +
                     REFERENCES + TABLE_USERS + "(" + KEY_USER_ACCOUN_ID + ")" + ")";
     private static final String CREATE_TABLE_MESSAGES =
-            CREATE_TABLE + TABLE_MESSAGES + "(" +
+            CREATE_TABLE_SQL + TABLE_MESSAGES + "(" +
                     KEY_MESSAGES_ID + INTEGER + "," +
                     KEY_CONVERSATIONS_GROUP_ID + INTEGER + "," +
                     KEY_MESSAGES_DATE_SENT + INTEGER + "," +
@@ -118,7 +120,7 @@ public class DatabaseHelper extends SQLiteOpenHelper implements Closeable {
     //   FOREIGN_KEY + "(" + KEY_CONVERSATIONS_GROUP_ID + ")" +
     //   REFERENCES + TABLE_CONVERSATIONS + "(" + KEY_CONVERSATIONS_GROUP_ID + ")"
     private static final String CREATE_TABLE_TIMETABLE =
-            CREATE_TABLE + TABLE_TIMETABLE + "(" +
+            CREATE_TABLE_SQL + TABLE_TIMETABLE + "(" +
                     KEY_TIMETABLE_LESSON_ID + INTEGER + "," +
                     KEY_TIMETABLE_EMPLOYEE + TEXT + "," +
                     KEY_TIMETABLE_SUBJECT + TEXT + "," +
@@ -141,8 +143,8 @@ public class DatabaseHelper extends SQLiteOpenHelper implements Closeable {
         protected static final String KEY_LINK_RECEPIENTS = "link_recepients";
         protected static final String KEY_SUBJECT = "subject";
 
-        private static final String CREATE_TABLE_BB =
-                CREATE_TABLE + TABLE_NAME + "(" +
+        private static final String CREATE_TABLE =
+                CREATE_TABLE_SQL + TABLE_NAME + "(" +
                         KEY_TEXT + TEXT + "," +
                         KEY_DATE_CREATE + INTEGER + "," +
                         KEY_CREATOR_ID + INTEGER + "," +
@@ -152,6 +154,47 @@ public class DatabaseHelper extends SQLiteOpenHelper implements Closeable {
                         KEY_LINK_RECEPIENTS + TEXT + "," +
                         KEY_SUBJECT + TEXT + "," +
                         PRIMARY_KEY + "(" + KEY_BULLETIN_BOARD_ID + ")" + ")";
+    }
+
+    protected abstract static class EmployeeEntry implements BaseColumns{
+        protected static final String TABLE_NAME = "Employee";
+        protected static final String KEY_USER_ACCOUNT_ID = "user_account_id";
+        protected static final String KEY_SUBDIVISION_NAME = "subdivion_name";
+        protected static final String KEY_SUBDIVISION_ID = "subdivision_d";
+        protected static final String KEY_POSITION = "position";
+        protected static final String KEY_ACADEMIC_DEGREE = "academic_degree";
+        protected static final String KEY_ACADEMIC_STATUS = "academic_status";
+
+        private static final String CREATE_TABLE =
+                CREATE_TABLE_SQL + TABLE_NAME + "(" +
+                        KEY_USER_ACCOUNT_ID + INTEGER + "," +
+                        KEY_SUBDIVISION_ID + INTEGER + "," +
+                        KEY_SUBDIVISION_NAME + TEXT + "," +
+                        KEY_POSITION + TEXT + "," +
+                        KEY_ACADEMIC_DEGREE + TEXT + "," +
+                        KEY_ACADEMIC_STATUS + TEXT +
+                        ")";
+    }
+
+    protected static abstract class PersonalitiesEntry implements BaseColumns{
+        protected static final String TABLE_NAME = "Personalities";
+
+        protected static final String KEY_USER_ACCOUNT_ID = "user_account_id";
+        protected static final String KEY_SUBDIVISION_NAME = "subdivision_name";
+        protected static final String KEY_SUBDIVISION_ID = "subdivision_d";
+        protected static final String KEY_IS_CONTRACT = "is_ontract";
+        protected static final String KEY_SPECIALITY = "speciality";
+        protected static final String KEY_STUDY_GROUP_NAME = "study_group_name";
+
+        private static final String CREATE_TABLE =
+                CREATE_TABLE_SQL + TABLE_NAME + "(" +
+                        KEY_USER_ACCOUNT_ID + INTEGER + "," +
+                        KEY_SUBDIVISION_ID + INTEGER + "," +
+                        KEY_SUBDIVISION_NAME + TEXT + "," +
+                        KEY_IS_CONTRACT + TEXT + "," +
+                        KEY_SPECIALITY + TEXT + "," +
+                        KEY_STUDY_GROUP_NAME + TEXT +
+                        ")";
     }
 
     public DatabaseHelper(Context context) {
@@ -179,8 +222,12 @@ public class DatabaseHelper extends SQLiteOpenHelper implements Closeable {
         Log.d(TAG, hashCode() + " SQL query: " + CREATE_TABLE_MESSAGES);
         db.execSQL(CREATE_TABLE_TIMETABLE);
         Log.d(TAG, hashCode() + " SQL query: " + CREATE_TABLE_TIMETABLE);
-        db.execSQL(BulletinBoardEntry.CREATE_TABLE_BB);
-        Log.d(TAG, hashCode() + " SQL query: " + BulletinBoardEntry.CREATE_TABLE_BB);
+        db.execSQL(BulletinBoardEntry.CREATE_TABLE);
+        Log.d(TAG, hashCode() + " SQL query: " + BulletinBoardEntry.CREATE_TABLE);
+        db.execSQL(EmployeeEntry.CREATE_TABLE);
+        Log.d(TAG, hashCode() + " SQL query: " + EmployeeEntry.CREATE_TABLE);
+        db.execSQL(PersonalitiesEntry.CREATE_TABLE);
+        Log.d(TAG, hashCode() + " SQL query: " + PersonalitiesEntry.CREATE_TABLE);
 
         Log.d(TAG, hashCode() + " created tables.");
     }
@@ -206,6 +253,8 @@ public class DatabaseHelper extends SQLiteOpenHelper implements Closeable {
         db.execSQL(DROP_TABLE_IF_EXISTS + TABLE_MESSAGES);
         db.execSQL(DROP_TABLE_IF_EXISTS + TABLE_TIMETABLE);
         db.execSQL(DROP_TABLE_IF_EXISTS + BulletinBoardEntry.TABLE_NAME);
+        db.execSQL(DROP_TABLE_IF_EXISTS + EmployeeEntry.TABLE_NAME);
+        db.execSQL(DROP_TABLE_IF_EXISTS + PersonalitiesEntry.TABLE_NAME);
         Log.d(TAG, hashCode() + " tables dropped.");
     }
 
@@ -233,7 +282,9 @@ public class DatabaseHelper extends SQLiteOpenHelper implements Closeable {
                     c.getInt(c.getColumnIndex(KEY_CURRENT_USER_ID)),
                     c.getString(c.getColumnIndex(KEY_CURRENT_USER_SESSION_ID)),
                     c.getString(c.getColumnIndex(KEY_CURRENT_USER_LOGIN)),
-                    c.getString(c.getColumnIndex(KEY_CURRENT_USER_PASSWORD)));
+                    c.getString(c.getColumnIndex(KEY_CURRENT_USER_PASSWORD)),
+                    c.getInt(c.getColumnIndex(KEY_CURRENT_USER_IS_EMPLOYEE))
+                    );
         } else return null;
     }
 
@@ -245,6 +296,7 @@ public class DatabaseHelper extends SQLiteOpenHelper implements Closeable {
         values.put(KEY_CURRENT_USER_SESSION_ID, user.getSessionId());
         values.put(KEY_CURRENT_USER_LOGIN, user.getLogin());
         values.put(KEY_CURRENT_USER_PASSWORD, user.getPassword());
+        values.put(KEY_CURRENT_USER_IS_EMPLOYEE, user.isEmployee() ? 1 : 0);
         db.insert(TABLE_CURRENT_USER, null, values);
     }
 
