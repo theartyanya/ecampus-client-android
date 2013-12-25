@@ -10,8 +10,6 @@ import android.widget.TextView;
 import ua.kpi.campus.Activity.MainActivity;
 import ua.kpi.campus.R;
 import ua.kpi.campus.model.BulletinBoardSubject;
-import ua.kpi.campus.model.Conversation;
-import ua.kpi.campus.utils.Time;
 
 import java.util.List;
 
@@ -26,7 +24,7 @@ public class BulletinBoardListAdapter extends ArrayAdapter<BulletinBoardSubject>
     private final List<BulletinBoardSubject> values;
 
     public BulletinBoardListAdapter(Context context, List<BulletinBoardSubject> values) {
-        super(context, R.layout.list_item_message, values);
+        super(context, R.layout.bulletin_list_item, values);
         this.context = context;
         this.values = values;
     }
@@ -38,35 +36,24 @@ public class BulletinBoardListAdapter extends ArrayAdapter<BulletinBoardSubject>
             viewHolder = new ViewHolder();
             LayoutInflater inflater = (LayoutInflater) context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.list_item_message, parent, false);
-            viewHolder.tSubject = (TextView) convertView.findViewById(R.id.messageListSubject);
-            viewHolder.tLastMessageText = (TextView) convertView.findViewById(R.id.messageListLastMessage);
-            viewHolder.tLastDateText = (TextView) convertView.findViewById(R.id.messageListLastDate);
+            convertView = inflater.inflate(R.layout.bulletin_list_item, parent, false);
+            viewHolder.tSubject = (TextView) convertView.findViewById(R.id.bulletin_board_subject);
+            viewHolder.tLastMessageText = (TextView) convertView.findViewById(R.id.bulletin_board_text);
             convertView.setTag(viewHolder);
             Log.d(MainActivity.TAG, hashCode() + " created subsystem view " + position);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        Conversation currentConversation = values.get(position);
-        viewHolder.tSubject.setText(formatString(currentConversation.getSubject(), maxLengthTheme));
-        viewHolder.tLastMessageText.setText(formatString(currentConversation.getLastMessageText(), maxLength));
-        viewHolder.tLastDateText.setText(Time.getShortWithDate(currentConversation.getLastMessageDate()));
+        BulletinBoardSubject bulletinBoardSubject = values.get(position);
+        viewHolder.tSubject.setText(bulletinBoardSubject.getSubject());
+        viewHolder.tLastMessageText.setText(bulletinBoardSubject.getText());
 
         return convertView;
-    }
-
-    private static String formatString(String original, final int maxLength) {
-        if (original.length() > maxLength) {
-            original = original.substring(0, maxLength);
-            original = original + "...";
-        }
-        return original;
     }
 
     static class ViewHolder {
         TextView tSubject;
         TextView tLastMessageText;
-        TextView tLastDateText;
     }
 }
