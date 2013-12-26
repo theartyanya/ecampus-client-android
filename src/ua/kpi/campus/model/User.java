@@ -8,13 +8,10 @@ import ua.kpi.campus.api.jsonparsers.message.UserMessage;
  * @author Artur Dzidzoiev
  * @version 12/21/13
  */
-public class User {
-    private int id;
-    private String fullname;
-    private String photo;
-
-    public User() {
-    }
+public final class User {
+    private final int id;
+    private final String fullname;
+    private final String photo;
 
     public User(int id, String fullname, String photo) {
         this.id = id;
@@ -32,24 +29,12 @@ public class User {
         return photo;
     }
 
-    public void setPhoto(String photo) {
-        this.photo = photo;
-    }
-
     public int getId() {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getFullname() {
         return fullname;
-    }
-
-    public void setFullname(String fullname) {
-        this.fullname = fullname;
     }
 
     @Override
