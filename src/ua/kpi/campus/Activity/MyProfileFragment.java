@@ -53,7 +53,7 @@ public class MyProfileFragment extends Fragment implements ImageLoadingListener 
         super.onCreateView(inflater, container, savedInstanceState);
         View rootView = inflater.inflate(R.layout.fragment_section_my_profile, container, false);
         Log.d(MainActivity.TAG, hashCode() + " onCreateView: fragment " + this.getClass().getName());
-        try (DatabaseHelper db = new DatabaseHelper(getActivity().getApplicationContext())) {
+        try (DatabaseHelper db = DatabaseHelper.getInstance()) {
             currentUser = Session.getCurrentUser();
             mCurrentUser = db.getCurrentUser();
             mCurrentUserId = mCurrentUser.getId();

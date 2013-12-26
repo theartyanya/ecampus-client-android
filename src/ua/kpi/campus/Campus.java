@@ -13,6 +13,7 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
 import com.nostra13.universalimageloader.utils.StorageUtils;
 import ua.kpi.campus.Activity.MainActivity;
+import ua.kpi.campus.model.dbhelper.DatabaseHelper;
 
 import java.io.File;
 
@@ -23,7 +24,7 @@ import java.io.File;
  * @version 12/20/13
  */
 public class Campus extends Application {
-    public static final String TAG = MainActivity.TAG;
+    public static final String TAG = "Campus";
     private Context mContext;
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
@@ -56,6 +57,9 @@ public class Campus extends Application {
 
         imageLoader.init(config);
         Log.d(MainActivity.TAG, hashCode() + " image loader configurated.");
+
+        DatabaseHelper.initContext(mContext);
+        Log.d(MainActivity.TAG, hashCode() + " db context set.");
     }
 
     @Override

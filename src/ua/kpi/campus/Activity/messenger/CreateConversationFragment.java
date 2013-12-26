@@ -47,7 +47,7 @@ public class CreateConversationFragment extends Fragment{
         HashSet<User> mUsers = new HashSet<>();
         Intent intent = getActivity().getIntent();
         userIds = intent.getIntArrayExtra(CreateConversationActivity.EXTRA_USERS);
-        try (DatabaseHelper db = new DatabaseHelper(mContext)) {
+        try (DatabaseHelper db = DatabaseHelper.getInstance()) {
             mSessionId = db.getSessionId();
             for(int i: userIds){
                 mUsers.add(db.getUser(i));

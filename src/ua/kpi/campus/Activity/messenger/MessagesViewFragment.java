@@ -89,7 +89,7 @@ public class MessagesViewFragment extends ListFragment {
         getListView().setEmptyView(progressBar);
 
         //loading stored data
-        try (DatabaseHelper db = new DatabaseHelper(getActivity().getApplicationContext())) {
+        try (DatabaseHelper db = DatabaseHelper.getInstance()) {
             mSessionId = db.getSessionId();
         }
 
@@ -115,7 +115,7 @@ public class MessagesViewFragment extends ListFragment {
     }
 
     private List<Message> getFromDB() {
-        try (DatabaseHelper db = new DatabaseHelper(getActivity().getApplicationContext())) {
+        try (DatabaseHelper db = DatabaseHelper.getInstance()) {
             return db.getLastMessages(mGroupId);
         }
     }
@@ -138,7 +138,7 @@ public class MessagesViewFragment extends ListFragment {
                     public void onSuccess(int statusCode, org.apache.http.Header[] headers, java.lang.String responseBody) {
                         Log.d(TAG, hashCode() + " received.");
                         List<MessageItem> userConversationDatas = parseConversation(responseBody);
-                        try (DatabaseHelper db = new DatabaseHelper(getActivity().getApplicationContext())) {
+                        try (DatabaseHelper db = DatabaseHelper.getInstance()) {
                             db.addAllMessages(userConversationDatas);
                             updateListView(db.getLastMessages(mGroupId));
                         }

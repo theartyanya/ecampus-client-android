@@ -37,7 +37,7 @@ public class MessagesViewAdapter extends ArrayAdapter<Message>{
         this.context = context;
         this.values = values;
         this.users = new HashMap<>();
-        try (DatabaseHelper db = new DatabaseHelper(getContext())) {
+        try (DatabaseHelper db = DatabaseHelper.getInstance()) {
             this.currentUserID = db.getCurrentUser().getId();
             Set<User> userset = db.getAllUsersSet();
             for (User user : userset) {

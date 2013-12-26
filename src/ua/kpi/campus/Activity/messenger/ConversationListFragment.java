@@ -65,7 +65,7 @@ public class ConversationListFragment extends ListFragment {
         progressBar.setIndeterminate(true);
         getListView().setEmptyView(progressBar);
 
-        try (DatabaseHelper db = new DatabaseHelper(getActivity().getApplicationContext())) {
+        try (DatabaseHelper db = DatabaseHelper.getInstance()) {
            sessionId = db.getSessionId();
         }
 
@@ -133,7 +133,7 @@ public class ConversationListFragment extends ListFragment {
     }
 
     private void updateDB(ArrayList<UserConversationData> conversations) {
-        try (DatabaseHelper db = new DatabaseHelper(getActivity().getApplicationContext())) {
+        try (DatabaseHelper db = DatabaseHelper.getInstance()) {
             HashSet<UserMessage> users = new HashSet<>();
             db.refreshConversations();
             Log.d(TAG, hashCode() + db.getPath());
@@ -151,7 +151,7 @@ public class ConversationListFragment extends ListFragment {
     }
 
     private List<Conversation> getFromDB() {
-        try (DatabaseHelper db = new DatabaseHelper(getActivity().getApplicationContext())) {
+        try (DatabaseHelper db = DatabaseHelper.getInstance()) {
             return db.getAllConversations();
         }
     }

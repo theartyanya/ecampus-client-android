@@ -62,7 +62,7 @@ public class BulletinBoardListFragment extends ListFragment {
         progressBar.setIndeterminate(true);
         getListView().setEmptyView(progressBar);
 
-        try (DatabaseHelper db = new DatabaseHelper(getActivity().getApplicationContext())) {
+        try (DatabaseHelper db = DatabaseHelper.getInstance()) {
             sessionId = db.getSessionId();
         }
 

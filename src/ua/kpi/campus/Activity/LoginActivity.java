@@ -75,7 +75,7 @@ public class LoginActivity extends FragmentActivity implements OnTaskCompleteLis
                 //String Url = CampusApiURL.getAuth(login, password);
                 //mAsyncTaskManager.setupTask(new HttpLoadTask(getResources(), Url, R.string.login_activity_auth_work, AUTH_LOADER_ID));
                 //startSessionIdLoader(Url);
-                try (DatabaseHelper db = new DatabaseHelper(getApplicationContext())) {
+                try (DatabaseHelper db = DatabaseHelper.getInstance()) {
 
                     int accountID = parseUser(Mock.getUSER_EMPLOYEE()).getData().getUserAccountID();
                     CurrentUser user = new CurrentUser(accountID, "4344", login, password, 1);
@@ -143,6 +143,7 @@ public class LoginActivity extends FragmentActivity implements OnTaskCompleteLis
         Button testButton = (Button) findViewById(R.id.testButton);
         testButton.setOnClickListener(testButtonListener);
 
+
         mAsyncTaskManager = new AsyncTaskManager(this, this);
         mAsyncTaskManager.handleRetainedTask(getLastCustomNonConfigurationInstance());
     }
@@ -187,7 +188,7 @@ public class LoginActivity extends FragmentActivity implements OnTaskCompleteLis
         if (httpResponse.getStatusCode() == HttpStatus.SC_OK) {
             //TODO delete Session class
             Session.setCurrentUser(parseUser(userDataStr).getData());
-            try (DatabaseHelper db = new DatabaseHelper(getApplicationContext())) {
+            try (DatabaseHelper db = DatabaseHelper.getInstance()) {
                 final String login = mLogin.getText().toString();
                 final String password = mPassword.getText().toString();
                 UserData userData = parseUser(userDataStr).getData();

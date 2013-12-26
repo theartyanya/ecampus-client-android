@@ -91,7 +91,7 @@ public class UserListFragment extends ListFragment {
     }
 
     private List<UserModel> getFromDB() {
-        try (DatabaseHelper db = new DatabaseHelper(mContext)) {
+        try (DatabaseHelper db = DatabaseHelper.getInstance()) {
             List<UserModel> model = new ArrayList<UserModel>();
             for (User user : db.getAllUsersSet()) {
                 model.add(new UserModel(user.getId(), user.getFullname(), user.getPhoto()));
