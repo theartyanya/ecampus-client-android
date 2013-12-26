@@ -29,6 +29,8 @@
         <activity android:name=".Activity.messenger.MessageActivity" android:label="@string/message_view" />
         <activity android:name=".Activity.CollectionDemoActivity" android:label="@string/demo_collection" />
         <activity android:name=".Activity.bulletinboard.BulletinActivity" android:label="@string/bulletin_activity_name" />
+        <activity android:name=".Activity.userlist.UserListActivity" android:label="@string/users" />
+        <activity android:name=".Activity.messenger.CreateConversationActivity" android:label="@string/create_message" />
 
 
     </application>

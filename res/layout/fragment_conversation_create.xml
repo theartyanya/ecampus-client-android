@@ -21,7 +21,8 @@
                 android:layout_height="fill_parent"
                 android:layout_alignTop="@+id/create_conversation_to"
                 android:layout_toRightOf="@+id/create_conversation_to"
-                android:layout_marginLeft="@dimen/activity_vertical_margin_small">
+                android:layout_marginLeft="@dimen/activity_vertical_margin_small"
+                android:layout_marginBottom="@dimen/activity_vertical_margin">
         </LinearLayout>
 
         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
@@ -44,6 +45,14 @@
                 android:id="@+id/create_conversation_text_edit"
                 android:layout_below="@+id/create_conversation_text"
                 android:inputType="text"/>
+        <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/send"
+                android:id="@+id/create_conversatioin_button_send"
+                android:layout_alignParentLeft="false" android:layout_alignParentBottom="true"
+                android:layout_below="@+id/create_conversation_text_edit"
+                android:layout_marginTop="@dimen/activity_vertical_margin_small"/>
 
 
     </RelativeLayout>

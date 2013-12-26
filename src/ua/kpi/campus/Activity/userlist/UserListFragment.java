@@ -35,7 +35,7 @@ public class UserListFragment extends ListFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.userlist, container, false);
-        Button button = (Button) rootView.findViewById(R.id.userlist_button_create_group);
+        Button button = (Button) rootView.findViewById(R.id.button_select_users);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

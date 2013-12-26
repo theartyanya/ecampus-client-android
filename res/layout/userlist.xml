@@ -10,13 +10,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_above="@+id/create_conversation_subject_edit"/>
+            android:layout_above="@+id/button_select_users"/>
 
     <Button
             android:layout_width="fill_parent"
             android:layout_height="@dimen/button_high"
             android:text="@string/create_message"
-            android:id="@+id/create_conversation_subject_edit" android:layout_alignParentTop="false" android:layout_centerHorizontal="true"
+            android:id="@+id/button_select_users" android:layout_alignParentTop="false" android:layout_centerHorizontal="true"
             android:gravity="center" android:layout_alignParentBottom="true"
             />
 

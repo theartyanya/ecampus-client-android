@@ -23,7 +23,7 @@ public class InteractiveUserListAdapter extends ArrayAdapter<UserModel> {
     private final Activity context;
 
     public InteractiveUserListAdapter(Activity context, List<UserModel> list) {
-        super(context, R.layout.user_list_rowbutton, list);
+        super(context, R.layout.userlist_rowbutton, list);
         this.context = context;
         this.list = list;
     }
@@ -33,7 +33,7 @@ public class InteractiveUserListAdapter extends ArrayAdapter<UserModel> {
         View view = null;
         if (convertView == null) {
             LayoutInflater inflator = context.getLayoutInflater();
-            view = inflator.inflate(R.layout.user_list_rowbutton, null);
+            view = inflator.inflate(R.layout.userlist_rowbutton, null);
             final ViewHolder viewHolder = new ViewHolder();
             viewHolder.text = (TextView) view.findViewById(R.id.userlist_name);
             viewHolder.avatar = (ImageView) view.findViewById(R.id.userlist_avatar);
