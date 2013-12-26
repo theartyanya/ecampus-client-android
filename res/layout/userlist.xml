@@ -18,6 +18,6 @@
             android:text="@string/create_message"
             android:id="@+id/create_conversation_subject_edit" android:layout_alignParentTop="false" android:layout_centerHorizontal="true"
             android:gravity="center" android:layout_alignParentBottom="true"
-            style="@android:style/Widget.Holo.Light.Button"/>
+            />
 
 </RelativeLayout>
