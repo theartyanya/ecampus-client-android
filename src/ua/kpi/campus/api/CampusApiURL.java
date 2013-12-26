@@ -21,7 +21,7 @@ public class CampusApiURL {
     private final static String GET_CONVERSATION_PATH = "message/GetUserConversation?";
     private final static String SEND_MESSAGE_PATH = "message/sendmessage?";
     private final static String GET_ACTUAL = "bulletinboard/getactual?";
-
+    private final static String MESSAGE_CREATE_GROUP = "message/CreateGroup?";
 
 
     /**
@@ -105,11 +105,27 @@ public class CampusApiURL {
     }
 
     /**
-     * Getting message list
+     * Getting actual bulletin
      *
      * @return URL
      */
     public static String getActual(String sessionId) {
         return String.format("%s%ssessionId=%s", API_URL, GET_ACTUAL, sessionId);
+    }
+
+    /**
+     * Creeate new conversation
+     *
+     * @return URL
+     */
+    public static String createGroup(String sessionId, int[] userIdList, String name) {
+        StringBuilder users = new StringBuilder();
+        for(int i : userIdList) {
+            users.append(i);
+            users.append(",");
+        }
+        users.deleteCharAt(users.length()-1);
+        return String.format("%s%ssessionId=%s&userIdList=%s&name=%s",
+                API_URL, MESSAGE_CREATE_GROUP, sessionId, users, name);
     }
 }

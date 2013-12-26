@@ -67,8 +67,14 @@
     <string name="users">Користувачі</string>
     <string name="create_message">Надіслати повідомлення</string>
     <string name="create_conversation">Кому:</string>
-    <string name="create_conversation_subject">Тема</string>
-    <string name="create_conversation_text">Текст повідомлення</string>
+    <string name="create_conversation_fail">Не вдалося надіслати</string>
+    <string name="create_conversation_subject">Тема:</string>
+    <string name="create_conversation_text">Текст повідомлення:</string>
+    <string name="create_conversation_fill_subject">Введіть тему!</string>
+    <string name="create_conversation_fill_text">Введіть текст повідомлення!</string>
+    <string name="create_fill_text">Заповните повідомлення</string>
+    <string name="create_fill_subject">Заповните тему</string>
 
+    <string name="userlist_select_one">Виберіть хоча б одного користувача</string>
 
 </resources>

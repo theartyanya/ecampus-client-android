@@ -91,7 +91,6 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         }
     }
 
-
     @Override
     public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
     }
@@ -122,6 +121,20 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     }
 
     /**
+     * Statistics
+     */
+    public static class StatSectionFragment extends Fragment {
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+            View rootView = inflater.inflate(R.layout.fragment_section_stat, container, false);
+
+            return rootView;
+        }
+    }
+
+    /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to one of the primary
      * sections of the app.
      */
@@ -137,11 +150,12 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                 case 0:
                     return new MyProfileFragment();
                 case 1:
-                    return new BulletinBoardListFragment();
-                case 2:
                     return new ConversationListFragment();
-                case 3:
+
+                case 2:
                     return new UserListFragment();
+                case 3:
+                    return new BulletinBoardListFragment();
 
                 default:
                     // The other sections of the app are dummy placeholders.
@@ -165,29 +179,16 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                 case 0:
                     return getResources().getString(R.string.section1_main_info);
                 case 1:
-                    return getResources().getString(R.string.section2_desk);
-                case 2:
                     return getResources().getString(R.string.section3_message);
-                case 3:
+
+                case 2:
                     return getResources().getString(R.string.section4_userlist);
+
+                case 3:
+                    return getResources().getString(R.string.section2_desk);
                 default:
                     return "Section " + (position + 1);
             }
-        }
-    }
-
-
-    /**
-     * Statistics
-     */
-    public static class StatSectionFragment extends Fragment {
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_section_stat, container, false);
-
-            return rootView;
         }
     }
 }

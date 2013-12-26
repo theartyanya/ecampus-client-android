@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Toast;
 import ua.kpi.campus.Activity.MainActivity;
 import ua.kpi.campus.Activity.messenger.CreateConversationActivity;
 import ua.kpi.campus.R;
@@ -55,10 +56,14 @@ public class UserListFragment extends ListFragment {
                         userIds.add(userModel.getId());
                     }
                 }
-                Intent intent = new Intent(getActivity(), CreateConversationActivity.class);
-                intent.putExtra(CreateConversationActivity.EXTRA_USERS, convertIntegers(userIds));
-                Log.d(TAG, hashCode() + " starting new activity... " + CreateConversationActivity.class.getName());
-                startActivity(intent);
+                if (!userIds.isEmpty()) {
+                    Intent intent = new Intent(getActivity(), CreateConversationActivity.class);
+                    intent.putExtra(CreateConversationActivity.EXTRA_USERS, convertIntegers(userIds));
+                    Log.d(TAG, hashCode() + " starting new activity... " + CreateConversationActivity.class.getName());
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(mContext, mContext.getResources().getString(R.string.userlist_select_one), Toast.LENGTH_SHORT).show();
+                }
             }
         });
         return rootView;

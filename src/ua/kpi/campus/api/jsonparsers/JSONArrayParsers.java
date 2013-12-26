@@ -122,11 +122,9 @@ class JSONArrayParsers {
 
         for (int i = 0; i < dataJSONArray.length(); i++) {
             JSONObject childJSONObject = dataJSONArray.getJSONObject(i);
-            long dateCreate = Time.getUnixTime(childJSONObject.getString("DateCreate"));
-            dataArray.add(new BulletinBoardSubject(childJSONObject
-                    .getString("Text"), dateCreate
-                    , childJSONObject
-                    .getInt("CreatorUserAccountId"),
+            long dateCreate = Time.getUnixTimeBulletinBoard(childJSONObject.getString("DateCreate"));
+            dataArray.add(new BulletinBoardSubject(childJSONObject.getString("Text"), dateCreate
+                    , childJSONObject.getInt("CreatorUserAccountId"),
                     childJSONObject.getString("CreatorUserFullName"), childJSONObject
                     .getInt("BulletinBoardSubjectId"), childJSONObject.getInt("BulletinBoardId"),
                     childJSONObject.getString("BulletinBoardLinkRecipients"),

@@ -9,7 +9,7 @@ import java.sql.Timestamp;
  * @author Artur Dzidzoiev
  * @version 04 Dec 2013
  */
-public class JSONAuthorizationParser {
+public class JsonBasicParser {
     private static final String STATUS_CODE_ATTRIBUTE_NAME = "StatusCode";
     private static final String TIMESTAMP_ATTRIBUTE_NAME = "TimeStamp";
     private static final String GUID_ATTRIBUTE_NAME = "Guid";

@@ -14,7 +14,8 @@ import java.util.ArrayList;
  * Time: 12:43
  * To change this template use File | Settings | File Templates.
  */
-public class JSONBulletinBoardParser {  private static final String STATUS_CODE_ATTRIBUTE_NAME = "StatusCode";
+public class JSONBulletinBoardParser {
+    private static final String STATUS_CODE_ATTRIBUTE_NAME = "StatusCode";
     private static final String TIMESTAMP_ATTRIBUTE_NAME = "TimeStamp";
     private static final String GUID_ATTRIBUTE_NAME = "Guid";
     private static final String PAGING_ATTRIBUTE_NAME = "Paging";

@@ -13,6 +13,7 @@ import java.util.Date;
 public class Time {
     private static final String PATTEN_INPUT = "yyyy-MM-dd'T'HH:mm:ss.SSS";
     private static final String PATTEN_INPUT_MESSAGE = "MM/dd/yyyy hh:mm:ss a";
+    private static final String PATTEN_INPUT_BULLETIN = "yyyy-MM-dd'T'HH:mm:ss";
     private static final String PATTERN_SHORT_DATE = "HH:mm E', 'dd";
     private static final String PATTERN_SHORT = "HH:mm:ss";
     private static final String PATTERN_DATE_ONLY = "dd/MM/yyyy";
@@ -30,6 +31,17 @@ public class Time {
 
     public static long getUnixTimeMessage(String dateStr) {
         SimpleDateFormat inputDate = new SimpleDateFormat(PATTEN_INPUT_MESSAGE);
+        Date date = new Date();
+        try {
+            date = inputDate.parse(dateStr);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return date.getTime();
+    }
+
+    public static long getUnixTimeBulletinBoard(String dateStr) {
+        SimpleDateFormat inputDate = new SimpleDateFormat(PATTEN_INPUT_BULLETIN);
         Date date = new Date();
         try {
             date = inputDate.parse(dateStr);

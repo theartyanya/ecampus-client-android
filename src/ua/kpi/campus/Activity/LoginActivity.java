@@ -16,7 +16,7 @@ import ua.kpi.campus.Mock;
 import ua.kpi.campus.R;
 import ua.kpi.campus.Session;
 import ua.kpi.campus.api.CampusApiURL;
-import ua.kpi.campus.api.jsonparsers.JSONAuthorizationParser;
+import ua.kpi.campus.api.jsonparsers.JsonBasicParser;
 import ua.kpi.campus.api.jsonparsers.JSONBulletinBoardParser;
 import ua.kpi.campus.api.jsonparsers.JSONUserDataParser;
 import ua.kpi.campus.api.jsonparsers.JsonObject;
@@ -229,8 +229,8 @@ public class LoginActivity extends FragmentActivity implements OnTaskCompleteLis
                 mAsyncTaskManager = new AsyncTaskManager(this, this);
                 // Handle task that can be retained before
                 mAsyncTaskManager.handleRetainedTask(getLastCustomNonConfigurationInstance());
-                Session.setSessionId(JSONAuthorizationParser.parse(response).getData());
-                sessionId = JSONAuthorizationParser.parse(response).getData();
+                Session.setSessionId(JsonBasicParser.parse(response).getData());
+                sessionId = JsonBasicParser.parse(response).getData();
                 String Url = CampusApiURL.getCurrentUser(Session.getSessionId());
                 mAsyncTaskManager.setupTask(new HttpLoadTask(getResources(), Url, R.string.login_activity_getuser_work, CURRENT_USER_LOADER_ID));
             } catch (JSONException e) {

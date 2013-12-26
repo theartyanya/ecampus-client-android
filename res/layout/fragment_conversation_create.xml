@@ -33,7 +33,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/create_conversation_subject_edit"
-                android:layout_below="@+id/create_conversation_subject" android:inputType="text"/>
+                android:layout_below="@+id/create_conversation_subject" android:inputType="text|textCapSentences"/>
 
         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                   android:text="@string/create_conversation_text" android:id="@+id/create_conversation_text"
@@ -44,7 +44,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/create_conversation_text_edit"
                 android:layout_below="@+id/create_conversation_text"
-                android:inputType="text"/>
+                android:inputType="textMultiLine|textCapSentences"/>
         <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
