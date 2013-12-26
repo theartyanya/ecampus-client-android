@@ -17,6 +17,7 @@ import ua.kpi.campus.model.User;
 import ua.kpi.campus.model.dbhelper.DatabaseHelper;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -31,6 +32,15 @@ public class UserListFragment extends ListFragment {
     private Context mContext;
     private List<UserModel> mUserModels;
 
+    public static int[] convertIntegers(List<Integer> integers) {
+        int[] ret = new int[integers.size()];
+        Iterator<Integer> iterator = integers.iterator();
+        for (int i = 0; i < ret.length; i++) {
+            ret[i] = iterator.next();
+        }
+        return ret;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -39,18 +49,29 @@ public class UserListFragment extends ListFragment {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                List <Integer> userIds = new ArrayList<>();
-                for(UserModel userModel: mUserModels){
-                    userIds.add(userModel.getId());
+                List<Integer> userIds = new ArrayList<>();
+                for (UserModel userModel : mUserModels) {
+                    if (userModel.isSelected()) {
+                        userIds.add(userModel.getId());
+                    }
                 }
                 Intent intent = new Intent(getActivity(), CreateConversationActivity.class);
-                intent.putExtra(CreateConversationActivity.EXTRA_USERS, userIds.toArray());
+                intent.putExtra(CreateConversationActivity.EXTRA_USERS, convertIntegers(userIds));
                 Log.d(TAG, hashCode() + " starting new activity... " + CreateConversationActivity.class.getName());
                 startActivity(intent);
             }
         });
         return rootView;
     }
+/*
+    @Override
+    public void onListItemClick(ListView l, View v, int position, long id) {
+        Log.d(TAG, hashCode() + " clicked on " + "l:" + l + " " + "v:" + v + " " + "position:" + (position-1)  + " " + "id:" + id + " ");
+        Intent intent = new Intent(getActivity(), BulletinActivity.class);
+        Log.d(TAG, hashCode() + " starting new activity... " + BulletinActivity.class.getName());
+        intent.putExtra(BulletinFragment.EXTRA_BULLETIN_ID,((BulletinBoardSubject) l.getItemAtPosition(position)).getBulletinBoardId());
+        startActivity(intent);
+    }*/
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -63,25 +84,14 @@ public class UserListFragment extends ListFragment {
         mAdapter = new InteractiveUserListAdapter(getActivity(), mUserModels);
         setListAdapter(mAdapter);
     }
-/*
-    @Override
-    public void onListItemClick(ListView l, View v, int position, long id) {
-        Log.d(TAG, hashCode() + " clicked on " + "l:" + l + " " + "v:" + v + " " + "position:" + (position-1)  + " " + "id:" + id + " ");
-        Intent intent = new Intent(getActivity(), BulletinActivity.class);
-        Log.d(TAG, hashCode() + " starting new activity... " + BulletinActivity.class.getName());
-        intent.putExtra(BulletinFragment.EXTRA_BULLETIN_ID,((BulletinBoardSubject) l.getItemAtPosition(position)).getBulletinBoardId());
-        startActivity(intent);
-    }*/
 
     private List<UserModel> getFromDB() {
         try (DatabaseHelper db = new DatabaseHelper(mContext)) {
             List<UserModel> model = new ArrayList<UserModel>();
-            for(User user : db.getAllUsersSet()){
-                model.add(new UserModel(user.getId(),user.getFullname(),user.getPhoto()));
+            for (User user : db.getAllUsersSet()) {
+                model.add(new UserModel(user.getId(), user.getFullname(), user.getPhoto()));
             }
             return model;
         }
     }
-
-
 }

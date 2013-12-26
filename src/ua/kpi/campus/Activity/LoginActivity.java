@@ -79,7 +79,7 @@ public class LoginActivity extends FragmentActivity implements OnTaskCompleteLis
 
                     int accountID = parseUser(Mock.getUSER_EMPLOYEE()).getData().getUserAccountID();
                     CurrentUser user = new CurrentUser(accountID, "4344", login, password, 1);
-                    db.onUserChanged(user);
+                    //db.onUserChanged(user);
                     try (BulletinBoardBase bulletinBoardBase = BulletinBoardBase.getInstance()) {
                         bulletinBoardBase.addAllBulletins(parseBulletinBoard(Mock.getBulletinBoardActual()));
                     }

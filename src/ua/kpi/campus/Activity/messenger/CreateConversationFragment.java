@@ -32,8 +32,9 @@ public class CreateConversationFragment extends Fragment{
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_conversation_create, container, false);
         mContext = getActivity();
+        mUsers = new HashSet<>();
         Intent intent = getActivity().getIntent();
-        int[] userIds = (int[]) intent.getExtras().get(CreateConversationActivity.EXTRA_USERS);
+        int[] userIds = intent.getIntArrayExtra(CreateConversationActivity.EXTRA_USERS);
         try (DatabaseHelper db = new DatabaseHelper(mContext)) {
             for(int i: userIds){
                 mUsers.add(db.getUser(i));

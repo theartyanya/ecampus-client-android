@@ -8,7 +8,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@+id/friendlist_name"
-            android:layout_toRightOf="@+id/userlist_avatar" android:layout_centerVertical="true">
+            android:layout_toRightOf="@+id/userlist_avatar" android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/activity_vertical_margin_small"
+            android:layout_toLeftOf="@+id/userlist_check">
     </TextView>
 
     <CheckBox

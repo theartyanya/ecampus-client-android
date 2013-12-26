@@ -14,7 +14,7 @@
 
     <Button
             android:layout_width="fill_parent"
-            android:layout_height="@dimen/button_high"
+            android:layout_height="wrap_content"
             android:text="@string/create_message"
             android:id="@+id/button_select_users" android:layout_alignParentTop="false" android:layout_centerHorizontal="true"
             android:gravity="center" android:layout_alignParentBottom="true"
