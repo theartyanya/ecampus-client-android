@@ -490,7 +490,7 @@ public class DatabaseHelper extends SQLiteOpenHelper implements Closeable {
     /*
      * TABLE_MESSAGES
      */
-    private int createMessage(Message message) {
+    public int createMessage(Message message) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 

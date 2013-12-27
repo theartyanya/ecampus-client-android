@@ -25,12 +25,13 @@ import java.util.Set;
  * @author Artur Dzidzoiev
  * @version 12/23/13
  */
-public class MessagesViewAdapter extends ArrayAdapter<Message>{
+public class MessagesViewAdapter extends ArrayAdapter<Message> {
     public final static String TAG = MessagesViewAdapter.class.getName();
     private final Context context;
     private final List<Message> values;
     private final int currentUserID;
-    private HashMap<Integer,User> users;
+    private int mNextUserId;
+    private HashMap<Integer, User> users;
 
     public MessagesViewAdapter(Context context, List<Message> values) {
         super(context, R.layout.list_item_message, values);
@@ -41,7 +42,7 @@ public class MessagesViewAdapter extends ArrayAdapter<Message>{
             this.currentUserID = db.getCurrentUser().getId();
             Set<User> userset = db.getAllUsersSet();
             for (User user : userset) {
-                users.put(user.getId(),user);
+                users.put(user.getId(), user);
             }
         }
     }
@@ -51,12 +52,18 @@ public class MessagesViewAdapter extends ArrayAdapter<Message>{
         ViewHolder viewHolder;
         Message currentMessage;
         currentMessage = values.get(position);
+        findNextUserId(position);
         User sender = users.get(currentMessage.getSenderId());
         if (convertView == null) {
+            LayoutInflater inflater;
             viewHolder = new ViewHolder();
-            LayoutInflater inflater = (LayoutInflater) context
+            inflater = (LayoutInflater) context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.message_sent, parent, false);
+            if (sender.getId() == mNextUserId) {
+                convertView = inflater.inflate(R.layout.message_sent_continuous, parent, false);
+            } else {
+                convertView = inflater.inflate(R.layout.message_sent, parent, false);
+            }
             viewHolder.tName = (TextView) convertView.findViewById(R.id.senderName);
             viewHolder.tDate = (TextView) convertView.findViewById(R.id.timeSent);
             viewHolder.tTextMessage = (TextView) convertView.findViewById(R.id.textMessage);
@@ -66,7 +73,8 @@ public class MessagesViewAdapter extends ArrayAdapter<Message>{
                 //TODO another layout params for another user
             }
             convertView.setTag(viewHolder);
-            Log.d(TAG, hashCode() + " created message view " + position);
+            Log.d(TAG, hashCode() + " created message view " + position +  " + " + sender.getFullname() + " - " + currentMessage.getText());
+
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
@@ -77,8 +85,16 @@ public class MessagesViewAdapter extends ArrayAdapter<Message>{
         ImageLoader imageLoader = ImageLoader.getInstance();
         imageLoader.displayImage(sender.getPhoto(), viewHolder.avatar);
 
-        Log.d(TAG, hashCode() + " shown message view " + position);
+        Log.d(TAG, hashCode() + " shown message view " + sender.getFullname() + " - " + currentMessage.getText());
         return convertView;
+    }
+
+    private void findNextUserId(int position) {
+        if (position < (getCount()) && position != 0) {
+            mNextUserId = getItem(position - 1).getSenderId();
+        } else {
+            mNextUserId = -1;
+        }
     }
 
     private static class ViewHolder {

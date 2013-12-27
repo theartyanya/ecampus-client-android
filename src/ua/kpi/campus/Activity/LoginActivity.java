@@ -25,9 +25,7 @@ import ua.kpi.campus.loaders.HttpResponse;
 import ua.kpi.campus.loaders.asynctask.AsyncTaskManager;
 import ua.kpi.campus.loaders.asynctask.HttpLoadTask;
 import ua.kpi.campus.loaders.asynctask.OnTaskCompleteListener;
-import ua.kpi.campus.model.BulletinBoardSubject;
-import ua.kpi.campus.model.CurrentUser;
-import ua.kpi.campus.model.User;
+import ua.kpi.campus.model.*;
 import ua.kpi.campus.model.dbhelper.BulletinBoardBase;
 import ua.kpi.campus.model.dbhelper.DatabaseHelper;
 import ua.kpi.campus.model.dbhelper.EmployeeBase;
@@ -79,7 +77,7 @@ public class LoginActivity extends FragmentActivity implements OnTaskCompleteLis
 
                     int accountID = parseUser(Mock.getUSER_EMPLOYEE()).getData().getUserAccountID();
                     CurrentUser user = new CurrentUser(accountID, "4344", login, password, 1);
-                    //db.onUserChanged(user);
+                    db.onUserChanged(user);
                     try (BulletinBoardBase bulletinBoardBase = BulletinBoardBase.getInstance()) {
                         bulletinBoardBase.addAllBulletins(parseBulletinBoard(Mock.getBulletinBoardActual()));
                     }
@@ -97,6 +95,9 @@ public class LoginActivity extends FragmentActivity implements OnTaskCompleteLis
                     db.createUser(new User(236, "Мишель Фуко", "http://upload.wikimedia.org/wikipedia/ru/thumb/1/12/Michel_Foucault2.jpg/220px-Michel_Foucault2.jpg"));
                     db.createUser(new User(11, "Фридрих Ницше", "http://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Nietzsche187a.jpg/220px-Nietzsche187a.jpg"));
                     db.createUser(new User(9, "Марк Туллий Цицерон", "http://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/M-T-Cicero.jpg/200px-M-T-Cicero.jpg"));
+                    db.createUser(new User(80, "Аристотель", "http://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Aristotle_Altemps_Inv8575.jpg/200px-Aristotle_Altemps_Inv8575.jpg"));
+                    db.createUser(new User(81, "Парменид Элейский", "http://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Parmenides.jpg/220px-Parmenides.jpg"));
+
                     //db.createUser(new User(236,"Мишель Фуко", ""));
 
                     try (EmployeeBase employeeBase = EmployeeBase.getInstance()) {
@@ -111,6 +112,30 @@ public class LoginActivity extends FragmentActivity implements OnTaskCompleteLis
                     try (BulletinBoardBase employeeBase = BulletinBoardBase.getInstance()) {
                         employeeBase.createBulletin(boardSubject);
                     }
+
+                    Creator moralCreator = new Creator(1000);
+                    db.createConversation(new Conversation(1000,"Мораль?","тем более, чем выше мы поднимаемся",1388094000l));
+                    db.createMessage(moralCreator.createMessage(174,"Привет!"));
+                    db.createMessage(moralCreator.createMessage(11,"Здарова, не отвлекай!"));
+                    db.createMessage(moralCreator.createMessage(174,"Почему злой такой? \nУмные люди не бывают злыми, злость предполагает ограниченность."));
+                    db.createMessage(moralCreator.createMessage(11,"Серъезно, не могу сейчас говорить"));
+                    db.createMessage(moralCreator.createMessage(174,"твори что хочешь"));
+                    db.createMessage(moralCreator.createMessage(174,"но ты в ответе за то что ты делаешь"));
+                    db.createMessage(moralCreator.createMessage(11,"я и так делаю что хочу"));
+                    db.createMessage(moralCreator.createMessage(11,"тем более, чем выше мы поднимаемся, тем меньше и ничтожнее кажемся тем, кто не может взлететь"));
+
+                    Creator butieCreator = new Creator(1001);
+                    db.createConversation(new Conversation(1001,"Палево на бытие есть?","ахахааххаххах",1388096000l));
+                    db.createMessage(butieCreator.createMessage(15,"Здарова ребят, кто-то бытие сдавал в четверг?"));
+                    db.createMessage(butieCreator.createMessage(1464,"я пробывал, но у меня без чистого определения"));
+                    db.createMessage(butieCreator.createMessage(81,"Подожди ка, бытие - оно единственное и его нельзя скинуть"));
+                    db.createMessage(butieCreator.createMessage(81,"слышали шутку?"));
+                    db.createMessage(butieCreator.createMessage(81,"-есть чо?"));
+                    db.createMessage(butieCreator.createMessage(174,"ага"));
+                    db.createMessage(butieCreator.createMessage(174,"бытие есть а небыитя нет"));
+                    db.createMessage(butieCreator.createMessage(236,"ахахааххаххах"));
+
+
                 }
                 Session.setCurrentUser(parseUser(Mock.getUSER_EMPLOYEE()).getData());
                 //Intent intent = new Intent(LoginActivity.this, MessageActivity.class);
@@ -121,6 +146,25 @@ public class LoginActivity extends FragmentActivity implements OnTaskCompleteLis
             }
         }
     };
+
+    static class Creator {
+        private static int messageUserId = 10000;
+        private static long time = 1388096798l;
+        private int groupId;
+
+        Creator(int groupId) {
+            this.groupId = groupId;
+        }
+
+        Message createMessage(int userId, String text) {
+            updateFields();
+            return new Message(messageUserId,groupId,time,text,"",userId);
+        }
+        private void updateFields(){
+            messageUserId++;
+            time += 500;
+        }
+    }
 
     private ArrayList<BulletinBoardSubject> parseBulletinBoard(String JsonConversation) {
         try {
