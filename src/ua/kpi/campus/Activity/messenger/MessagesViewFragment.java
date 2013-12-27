@@ -37,7 +37,7 @@ public class MessagesViewFragment extends ListFragment {
     public final static String TAG = MainActivity.TAG;
     public final static String EXTRA_GROUP_ID = "groupId";
     private int mPageToLoad;
-    private final int mPageSize = 5;
+    private final int mPageSize = 100;
     private int mCurrentPageSize;
     private Context mContext;
     private int mGroupId;

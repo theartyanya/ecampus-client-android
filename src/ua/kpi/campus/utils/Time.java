@@ -63,6 +63,12 @@ public class Time {
         return inputDate.format(date);
     }
 
+    public static String getLongDate(long unixtime) {
+        SimpleDateFormat inputDate = new SimpleDateFormat(PATTEN_INPUT_MESSAGE);
+        Date date = new Date(unixtime);
+        return inputDate.format(date);
+    }
+
     public static String getShortDependsOnToday(long unixtime) {
         SimpleDateFormat longDate = new SimpleDateFormat(PATTERN_SHORT_DATE);
         SimpleDateFormat shortDate = new SimpleDateFormat(PATTERN_SHORT);

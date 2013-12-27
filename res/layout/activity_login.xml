@@ -61,5 +61,11 @@
             android:text="TEST"
             android:id="@+id/testButton" android:layout_alignLeft="@+id/lastMessage" android:layout_below="@+id/sumButton"
             android:layout_alignRight="@+id/sumButton"/>
+    <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/login_clear_history"
+            android:layout_toRightOf="@+id/testButton" android:layout_centerVertical="true"
+            android:layout_alignBaseline="@+id/sumButton" android:text="Очистити кеш" android:checked="true"/>
 
 </RelativeLayout>

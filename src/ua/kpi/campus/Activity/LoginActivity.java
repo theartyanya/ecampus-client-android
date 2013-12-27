@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 import org.apache.http.HttpStatus;
@@ -125,17 +126,11 @@ public class LoginActivity extends FragmentActivity implements OnTaskCompleteLis
                     db.createMessage(moralCreator.createMessage(11,"тем более, чем выше мы поднимаемся, тем меньше и ничтожнее кажемся тем, кто не может взлететь"));
 
                     Creator butieCreator = new Creator(1001);
-                    db.createConversation(new Conversation(1001,"Палево на бытие есть?","ахахааххаххах",1388096000l));
-                    db.createMessage(butieCreator.createMessage(15,"Здарова ребят, кто-то бытие сдавал в четверг?"));
-                    db.createMessage(butieCreator.createMessage(1464,"я пробывал, но у меня без чистого определения"));
-                    db.createMessage(butieCreator.createMessage(81,"Подожди ка, бытие - оно единственное и его нельзя скинуть"));
-                    db.createMessage(butieCreator.createMessage(81,"слышали шутку?"));
-                    db.createMessage(butieCreator.createMessage(81,"-есть чо?"));
-                    db.createMessage(butieCreator.createMessage(174,"ага"));
-                    db.createMessage(butieCreator.createMessage(174,"бытие есть а небыитя нет"));
-                    db.createMessage(butieCreator.createMessage(236,"ахахааххаххах"));
-
-
+                    db.createConversation(new Conversation(1001,"Палево на бытие есть?","Парменид, не паясничай",1388096000l));
+                    db.createMessage(butieCreator.createMessage(15,"Привет ребят, кто-то бытие сдавал в четверг?"));
+                    db.createMessage(butieCreator.createMessage(1464,"Я пробывал сдавать, но у меня почему-то без чистого определения"));
+                    db.createMessage(butieCreator.createMessage(81,"Бытие - оно едино и его нельзя скинуть :("));
+                    db.createMessage(butieCreator.createMessage(15,"Парменид, не паясничай"));
                 }
                 Session.setCurrentUser(parseUser(Mock.getUSER_EMPLOYEE()).getData());
                 //Intent intent = new Intent(LoginActivity.this, MessageActivity.class);
@@ -149,10 +144,11 @@ public class LoginActivity extends FragmentActivity implements OnTaskCompleteLis
 
     static class Creator {
         private static int messageUserId = 10000;
-        private static long time = 1388096798l;
+        private static long time;
         private int groupId;
 
         Creator(int groupId) {
+            time = 1388096798L;
             this.groupId = groupId;
         }
 
@@ -162,7 +158,7 @@ public class LoginActivity extends FragmentActivity implements OnTaskCompleteLis
         }
         private void updateFields(){
             messageUserId++;
-            time += 500;
+            time += 10000L;
         }
     }
 
@@ -240,7 +236,9 @@ public class LoginActivity extends FragmentActivity implements OnTaskCompleteLis
                 CurrentUser currentUser = new CurrentUser(accountID, sessionId, login, password, userData.isEmployee());
                 User user = new User(accountID, userData.getFullName(), userData.getPhoto());
 
-                if (currentUser.equals(db.getCurrentUser())) {
+                CheckBox cbClearHistory = (CheckBox) findViewById(R.id.login_clear_history);
+
+                if (!cbClearHistory.isChecked() && currentUser.equals(db.getCurrentUser())) {
                     db.updateCurrentUser(currentUser);
                 } else {
                     db.onUserChanged(currentUser);
