@@ -414,7 +414,35 @@ public class DatabaseHelper extends SQLiteOpenHelper implements Closeable {
 
     public Set<User> getAllUsersSet() {
         Set<User> users = new HashSet<>();
-        String selectQuery = "SELECT  * FROM " + TABLE_USERS;
+        String selectQuery = "SELECT * FROM " + TABLE_USERS;
+        Log.d(TAG, hashCode() + " SQL query: " + selectQuery);
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.rawQuery(selectQuery, null);
+
+        if(c.getCount() == 0) {
+            return users;
+        }
+
+        // looping through all rows and adding to list
+        if (c.moveToFirst()) {
+            do {
+                User user = new User(
+                        c.getInt(c.getColumnIndex(KEY_USER_ACCOUN_ID)),
+                        c.getString(c.getColumnIndex(KEY_USER_FULLNAME)),
+                        c.getString(c.getColumnIndex(KEY_USER_PHOTO)));
+
+                users.add(user);
+            } while (c.moveToNext());
+        }
+
+        return users;
+    }
+
+    public Set<User> getAllUsersSet(String userName) {
+        Set<User> users = new HashSet<>();
+        String selectQuery = "SELECT * FROM " + TABLE_USERS + " WHERE " +
+                KEY_USER_FULLNAME + " LIKE '%" + userName + "%'";
         Log.d(TAG, hashCode() + " SQL query: " + selectQuery);
 
         SQLiteDatabase db = this.getReadableDatabase();
