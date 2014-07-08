@@ -8,8 +8,8 @@ import android.graphics.drawable.GradientDrawable;
 
 public class CardView extends RelativeLayout {
 	
-	private final int padding = (int)(ua.kpi.campus.Campus.density * 4);
-	private final int shadowSize = (int)(ua.kpi.campus.Campus.density * 3);
+	private final int padding = (int)(ua.kpi.campus.Campus.density * 8);
+	private final int shadowSize = (int)(ua.kpi.campus.Campus.density * 2);
 
 	private final RelativeLayout body;
 	@Override public void addView(View child) {

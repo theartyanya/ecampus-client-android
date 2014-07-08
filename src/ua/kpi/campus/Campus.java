@@ -34,24 +34,7 @@ public class Campus extends Application {
 	
 	public static Post[] getPosts() throws IOException {
 		// Заглушка //////////////////////////////////////////////////////////////////////////////////////////
-		return new Post[] {
-			new Post(
-				"Заголовок", 
-				"Текст объявления\nДрынь\nДрынь\nДрынь", 
-				"Автор", 
-				Calendar.getInstance().getTime(), 
-				Calendar.getInstance().getTime(), 
-				true
-			),
-			new Post(
-				"Заголовок", 
-				"Текст объявления\nДрынь\nДрынь\nДрынь", 
-				"Автор", 
-				Calendar.getInstance().getTime(), 
-				Calendar.getInstance().getTime(), 
-				true
-			)
-		};
+		return new Post[] {};
 		// Заглушка //////////////////////////////////////////////////////////////////////////////////////////
 	}
 	
