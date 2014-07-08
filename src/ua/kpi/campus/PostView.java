@@ -1,8 +1,11 @@
 package ua.kpi.campus;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import android.content.Context;
+import android.graphics.BitmapFactory;
+import android.view.Gravity;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -11,16 +14,15 @@ import android.widget.TextView;
 import dny.android.Activity;
 import dny.android.util.Listener;
 import dny.android.widgets.CardView;
-import ua.kpi.campus.Campus.*;
-import java.io.*;
+import dny.android.widgets.FlatButton;
+import dny.time.Time;
 
 public class PostView extends CardView {
 	
 	public PostView(
 		final Post post, 
-		final Activity activity, 
-		final ArrayList<Post> posts,
-		final Runnable refreshAction
+		final Activity activity,
+		final BoardPage board
 	) {
 		super(activity);
 		
@@ -47,14 +49,14 @@ public class PostView extends CardView {
 					LinearLayout.LayoutParams.MATCH_PARENT,
 					LinearLayout.LayoutParams.WRAP_CONTENT
 				));
-				title.setBackgroundColor(0xffcccccc);
+				title.setBackgroundColor(0xffcc4444);
 				
 				subjectSetting: {
 					TextView subject = new TextView(activity);
 					final int padding = (int)(Campus.density * 4);
 					subject.setPadding(padding, padding, padding, padding);
-					subject.setTextSize(16);
-					subject.setTextColor(0xff000000);
+					subject.setTextSize(20);
+					subject.setTextColor(0xffffffff);
 					subject.setText(post.subject);
 					title.addView(subject);
 				}
@@ -76,7 +78,7 @@ public class PostView extends CardView {
 					final int padding = (int)(Campus.density * 8);
 					text.setPadding(padding, padding, padding, padding);
 					text.setTextColor(0xff000000);
-					text.setText(post.text);
+					text.setText(post.body);
 					body.addView(text);
 				}
 				
@@ -92,30 +94,34 @@ public class PostView extends CardView {
 					LinearLayout.LayoutParams.MATCH_PARENT,
 					LinearLayout.LayoutParams.WRAP_CONTENT
 				));
+				toolbar.setGravity(Gravity.CENTER_VERTICAL);
 				toolbar.setBackgroundColor(0xffcccccc);
 				
 				if (post.editable) editButtonsSetting: {
 					
-					Button editButton = new Button(activity);
-					editButton.setText("Редактировать");
-					editButton.setOnClickListener(new Listener(new Runnable() {@Override public void run() {
-						activity.open(EditActivity.class, post, refreshAction);
-					}}));
+					FlatButton editButton = new FlatButton(
+						BitmapFactory.decodeResource(getResources(), R.drawable.edit),
+						new Runnable() {@Override public void run() {
+							activity.open(EditActivity.class, post, board);
+						}},
+						activity
+					);
 					toolbar.addView(editButton);
-
-					Button deleteButton = new Button(activity);
-					deleteButton.setText("Удалить");
-					deleteButton.setOnClickListener(new Listener(new Runnable() {@Override public void run() {
-						try {
-							Campus.deletePost(post);
-							posts.remove(post);
-							refreshAction.run();
-						} catch (Campus.AccessException e) {
-							Campus.showToast(getResources().getString(R.string.access_error));
-						} catch (IOException e) {
-							Campus.showToast(getResources().getString(R.string.connection_error));
-						}
-					}}));
+					
+					FlatButton deleteButton = new FlatButton(
+						BitmapFactory.decodeResource(getResources(), R.drawable.remove),
+						new Runnable() {@Override public void run() {
+							try {
+								Campus.deletePost(post);
+								board.removePost(post);
+							} catch (Campus.AccessException e) {
+								Campus.showToast(getResources().getString(R.string.access_error));
+							} catch (IOException e) {
+								Campus.showToast(getResources().getString(R.string.connection_error));
+							}
+						}},
+						activity
+					);
 					toolbar.addView(deleteButton);
 					
 				}
@@ -134,7 +140,7 @@ public class PostView extends CardView {
 					final int padding = (int)(Campus.density * 4);
 					date.setPadding(padding, padding, padding, padding);
 					date.setTextColor(0x88000000);
-					date.setText(post.modified.toString());
+					date.setText(Time.toString(post.modified));
 					toolbar.addView(date);
 				}
 

@@ -2,6 +2,7 @@ package ua.kpi.campus;
 
 import java.util.ArrayList;
 
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.PagerAdapter;
@@ -16,6 +17,7 @@ import com.astuetz.PagerSlidingTabStrip;
 
 import dny.android.Activity;
 import dny.android.util.Listener;
+import dny.android.widgets.FlatButton;
 
 public class MainActivity extends Activity {
 
@@ -33,7 +35,7 @@ public class MainActivity extends Activity {
 				LinearLayout.LayoutParams.MATCH_PARENT,
 				statusBarHeight
 			));
-			statusBarEmptySpace.setBackgroundColor(0xcc224444);
+			statusBarEmptySpace.setBackgroundColor(0xcc336666);
 			layout.addView(statusBarEmptySpace);
 		}
 
@@ -96,17 +98,22 @@ public class MainActivity extends Activity {
 			}
 
 			filterButtonSetting: {
-				Button button = new Button(this);
-				button.setText("Фильтр");
+				FlatButton button = new FlatButton(
+					BitmapFactory.decodeResource(getResources(), R.drawable.search),
+					null,////////////////////////////////////////////////////////////////////
+					this
+				);
 				title.addView(button);
 			}
 				
 			if (Campus.user.moder) newPostButtonSetting: {
-				Button button = new Button(this);
-				button.setText("Новое объявление");
-				button.setOnClickListener(new Listener(new Runnable() {@Override public void run() {
-					open(EditActivity.class, null, boardPage.refreshAction);
-				}}));
+				FlatButton button = new FlatButton(
+					BitmapFactory.decodeResource(getResources(), R.drawable.new_post),
+					new Runnable() {@Override public void run() {
+						open(EditActivity.class, null, boardPage);
+					}},
+					this
+				);
 				title.addView(button);
 			}
 			

@@ -31,49 +31,49 @@ public class LoginActivity extends Activity {
 		
 		final int padding = (int)(Campus.density * 16);
 		
-		linearLayoutSetting: {
+		layoutSetting: {
 			
-			final LinearLayout linearLayout = new LinearLayout(this);
-			linearLayout.setOrientation(LinearLayout.VERTICAL);
-			linearLayout.setLayoutParams(new LinearLayout.LayoutParams(
+			final LinearLayout layout = new LinearLayout(this);
+			layout.setOrientation(LinearLayout.VERTICAL);
+			layout.setLayoutParams(new LinearLayout.LayoutParams(
 				LinearLayout.LayoutParams.MATCH_PARENT,
 				LinearLayout.LayoutParams.MATCH_PARENT
 			));
 
-			final EditText loginField = new EditText(this);
-			loginFieldSetting: {
+			final EditText login = new EditText(this);
+			loginSetting: {
 				LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
 					LinearLayout.LayoutParams.MATCH_PARENT,
 					LinearLayout.LayoutParams.WRAP_CONTENT
 				);
-				loginField.setLayoutParams(layoutParams);
-				loginField.setPadding(padding, padding, padding, padding);
-				loginField.setInputType(InputType.TYPE_CLASS_TEXT);
-				loginField.setHint(R.string.login_hint);
-				linearLayout.addView(loginField);
+				login.setLayoutParams(layoutParams);
+				login.setPadding(padding, padding, padding, padding);
+				login.setInputType(InputType.TYPE_CLASS_TEXT);
+				login.setHint(R.string.login_hint);
+				layout.addView(login);
 			}
 
-			final EditText passwordField = new EditText(this);
-			passwordFieldSetting: {
+			final EditText password = new EditText(this);
+			passwordSetting: {
 				LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
 					LinearLayout.LayoutParams.MATCH_PARENT,
 					LinearLayout.LayoutParams.WRAP_CONTENT
 				);
-				passwordField.setLayoutParams(layoutParams);
-				passwordField.setPadding(padding, padding, padding, padding);
-				passwordField.setInputType(
+				password.setLayoutParams(layoutParams);
+				password.setPadding(padding, padding, padding, padding);
+				password.setInputType(
 					InputType.TYPE_CLASS_TEXT | 
 					InputType.TYPE_TEXT_VARIATION_PASSWORD
 				);
-				passwordField.setHint(R.string.password_hint);
-				linearLayout.addView(passwordField);
+				password.setHint(R.string.password_hint);
+				layout.addView(password);
 			}
 			
-			final TextView messageView = new TextView(this);
-			messageViewSetting: {
-				messageView.setPadding(padding, padding, padding, padding);
-				linearLayout.addView(messageView);
-				setMessage(messageView, true, getResources().getString(R.string.please_auth));
+			final TextView message = new TextView(this);
+			messageSetting: {
+				message.setPadding(padding, padding, padding, padding);
+				layout.addView(message);
+				setMessage(message, true, getResources().getString(R.string.please_auth));
 			}
 			
 			submitButtonSetting: {
@@ -83,28 +83,28 @@ public class LoginActivity extends Activity {
 					LinearLayout.LayoutParams.WRAP_CONTENT
 				));
 				submitButton.setPadding(padding, padding, padding, padding);
-				submitButton.setText(R.string.submit_button);
+				submitButton.setText(R.string.auth_button);
 				submitButton.setOnClickListener(new Listener(new Runnable() {@Override public void run() {
 					try {
-						setMessage(messageView, true, getResources().getString(R.string.auth_wait));
+						setMessage(message, true, getResources().getString(R.string.auth_wait));
 						Campus.auth(
-							loginField.getText().toString(), 
-							passwordField.getText().toString()
+							login.getText().toString(), 
+							password.getText().toString()
 						);
-						setMessage(messageView, true, getResources().getString(R.string.auth_okay));
+						setMessage(message, true, getResources().getString(R.string.auth_okay));
 						open(MainActivity.class);
 						return;
 					} catch (IOException e) {
-						setMessage(messageView, false, getResources().getString(R.string.connection_error));
+						setMessage(message, false, getResources().getString(R.string.connection_error));
 					} catch (Campus.AuthException e) {
-						clearFields(loginField, passwordField);
-						setMessage(messageView, false, getResources().getString(R.string.auth_error));
+						clearFields(login, password);
+						setMessage(message, false, getResources().getString(R.string.auth_error));
 					}
 				}}));
-				linearLayout.addView(submitButton);
+				layout.addView(submitButton);
 			}
 			
-			setContentView(linearLayout);
+			setContentView(layout);
 			
 		}
 		

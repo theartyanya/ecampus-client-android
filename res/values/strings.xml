@@ -4,7 +4,7 @@
     <string name="app_name">Campus</string>
 	<string name="login_hint">Логин</string>
 	<string name="password_hint">Пароль</string>
-	<string name="submit_button">Войти</string>
+	<string name="auth_button">Войти</string>
 	<string name="info_page_title">Профиль</string>
 	<string name="board_page_title">Объявления</string>
 	<string name="please_auth">Здрасьте! Введите логин и пароль</string>
@@ -13,5 +13,8 @@
 	<string name="auth_error">Неправильный логин или пароль!</string>
 	<string name="connection_error">Не получается подключиться к серверу :(</string>
 	<string name="access_error">Ошибка доступа :(</string>
+	<string name="subject_hint">Заголовок</string>
+	<string name="post_body_hint">Текст объявления</string>
+	<string name="submit_button">Готово</string>
 	
 </resources>

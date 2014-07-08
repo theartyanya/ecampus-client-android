@@ -21,15 +21,22 @@ public class BoardPage extends Page {
 	private final ArrayList<Post> posts = new ArrayList<Post>();
 	private final LinearLayout listView;
 
-	private void refreshPage() {
+	public void refreshPage() {
 		listView.removeAllViews();
 		for (Post post : posts) {
-			listView.addView(new PostView(post, activity, posts, refreshAction));
+			listView.addView(new PostView(post, activity, this));
 		}
 	}
-	protected Runnable refreshAction = new Runnable() {@Override public void run() {
+	
+	public void addPost(Post post) {
+		posts.add(post);
 		refreshPage();
-	}};
+	}
+	
+	public void removePost(Post post) {
+		posts.remove(post);
+		refreshPage();
+	}
 	
 	private void loadPosts() {
 		try {

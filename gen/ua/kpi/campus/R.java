@@ -21,6 +21,7 @@ public final class R {
     public static final class string {
         public static final int access_error=0x7f03000b;
         public static final int app_name=0x7f030000;
+        public static final int auth_button=0x7f030003;
         public static final int auth_error=0x7f030009;
         public static final int auth_okay=0x7f030008;
         public static final int auth_wait=0x7f030007;
@@ -30,7 +31,9 @@ public final class R {
         public static final int login_hint=0x7f030001;
         public static final int password_hint=0x7f030002;
         public static final int please_auth=0x7f030006;
-        public static final int submit_button=0x7f030003;
+        public static final int post_body_hint=0x7f03000d;
+        public static final int subject_hint=0x7f03000c;
+        public static final int submit_button=0x7f03000e;
     }
     public static final class style {
         public static final int Morphine=0x7f040000;
