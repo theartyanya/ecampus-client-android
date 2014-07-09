@@ -16,5 +16,11 @@
 	<string name="subject_hint">Заголовок</string>
 	<string name="post_body_hint">Текст объявления</string>
 	<string name="submit_button">Готово</string>
+	<string name="date_label">По дате изменения:</string>
+	<string name="from_label">От:</string>
+	<string name="to_label">До:</string>
+	<string name="subdiv_label">Факультет:</string>
+	<string name="group_label">Группа:</string>
+	<string name="profile_label">Профиль:</string>
 	
 </resources>

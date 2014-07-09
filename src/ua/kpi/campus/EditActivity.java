@@ -32,6 +32,7 @@ public class EditActivity extends Activity {
 				LinearLayout.LayoutParams.MATCH_PARENT,
 				LinearLayout.LayoutParams.MATCH_PARENT
 			));
+			layout.setPadding(padding, padding, padding, padding);
 
 			final EditText subject = new EditText(this);
 			subjectSetting: {

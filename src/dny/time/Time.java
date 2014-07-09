@@ -16,9 +16,18 @@ public class Time {
 	}
 	
 	public static String toString(Date time, boolean today) {
-		String string = time.getHours() + ":" + time.getMinutes();
+		String hours = Integer.toString(time.getHours()); 
+			if (hours.length() == 1) hours = '0' + hours;
+		String minutes = Integer.toString(time.getMinutes()); 
+			if (minutes.length() == 1) minutes = '0' + minutes;
+		String string = hours + ":" + minutes;
 		if (!today) {
-			string += " " + time.getDate() + "." + time.getMonth() + "." + time.getYear();
+			String date = Integer.toString(time.getDate()); 
+				if (date.length() == 1) date = '0' + date;
+			String month = Integer.toString(time.getMonth()); 
+				if (month.length() == 1) month = '0' + month;
+			String year = Integer.toString(time.getYear());
+			string += " " + date + "." + month + "." + year;
 		}
 		return string;
 	}

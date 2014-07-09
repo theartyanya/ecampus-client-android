@@ -20,13 +20,15 @@ import dny.android.util.Listener;
 import dny.android.widgets.FlatButton;
 
 public class MainActivity extends Activity {
+	
+	private Filter filter = new Filter();
 
 	@Override protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
 		final LinearLayout layout = new LinearLayout(this);
 		layout.setOrientation(LinearLayout.VERTICAL);
-		layout.setBackgroundColor(0xccffffff);
+		layout.setBackgroundColor(0xf0ffffff);
 		
 		statusBarEmptySpaceSetting: {
 			final int statusBarHeight = getStatusBarHeight();
@@ -35,12 +37,12 @@ public class MainActivity extends Activity {
 				LinearLayout.LayoutParams.MATCH_PARENT,
 				statusBarHeight
 			));
-			statusBarEmptySpace.setBackgroundColor(0xcc336666);
+			statusBarEmptySpace.setBackgroundColor(0xff336666);
 			layout.addView(statusBarEmptySpace);
 		}
 
 		final ArrayList<Page> pages = new ArrayList<Page>();
-		final BoardPage boardPage = new BoardPage(this);
+		final BoardPage boardPage = new BoardPage(this, filter);
 		pagesSetting: {
 			pages.add(new InfoPage(this));
 			pages.add(boardPage);
@@ -79,7 +81,7 @@ public class MainActivity extends Activity {
 				LinearLayout.LayoutParams.MATCH_PARENT,
 				LinearLayout.LayoutParams.WRAP_CONTENT
 			));
-			title.setBackgroundColor(0x88448888);
+			title.setBackgroundColor(0xff448888);
 
 			pagerTabStripSetting: {
 				final PagerSlidingTabStrip tabStrip = new PagerSlidingTabStrip(this);
@@ -100,7 +102,9 @@ public class MainActivity extends Activity {
 			filterButtonSetting: {
 				FlatButton button = new FlatButton(
 					BitmapFactory.decodeResource(getResources(), R.drawable.search),
-					null,////////////////////////////////////////////////////////////////////
+					new Runnable() {@Override public void run() {
+						open(FilterActivity.class, boardPage);
+					}},
 					this
 				);
 				title.addView(button);
@@ -137,7 +141,7 @@ public class MainActivity extends Activity {
 				LinearLayout.LayoutParams.MATCH_PARENT,
 				navBarHeight
 			));
-			navBarEmptySpace.setBackgroundColor(0x88448888);
+			navBarEmptySpace.setBackgroundColor(0xff448888);
 			layout.addView(navBarEmptySpace);
 		}
 		

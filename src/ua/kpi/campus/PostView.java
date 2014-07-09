@@ -49,14 +49,22 @@ public class PostView extends CardView {
 					LinearLayout.LayoutParams.MATCH_PARENT,
 					LinearLayout.LayoutParams.WRAP_CONTENT
 				));
-				title.setBackgroundColor(0xffcc4444);
+				if (post.editable) {
+					title.setBackgroundColor(0xffcc4444);
+				} else {
+					title.setBackgroundColor(0x11000000);
+				}
 				
 				subjectSetting: {
 					TextView subject = new TextView(activity);
 					final int padding = (int)(Campus.density * 6);
 					subject.setPadding(padding, padding, padding, padding);
 					subject.setTextSize(24);
-					subject.setTextColor(0xffffffff);
+					if (post.editable) {
+						subject.setTextColor(0xffffffff);
+					} else {
+						subject.setTextColor(0xff000000);
+					}
 					subject.setText(post.subject);
 					title.addView(subject);
 				}
@@ -95,7 +103,7 @@ public class PostView extends CardView {
 					LinearLayout.LayoutParams.WRAP_CONTENT
 				));
 				toolbar.setGravity(Gravity.CENTER_VERTICAL);
-				toolbar.setBackgroundColor(0xffcc4444);
+				toolbar.setBackgroundColor(0x11000000);
 				
 				if (post.editable) editButtonsSetting: {
 					
@@ -139,7 +147,7 @@ public class PostView extends CardView {
 					TextView date = new TextView(activity);
 					final int padding = (int)(Campus.density * 4);
 					date.setPadding(padding, padding, padding, padding);
-					date.setTextColor(0x88ffffff);
+					date.setTextColor(0x88000000);
 					date.setText(Time.toString(post.modified));
 					toolbar.addView(date);
 				}

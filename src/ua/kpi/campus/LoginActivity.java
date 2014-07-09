@@ -39,6 +39,7 @@ public class LoginActivity extends Activity {
 				LinearLayout.LayoutParams.MATCH_PARENT,
 				LinearLayout.LayoutParams.MATCH_PARENT
 			));
+			layout.setPadding(padding, padding, padding, padding);
 
 			final EditText login = new EditText(this);
 			loginSetting: {

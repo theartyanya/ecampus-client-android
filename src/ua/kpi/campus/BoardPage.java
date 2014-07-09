@@ -20,10 +20,13 @@ public class BoardPage extends Page {
 
 	private final ArrayList<Post> posts = new ArrayList<Post>();
 	private final LinearLayout listView;
+	
+	public Filter filter;
 
 	public void refreshPage() {
 		listView.removeAllViews();
 		for (Post post : posts) {
+			if (!filter.fits(post)) continue;
 			listView.addView(new PostView(post, activity, this));
 		}
 	}
@@ -50,9 +53,10 @@ public class BoardPage extends Page {
 		}
 	}
 	
-	public BoardPage(Activity activity) {
+	public BoardPage(Activity activity, Filter filter) {
 		super(activity);
 		this.activity = activity;
+		this.filter = filter;
 		
 		scrollViewSetting: {
 			

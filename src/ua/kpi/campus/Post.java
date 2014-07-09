@@ -11,6 +11,10 @@ public class Post {
 	public String author;
 	public Date created, modified;
 	
+	public Subdivision subdivision;
+	public Group group;
+	public Profile profile;
+	
 	public boolean editable;
 	
 	public Post(String subject, String body, String author, Date created, Date modified, boolean editable) {

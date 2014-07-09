@@ -8,7 +8,7 @@ import android.graphics.drawable.GradientDrawable;
 
 public class CardView extends RelativeLayout {
 	
-	private final int padding = (int)(ua.kpi.campus.Campus.density * 8);
+	private final int padding = (int)(ua.kpi.campus.Campus.density * 4);
 	private final int shadowSize = (int)(ua.kpi.campus.Campus.density * 2);
 
 	private final RelativeLayout body;
@@ -38,7 +38,7 @@ public class CardView extends RelativeLayout {
 				LayoutParams.WRAP_CONTENT,
 				LayoutParams.WRAP_CONTENT
 			));
-			frame.setPadding(shadowSize, shadowSize, shadowSize, shadowSize);
+			frame.setPadding(shadowSize / 2, 0, shadowSize / 2, shadowSize);
 			
 			shadowSetting: {
 				GradientDrawable shadow = new GradientDrawable();
