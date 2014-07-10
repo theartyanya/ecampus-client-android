@@ -4,7 +4,8 @@ import java.util.Date;
 
 public class Filter {
 	
-	public Date from, to;
+	public final Date from = new Date(0);
+	public final Date to = new Date(0);
 	
 	public Subdivision subdivision;
 	public Group group;
@@ -13,8 +14,8 @@ public class Filter {
 	public boolean fits(final Post post) {
 		
 		dateCheck: {
-			if (from != null) if (post.modified.before(from)) return false;
-			if (to != null) if (post.modified.after(to)) return false;
+			if (from.getTime() != 0) if (post.modified.before(from)) return false;
+			if (to.getTime() != 0) if (post.modified.after(to)) return false;
 		}
 		
 		subdivisionCheck: {

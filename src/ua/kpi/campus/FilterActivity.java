@@ -1,20 +1,32 @@
 package ua.kpi.campus;
 
+import java.util.Date;
+
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import dny.android.Activity;
+import dny.android.util.Listener;
+import dny.time.Time;
+import dny.util.Event;
 
 public class FilterActivity extends Activity {
 	
 	private BoardPage boardPage;
 	private Filter filter;
 
+	@Override protected void onPause() {
+		super.onPause();
+		boardPage.refreshPage();
+	}
+
 	@Override protected void onCreate(android.os.Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		boardPage = (BoardPage)arg1;
 		filter = boardPage.filter;
+		
+		final Event refreshEvent = new Event();
 		
 		layoutSetting: {
 			
@@ -52,6 +64,21 @@ public class FilterActivity extends Activity {
 					
 					fromButtonSetting: {
 						final Button button = new Button(this);
+						final Date date = filter.from;
+						button.setOnClickListener(new Listener(new Runnable() {@Override public void run() {
+							open(
+								DatePickerActivity.class, 
+								date,
+								refreshEvent
+							);
+						}}));
+						refreshEvent.addAction(new Runnable() {@Override public void run() {
+							if (date.getTime() == 0) {
+								button.setText("--.--.----");
+							} else {
+								button.setText(Time.toString(date, true, false));
+							}
+						}});
 						dateLayout.addView(button);
 					}
 					
@@ -65,6 +92,21 @@ public class FilterActivity extends Activity {
 
 					toButtonSetting: {
 						final Button button = new Button(this);
+						final Date date = filter.to;
+						button.setOnClickListener(new Listener(new Runnable() {@Override public void run() {
+							open(
+								DatePickerActivity.class, 
+								date,
+								refreshEvent
+							);
+						}}));
+						refreshEvent.addAction(new Runnable() {@Override public void run() {
+							if (date.getTime() == 0) {
+								button.setText("--.--.----");
+							} else {
+								button.setText(Time.toString(date, true, false));
+							}
+						}});
 						dateLayout.addView(button);
 					}
 					
@@ -139,6 +181,7 @@ public class FilterActivity extends Activity {
 			}
 			
 			setContentView(layout);
+			refreshEvent.run();
 			
 		}
 		

@@ -45,6 +45,18 @@ public class Campus extends Application {
 	public static void deletePost(Post post) throws IOException, AccessException {
 		
 	}
+	
+	public static Subdiv[] getSubdivs() throws IOException, AccessException {
+		return null;
+	}
+	
+	public static Group[] getGroups(Subdiv subdiv) throws IOException, AccessException {
+		return null;
+	}
+	
+	public static Profile[] getProfiles() throws IOException, AccessException {
+		return null;
+	}
 
 	@Override public void onCreate() {
 		super.onCreate();

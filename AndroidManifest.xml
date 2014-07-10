@@ -41,6 +41,26 @@
 			android:configChanges="keyboardHidden|orientation|screenSize"
             android:theme="@style/Morphine_Dialogue" >
         </activity>
+        <activity
+            android:name=".DatePickerActivity"
+			android:configChanges="keyboardHidden|orientation|screenSize"
+            android:theme="@style/Morphine_Dialogue" >
+        </activity>
+        <activity
+            android:name=".SubdivPickerActivity"
+			android:configChanges="keyboardHidden|orientation|screenSize"
+            android:theme="@style/Morphine_Dialogue" >
+        </activity>
+        <activity
+            android:name=".GroupPickerActivity"
+			android:configChanges="keyboardHidden|orientation|screenSize"
+            android:theme="@style/Morphine_Dialogue" >
+        </activity>
+        <activity
+            android:name=".ProfilePickerActivity"
+			android:configChanges="keyboardHidden|orientation|screenSize"
+            android:theme="@style/Morphine_Dialogue" >
+        </activity>
     </application>
 
 </manifest>
