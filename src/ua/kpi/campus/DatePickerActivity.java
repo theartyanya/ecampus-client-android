@@ -11,10 +11,11 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+// библиотеку DateTimePicker можно найти тут: https://github.com/dirtynewyorker/datetimepicker
 import com.fourmob.datetimepicker.date.DatePickerDialog;
 
 import dny.android.Activity;
-import dny.android.util.Listener;
+import dny.android.util.ListenerAdapter;
 
 public class DatePickerActivity extends Activity {
 	
@@ -96,7 +97,7 @@ public class DatePickerActivity extends Activity {
 					LinearLayout.LayoutParams.WRAP_CONTENT
 				));
 				button.setText("Любая");
-				button.setOnClickListener(new Listener(new Runnable() {@Override public void run() {
+				button.setOnClickListener(new ListenerAdapter(new Runnable() {@Override public void run() {
 					date.setTime(0);
 					finish();
 				}}));

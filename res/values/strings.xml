@@ -22,5 +22,9 @@
 	<string name="subdiv_label">Факультет:</string>
 	<string name="group_label">Группа:</string>
 	<string name="profile_label">Профиль:</string>
+	<string name="subdiv_hint">Факультет</string>
+	<string name="group_hint">Группа</string>
+	<string name="profile_hint">Профиль</string>
+	<string name="access_settings">Настройки доступа</string>
 	
 </resources>

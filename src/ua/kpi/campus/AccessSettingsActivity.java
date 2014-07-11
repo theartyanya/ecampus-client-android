@@ -12,9 +12,9 @@ import dny.android.util.ListenerAdapter;
 import dny.time.Time;
 import dny.util.Event;
 
-public class FilterActivity extends Activity {
-	
-	private Filter filter;
+public class AccessSettingsActivity extends Activity {
+
+	private Post post;
 	private Runnable submitAction;
 
 	@Override protected void onPause() {
@@ -24,98 +24,21 @@ public class FilterActivity extends Activity {
 
 	@Override protected void onCreate(android.os.Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		filter = (Filter)arg1;
+		post = (Post)arg1;
 		submitAction = (Runnable)arg2;
-		
+
 		final Event refreshEvent = new Event();
-		
+
 		layoutSetting: {
-			
+
 			final LinearLayout layout = new LinearLayout(this);
 			layout.setOrientation(LinearLayout.VERTICAL);
 			layout.setLayoutParams(new LinearLayout.LayoutParams(
 				LinearLayout.LayoutParams.MATCH_PARENT,
-				LinearLayout.LayoutParams.MATCH_PARENT
+				 LinearLayout.LayoutParams.MATCH_PARENT
 			));
 			int padding = (int)(Campus.density * 16);
 			layout.setPadding(padding, padding, padding, padding);
-			
-			dateSetting: {
-				
-				labelSetting: {
-					final TextView label = new TextView(this);
-					label.setTextSize(24);
-					label.setTextColor(0xff000000);
-					label.setText(getResources().getString(R.string.date_label));
-					layout.addView(label);
-				}
-				
-				dateLayoutSetting: {
-					
-					final LinearLayout dateLayout = new LinearLayout(this);
-					dateLayout.setOrientation(LinearLayout.HORIZONTAL);
-					
-					fromLabelSetting: {
-						final TextView label = new TextView(this);
-						label.setTextSize(16);
-						label.setTextColor(0xff000000);
-						label.setText(getResources().getString(R.string.from_label));
-						dateLayout.addView(label);
-					}
-					
-					fromButtonSetting: {
-						final Button button = new Button(this);
-						final Date date = filter.from;
-						button.setOnClickListener(new ListenerAdapter(new Runnable() {@Override public void run() {
-							open(
-								DatePickerActivity.class, 
-								date,
-								refreshEvent
-							);
-						}}));
-						refreshEvent.addAction(new Runnable() {@Override public void run() {
-							if (date.getTime() == 0) {
-								button.setText("--.--.----");
-							} else {
-								button.setText(Time.toString(date, true, false));
-							}
-						}});
-						dateLayout.addView(button);
-					}
-					
-					toLabelSetting: {
-						final TextView label = new TextView(this);
-						label.setTextSize(16);
-						label.setTextColor(0xff000000);
-						label.setText(getResources().getString(R.string.to_label));
-						dateLayout.addView(label);
-					}
-
-					toButtonSetting: {
-						final Button button = new Button(this);
-						final Date date = filter.to;
-						button.setOnClickListener(new ListenerAdapter(new Runnable() {@Override public void run() {
-							open(
-								DatePickerActivity.class, 
-								date,
-								refreshEvent
-							);
-						}}));
-						refreshEvent.addAction(new Runnable() {@Override public void run() {
-							if (date.getTime() == 0) {
-								button.setText("--.--.----");
-							} else {
-								button.setText(Time.toString(date, true, false));
-							}
-						}});
-						dateLayout.addView(button);
-					}
-					
-					layout.addView(dateLayout);
-					
-				}
-				
-			}
 
 			subdivSetting: {
 
@@ -134,23 +57,23 @@ public class FilterActivity extends Activity {
 						LinearLayout.LayoutParams.WRAP_CONTENT
 					));
 					button.setOnClickListener(new ListenerAdapter(new Runnable() {@Override public void run() {
-						open(SubdivPickerActivity.class, filter, refreshEvent);
+						open(SubdivPickerActivity.class, post, refreshEvent);
 					}}));
 					refreshEvent.addAction(new Runnable() {@Override public void run() {
-						Subdiv subdiv = filter.subdiv;
+						Subdiv subdiv = post.subdiv;
 						if (subdiv == null) button.setText("Любой");
-						else button.setText(subdiv.name);
-					}});
+							else button.setText(subdiv.name);
+						}});
 					layout.addView(button);
 				}
 
 			}
-			
+
 			groupSetting: {
-				
+
 				final LinearLayout groupLayout = new LinearLayout(this);
 				groupLayout.setOrientation(LinearLayout.HORIZONTAL);
-				
+
 				labelSetting: {
 					final TextView label = new TextView(this);
 					label.setTextSize(16);
@@ -162,38 +85,38 @@ public class FilterActivity extends Activity {
 				buttonSetting: {
 					final Button button = new Button(this);
 					button.setOnClickListener(new ListenerAdapter(new Runnable() {@Override public void run() {
-						open(GroupPickerActivity.class, filter, refreshEvent);
+						open(GroupPickerActivity.class, post, refreshEvent);
 					}}));
 					refreshEvent.addAction(new Runnable() {
 						private Subdiv oldSubdiv;
 						@Override public void run() {
-							Subdiv subdiv = filter.subdiv;
+							Subdiv subdiv = post.subdiv;
 							if (oldSubdiv != null) if (subdiv != oldSubdiv) {
-								filter.group = null;
+								post.group = null;
 								oldSubdiv = subdiv;
 							}
-							Group group = filter.group;
+							Group group = post.group;
 							if (group == null) button.setText("Любая");
 							else button.setText(group.name);
-						}
-					});
+							}
+						});
 					groupLayout.addView(button);
 				}
-				
+
 				refreshEvent.addAction(new Runnable() {@Override public void run() {
-					if (filter.subdiv == null) {
+					if (post.subdiv == null) {
 						groupLayout.setVisibility(View.GONE);
 					} else {
 						groupLayout.setVisibility(View.VISIBLE);
 					}
 				}});
-				
+
 				layout.addView(groupLayout);
-				
+
 			}
-			
+
 			profileSetting: {
-				
+
 				labelSetting: {
 					final TextView label = new TextView(this);
 					label.setTextSize(24);
@@ -209,23 +132,23 @@ public class FilterActivity extends Activity {
 						LinearLayout.LayoutParams.WRAP_CONTENT
 					));
 					button.setOnClickListener(new ListenerAdapter(new Runnable() {@Override public void run() {
-						open(ProfilePickerActivity.class, filter, refreshEvent);
+						open(ProfilePickerActivity.class, post, refreshEvent);
 					}}));
 					refreshEvent.addAction(new Runnable() {@Override public void run() {
-						Profile profile = filter.profile;
+						Profile profile = post.profile;
 						if (profile == null) button.setText("Любой");
-						else button.setText(profile.name);
-					}});
+							else button.setText(profile.name);
+						}});
 					layout.addView(button);
 				}
-				
+
 			}
-			
+
 			setContentView(layout);
 			refreshEvent.run();
-			
+
 		}
-		
+
 	}
-	
+
 }

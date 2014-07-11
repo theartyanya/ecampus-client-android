@@ -7,7 +7,7 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
 import android.widget.ImageButton;
 
-import dny.android.util.Listener;
+import dny.android.util.ListenerAdapter;
 
 public class FlatButton extends ImageButton {
 	
@@ -18,7 +18,7 @@ public class FlatButton extends ImageButton {
 	public FlatButton(Bitmap bitmap, Runnable clickAction, Context context) {
 		super(context);
 		setImageBitmap(bitmap);
-		setOnClickListener(new Listener(clickAction));
+		setOnClickListener(new ListenerAdapter(clickAction));
 		
 		backgroundSetting: {
 			StateListDrawable background = new StateListDrawable();

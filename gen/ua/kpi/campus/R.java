@@ -1115,6 +1115,7 @@ containing a value of this type.
         public static final int abc_shareactionprovider_share_with=0x7f0a000b;
         public static final int abc_shareactionprovider_share_with_application=0x7f0a000c;
         public static final int access_error=0x7f0a0032;
+        public static final int access_settings=0x7f0a003f;
         public static final int ampm_circle_radius_multiplier=0x7f0a0010;
         public static final int app_name=0x7f0a0027;
         public static final int auth_button=0x7f0a002a;
@@ -1135,6 +1136,7 @@ containing a value of this type.
         public static final int deleted_key=0x7f0a0021;
         public static final int done_label=0x7f0a0017;
         public static final int from_label=0x7f0a0037;
+        public static final int group_hint=0x7f0a003d;
         public static final int group_label=0x7f0a003a;
         /** 
          Content description for the hour selector in the time picker, which displays
@@ -1159,6 +1161,7 @@ containing a value of this type.
         public static final int password_hint=0x7f0a0029;
         public static final int please_auth=0x7f0a002d;
         public static final int post_body_hint=0x7f0a0034;
+        public static final int profile_hint=0x7f0a003e;
         public static final int profile_label=0x7f0a003b;
         public static final int radial_numbers_typeface=0x7f0a0024;
         public static final int sans_serif=0x7f0a001d;
@@ -1167,6 +1170,7 @@ containing a value of this type.
         public static final int select_minutes=0x7f0a0026;
         public static final int select_year=0x7f0a001b;
         public static final int selection_radius_multiplier=0x7f0a000f;
+        public static final int subdiv_hint=0x7f0a003c;
         public static final int subdiv_label=0x7f0a0039;
         public static final int subject_hint=0x7f0a0033;
         public static final int submit_button=0x7f0a0035;

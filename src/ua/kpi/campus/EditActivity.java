@@ -10,17 +10,27 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import dny.android.Activity;
-import dny.android.util.Listener;
+import dny.android.util.ListenerAdapter;
+import dny.util.Event;
 
 public class EditActivity extends Activity {
 	
 	private Post post;
 	private BoardPage board;
-
+	
+	private boolean postIsNew = false;
+	
+	private final Event submitEvent = new Event();
+	
 	@Override protected void onCreate(android.os.Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		post = (Post)arg1;
 		board = (BoardPage)arg2;
+		
+		if (post == null) {
+			post = new Post();
+			postIsNew = true;
+		}
 
 		final int padding = (int)(Campus.density * 16);
 		
@@ -34,21 +44,30 @@ public class EditActivity extends Activity {
 			));
 			layout.setPadding(padding, padding, padding, padding);
 
-			final EditText subject = new EditText(this);
 			subjectSetting: {
-				LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+				
+				final EditText subject = new EditText(this);
+				subject.setLayoutParams(new LinearLayout.LayoutParams(
 					LinearLayout.LayoutParams.MATCH_PARENT,
 					LinearLayout.LayoutParams.WRAP_CONTENT
-				);
-				subject.setLayoutParams(layoutParams);
+				));
 				subject.setPadding(padding, padding, padding, padding);
 				subject.setTextSize(20);
 				subject.setHint(getResources().getString(R.string.subject_hint));
+				
+				subject.setText(post.subject);
+				
+				submitEvent.addAction(new Runnable() {@Override public void run() {
+					post.subject = subject.getText().toString();
+				}});
+
 				layout.addView(subject);
+				
 			}
 
-			final EditText body = new EditText(this);
 			bodySetting: {
+				
+				final EditText body = new EditText(this);
 				LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
 					LinearLayout.LayoutParams.MATCH_PARENT,
 					LinearLayout.LayoutParams.WRAP_CONTENT
@@ -57,46 +76,59 @@ public class EditActivity extends Activity {
 				body.setPadding(padding, padding, padding, padding);
 				body.setTextSize(16);
 				body.setHint(getResources().getString(R.string.post_body_hint));
+				
+				body.setText(post.body);
+				
+				submitEvent.addAction(new Runnable() {@Override public void run() {
+					post.body = body.getText().toString();
+				}});
+
 				layout.addView(body);
+						
 			}
 			
-			if (post != null) {
-				subject.setText(post.subject);
-				body.setText(post.body);
+			filterButtonSetting: {
+				
+				final Button button = new Button(this);
+				button.setLayoutParams(new LinearLayout.LayoutParams(
+					LinearLayout.LayoutParams.MATCH_PARENT,
+					LinearLayout.LayoutParams.WRAP_CONTENT
+				));
+				button.setPadding(padding, padding, padding, padding);
+				button.setText(R.string.access_settings);
+				
+				button.setOnClickListener(new ListenerAdapter(new Runnable() {@Override public void run() {
+					open(AccessSettingsActivity.class, post, null);
+				}}));
+
+				layout.addView(button);
+				
 			}
 			
 			submitButtonSetting: {
-				final Button submitButton = new Button(this);
-				submitButton.setLayoutParams(new LinearLayout.LayoutParams(
+				
+				final Button button = new Button(this);
+				button.setLayoutParams(new LinearLayout.LayoutParams(
 					(int)(Campus.density * 512),
 					LinearLayout.LayoutParams.WRAP_CONTENT
 				));
-				submitButton.setPadding(padding, padding, padding, padding);
-				submitButton.setText(R.string.submit_button);
-				submitButton.setOnClickListener(new Listener(new Runnable() {@Override public void run() {
+				button.setPadding(padding, padding, padding, padding);
+				button.setText(R.string.submit_button);
+				button.setOnClickListener(new ListenerAdapter(new Runnable() {@Override public void run() {
 					try {
-						Post newPost = new Post(
-							post,
-							subject.getText().toString(),
-							body.getText().toString()
-						);
-						Campus.postPost(newPost);
-						if (post != null) {
-							post.subject = newPost.subject;
-							post.body = newPost.body;
-							post.modified = newPost.modified;
-							board.refreshPage();
-						} else {
-							board.addPost(newPost);
-						}
+						submitEvent.run();
+						Campus.postPost(post);
+						if (postIsNew) board.addPost(post);
+						else board.refreshPage();
 						finish();
 					} catch (IOException e) {
-						Campus.showToast(getResources().getString(R.string.connection_error));
+						
 					} catch (Campus.AccessException e) {
-						Campus.showToast(getResources().getString(R.string.access_error));
+						
 					}
 				}}));
-				layout.addView(submitButton);
+				
+				layout.addView(button);
 			}
 			
 			setContentView(layout);

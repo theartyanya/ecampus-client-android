@@ -16,7 +16,7 @@ import android.widget.RelativeLayout;
 import com.astuetz.PagerSlidingTabStrip;
 
 import dny.android.Activity;
-import dny.android.util.Listener;
+import dny.android.util.ListenerAdapter;
 import dny.android.widgets.FlatButton;
 
 public class MainActivity extends Activity {
@@ -103,7 +103,13 @@ public class MainActivity extends Activity {
 				FlatButton button = new FlatButton(
 					BitmapFactory.decodeResource(getResources(), R.drawable.search),
 					new Runnable() {@Override public void run() {
-						open(FilterActivity.class, boardPage);
+						open(
+							FilterActivity.class, 
+							boardPage.filter, 
+							new Runnable() {@Override public void run() {
+								boardPage.refreshPage();
+							}}
+						);
 					}},
 					this
 				);

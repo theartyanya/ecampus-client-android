@@ -3,7 +3,9 @@ package ua.kpi.campus;
 import java.util.Calendar;
 import java.util.Date;
 
-public class Post {
+public class Post extends AccessSettings {
+	
+	public int id = -1;
 	
 	public String subject;
 	public String body;
@@ -11,33 +13,13 @@ public class Post {
 	public String author;
 	public Date created, modified;
 	
-	public Subdivision subdivision;
-	public Group group;
-	public Profile profile;
-	
 	public boolean editable;
 	
-	public Post(String subject, String body, String author, Date created, Date modified, boolean editable) {
-		this.subject = subject;
-		this.body = body;
-		this.author = author;
-		this.created = created; this.modified = modified;
-		this.editable = editable;
-	}
-	
-	public Post(Post oldPost, String subject, String body) {
-		this.subject = subject;
-		this.body = body;
-		modified = Calendar.getInstance().getTime();
-		if (oldPost != null) {
-			author = oldPost.author;
-			editable = oldPost.editable;
-			created = oldPost.created;
-		} else {
-			author = Campus.user.name;
-			editable = true;
-			created = modified;
-		}
+	public Post() {
+		author = Campus.user.name;
+		Date now = Calendar.getInstance().getTime();
+		created = now; modified = now;
+		editable = true;
 	}
 	
 }

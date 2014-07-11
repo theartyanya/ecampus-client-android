@@ -12,7 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import dny.android.Activity;
-import dny.android.util.Listener;
+import dny.android.util.ListenerAdapter;
 import dny.android.widgets.CardView;
 import dny.android.widgets.FlatButton;
 import dny.time.Time;

@@ -2,14 +2,10 @@ package ua.kpi.campus;
 
 import java.util.Date;
 
-public class Filter {
+public class Filter extends AccessSettings {
 	
 	public final Date from = new Date(0);
 	public final Date to = new Date(0);
-	
-	public Subdivision subdivision;
-	public Group group;
-	public Profile profile;
 	
 	public boolean fits(final Post post) {
 		
@@ -18,9 +14,9 @@ public class Filter {
 			if (to.getTime() != 0) if (post.modified.after(to)) return false;
 		}
 		
-		subdivisionCheck: {
-			if (subdivision == null) break subdivisionCheck;
-			if (post.subdivision != subdivision) return false;
+		subdivCheck: {
+			if (subdiv == null) break subdivCheck;
+			if (post.subdiv != subdiv) return false;
 		}
 
 		groupCheck: {

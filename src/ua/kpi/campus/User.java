@@ -6,7 +6,8 @@ public class User {
 	
 	public boolean moder;
 	
-	public User(boolean moder) {
+	public User(String name, boolean moder) {
+		this.name = name;
 		this.moder = moder;
 	}
 	

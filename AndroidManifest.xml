@@ -37,6 +37,11 @@
             android:theme="@style/Morphine_Dialogue" >
         </activity>
         <activity
+            android:name=".AccessSettingsActivity"
+			android:configChanges="keyboardHidden|orientation|screenSize"
+            android:theme="@style/Morphine_Dialogue" >
+        </activity>
+        <activity
             android:name=".FilterActivity"
 			android:configChanges="keyboardHidden|orientation|screenSize"
             android:theme="@style/Morphine_Dialogue" >

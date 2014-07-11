@@ -12,7 +12,7 @@ import android.widget.TextView;
 import android.view.ViewGroup;
 
 import dny.android.Activity;
-import dny.android.util.Listener;
+import dny.android.util.ListenerAdapter;
 
 public class LoginActivity extends Activity {
 	
@@ -85,7 +85,8 @@ public class LoginActivity extends Activity {
 				));
 				submitButton.setPadding(padding, padding, padding, padding);
 				submitButton.setText(R.string.auth_button);
-				submitButton.setOnClickListener(new Listener(new Runnable() {@Override public void run() {
+				submitButton.setOnClickListener(new ListenerAdapter(new Runnable() {
+				@Override public void run() {
 					try {
 						setMessage(message, true, getResources().getString(R.string.auth_wait));
 						Campus.auth(

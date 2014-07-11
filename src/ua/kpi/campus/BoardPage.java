@@ -43,7 +43,7 @@ public class BoardPage extends Page {
 	
 	private void loadPosts() {
 		try {
-			Post[] newPosts = Campus.getPosts();
+			ArrayList<Post> newPosts = Campus.getPosts();
 			for (Post post : newPosts) {
 				posts.add(post);
 			}
