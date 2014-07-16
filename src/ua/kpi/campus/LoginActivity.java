@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 
 import dny.android.Activity;
 import dny.android.util.ListenerAdapter;
+import dny.parallel.Run;
 
 public class LoginActivity extends Activity {
 	
@@ -29,7 +30,7 @@ public class LoginActivity extends Activity {
 	@Override protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		final int padding = (int)(Campus.density * 16);
+		final int padding = (int)(ThisApp.density * 16);
 		
 		layoutSetting: {
 			
@@ -80,28 +81,35 @@ public class LoginActivity extends Activity {
 			submitButtonSetting: {
 				final Button submitButton = new Button(this);
 				submitButton.setLayoutParams(new LinearLayout.LayoutParams(
-					(int)(Campus.density * 256),
+					(int)(ThisApp.density * 256),
 					LinearLayout.LayoutParams.WRAP_CONTENT
 				));
 				submitButton.setPadding(padding, padding, padding, padding);
 				submitButton.setText(R.string.auth_button);
 				submitButton.setOnClickListener(new ListenerAdapter(new Runnable() {
 				@Override public void run() {
-					try {
-						setMessage(message, true, getResources().getString(R.string.auth_wait));
-						Campus.auth(
-							login.getText().toString(), 
-							password.getText().toString()
-						);
-						setMessage(message, true, getResources().getString(R.string.auth_okay));
-						open(MainActivity.class);
-						return;
-					} catch (IOException e) {
-						setMessage(message, false, getResources().getString(R.string.connection_error));
-					} catch (Campus.AuthException e) {
-						clearFields(login, password);
-						setMessage(message, false, getResources().getString(R.string.auth_error));
-					}
+					setMessage(message, true, getResources().getString(R.string.auth_wait));
+					new Run(new Runnable() {@Override public void run() {
+						try {
+							CampusAPI.auth(
+								login.getText().toString(), 
+								password.getText().toString()
+							);
+							runOnUiThread(new Runnable() {@Override public void run() {
+								setMessage(message, true, getResources().getString(R.string.auth_okay));
+								open(MainActivity.class);
+							}});
+						} catch (IOException e) {
+							runOnUiThread(new Runnable() {@Override public void run() {
+								setMessage(message, false, getResources().getString(R.string.connection_error));
+							}});
+						} catch (CampusAPI.AuthException e) {
+							runOnUiThread(new Runnable() {@Override public void run() {
+								clearFields(login, password);
+								setMessage(message, false, getResources().getString(R.string.auth_error));
+							}});
+						}
+					}}).open();
 				}}));
 				layout.addView(submitButton);
 			}

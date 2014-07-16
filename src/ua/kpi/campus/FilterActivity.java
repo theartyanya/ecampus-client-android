@@ -37,7 +37,7 @@ public class FilterActivity extends Activity {
 				LinearLayout.LayoutParams.MATCH_PARENT,
 				LinearLayout.LayoutParams.MATCH_PARENT
 			));
-			int padding = (int)(Campus.density * 16);
+			int padding = (int)(ThisApp.density * 16);
 			layout.setPadding(padding, padding, padding, padding);
 			
 			dateSetting: {
@@ -168,10 +168,8 @@ public class FilterActivity extends Activity {
 						private Subdiv oldSubdiv;
 						@Override public void run() {
 							Subdiv subdiv = filter.subdiv;
-							if (oldSubdiv != null) if (subdiv != oldSubdiv) {
-								filter.group = null;
-								oldSubdiv = subdiv;
-							}
+							if (oldSubdiv != null) if (subdiv != oldSubdiv) filter.group = null;
+							oldSubdiv = subdiv;
 							Group group = filter.group;
 							if (group == null) button.setText("Любая");
 							else button.setText(group.name);

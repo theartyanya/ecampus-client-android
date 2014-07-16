@@ -32,7 +32,7 @@ public class DatePickerActivity extends Activity {
 		date = (Date)arg1;
 		submitAction = (Runnable)arg2;
 
-		final int padding = (int)(Campus.density * 16);
+		final int padding = (int)(ThisApp.density * 16);
 		
 		layoutSetting: {
 			
@@ -50,7 +50,7 @@ public class DatePickerActivity extends Activity {
 				int relativelayoutId = View.generateViewId();
 				relativelayout.setId(relativelayoutId);
 				relativelayout.setLayoutParams(new LinearLayout.LayoutParams(
-					(int)(Campus.density * 800),
+					(int)(ThisApp.density * 800),
 					LinearLayout.LayoutParams.WRAP_CONTENT
 				));
 				relativelayout.setPadding(padding, padding, padding, padding);

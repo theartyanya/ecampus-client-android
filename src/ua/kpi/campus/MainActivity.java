@@ -75,7 +75,7 @@ public class MainActivity extends Activity {
 		titleSetting: {
 
 			final LinearLayout title = new LinearLayout(this);
-			final int titleHeight = (int)(Campus.density * 48);
+			final int titleHeight = (int)(ThisApp.density * 48);
 			title.setOrientation(LinearLayout.HORIZONTAL);
 			title.setLayoutParams(new LinearLayout.LayoutParams(
 				LinearLayout.LayoutParams.MATCH_PARENT,
@@ -116,7 +116,7 @@ public class MainActivity extends Activity {
 				title.addView(button);
 			}
 				
-			if (Campus.user.moder) newPostButtonSetting: {
+			if (CampusAPI.user.moder) newPostButtonSetting: {
 				FlatButton button = new FlatButton(
 					BitmapFactory.decodeResource(getResources(), R.drawable.new_post),
 					new Runnable() {@Override public void run() {

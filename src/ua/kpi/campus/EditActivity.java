@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import dny.android.Activity;
 import dny.android.util.ListenerAdapter;
 import dny.util.Event;
+import dny.parallel.*;
 
 public class EditActivity extends Activity {
 	
@@ -32,7 +33,7 @@ public class EditActivity extends Activity {
 			postIsNew = true;
 		}
 
-		final int padding = (int)(Campus.density * 16);
+		final int padding = (int)(ThisApp.density * 16);
 		
 		layoutSetting: {
 			
@@ -109,23 +110,28 @@ public class EditActivity extends Activity {
 				
 				final Button button = new Button(this);
 				button.setLayoutParams(new LinearLayout.LayoutParams(
-					(int)(Campus.density * 512),
+					(int)(ThisApp.density * 512),
 					LinearLayout.LayoutParams.WRAP_CONTENT
 				));
 				button.setPadding(padding, padding, padding, padding);
 				button.setText(R.string.submit_button);
 				button.setOnClickListener(new ListenerAdapter(new Runnable() {@Override public void run() {
-					try {
-						submitEvent.run();
-						Campus.postPost(post);
-						if (postIsNew) board.addPost(post);
-						else board.refreshPage();
-						finish();
-					} catch (IOException e) {
-						
-					} catch (Campus.AccessException e) {
-						
-					}
+					
+					submitEvent.run();
+					new Run(new Runnable() {@Override public void run() {
+						try {
+							CampusAPI.postPost(post);
+							runOnUiThread(new Runnable() {@Override public void run() {
+								if (postIsNew) board.addPost(post);
+								else board.refreshPage();
+								finish();
+							}});
+						} catch (IOException e) {
+							ThisApp.showToast(getResources().getString(R.string.connection_error));
+						} catch (CampusAPI.AccessException e) {
+							ThisApp.showToast(getResources().getString(R.string.access_error));
+						}
+					}}).open();
 				}}));
 				
 				layout.addView(button);

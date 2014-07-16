@@ -16,7 +16,7 @@ public class Post extends AccessSettings {
 	public boolean editable;
 	
 	public Post() {
-		author = Campus.user.name;
+		author = CampusAPI.user.name;
 		Date now = Calendar.getInstance().getTime();
 		created = now; modified = now;
 		editable = true;

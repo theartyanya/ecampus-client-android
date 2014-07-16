@@ -9,6 +9,7 @@ import android.widget.ScrollView;
 import android.view.ViewGroup;
 
 import dny.android.Activity;
+import dny.parallel.*;
 
 public class BoardPage extends Page {
 	
@@ -42,15 +43,19 @@ public class BoardPage extends Page {
 	}
 	
 	private void loadPosts() {
-		try {
-			ArrayList<Post> newPosts = Campus.getPosts();
-			for (Post post : newPosts) {
-				posts.add(post);
+		new Run(new Runnable() {@Override public void run() {
+			try {
+				ArrayList<Post> newPosts = CampusAPI.getPosts();
+				for (Post post : newPosts) {
+					posts.add(post);
+				}
+				activity.runOnUiThread(new Runnable() {@Override public void run() {
+					refreshPage();
+				}});
+			} catch (IOException e) {
+				ThisApp.showToast(getResources().getString(R.string.connection_error));
 			}
-			refreshPage();
-		} catch (IOException e) {
-			Campus.showToast(getResources().getString(R.string.connection_error));
-		}
+		}}).open();
 	}
 	
 	public BoardPage(Activity activity, Filter filter) {

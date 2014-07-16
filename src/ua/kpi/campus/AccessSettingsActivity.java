@@ -37,7 +37,7 @@ public class AccessSettingsActivity extends Activity {
 				LinearLayout.LayoutParams.MATCH_PARENT,
 				 LinearLayout.LayoutParams.MATCH_PARENT
 			));
-			int padding = (int)(Campus.density * 16);
+			int padding = (int)(ThisApp.density * 16);
 			layout.setPadding(padding, padding, padding, padding);
 
 			subdivSetting: {
@@ -91,10 +91,8 @@ public class AccessSettingsActivity extends Activity {
 						private Subdiv oldSubdiv;
 						@Override public void run() {
 							Subdiv subdiv = post.subdiv;
-							if (oldSubdiv != null) if (subdiv != oldSubdiv) {
-								post.group = null;
-								oldSubdiv = subdiv;
-							}
+							if (oldSubdiv != null) if (subdiv != oldSubdiv) post.group = null;
+							oldSubdiv = subdiv;
 							Group group = post.group;
 							if (group == null) button.setText("Любая");
 							else button.setText(group.name);

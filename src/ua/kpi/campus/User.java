@@ -2,12 +2,13 @@ package ua.kpi.campus;
 
 public class User {
 	
-	public String name;
+	public final String name;
+	public final String sessionId;
+	public final boolean moder;
 	
-	public boolean moder;
-	
-	public User(String name, boolean moder) {
+	public User(String name, String sessionId, boolean moder) {
 		this.name = name;
+		this.sessionId = sessionId;
 		this.moder = moder;
 	}
 	

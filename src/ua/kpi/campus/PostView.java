@@ -57,7 +57,7 @@ public class PostView extends CardView {
 				
 				subjectSetting: {
 					TextView subject = new TextView(activity);
-					final int padding = (int)(Campus.density * 6);
+					final int padding = (int)(ThisApp.density * 6);
 					subject.setPadding(padding, padding, padding, padding);
 					subject.setTextSize(24);
 					if (post.editable) {
@@ -83,7 +83,7 @@ public class PostView extends CardView {
 				
 				textSetting: {
 					TextView text = new TextView(activity);
-					final int padding = (int)(Campus.density * 8);
+					final int padding = (int)(ThisApp.density * 8);
 					text.setPadding(padding, padding, padding, padding);
 					text.setTextColor(0xff000000);
 					text.setText(post.body);
@@ -120,12 +120,12 @@ public class PostView extends CardView {
 						BitmapFactory.decodeResource(getResources(), R.drawable.remove),
 						new Runnable() {@Override public void run() {
 							try {
-								Campus.deletePost(post);
+								CampusAPI.deletePost(post);
 								board.removePost(post);
-							} catch (Campus.AccessException e) {
-								Campus.showToast(getResources().getString(R.string.access_error));
+							} catch (CampusAPI.AccessException e) {
+								ThisApp.showToast(getResources().getString(R.string.access_error));
 							} catch (IOException e) {
-								Campus.showToast(getResources().getString(R.string.connection_error));
+								ThisApp.showToast(getResources().getString(R.string.connection_error));
 							}
 						}},
 						activity
@@ -136,7 +136,7 @@ public class PostView extends CardView {
 				
 				authorSetting: {
 					TextView author = new TextView(activity);
-					final int padding = (int)(Campus.density * 4);
+					final int padding = (int)(ThisApp.density * 4);
 					author.setPadding(padding, padding, padding, padding);
 					author.setTextColor(0x88000000);
 					author.setText(post.author);
@@ -145,7 +145,7 @@ public class PostView extends CardView {
 
 				dateSetting: {
 					TextView date = new TextView(activity);
-					final int padding = (int)(Campus.density * 4);
+					final int padding = (int)(ThisApp.density * 4);
 					date.setPadding(padding, padding, padding, padding);
 					date.setTextColor(0x88000000);
 					date.setText(Time.toString(post.modified));

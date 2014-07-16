@@ -27,7 +27,7 @@ public class Time {
 		if (showDate) {
 			String date = Integer.toString(time.getDate()); 
 				if (date.length() == 1) date = '0' + date;
-			String month = Integer.toString(time.getMonth()); 
+			String month = Integer.toString(time.getMonth() + 1); 
 				if (month.length() == 1) month = '0' + month;
 			String year = Integer.toString(time.getYear() + 1900);
 			string += " " + date + "." + month + "." + year;

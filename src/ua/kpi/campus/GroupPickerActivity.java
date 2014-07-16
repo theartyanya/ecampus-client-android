@@ -34,12 +34,12 @@ public class GroupPickerActivity extends Activity {
 		final ArrayList<Group> groups = new ArrayList<Group>();
 		subdivsGetting: {
 			try {
-				groups.addAll(Campus.getGroups(filter.subdiv));
+				groups.addAll(CampusAPI.getGroups(filter.subdiv));
 			} catch (IOException e) {
-				Campus.showToast(getResources().getString(R.string.connection_error));
+				ThisApp.showToast(getResources().getString(R.string.connection_error));
 				finish();
-			} catch (Campus.AccessException e) {
-				Campus.showToast(getResources().getString(R.string.access_error));
+			} catch (CampusAPI.AccessException e) {
+				ThisApp.showToast(getResources().getString(R.string.access_error));
 				finish();
 			}
 		}
@@ -49,7 +49,7 @@ public class GroupPickerActivity extends Activity {
 
 		layoutSetting: {
 
-			final int padding = (int)(Campus.density * 16);
+			final int padding = (int)(ThisApp.density * 16);
 
 			final LinearLayout layout = new LinearLayout(this);
 			layout.setOrientation(LinearLayout.VERTICAL);
@@ -113,7 +113,7 @@ public class GroupPickerActivity extends Activity {
 					final LinearLayout list = new LinearLayout(this);
 					list.setOrientation(LinearLayout.VERTICAL);
 
-					final int entryPadding = (int)(Campus.density * 16);
+					final int entryPadding = (int)(ThisApp.density * 8);
 
 					refreshEvent.addAction(new Runnable() {@Override public void run() {
 						list.removeAllViews();
@@ -125,7 +125,7 @@ public class GroupPickerActivity extends Activity {
 							listEntrySetting: {
 
 								final TextView entry = new TextView(GroupPickerActivity.this);
-								entry.setPadding(entryPadding, entryPadding, entryPadding, 0);
+								entry.setPadding(entryPadding, entryPadding, entryPadding, entryPadding);
 								entry.setText(group.name);
 
 								entry.setClickable(true);

@@ -34,12 +34,12 @@ public class SubdivPickerActivity extends Activity {
 		final ArrayList<Subdiv> subdivs = new ArrayList<Subdiv>();
 		subdivsGetting: {
 			try {
-				subdivs.addAll(Campus.getSubdivs());
+				subdivs.addAll(CampusAPI.getSubdivs());
 			} catch (IOException e) {
-				Campus.showToast(getResources().getString(R.string.connection_error));
+				ThisApp.showToast(getResources().getString(R.string.connection_error));
 				finish();
-			} catch (Campus.AccessException e) {
-				Campus.showToast(getResources().getString(R.string.access_error));
+			} catch (CampusAPI.AccessException e) {
+				ThisApp.showToast(getResources().getString(R.string.access_error));
 				finish();
 			}
 		}
@@ -49,7 +49,7 @@ public class SubdivPickerActivity extends Activity {
 		
 		layoutSetting: {
 
-			final int padding = (int)(Campus.density * 16);
+			final int padding = (int)(ThisApp.density * 16);
 			
 			final LinearLayout layout = new LinearLayout(this);
 			layout.setOrientation(LinearLayout.VERTICAL);
@@ -114,7 +114,7 @@ public class SubdivPickerActivity extends Activity {
 					final LinearLayout list = new LinearLayout(this);
 					list.setOrientation(LinearLayout.VERTICAL);
 
-					final int entryPadding = (int)(Campus.density * 16);
+					final int entryPadding = (int)(ThisApp.density * 8);
 					
 					refreshEvent.addAction(new Runnable() {@Override public void run() {
 						list.removeAllViews();
@@ -126,7 +126,7 @@ public class SubdivPickerActivity extends Activity {
 							listEntrySetting: {
 								
 								final TextView entry = new TextView(SubdivPickerActivity.this);
-								entry.setPadding(entryPadding, entryPadding, entryPadding, 0);
+								entry.setPadding(entryPadding, entryPadding, entryPadding, entryPadding);
 								entry.setText(subdiv.name);
 								
 								entry.setClickable(true);
