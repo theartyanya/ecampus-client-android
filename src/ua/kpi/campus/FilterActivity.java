@@ -219,6 +219,28 @@ public class FilterActivity extends Activity {
 				
 			}
 			
+			resetButtonSetting: {
+				
+				final Button button = new Button(this);
+				button.setLayoutParams(new LinearLayout.LayoutParams(
+					LinearLayout.LayoutParams.MATCH_PARENT,
+					LinearLayout.LayoutParams.WRAP_CONTENT
+				));
+				button.setText(getResources().getString(R.string.reset_filter));
+				
+				button.setOnClickListener(new ListenerAdapter(new Runnable() {@Override public void run() {
+					filter.from.setTime(0);
+					filter.to.setTime(0);
+					filter.subdiv = null;
+					filter.group = null;
+					filter.profile = null;
+					refreshEvent.run();
+				}}));
+				
+				layout.addView(button);
+				
+			}
+			
 			setContentView(layout);
 			refreshEvent.run();
 			

@@ -72,7 +72,7 @@ public class GroupPickerActivity extends Activity {
 
 					final EditText searchbox = new EditText(this);
 					searchbox.setInputType(InputType.TYPE_CLASS_TEXT);
-					searchbox.setHint(getResources().getString(R.string.subdiv_hint));
+					searchbox.setHint(getResources().getString(R.string.group_hint));
 
 					searchbox.addTextChangedListener(new ListenerAdapter(refreshEvent));
 
@@ -91,7 +91,7 @@ public class GroupPickerActivity extends Activity {
 						LinearLayout.LayoutParams.MATCH_PARENT,
 						LinearLayout.LayoutParams.WRAP_CONTENT
 					));
-					button.setText("Любой");
+					button.setText("Любая");
 					button.setOnClickListener(new ListenerAdapter(new Runnable() {@Override public void run() {
 						filter.group = null;
 						finish();

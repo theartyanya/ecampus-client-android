@@ -72,7 +72,7 @@ public class ProfilePickerActivity extends Activity {
 
 					final EditText searchbox = new EditText(this);
 					searchbox.setInputType(InputType.TYPE_CLASS_TEXT);
-					searchbox.setHint(getResources().getString(R.string.subdiv_hint));
+					searchbox.setHint(getResources().getString(R.string.profile_hint));
 
 					searchbox.addTextChangedListener(new ListenerAdapter(refreshEvent));
 
