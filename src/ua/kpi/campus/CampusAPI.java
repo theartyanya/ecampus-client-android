@@ -16,7 +16,7 @@ public class CampusAPI {
 	public static class AuthException extends Exception {}
 	public static void auth(final String login, final String password) throws IOException, AuthException {
         //TODO: add proxy setting to program
-        /*
+
         Authenticator authenticator = new Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
@@ -25,12 +25,12 @@ public class CampusAPI {
         };
         Authenticator.setDefault(authenticator);
         Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress("10.13.100.13", 3128));
-        */
+
 		HttpURLConnection connection = (HttpURLConnection) new URL(
 			"http://api.ecampus.kpi.ua/user/auth?" +
 		 	"login=" + login + "&" +
 		 	"password=" + password
-		).openConnection();//(proxy)
+		).openConnection(proxy);
 		connection.setRequestProperty("Accept-Charset", "UTF-8");
 		if (connection.getResponseCode() == 403) throw new AuthException();
 		InputStream inputStream = connection.getInputStream();
