@@ -15,6 +15,7 @@ import dny.android.util.ListenerAdapter;
 import dny.util.Event;
 import dny.util.Wrapper.MutableWrapper;
 import dny.util.Wrapper.MutableWrapper.ConcreteMutableWrapper;
+import dny.parallel.*;
 
 public class GroupPickerActivity extends Activity {
 
@@ -33,15 +34,21 @@ public class GroupPickerActivity extends Activity {
 
 		final ArrayList<Group> groups = new ArrayList<Group>();
 		subdivsGetting: {
-			try {
-				groups.addAll(CampusAPI.getGroups(filter.subdiv));
-			} catch (IOException e) {
-				ThisApp.showToast(getResources().getString(R.string.connection_error));
-				finish();
-			} catch (CampusAPI.AccessException e) {
-				ThisApp.showToast(getResources().getString(R.string.access_error));
-				finish();
-			}
+			final Run invoker = Run.getCurrentRun();
+			new Run(new Runnable() {@Override public void run() {
+				try {
+					groups.addAll(CampusAPI.getGroups(filter.subdiv));
+				} catch (IOException e) {
+					ThisApp.showToast(getResources().getString(R.string.connection_error));
+					finish();
+				} catch (CampusAPI.AccessException e) {
+					ThisApp.showToast(getResources().getString(R.string.access_error));
+					finish();
+				} finally {
+					invoker.wakeUp();
+				}
+			}}).open();
+			Run.sleep();
 		}
 
 		final Event refreshEvent = new Event();

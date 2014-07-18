@@ -14,8 +14,8 @@ import android.view.ViewGroup;
 import dny.android.Activity;
 import dny.android.util.ListenerAdapter;
 import dny.parallel.Run;
-import ua.kpi.campus.Activity.messenger.JabberAuth;
-import ua.kpi.campus.Activity.messenger.StartJabberConnection;
+import ua.kpi.campus.activity.messenger.JabberAuth;
+import ua.kpi.campus.activity.messenger.StartJabberConnection;
 
 public class LoginActivity extends Activity {
 	

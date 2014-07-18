@@ -1,4 +1,4 @@
-package ua.kpi.campus.Activity.messenger;
+package ua.kpi.campus.activity.messenger;
 
 import org.jivesoftware.smack.Chat;
 import org.jivesoftware.smack.MessageListener;

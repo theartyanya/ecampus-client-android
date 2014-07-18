@@ -1,4 +1,4 @@
-package ua.kpi.campus.Activity.messenger;
+package ua.kpi.campus.activity.messenger;
 
 import org.jivesoftware.smack.ConnectionConfiguration;
 import org.jivesoftware.smack.tcp.XMPPTCPConnection;

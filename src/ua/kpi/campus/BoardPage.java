@@ -54,6 +54,8 @@ public class BoardPage extends Page {
 				}});
 			} catch (IOException e) {
 				ThisApp.showToast(getResources().getString(R.string.connection_error));
+			} catch (CampusAPI.AccessException e) {
+				ThisApp.showToast(getResources().getString(R.string.access_error));
 			}
 		}}).open();
 	}

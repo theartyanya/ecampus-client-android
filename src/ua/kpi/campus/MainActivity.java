@@ -18,7 +18,7 @@ import com.astuetz.PagerSlidingTabStrip;
 import dny.android.Activity;
 import dny.android.util.ListenerAdapter;
 import dny.android.widgets.FlatButton;
-import ua.kpi.campus.Activity.messenger.MessagePage;
+import ua.kpi.campus.activity.messenger.MessagePage;
 
 public class MainActivity extends Activity {
 	
