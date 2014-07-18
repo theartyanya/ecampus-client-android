@@ -16,13 +16,9 @@ public class StartJabberConnection extends AsyncTask {
         try {
             connection.connect();
             System.out.println("connection successful");
-
-            connection.login("123", "123");
+            connection.login(JabberAuth.login, JabberAuth.password);
             System.out.println("loginned successful");
-            Thread.sleep(8000);
-            connection.disconnect();
-            System.out.println("disconnection successful");
-        } catch (SmackException | IOException | XMPPException | InterruptedException e) {
+        } catch (SmackException | IOException | XMPPException e) {
             e.printStackTrace();
             System.out.println("connection failed");
         }

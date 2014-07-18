@@ -14,6 +14,8 @@ import android.view.ViewGroup;
 import dny.android.Activity;
 import dny.android.util.ListenerAdapter;
 import dny.parallel.Run;
+import ua.kpi.campus.Activity.messenger.JabberAuth;
+import ua.kpi.campus.Activity.messenger.StartJabberConnection;
 
 public class LoginActivity extends Activity {
 	
@@ -89,6 +91,16 @@ public class LoginActivity extends Activity {
 				submitButton.setOnClickListener(new ListenerAdapter(new Runnable() {
 				@Override public void run() {
 					setMessage(message, true, getResources().getString(R.string.auth_wait));
+
+                    JabberAuth.setLoginAndPass(login.getText().toString(), password.getText().toString());
+                    //StartJabberConnection.execute(this);
+                    new Run(new Runnable() {
+                        @Override
+                        public void run() {
+                            new StartJabberConnection().execute();
+                        }
+                    }).open();
+
 					new Run(new Runnable() {@Override public void run() {
 						try {
 							CampusAPI.auth(

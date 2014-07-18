@@ -18,6 +18,7 @@ import com.astuetz.PagerSlidingTabStrip;
 import dny.android.Activity;
 import dny.android.util.ListenerAdapter;
 import dny.android.widgets.FlatButton;
+import ua.kpi.campus.Activity.messenger.MessagePage;
 
 public class MainActivity extends Activity {
 	
@@ -46,13 +47,14 @@ public class MainActivity extends Activity {
 		pagesSetting: {
 			pages.add(new InfoPage(this));
 			pages.add(boardPage);
+            pages.add(new MessagePage(this));
 		}
 		
 		final ViewPager viewPager = new ViewPager(this);
 		pagerAdapterSetting: {
 			final PagerAdapter pagerAdapter = new PagerAdapter() {
 				@Override public int getCount() {
-					return 2;
+					return 3;
 				}
 				@Override public boolean isViewFromObject(View p1, Object p2) {
 					return p1.equals(p2);
