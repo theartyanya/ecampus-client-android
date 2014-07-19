@@ -1,4 +1,4 @@
-package ua.kpi.campus.Activity.messenger;
+package ua.kpi.campus.activity.messenger;
 
 /**
  * Created by Serhiy on 18.07.2014.

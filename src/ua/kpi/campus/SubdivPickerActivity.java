@@ -15,6 +15,7 @@ import dny.android.util.ListenerAdapter;
 import dny.util.Event;
 import dny.util.Wrapper.MutableWrapper;
 import dny.util.Wrapper.MutableWrapper.ConcreteMutableWrapper;
+import dny.parallel.*;
 
 public class SubdivPickerActivity extends Activity {
 	
@@ -33,15 +34,21 @@ public class SubdivPickerActivity extends Activity {
 		
 		final ArrayList<Subdiv> subdivs = new ArrayList<Subdiv>();
 		subdivsGetting: {
-			try {
-				subdivs.addAll(CampusAPI.getSubdivs());
-			} catch (IOException e) {
-				ThisApp.showToast(getResources().getString(R.string.connection_error));
-				finish();
-			} catch (CampusAPI.AccessException e) {
-				ThisApp.showToast(getResources().getString(R.string.access_error));
-				finish();
-			}
+			final Run invoker = Run.getCurrentRun();
+			new Run(new Runnable() {@Override public void run() {
+				try {
+					subdivs.addAll(CampusAPI.getSubdivs());
+				} catch (IOException e) {
+					ThisApp.showToast(getResources().getString(R.string.connection_error));
+					finish();
+				} catch (CampusAPI.AccessException e) {
+					ThisApp.showToast(getResources().getString(R.string.access_error));
+					finish();
+				} finally {
+					invoker.wakeUp();
+				}
+			}}).open();
+			Run.sleep();
 		}
 
 		final Event refreshEvent = new Event();

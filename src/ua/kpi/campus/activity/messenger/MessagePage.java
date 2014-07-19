@@ -1,4 +1,4 @@
-package ua.kpi.campus.Activity.messenger;
+package ua.kpi.campus.activity.messenger;
 
 import android.content.Context;
 import ua.kpi.campus.Page;

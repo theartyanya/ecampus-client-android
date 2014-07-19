@@ -1,4 +1,4 @@
-package ua.kpi.campus.Activity.messenger;
+package ua.kpi.campus.activity.messenger;
 
 import android.os.AsyncTask;
 import org.jivesoftware.smack.*;

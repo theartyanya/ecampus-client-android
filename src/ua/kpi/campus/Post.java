@@ -22,4 +22,22 @@ public class Post extends AccessSettings {
 		editable = true;
 	}
 	
+	public Post(
+		int id,
+		String subject,
+		String body,
+		String author,
+		Date created,
+		Date modified,
+		boolean editable
+	) {
+		this.id = id;
+		this.subject = subject;
+		this.body = body;
+		this.author = author;
+		this.created = created;
+		this.modified = modified;
+		this.editable = editable;
+	}
+	
 }

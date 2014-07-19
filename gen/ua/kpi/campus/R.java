@@ -1114,19 +1114,19 @@ containing a value of this type.
         public static final int abc_searchview_description_voice=0x7f0a000a;
         public static final int abc_shareactionprovider_share_with=0x7f0a000b;
         public static final int abc_shareactionprovider_share_with_application=0x7f0a000c;
-        public static final int access_error=0x7f0a0032;
-        public static final int access_settings=0x7f0a0040;
+        public static final int access_error=0x7f0a0033;
+        public static final int access_settings=0x7f0a0041;
         public static final int ampm_circle_radius_multiplier=0x7f0a0010;
         public static final int app_name=0x7f0a0027;
         public static final int auth_button=0x7f0a002a;
-        public static final int auth_error=0x7f0a0030;
-        public static final int auth_okay=0x7f0a002f;
-        public static final int auth_wait=0x7f0a002e;
+        public static final int auth_error=0x7f0a0031;
+        public static final int auth_okay=0x7f0a0030;
+        public static final int auth_wait=0x7f0a002f;
         public static final int board_page_title=0x7f0a002c;
         public static final int circle_radius_multiplier=0x7f0a000d;
         public static final int circle_radius_multiplier_24HourMode=0x7f0a000e;
-        public static final int connection_error=0x7f0a0031;
-        public static final int date_label=0x7f0a0036;
+        public static final int connection_error=0x7f0a0032;
+        public static final int date_label=0x7f0a0037;
         /**  DO NOT TRANSLATE 
          */
         public static final int day_of_week_label_typeface=0x7f0a001e;
@@ -1135,9 +1135,9 @@ containing a value of this type.
          */
         public static final int deleted_key=0x7f0a0021;
         public static final int done_label=0x7f0a0017;
-        public static final int from_label=0x7f0a0037;
-        public static final int group_hint=0x7f0a003e;
-        public static final int group_label=0x7f0a003a;
+        public static final int from_label=0x7f0a0038;
+        public static final int group_hint=0x7f0a003f;
+        public static final int group_label=0x7f0a003b;
         /** 
          Content description for the hour selector in the time picker, which displays
          selectable hours of the day along the inside edge of a circle, as in an analog clock.
@@ -1148,6 +1148,7 @@ containing a value of this type.
         public static final int info_page_title=0x7f0a002b;
         public static final int item_is_selected=0x7f0a001c;
         public static final int login_hint=0x7f0a0028;
+        public static final int message_page_title=0x7f0a002d;
         /** 
          Content description for the minute selector in the time picker, which displays
          selectable five-minute intervals along the inside edge of a circle, as in an analog clock.
@@ -1159,28 +1160,28 @@ containing a value of this type.
         public static final int numbers_radius_multiplier_normal=0x7f0a0011;
         public static final int numbers_radius_multiplier_outer=0x7f0a0013;
         public static final int password_hint=0x7f0a0029;
-        public static final int please_auth=0x7f0a002d;
-        public static final int post_body_hint=0x7f0a0034;
-        public static final int profile_hint=0x7f0a003f;
-        public static final int profile_label=0x7f0a003b;
+        public static final int please_auth=0x7f0a002e;
+        public static final int post_body_hint=0x7f0a0035;
+        public static final int profile_hint=0x7f0a0040;
+        public static final int profile_label=0x7f0a003c;
         public static final int radial_numbers_typeface=0x7f0a0024;
-        public static final int reset_filter=0x7f0a003c;
+        public static final int reset_filter=0x7f0a003d;
         public static final int sans_serif=0x7f0a001d;
         public static final int select_day=0x7f0a001a;
         public static final int select_hours=0x7f0a0025;
         public static final int select_minutes=0x7f0a0026;
         public static final int select_year=0x7f0a001b;
         public static final int selection_radius_multiplier=0x7f0a000f;
-        public static final int subdiv_hint=0x7f0a003d;
-        public static final int subdiv_label=0x7f0a0039;
-        public static final int subject_hint=0x7f0a0033;
-        public static final int submit_button=0x7f0a0035;
+        public static final int subdiv_hint=0x7f0a003e;
+        public static final int subdiv_label=0x7f0a003a;
+        public static final int subject_hint=0x7f0a0034;
+        public static final int submit_button=0x7f0a0036;
         public static final int text_size_multiplier_inner=0x7f0a0015;
         public static final int text_size_multiplier_normal=0x7f0a0014;
         public static final int text_size_multiplier_outer=0x7f0a0016;
         public static final int time_placeholder=0x7f0a001f;
         public static final int time_separator=0x7f0a0020;
-        public static final int to_label=0x7f0a0038;
+        public static final int to_label=0x7f0a0039;
         public static final int year_picker_description=0x7f0a0019;
     }
     public static final class style {
