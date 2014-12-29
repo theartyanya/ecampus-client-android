@@ -9,4 +9,7 @@ Chat
 You can talk with us in our Gitter chat room! Enjoy this! :sparkles:
 
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/DOIS/ecampus-client-android?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+<<<<<<< HEAD
 
+=======
+>>>>>>> 368b9ad5695d504bf5d311dd2a6f341ca193dab1
