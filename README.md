@@ -3,7 +3,7 @@ Campus Android
 
 Now resources are cleaned before update. Old sorces can be found in **"old-master"** branch!
 
-Gitter
+Gitter Chat
 ====
 
 You can talk with us in our Gitter chat room! Enjoy this! :sparkles:
