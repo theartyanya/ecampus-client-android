@@ -2,6 +2,7 @@ HAPPY NEW YEAR
 ====
 
 Happy New 2015 Year, guys!)
+![Fucking new year](https://octodex.github.com/images/yaktocat.png)
 
 Campus Android
 ====
