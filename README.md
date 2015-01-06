@@ -1,16 +1,8 @@
-HAPPY NEW YEAR
-====
-
-Happy New 2015 Year, guys!)
-![Fucking new year](https://raw.githubusercontent.com/DOIS/ecampus-client-android/master/app/src/main/res/drawable-nodpi/calendar.png)
-
-Campus Android
-====
+### KPI Campus Android Application
 
 Now resources are cleaned before update. Old sorces can be found in **"old-master"** branch!
 
-Gitter Chat
-====
+####Gitter Chat
 
 You can talk with us in our Gitter chat room! Enjoy this! :sparkles:
 
