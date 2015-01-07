@@ -23,27 +23,27 @@
             app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
         <!--Sliding tabs layout-->
-        <ua.kpi.venco.ui.widgets.SlidingTabLayout
+        <!--<ua.kpi.venco.ui.widgets.SlidingTabLayout
             android:id="@+id/sliding_tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/material_indigo_500"
-            />
+            />-->
 
         <!--Swipe to refresh Layout-->
-        <android.support.v4.widget.SwipeRefreshLayout
+        <!--<android.support.v4.widget.SwipeRefreshLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/refresh_layout">
+            android:id="@+id/refresh_layout">-->
 
             <!-- Sessions fragments showing each day of the conference -->
-            <android.support.v4.view.ViewPager
+            <!--<android.support.v4.view.ViewPager
                 android:id="@+id/view_pager"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1"/>
+                android:layout_weight="1"/>-->
 
-        </android.support.v4.widget.SwipeRefreshLayout>
+        <!--</android.support.v4.widget.SwipeRefreshLayout>-->
 
     </LinearLayout>
 

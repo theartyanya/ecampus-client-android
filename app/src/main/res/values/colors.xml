@@ -4,4 +4,14 @@
     <color name="primary">#673AB7</color>
     <color name="primaryDark">#512DA8</color>
     <color name="accent">#448AFF</color>
+    <color name="dark">#212121</color>
+    <color name="gray">#727272</color>
+    <color name="devider">#B6B6B6</color>
+    <color name="body_text_1_inverse">#deffffff</color>
+    <color name="body_text_1">#de000000</color>
+    <color name="navdrawer_text_color">@color/body_text_1</color>
+    <color name="navdrawer_text_color_selected">@color/primary</color>
+    <color name="navdrawer_icon_tint">#808080</color>
+    <color name="navdrawer_icon_tint_selected">@color/primary</color>
+    <color name="session_photo_scrim">#6000</color>
 </resources>
