@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingBottom="8dp"
+    android:paddingLeft="@dimen/keyline_1"
+    android:paddingRight="@dimen/keyline_1"
+    android:orientation="horizontal"
+    android:layout_height="@dimen/my_schedule_item_height"
+    android:layout_width="match_parent">
+
+    <!-- Start and end times -->
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="@dimen/my_schedule_time_column_width"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/start_time"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:gravity="bottom"
+            android:textSize="@dimen/text_size_medium"
+            android:textColor="@color/body_text_2"
+            android:text="@string/placeholder_session_start_time" />
+
+        <TextView
+            android:id="@+id/end_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_size_small"
+            android:textColor="@color/body_text_3"
+            android:text="@string/placeholder_session_end_time" />
+
+
+    </LinearLayout>
+
+    <!-- Background photo, title, subtitle -->
+    <FrameLayout
+        android:id="@+id/box"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="match_parent">
+
+        <!-- Background photo -->
+        <!--<ua.kpi.campus.ui.widgets.BezelImageView
+            app:maskDrawable="@drawable/schedule_background_mask"
+            android:id="@+id/background_image"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:scaleType="centerCrop" />-->
+
+        <!-- Session photo -->
+        <ua.kpi.campus.ui.widgets.BezelImageView
+            app:maskDrawable="@drawable/schedule_background_mask"
+            android:id="@+id/session_image"
+            android:background="@color/primary"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:scaleType="centerCrop" />
+
+        <!-- Block/slot chip contents -->
+        <LinearLayout
+            android:id="@+id/slot_chip_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="16dp"
+            android:paddingRight="8dp"
+            android:paddingBottom="8dp">
+
+            <TextView
+                android:id="@+id/slot_title"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:gravity="bottom"
+                android:textColor="@color/white"
+                android:text="@string/placeholder_session_title"
+                android:textSize="@dimen/text_size_large"
+                android:ellipsize="end"
+                android:maxLines="1" />
+
+            <TextView
+                android:id="@+id/slot_subtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/primaryLight"
+                android:text="@string/placeholder_session_subtitle"
+                android:textSize="@dimen/text_size_small"
+                />
+        </LinearLayout>
+
+
+    </FrameLayout>
+</LinearLayout>
