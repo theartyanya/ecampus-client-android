@@ -1,5 +1,6 @@
 package ua.kpi.campus;
 
+import android.app.ListFragment;
 import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
@@ -22,10 +23,11 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import ua.kpi.campus.ui.ScheduleFragment;
 import ua.kpi.campus.util.ShakeListener;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends ActionBarActivity implements ScheduleFragment.Listener {
 
     //private LinearLayout mAccountListContainer;
     //private ImageView mExpandAccountBoxIndicator;
@@ -49,7 +51,7 @@ public class MainActivity extends ActionBarActivity {
     private Toolbar mToolbar;
 
     // list of navdrawer items that were actually added to the navdrawer, in order
-    private ArrayList<Integer> mNavDrawerItems = new ArrayList<Integer>();
+    private ArrayList<Integer> mNavDrawerItems = new ArrayList<>();
 
     //NavDrawer Items
     protected static final int NAVDRAWER_ITEM_MY_SCHEDULE = 0;
@@ -68,7 +70,7 @@ public class MainActivity extends ActionBarActivity {
             R.string.navdrawer_item_my_lessons,    // Lessons
             R.string.navdrawer_item_my_notes,      // Notes
             R.string.navdrawer_item_settings,      // Settings
-            R.string.navdrawer_item_feedback       // Feedback
+            R.string.navdrawer_item_feedback                             // Feedback
     };
 
     //icons for navdrawer items
@@ -193,7 +195,7 @@ public class MainActivity extends ActionBarActivity {
             Toast.makeText(getApplicationContext(), "NULL", Toast.LENGTH_SHORT).show();
             return;
         }
-        //This shis code may just not work
+        //This shit code may just not work
         /*if (selfItem == NAVDRAWER_ITEM_INVALID) {
             View navDrawer = (View) findViewById(R.id.navdrawer);
             if (navDrawer != null) {
@@ -444,5 +446,18 @@ public class MainActivity extends ActionBarActivity {
     }
 
 
+    @Override
+    public void onFragmentViewCreated(ListFragment fragment) {
 
+    }
+
+    @Override
+    public void onFragmentAttached(ScheduleFragment fragment) {
+
+    }
+
+    @Override
+    public void onFragmentDetached(ScheduleFragment fragment) {
+
+    }
 }

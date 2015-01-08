@@ -14,36 +14,40 @@
 
         <!-- We use a Toolbar so that our drawer can be displayed
              in front of the action bar -->
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:minHeight="@dimen/toolbar_width"
-            android:background="?attr/colorPrimary"
-            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
-        <!--Sliding tabs layout-->
-        <!--<ua.kpi.venco.ui.widgets.SlidingTabLayout
-            android:id="@+id/sliding_tabs"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/material_indigo_500"
-            />-->
+            android:orientation="vertical">
 
-        <!--Swipe to refresh Layout-->
-        <!--<android.support.v4.widget.SwipeRefreshLayout
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:minHeight="@dimen/toolbar_width"
+                android:background="?attr/colorPrimary"
+                app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
+
+            <ua.kpi.campus.ui.widgets.SlidingTabLayout
+                android:background="?attr/colorPrimary"
+                android:id="@+id/sliding_tabs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/refresh_layout">-->
+            android:orientation="vertical">
 
-            <!-- Sessions fragments showing each day of the conference -->
-            <!--<android.support.v4.view.ViewPager
-                android:id="@+id/view_pager"
+            <android.support.v4.view.ViewPager
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1"/>-->
+                android:layout_weight="1"/>
 
-        <!--</android.support.v4.widget.SwipeRefreshLayout>-->
+            </LinearLayout>
+
+
 
     </LinearLayout>
 

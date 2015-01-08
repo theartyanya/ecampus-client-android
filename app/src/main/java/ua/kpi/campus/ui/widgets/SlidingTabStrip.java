@@ -1,8 +1,5 @@
 package ua.kpi.campus.ui.widgets;
 
-
-
-import android.R;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -11,6 +8,7 @@ import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.R;
 
 class SlidingTabStrip extends LinearLayout {
 
