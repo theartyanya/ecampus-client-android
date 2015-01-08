@@ -14,5 +14,7 @@
     <string name="placeholder_session_start_time">10:00</string>
     <string name="placeholder_session_title">Java Programming</string>
     <string name="placeholder_session_subtitle">This is subtitle</string>
+    <string name="drawer_close">Campus</string>
+    <string name="drawer_open">Select item</string>
 
 </resources>
