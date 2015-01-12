@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 import ua.kpi.campus.model.ScheduleItem;
 import ua.kpi.campus.provider.ScheduleContract.*;
+import ua.kpi.campus.ui.ScheduleAdapter;
 
 /**
  * Created by doroshartyom on 08.01.2015.
@@ -20,6 +21,7 @@ public class ScheduleProvider {
     private ScheduleDatabase scheduleDatabase;
     private ContentValues cv;
 
+    private Context mContext;
     private String LOG_TAG = "ScheduleProvider";
     private String SCHEDULE = "schedule";
 
@@ -58,7 +60,7 @@ public class ScheduleProvider {
     }
 
     //Returns Item from ScheduleDatabase
-    public ArrayList<ScheduleItem> getScheduleItemFromDatabase() {
+    public ArrayList<ScheduleItem> getScheduleItemsFromDatabase(int week) {
         ArrayList<ScheduleItem> items = new ArrayList<ScheduleItem>();
         Cursor cursor = db.query(SCHEDULE, null, null, null, null, null, null);
 
@@ -73,21 +75,21 @@ public class ScheduleProvider {
             int time_start = cursor.getColumnIndex(ScheduleColumns.TIME_START);
             int time_end = cursor.getColumnIndex(ScheduleColumns.TIME_END);
 
+            if (cursor.getInt(lesson_week) == week)
+                do {
+                    ScheduleItem item = new ScheduleItem();
+                    item.setLessonId(cursor.getInt(lesson_id))
+                        .setDayNumber(cursor.getInt(day_number))
+                        .setLessonNumber(cursor.getInt(lesson_number))
+                        .setLessonName(cursor.getString(lesson_name))
+                        .setLessonRoom(cursor.getString(lesson_room))
+                        .setTeacherName(cursor.getString(teacher_name))
+                        .setLessonWeek(cursor.getInt(lesson_week))
+                        .setTimeStart(cursor.getString(time_start))
+                        .setTimeEnd(cursor.getString(time_end));
 
-            do {
-                ScheduleItem item = new ScheduleItem();
-                item.setLessonId(cursor.getInt(lesson_id))
-                    .setDayNumber(cursor.getInt(day_number))
-                    .setLessonNumber(cursor.getInt(lesson_number))
-                    .setLessonName(cursor.getString(lesson_name))
-                    .setLessonRoom(cursor.getString(lesson_room))
-                    .setTeacherName(cursor.getString(teacher_name))
-                    .setLessonWeek(cursor.getInt(lesson_week))
-                    .setTimeStart(cursor.getInt(time_start))
-                    .setTimeEnd(cursor.getInt(time_end));
-
-                items.add(item);
-            } while (cursor.moveToNext());
+                    items.add(item);
+                } while (cursor.moveToNext());
         }
         return items;
     }

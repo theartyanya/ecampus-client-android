@@ -1,29 +1,45 @@
 package ua.kpi.campus;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.app.ListFragment;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.os.Build;
 import android.os.Handler;
+import android.preference.PreferenceManager;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v13.app.FragmentPagerAdapter;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
+import ua.kpi.campus.api.SyncSchedule;
+import ua.kpi.campus.model.ScheduleItem;
+import ua.kpi.campus.provider.ScheduleProvider;
+import ua.kpi.campus.ui.ScheduleAdapter;
 import ua.kpi.campus.ui.ScheduleFragment;
+import ua.kpi.campus.ui.widgets.SlidingTabLayout;
 import ua.kpi.campus.util.ShakeListener;
 
 
@@ -35,9 +51,11 @@ public class MainActivity extends ActionBarActivity implements ScheduleFragment.
     //private static final int ACCOUNT_BOX_EXPAND_ANIM_DURATION = 200;
 
 
-    //ScrollView scrollView;
-    //SlidingTabLayout slidingTabLayout = null;
-    //ViewPager viewPager = null;
+    ScrollView scrollView;
+    SlidingTabLayout slidingTabLayout = null;
+    ViewPager viewPager = null;
+    MyViewPagerAdapter viewPagerAdapter;
+    private Set<ScheduleFragment> mScheduleFragments = new HashSet<ScheduleFragment>();
     DrawerLayout drawerLayout;
 
     //private ActionBarDrawerToggle drawerToggle;
@@ -73,6 +91,11 @@ public class MainActivity extends ActionBarActivity implements ScheduleFragment.
             R.string.navdrawer_item_feedback                             // Feedback
     };
 
+    private static final String[] WEEK_NAMES = new String[] {
+        "Week 1",
+        "Week 2"
+    };
+
     //icons for navdrawer items
     private static final int[] NAVDRAWER_ICON_RES_ID = new int[]{
             R.drawable.ic_schedule_24dp,
@@ -100,6 +123,15 @@ public class MainActivity extends ActionBarActivity implements ScheduleFragment.
     private Handler mHandler;
 
     //private ImageLoader mImageLoader;
+
+    private final String LOG_TAG = "MainActivity";
+    private static final String ARG_SCHEDULE_WEEK_INDEX
+            = "ua.kpi.campus.ARG_SCHEDULE_WEEK_INDEX";
+
+    private ScheduleAdapter[] mScheduleAdapters = new ScheduleAdapter[2];
+
+    SharedPreferences mPrefs;
+    final String welcomeScreenShownPref = "welcomeScreenShown";
 
 
 
@@ -137,6 +169,66 @@ public class MainActivity extends ActionBarActivity implements ScheduleFragment.
 
         //Initializing mHandler
         mHandler = new Handler();
+
+        viewPager = (ViewPager) findViewById(R.id.view_pager);
+
+        int i;
+        for (i = 0; i < 2; i++) {
+            mScheduleAdapters[i] = new ScheduleAdapter(this);
+        }
+
+        mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+        Boolean welcomeScreenShown = mPrefs.getBoolean(welcomeScreenShownPref, false);
+
+        SyncSchedule sync = SyncSchedule.getSyncSchedule("IK-31", getApplicationContext());
+        SyncSchedule.Connect connect = new SyncSchedule.Connect();
+        connect.execute();
+
+
+        if (!welcomeScreenShown) {
+            SharedPreferences.Editor editor = mPrefs.edit();
+            editor.putBoolean(welcomeScreenShownPref, true);
+            editor.commit();
+
+        }
+
+        ScheduleProvider scheduleProvider = new ScheduleProvider(getApplicationContext());
+
+        mScheduleAdapters[0].updateItems(scheduleProvider.getScheduleItemsFromDatabase(1));
+        mScheduleAdapters[1].updateItems(scheduleProvider.getScheduleItemsFromDatabase(2));
+
+        viewPagerAdapter = new MyViewPagerAdapter(getFragmentManager());
+        viewPager.setAdapter(viewPagerAdapter);
+
+        slidingTabLayout = (SlidingTabLayout) findViewById(R.id.sliding_tabs);
+        slidingTabLayout.setCustomTabView(R.layout.tab_indicator, android.R.id.text1);
+
+        Resources res = getResources();
+
+        setSlidingTabLayoutContentDescriptions();
+
+        slidingTabLayout.setSelectedIndicatorColors(res.getColor(R.color.accent));
+        slidingTabLayout.setDistributeEvenly(true);
+        slidingTabLayout.setViewPager(viewPager);
+
+        if (slidingTabLayout != null) {
+            slidingTabLayout.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                @Override
+                public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+                }
+
+                @Override
+                public void onPageSelected(int position) {
+
+                }
+
+                @Override
+                public void onPageScrollStateChanged(int state) {
+
+                }
+            });
+        }
     }
 
     @Override
@@ -353,7 +445,7 @@ public class MainActivity extends ActionBarActivity implements ScheduleFragment.
     //Return Self Nav Drawer item
     protected int getSelfNavDrawerItem() {
 
-        return NAVDRAWER_ITEM_INVALID;
+        return NAVDRAWER_ITEM_MY_SCHEDULE;
     }
 
 
@@ -448,16 +540,56 @@ public class MainActivity extends ActionBarActivity implements ScheduleFragment.
 
     @Override
     public void onFragmentViewCreated(ListFragment fragment) {
-
+        fragment.getListView().addHeaderView(
+                getLayoutInflater().inflate(R.layout.reserve_action_bar_space_header_view, null));
+        int dayIndex = fragment.getArguments().getInt(ARG_SCHEDULE_WEEK_INDEX, 0);
+        fragment.setListAdapter(mScheduleAdapters[dayIndex]);
+        fragment.setListAdapter(mScheduleAdapters[dayIndex]);
     }
 
     @Override
     public void onFragmentAttached(ScheduleFragment fragment) {
-
+        mScheduleFragments.add(fragment);
     }
 
     @Override
     public void onFragmentDetached(ScheduleFragment fragment) {
+        mScheduleFragments.remove(fragment);
+    }
 
+    private class MyViewPagerAdapter extends FragmentPagerAdapter {
+        public MyViewPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+
+        @Override
+        public Fragment getItem(int position) {
+            Log.d(LOG_TAG, "Creating fragment #" + position);
+            ScheduleFragment frag = new ScheduleFragment();
+            Bundle args = new Bundle();
+            args.putInt(ARG_SCHEDULE_WEEK_INDEX, position);
+            frag.setArguments(args);
+            return frag;
+        }
+        @Override
+        public int getCount() {
+            return 2;
+        }
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return getWeekName(position);
+        }
+    }
+
+    private CharSequence getWeekName(int position) {
+        return WEEK_NAMES[position];
+    }
+
+    private void setSlidingTabLayoutContentDescriptions() {
+        for (int i = 0; i < 2; i++) {
+            slidingTabLayout.setContentDescription(i,
+                    getString(R.string.my_schedule_tab_desc_a11y, getWeekName(i)));
+        }
     }
 }

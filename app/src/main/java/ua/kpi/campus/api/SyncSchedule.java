@@ -21,7 +21,7 @@ import ua.kpi.campus.model.ScheduleItem;
 import ua.kpi.campus.provider.ScheduleProvider;
 
 /**
- * Created by Admin on 08.01.2015.
+ * Created by doroshartyom on 08.01.2015.
  */
 public class SyncSchedule {
 
@@ -55,9 +55,9 @@ public class SyncSchedule {
     /*This method sends request to http://api.... and gets JSON object
         then we add Subject objects to database
      */
-    public static void getSubjects() throws Exception{
+    public static void getSchedule() throws Exception{
 
-        String URL = "http://api.rozklad.org.ua/v1/groups/"+GROUP+"/lessons/?week="+getWeek();
+        String URL = "http://api.rozklad.org.ua/v1/groups/"+GROUP+"/lessons";
 
 
         BufferedReader in = null;
@@ -97,8 +97,8 @@ public class SyncSchedule {
                     .setLessonRoom(obj.getString("lesson_room"))
                     .setTeacherName(obj.getString("teacher_name"))
                     .setLessonWeek(obj.getInt("lesson_week"))
-                    .setTimeStart(Integer.parseInt(obj.getString("time_start")))
-                    .setTimeEnd(Integer.parseInt(obj.getString("time_end")));
+                    .setTimeStart(obj.getString("time_start"))
+                    .setTimeEnd(obj.getString("time_end"));
 
 
             itemsArrayList.add(current);
@@ -135,7 +135,8 @@ public class SyncSchedule {
         @Override
         public Void doInBackground(Void... arg) {
             try {
-                getSubjects();
+                Log.d(LOG_TAG, "Trying to get items");
+                getSchedule();
                 return null;
 
             }catch (Exception e) {

@@ -18,4 +18,5 @@
     <color name="body_text_3">#60000000</color>
     <color name="body_text_2">#8a000000</color>
     <color name="white">#FFFFFF</color>
+    <color name="secondary_text">#727272</color>
 </resources>

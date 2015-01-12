@@ -14,8 +14,8 @@ public class ScheduleItem implements Serializable {
     private String LESSON_ROOM;
     private String TEACHER_NAME;
     private int LESSON_WEEK;
-    private int TIME_START;
-    private int TIME_END;
+    private String TIME_START;
+    private String TIME_END;
 
 
     public int getLessonId() {
@@ -81,20 +81,20 @@ public class ScheduleItem implements Serializable {
         return this;
     }
 
-    public int getTimeStart() {
+    public String getTimeStart() {
         return TIME_START;
     }
 
-    public ScheduleItem setTimeStart(int TIME_START) {
+    public ScheduleItem setTimeStart(String TIME_START) {
         this.TIME_START = TIME_START;
         return this;
     }
 
-    public int getTimeEnd() {
+    public String getTimeEnd() {
         return TIME_END;
     }
 
-    public void setTimeEnd(int TIME_END) {
+    public void setTimeEnd(String TIME_END) {
         this.TIME_END = TIME_END;
     }
 

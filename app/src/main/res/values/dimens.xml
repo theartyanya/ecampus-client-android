@@ -11,5 +11,5 @@
     <dimen name="navdrawer_profile_image_size">40dp</dimen>
     <dimen name="text_size_small">12sp</dimen>
     <dimen name="my_schedule_time_column_width">100dp</dimen>
-    <dimen name="my_schedule_item_height">136dp</dimen>
+    <dimen name="my_schedule_item_height">100dp</dimen>
 </resources>

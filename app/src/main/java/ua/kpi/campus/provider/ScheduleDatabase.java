@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
+import android.util.Log;
 
 import ua.kpi.campus.provider.ScheduleContract.*;
 
@@ -38,8 +39,8 @@ public class ScheduleDatabase extends SQLiteOpenHelper {
             + ScheduleColumns.LESSON_ROOM + " TEXT,"
             + ScheduleColumns.TEACHER_NAME + " TEXT,"
             + ScheduleColumns.LESSON_WEEK + " INTEGER,"
-            + ScheduleColumns.TIME_START + " INTEGER NOT NULL,"
-            + ScheduleColumns.TIME_END + " INTEGER NOT NULL,"
+            + ScheduleColumns.TIME_START + " TEXT,"
+            + ScheduleColumns.TIME_END + " TEXT,"
             +"UNIQUE (" + ScheduleColumns.LESSON_ID + ") ON CONFLICT REPLACE)");
 
         db.execSQL("CREATE TABLE " + Tables.TEACHERS + " ("
@@ -47,7 +48,10 @@ public class ScheduleDatabase extends SQLiteOpenHelper {
             + TeacherColumns.TEACHER_ID + " INTEGER NOT NULL,"
             + TeacherColumns.TEACHER_NAME + " TEXT,"
             +"UNIQUE (" + TeacherColumns.TEACHER_ID + ") ON CONFLICT REPLACE)");
+
+        Log.d(LOG_TAG, "Databases created");
     }
+
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
