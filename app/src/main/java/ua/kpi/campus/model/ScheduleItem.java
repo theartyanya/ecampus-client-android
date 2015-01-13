@@ -16,6 +16,7 @@ public class ScheduleItem implements Serializable {
     private int LESSON_WEEK;
     private String TIME_START;
     private String TIME_END;
+    private boolean DEVIDER;
 
 
     public int getLessonId() {
@@ -94,12 +95,21 @@ public class ScheduleItem implements Serializable {
         return TIME_END;
     }
 
-    public void setTimeEnd(String TIME_END) {
+    public ScheduleItem setTimeEnd(String TIME_END) {
         this.TIME_END = TIME_END;
+        return this;
     }
 
     @Override
     public String toString() {
         return LESSON_NAME + " + " + TEACHER_NAME;
+    }
+
+    public boolean isDevider() {
+        return DEVIDER;
+    }
+
+    public void setDevider(boolean DEVIDER) {
+        this.DEVIDER = DEVIDER;
     }
 }

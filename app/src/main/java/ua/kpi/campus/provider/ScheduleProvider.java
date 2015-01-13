@@ -25,6 +25,8 @@ public class ScheduleProvider {
     private String LOG_TAG = "ScheduleProvider";
     private String SCHEDULE = "schedule";
 
+    private int lastday = 0;
+
     public ScheduleProvider(Context context) {
         Log.d(LOG_TAG, "Creating database");
 
@@ -75,21 +77,46 @@ public class ScheduleProvider {
             int time_start = cursor.getColumnIndex(ScheduleColumns.TIME_START);
             int time_end = cursor.getColumnIndex(ScheduleColumns.TIME_END);
 
-            if (cursor.getInt(lesson_week) == week)
-                do {
-                    ScheduleItem item = new ScheduleItem();
-                    item.setLessonId(cursor.getInt(lesson_id))
-                        .setDayNumber(cursor.getInt(day_number))
-                        .setLessonNumber(cursor.getInt(lesson_number))
-                        .setLessonName(cursor.getString(lesson_name))
-                        .setLessonRoom(cursor.getString(lesson_room))
-                        .setTeacherName(cursor.getString(teacher_name))
-                        .setLessonWeek(cursor.getInt(lesson_week))
-                        .setTimeStart(cursor.getString(time_start))
-                        .setTimeEnd(cursor.getString(time_end));
 
-                    items.add(item);
-                } while (cursor.moveToNext());
+             do {
+                 ScheduleItem item = new ScheduleItem();
+                 ScheduleItem deviderItem = new ScheduleItem();
+
+                 if (cursor.getInt(lesson_week) == week) {
+
+                     if (cursor.getInt(day_number) != lastday) {
+                         lastday = cursor.getInt(day_number);
+
+                         Log.d(LOG_TAG, "Adding divider for day #"+ lastday);
+
+                         deviderItem.setLessonId(0)
+                                 .setDayNumber(lastday)
+                                 .setLessonNumber(0)
+                                 .setLessonName("")
+                                 .setLessonRoom("")
+                                 .setTeacherName("")
+                                 .setLessonWeek(week)
+                                 .setTimeStart("")
+                                 .setTimeEnd("")
+                                 .setDevider(true);
+
+
+                         items.add(deviderItem);
+                     }
+                     item.setLessonId(cursor.getInt(lesson_id))
+                             .setDayNumber(cursor.getInt(day_number))
+                             .setLessonNumber(cursor.getInt(lesson_number))
+                             .setLessonName(cursor.getString(lesson_name))
+                             .setLessonRoom(cursor.getString(lesson_room))
+                             .setTeacherName(cursor.getString(teacher_name))
+                             .setLessonWeek(cursor.getInt(lesson_week))
+                             .setTimeStart(cursor.getString(time_start))
+                             .setTimeEnd(cursor.getString(time_end))
+                             .setDevider(false);
+
+                     items.add(item);
+                 }
+             } while (cursor.moveToNext());
         }
         return items;
     }

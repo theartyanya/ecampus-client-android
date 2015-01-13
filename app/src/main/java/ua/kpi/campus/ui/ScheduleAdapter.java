@@ -29,8 +29,6 @@ public class ScheduleAdapter implements ListAdapter, AbsListView.RecyclerListene
 
     ArrayList<ScheduleItem> mItems = new ArrayList<ScheduleItem>();
     ArrayList<DataSetObserver> mObservers = new ArrayList<DataSetObserver>();
-    private int deviders = 0;
-    private int lastday = 0;
 
     int mDefaultLessonColor;
 
@@ -111,22 +109,25 @@ public class ScheduleAdapter implements ListAdapter, AbsListView.RecyclerListene
             return view;
         }
 
-        final ScheduleItem item = mItems.get(position-deviders);
+        final ScheduleItem item = mItems.get(position);
         ScheduleItem nextItem = (position < mItems.size() - 1) ? mItems.get(position + 1) : null;
 
-        if (item.getDayNumber() != lastday) {
+        if (item.isDevider()) {
             layoutResId = R.layout.schedule_devider;
             isSeparator = true;
-            lastday = item.getDayNumber();
         }
 
         view = ((LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE))
                 .inflate(layoutResId, parent, false);
 
         if (isSeparator) {
+
+            view.setOnClickListener(null);
+            view.setOnLongClickListener(null);
+            view.setLongClickable(false);
+
             separator = (TextView) view.findViewById(R.id.separator_text);
-            separator.setText(days[lastday-1]);
-            deviders++;
+            separator.setText(days[item.getDayNumber()-1]);
         } else {
             startTimeView = (TextView) view.findViewById(R.id.start_time);
             endTimeView = (TextView) view.findViewById(R.id.end_time);
