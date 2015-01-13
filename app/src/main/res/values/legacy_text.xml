@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="legacy_text">This app is created by Camapus Team as a part of project "Venco"(https://github.com/projectVenco). \n\nApp is open source and distributed on DOIS official GitHub(https://github.com/DOIS/ecampus-client-android). Fork or star us on GitHub. \n\nIn future we will use Google Analytics in this app, but not now. Also here will be normal license agreement!</string>
+</resources>

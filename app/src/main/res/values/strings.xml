@@ -16,7 +16,10 @@
     <string name="placeholder_session_subtitle">This is subtitle</string>
     <string name="drawer_close">Campus</string>
     <string name="drawer_open">Select item</string>
-
     <string name="my_schedule_tab_desc_a11y">Tap to show your schedule for <xliff:g id="day">%1$s</xliff:g>.</string>
     <string name="my_schedule_page_desc_a11y">Now showing your schedule for <xliff:g id="day">%1$s</xliff:g></string>
+    <string name="title_activity_welcome">WelcomeActivity</string>
+    <string name="welcome_to_campus_app">Welcome to the Campus app!</string>
+    <string name="attract_text">Before we begin. here is some important information for you about this app. This will only take a minute!</string>
+
 </resources>
