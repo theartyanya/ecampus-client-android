@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.ListFragment;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.hardware.Sensor;
@@ -39,7 +40,9 @@ import ua.kpi.campus.model.ScheduleItem;
 import ua.kpi.campus.provider.ScheduleProvider;
 import ua.kpi.campus.ui.ScheduleAdapter;
 import ua.kpi.campus.ui.ScheduleFragment;
+import ua.kpi.campus.ui.WelcomeActivity;
 import ua.kpi.campus.ui.widgets.SlidingTabLayout;
+import ua.kpi.campus.util.PrefUtils;
 import ua.kpi.campus.util.ShakeListener;
 
 
@@ -140,6 +143,12 @@ public class MainActivity extends ActionBarActivity implements ScheduleFragment.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        if (!PrefUtils.isTosAccepted(this)) {
+            Intent intent = new Intent(this, WelcomeActivity.class);
+            startActivity(intent);
+            finish();
+        }
+        
         //Trying to setup NavDrawer
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);

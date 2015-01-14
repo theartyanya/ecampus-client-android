@@ -21,5 +21,7 @@
     <string name="title_activity_welcome">WelcomeActivity</string>
     <string name="welcome_to_campus_app">Welcome to the Campus app!</string>
     <string name="attract_text">Before we begin. here is some important information for you about this app. This will only take a minute!</string>
+    <string name="decline">Decline</string>
+    <string name="accept">Accept</string>
 
 </resources>
