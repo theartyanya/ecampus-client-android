@@ -40,6 +40,7 @@ import ua.kpi.campus.model.ScheduleItem;
 import ua.kpi.campus.provider.ScheduleProvider;
 import ua.kpi.campus.ui.ScheduleAdapter;
 import ua.kpi.campus.ui.ScheduleFragment;
+import ua.kpi.campus.ui.SettingsActivity;
 import ua.kpi.campus.ui.WelcomeActivity;
 import ua.kpi.campus.ui.widgets.SlidingTabLayout;
 import ua.kpi.campus.util.PrefUtils;
@@ -271,7 +272,8 @@ public class MainActivity extends ActionBarActivity implements ScheduleFragment.
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            return true;
+            Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+            startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);
