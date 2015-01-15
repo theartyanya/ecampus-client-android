@@ -1,76 +1,36 @@
-package ua.kpi.campus;
+package ua.kpi.campus.ui;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.ListFragment;
-import android.content.ActivityNotFoundException;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
-import android.hardware.Sensor;
-import android.hardware.SensorManager;
-import android.net.Uri;
 import android.os.Build;
-import android.os.Bundle;
 import android.os.Handler;
-import android.preference.PreferenceManager;
-import android.support.v13.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.os.Bundle;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.*;
+import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
-import ua.kpi.campus.api.SyncSchedule;
-import ua.kpi.campus.provider.ScheduleProvider;
-import ua.kpi.campus.ui.ScheduleAdapter;
-import ua.kpi.campus.ui.ScheduleFragment;
-import ua.kpi.campus.ui.SettingsActivity;
-import ua.kpi.campus.ui.WelcomeActivity;
-import ua.kpi.campus.ui.widgets.SlidingTabLayout;
-import ua.kpi.campus.util.PrefUtils;
-import ua.kpi.campus.util.ShakeListener;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
 
+import ua.kpi.campus.R;
+import ua.kpi.campus.model.ScheduleItem;
 
-public class MainActivity extends ActionBarActivity implements ScheduleFragment.Listener {
+public class ScheduleItemDetail extends ActionBarActivity {
 
-    //private LinearLayout mAccountListContainer;
-    //private ImageView mExpandAccountBoxIndicator;
-    //private boolean mAccountBoxExpanded = false;
-    //private static final int ACCOUNT_BOX_EXPAND_ANIM_DURATION = 200;
-
-
-    ScrollView scrollView;
-    SlidingTabLayout slidingTabLayout = null;
-    ViewPager viewPager = null;
-    MyViewPagerAdapter viewPagerAdapter;
-    private Set<ScheduleFragment> mScheduleFragments = new HashSet<ScheduleFragment>();
     DrawerLayout drawerLayout;
-
-    //private ActionBarDrawerToggle drawerToggle;
-
-    //SwipeRefreshLayout refreshLayout = null;
-
-    // The following are used for the shake detection
-    private SensorManager mSensorManager;
-    private Sensor mAccelerometer;
-    private ShakeListener shakeListener;
     private Toolbar mToolbar;
-
     // list of navdrawer items that were actually added to the navdrawer, in order
     private ArrayList<Integer> mNavDrawerItems = new ArrayList<>();
-
     //NavDrawer Items
     protected static final int NAVDRAWER_ITEM_MY_SCHEDULE = 0;
     protected static final int NAVDRAWER_ITEM_MY_TASKS = 1;
@@ -80,7 +40,6 @@ public class MainActivity extends ActionBarActivity implements ScheduleFragment.
     protected static final int NAVDRAWER_ITEM_FEEDBACK = 5;
     protected static final int NAVDRAWER_ITEM_INVALID = -1;
     protected static final int NAVDRAWER_ITEM_SEPARATOR = -2;
-
     //Titles for NavDrawer items
     private static final int[] NAVDRAWER_TITLE_RES_ID = new int[]{
             R.string.navdrawer_item_my_schedule,   // Schedule
@@ -90,9 +49,7 @@ public class MainActivity extends ActionBarActivity implements ScheduleFragment.
             R.string.navdrawer_item_settings,      // Settings
             R.string.navdrawer_item_feedback                             // Feedback
     };
-
     private static String[] WEEK_NAMES;
-
     //icons for navdrawer items
     private static final int[] NAVDRAWER_ICON_RES_ID = new int[]{
             R.drawable.ic_schedule_24dp,
@@ -102,56 +59,50 @@ public class MainActivity extends ActionBarActivity implements ScheduleFragment.
             R.drawable.ic_settings_24dp,
             R.drawable.ic_help_24dp
     };
-
     // delay to launch nav drawer item, to allow close animation to play
     private static final int NAVDRAWER_LAUNCH_DELAY = 250;
-
-    // fade in and fade out durations for the main content when switching between
-    // different Activities of the app through the Nav Drawer
-    //private static final int MAIN_CONTENT_FADEOUT_DURATION = 150;
-    //private static final int MAIN_CONTENT_FADEIN_DURATION = 250;
-
     // views that correspond to each navdrawer item, null if not yet created
     private View[] mNavDrawerItemViews = null;
-
-    //Log Tag for app
-    //private static final String LOG_TAG = "lol";
-
-    private Handler mHandler;
-
-    //private ImageLoader mImageLoader;
-
-    private final String LOG_TAG = "MainActivity";
-    private static final String ARG_SCHEDULE_WEEK_INDEX
-            = "ua.kpi.campus.ARG_SCHEDULE_WEEK_INDEX";
-
-    private ScheduleAdapter[] mScheduleAdapters = new ScheduleAdapter[2];
-
     SharedPreferences mPrefs;
-    final String welcomeScreenShownPref = "welcomeScreenShown";
-
-
+    private Handler mHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        WEEK_NAMES=new String[] {
-               getApplicationContext().getString(R.string.week)+" 1",
-                getApplicationContext().getString(R.string.week)+" 2"
-        };
-        if (!PrefUtils.isTosAccepted(this)) {
-            Intent intent = new Intent(this, WelcomeActivity.class);
-            startActivity(intent);
-            finish();
-        }
-        WEEK_NAMES = new String[] {
-                getApplicationContext().getString(R.string.week)+" 1",
-                getApplicationContext().getString(R.string.week)+" 2"
-        };
+        setContentView(R.layout.activity_schedule_item_detail);
+        mHandler = new Handler();
         //Trying to setup NavDrawer
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        ScheduleItem item = (ScheduleItem)getIntent().getSerializableExtra("scheduleItem");
+        String dayOfWeek =null;
+        switch(item.getDayNumber()){
+            case 1:
+                dayOfWeek = getResources().getString(R.string.monday);
+                break;
+            case 2:
+                dayOfWeek = getResources().getString(R.string.tuesday);
+                break;
+            case 3:
+                dayOfWeek = getResources().getString(R.string.wednesday);
+                break;
+            case 4:
+                dayOfWeek = getResources().getString(R.string.thursday);
+                break;
+            case 5:
+                dayOfWeek = getResources().getString(R.string.friday);
+                break;
+            case 6:
+                dayOfWeek = getResources().getString(R.string.saturday);
+                break;
+        }
+        mToolbar.setTitle(item.getLessonName()+", " +getString(R.string.week).substring(0,1)+item.getLessonWeek()+", "+dayOfWeek);
         setSupportActionBar(mToolbar);
+        TextView weekText = (TextView) findViewById(R.id.week);
+        weekText.setText(dayOfWeek);
+        TextView lessonNameText = (TextView) findViewById(R.id.lessonName);
+        lessonNameText.setText(item.getLessonName());
+        TextView audienceText = (TextView) findViewById(R.id.audience);
+        audienceText.setText(item.getLessonRoom());
 
         ActionBar bar = getSupportActionBar();
         if (bar !=null)
@@ -159,105 +110,14 @@ public class MainActivity extends ActionBarActivity implements ScheduleFragment.
 
         setUpNavDrawer();
 
-        //ShakeListener Setup
-        mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-        mAccelerometer = mSensorManager
-                .getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        shakeListener = new ShakeListener();
-        shakeListener.setOnShakeListener(new ShakeListener.OnShakeListener() {
-            @Override
-            public void onShake(int count) {
-                /*Implementing shake listener. When user shakes their device,
-                 *we need to show them a dialog with feedback
-                 */
-                //TODO: implement th feedback activity
 
-                Toast.makeText(getApplicationContext(), "Shake", Toast.LENGTH_SHORT).show();
-                giveFeedback();
-            }
-        });
-
-        //Initializing mHandler
-        mHandler = new Handler();
-
-        viewPager = (ViewPager) findViewById(R.id.view_pager);
-
-        for (int i = 0; i < 2; i++) {
-            mScheduleAdapters[i] = new ScheduleAdapter(this);
-        }
-
-        mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
-        Boolean welcomeScreenShown = mPrefs.getBoolean(welcomeScreenShownPref, false);
-
-        SyncSchedule sync = SyncSchedule.getSyncSchedule("IK-31", getApplicationContext());
-        SyncSchedule.Connect connect = new SyncSchedule.Connect();
-        connect.execute();
-
-
-        if (!welcomeScreenShown) {
-            SharedPreferences.Editor editor = mPrefs.edit();
-            editor.putBoolean(welcomeScreenShownPref, true);
-            editor.apply(); //let it be async
-        }
-
-        ScheduleProvider scheduleProvider = new ScheduleProvider(getApplicationContext());
-
-        mScheduleAdapters[0].updateItems(scheduleProvider.getScheduleItemsFromDatabase(1));
-        mScheduleAdapters[1].updateItems(scheduleProvider.getScheduleItemsFromDatabase(2));
-
-        viewPagerAdapter = new MyViewPagerAdapter(getFragmentManager());
-        viewPager.setAdapter(viewPagerAdapter);
-
-        slidingTabLayout = (SlidingTabLayout) findViewById(R.id.sliding_tabs);
-        slidingTabLayout.setCustomTabView(R.layout.tab_indicator, android.R.id.text1);
-
-        Resources res = getResources();
-
-        setSlidingTabLayoutContentDescriptions();
-
-        slidingTabLayout.setSelectedIndicatorColors(res.getColor(R.color.accent));
-        slidingTabLayout.setDistributeEvenly(true);
-        slidingTabLayout.setViewPager(viewPager);
-
-        if (slidingTabLayout != null) {
-            slidingTabLayout.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-                @Override
-                public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-                }
-
-                @Override
-                public void onPageSelected(int position) {
-
-                }
-
-                @Override
-                public void onPageScrollStateChanged(int state) {
-
-                }
-            });
-        }
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        // Add the following line to register the Session Manager Listener onResume
-        mSensorManager.registerListener(shakeListener, mAccelerometer, SensorManager.SENSOR_DELAY_UI);
-    }
-
-    @Override
-    public void onPause() {
-        // Add the following line to unregister the Sensor Manager onPause
-        mSensorManager.unregisterListener(shakeListener);
-        super.onPause();
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_schedule_item_detail, menu);
         return true;
     }
 
@@ -270,19 +130,12 @@ public class MainActivity extends ActionBarActivity implements ScheduleFragment.
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+            Intent intent = new Intent(ScheduleItemDetail.this, SettingsActivity.class);
             startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);
     }
-
-
-    /**
-     * Sets up the navigation drawer as appropriate. Note that the nav drawer will be
-     * different depending on whether the attendee indicated that they are attending the
-     * event on-site vs. attending remotely.
-     */
 
     private void setUpNavDrawer() {
         //Getting NavDrawer self item
@@ -341,7 +194,6 @@ public class MainActivity extends ActionBarActivity implements ScheduleFragment.
         mDrawerToggle.syncState();
 
     }
-
     private void populateNavDrawer() {
 
         //Clearing Nav Drawer Items
@@ -359,7 +211,6 @@ public class MainActivity extends ActionBarActivity implements ScheduleFragment.
         //Committing changes
         createNavDrawerItems();
     }
-
     //Method, creating Nav Drawer items
     private void createNavDrawerItems() {
         //Initializing  List Container
@@ -384,7 +235,6 @@ public class MainActivity extends ActionBarActivity implements ScheduleFragment.
             ++i;
         }
     }
-
     //Method is used to create new Nav Drawer items
     private View makeNavDrawerItem(final int itemId, ViewGroup container) {
         boolean selected = getSelfNavDrawerItem() == itemId;
@@ -427,7 +277,6 @@ public class MainActivity extends ActionBarActivity implements ScheduleFragment.
 
         return view;
     }
-
     private void formatNavDrawerItem(View view, int itemId, boolean selected) {
         if (isSeparator(itemId)) {
             // not applicable
@@ -445,7 +294,6 @@ public class MainActivity extends ActionBarActivity implements ScheduleFragment.
                 getResources().getColor(R.color.navdrawer_icon_tint_selected) :
                 getResources().getColor(R.color.navdrawer_icon_tint));
     }
-
     //Return "true" if item is separator
     private boolean isSeparator(int itemId) {
         return itemId == NAVDRAWER_ITEM_SEPARATOR;
@@ -494,7 +342,6 @@ public class MainActivity extends ActionBarActivity implements ScheduleFragment.
             }
         }
     }
-
     public static void setAccessibilityIgnore(View view) {
         view.setClickable(false);
         view.setFocusable(false);
@@ -542,76 +389,7 @@ public class MainActivity extends ActionBarActivity implements ScheduleFragment.
                 //startActivity(intent);
                 //finish();
                 Toast.makeText(getApplicationContext(), "Feedback", Toast.LENGTH_SHORT).show();
-                giveFeedback();
                 break;
-        }
-    }
-
-
-    @Override
-    public void onFragmentViewCreated(ListFragment fragment) {
-        fragment.getListView().addHeaderView(
-                getLayoutInflater().inflate(R.layout.reserve_action_bar_space_header_view, null));
-        int dayIndex = fragment.getArguments().getInt(ARG_SCHEDULE_WEEK_INDEX, 0);
-        fragment.setListAdapter(mScheduleAdapters[dayIndex]);
-        fragment.setListAdapter(mScheduleAdapters[dayIndex]);
-    }
-
-    @Override
-    public void onFragmentAttached(ScheduleFragment fragment) {
-        mScheduleFragments.add(fragment);
-    }
-
-    @Override
-    public void onFragmentDetached(ScheduleFragment fragment) {
-        mScheduleFragments.remove(fragment);
-    }
-
-    private class MyViewPagerAdapter extends FragmentPagerAdapter {
-        public MyViewPagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-
-        @Override
-        public Fragment getItem(int position) {
-            Log.d(LOG_TAG, "Creating fragment #" + position);
-            ScheduleFragment frag = new ScheduleFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SCHEDULE_WEEK_INDEX, position);
-            frag.setArguments(args);
-            return frag;
-        }
-        @Override
-        public int getCount() {
-            return 2;
-        }
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return getWeekName(position);
-        }
-    }
-
-    private CharSequence getWeekName(int position) {
-        return WEEK_NAMES[position];
-    }
-
-    private void setSlidingTabLayoutContentDescriptions() {
-        for (int i = 0; i < 2; i++) {
-            slidingTabLayout.setContentDescription(i,
-                    getString(R.string.my_schedule_tab_desc_a11y, getWeekName(i)));
-        }
-    }
-
-    private void giveFeedback(){
-        try {
-            Resources resources = getResources();
-            startActivity(Intent.createChooser(new Intent(Intent.ACTION_SENDTO,
-                                                          Uri.parse(
-                                                                  resources.getString(R.string.mail_to_support)
-                                                          )), resources.getString(R.string.navdrawer_item_feedback)));
-        } catch (ActivityNotFoundException e) {
-            Toast.makeText(this, R.string.email_app_not_found, Toast.LENGTH_SHORT).show();
         }
     }
 }

@@ -26,11 +26,15 @@
         <activity
             android:name=".ui.SettingsActivity"
             android:label="@string/title_activity_settings"
-            android:theme="@style/AppThemeWithActionBar"
-            android:parentActivityName=".MainActivity" >
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppThemeWithActionBar" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ua.kpi.campus.MainActivity" />
+        </activity>
+        <activity
+            android:name=".ui.ScheduleItemDetail"
+            android:label="@string/title_activity_schedule_item_detail" >
         </activity>
     </application>
 
