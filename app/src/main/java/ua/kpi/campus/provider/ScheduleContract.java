@@ -12,6 +12,7 @@ public class ScheduleContract {
         String LESSON_NAME = "lesson_name";
         String LESSON_ROOM = "lesson_room";
         String TEACHER_NAME = "teacher_name";
+        String TEACHER_ID = "teacher_id";
         String LESSON_WEEK = "lesson_week";
         String TIME_START = "time_start";
         String TIME_END = "time_end";

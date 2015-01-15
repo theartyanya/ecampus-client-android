@@ -13,6 +13,7 @@ public class ScheduleItem implements Serializable {
     private String LESSON_NAME;
     private String LESSON_ROOM;
     private String TEACHER_NAME;
+    private int TEACHER_ID;
     private int LESSON_WEEK;
     private String TIME_START;
     private String TIME_END;
@@ -73,6 +74,16 @@ public class ScheduleItem implements Serializable {
         return this;
     }
 
+
+    public int getTeacherId() {
+        return TEACHER_ID;
+    }
+
+    public ScheduleItem setTeacherId(int TEACHER_ID) {
+        this.TEACHER_ID = TEACHER_ID;
+        return this;
+    }
+
     public int getLessonWeek() {
         return LESSON_WEEK;
     }
@@ -112,4 +123,5 @@ public class ScheduleItem implements Serializable {
     public void setDevider(boolean DEVIDER) {
         this.DEVIDER = DEVIDER;
     }
+
 }
