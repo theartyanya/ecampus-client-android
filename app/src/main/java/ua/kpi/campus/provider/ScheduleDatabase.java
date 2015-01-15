@@ -38,6 +38,7 @@ public class ScheduleDatabase extends SQLiteOpenHelper {
             + ScheduleColumns.LESSON_NAME + " TEXT,"
             + ScheduleColumns.LESSON_ROOM + " TEXT,"
             + ScheduleColumns.TEACHER_NAME + " TEXT,"
+            + ScheduleColumns.TEACHER_ID + " INTEGER,"
             + ScheduleColumns.LESSON_WEEK + " INTEGER,"
             + ScheduleColumns.TIME_START + " TEXT,"
             + ScheduleColumns.TIME_END + " TEXT,"

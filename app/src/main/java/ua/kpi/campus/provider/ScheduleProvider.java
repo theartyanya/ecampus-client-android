@@ -53,6 +53,7 @@ public class ScheduleProvider {
             cv.put(ScheduleColumns.LESSON_NAME, item.getLessonName());
             cv.put(ScheduleColumns.LESSON_ROOM, item.getLessonRoom());
             cv.put(ScheduleColumns.TEACHER_NAME, item.getTeacherName());
+            cv.put(ScheduleColumns.TEACHER_ID, item.getTeacherId());
             cv.put(ScheduleColumns.LESSON_WEEK, item.getLessonWeek());
             cv.put(ScheduleColumns.TIME_START, item.getTimeStart());
             cv.put(ScheduleColumns.TIME_END, item.getTimeEnd());
@@ -73,6 +74,7 @@ public class ScheduleProvider {
             int lesson_name = cursor.getColumnIndex(ScheduleColumns.LESSON_NAME);
             int lesson_room = cursor.getColumnIndex(ScheduleColumns.LESSON_ROOM);
             int teacher_name = cursor.getColumnIndex(ScheduleColumns.TEACHER_NAME);
+            int teacher_id = cursor.getColumnIndex(ScheduleColumns.TEACHER_ID);
             int lesson_week = cursor.getColumnIndex(ScheduleColumns.LESSON_WEEK);
             int time_start = cursor.getColumnIndex(ScheduleColumns.TIME_START);
             int time_end = cursor.getColumnIndex(ScheduleColumns.TIME_END);
@@ -80,7 +82,7 @@ public class ScheduleProvider {
 
              do {
                  ScheduleItem item = new ScheduleItem();
-                 ScheduleItem deviderItem = new ScheduleItem();
+                 ScheduleItem dividerItem = new ScheduleItem();
 
                  if (cursor.getInt(lesson_week) == week) {
 
@@ -89,19 +91,20 @@ public class ScheduleProvider {
 
                          Log.d(LOG_TAG, "Adding divider for day #"+ lastday);
 
-                         deviderItem.setLessonId(0)
+                         dividerItem.setLessonId(0)
                                  .setDayNumber(lastday)
                                  .setLessonNumber(0)
                                  .setLessonName("")
                                  .setLessonRoom("")
                                  .setTeacherName("")
+                                 .setTeacherId(0)
                                  .setLessonWeek(week)
                                  .setTimeStart("")
                                  .setTimeEnd("")
                                  .setDevider(true);
 
 
-                         items.add(deviderItem);
+                         items.add(dividerItem);
                      }
                      item.setLessonId(cursor.getInt(lesson_id))
                              .setDayNumber(cursor.getInt(day_number))
@@ -109,6 +112,7 @@ public class ScheduleProvider {
                              .setLessonName(cursor.getString(lesson_name))
                              .setLessonRoom(cursor.getString(lesson_room))
                              .setTeacherName(cursor.getString(teacher_name))
+                             .setTeacherId(cursor.getInt(teacher_id))
                              .setLessonWeek(cursor.getInt(lesson_week))
                              .setTimeStart(cursor.getString(time_start))
                              .setTimeEnd(cursor.getString(time_end))

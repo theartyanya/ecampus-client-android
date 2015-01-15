@@ -18,6 +18,7 @@ import java.net.URI;
 import java.util.ArrayList;
 
 import ua.kpi.campus.model.ScheduleItem;
+import ua.kpi.campus.model.TeacherItem;
 import ua.kpi.campus.provider.ScheduleProvider;
 
 /**
@@ -37,6 +38,7 @@ public class SyncSchedule {
 
     //Array of Subject objects to add them to database later
     private static ArrayList<ScheduleItem> itemsArrayList = new ArrayList<ScheduleItem>();
+    private static ArrayList<TeacherItem> teacherList = new ArrayList<TeacherItem>();
 
     private SyncSchedule(String groupName, Context context) {
         SyncSchedule.GROUP= groupName;
@@ -86,27 +88,52 @@ public class SyncSchedule {
             Log.d(LOG_TAG, "Iteration number " + i + "...");
             ContentValues cv = new ContentValues();
             ScheduleItem sb = new ScheduleItem();
+            TeacherItem teacherItem = new TeacherItem();
             JSONObject obj = array.getJSONObject(i);
 
             ScheduleItem current = new ScheduleItem();
 
+            int teacher_id = -1;
+            
+            JSONArray teachers = obj.getJSONArray("teachers");
+            if (teachers.length()!=0) {
+                JSONObject teacher = teachers.getJSONObject(0);
+                teacher_id = teacher.getInt("teacher_id");
+                String teacher_name = teacher.getString("teacher_name");
+
+                teacherItem.setTeacherId(teacher_id)
+                        .setTeacherName(teacher_name);
+
+                
+                if (!(teacherList.contains(teacherItem))) {
+                    Log.d(LOG_TAG, teacherItem.toString() + "is added to teacherList");
+                    teacherList.add(teacherItem);
+                } else {
+                    Log.d(LOG_TAG, teacherItem.toString() + "is already in teacherList");
+                }
+            }
+            
             current.setLessonId(obj.getInt("lesson_id"))
                     .setDayNumber(obj.getInt("day_number"))
                     .setLessonNumber(obj.getInt("lesson_number"))
                     .setLessonName(obj.getString("lesson_name"))
                     .setLessonRoom(obj.getString("lesson_room"))
                     .setTeacherName(obj.getString("teacher_name"))
+                    .setTeacherId(teacher_id)
                     .setLessonWeek(obj.getInt("lesson_week"))
                     .setTimeStart(obj.getString("time_start"))
                     .setTimeEnd(obj.getString("time_end"));
 
 
             itemsArrayList.add(current);
+            
+            
         }
 
         provider = new ScheduleProvider(context);
         Log.d(LOG_TAG, itemsArrayList.size() + "");
         provider.clear();
+        
         for(ScheduleItem i: itemsArrayList) {
             Log.d(LOG_TAG, "Add");
             provider.addToScheduleDatabase(i);
