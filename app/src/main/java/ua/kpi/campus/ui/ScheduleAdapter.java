@@ -1,6 +1,7 @@
 package ua.kpi.campus.ui;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.database.DataSetObserver;
 import android.util.Log;
@@ -97,7 +98,7 @@ public class ScheduleAdapter implements ListAdapter, AbsListView.RecyclerListene
     }
 
     @Override
-    public View getView(int position, View view, ViewGroup parent) {
+    public View getView(final int position, View view, ViewGroup parent) {
         Resources res = mContext.getResources();
         TextView startTimeView = null;
         TextView endTimeView = null;
@@ -140,11 +141,21 @@ public class ScheduleAdapter implements ListAdapter, AbsListView.RecyclerListene
             TextView slotTitleView = (TextView) view.findViewById(R.id.slot_title);
             TextView slotSubtitleView = (TextView) view.findViewById(R.id.slot_subtitle);
 
+
+
             slotTitleView.setText(item.getLessonName());
             slotSubtitleView.setText(item.getTeacherName());
 
             startTimeView.setText(item.getTimeStart());
             endTimeView.setText(item.getTimeEnd());
+            View.OnClickListener onClickListener = new View.OnClickListener() {
+                public void onClick(View v) {
+                    Intent intent = new Intent(mContext.getApplicationContext(),ScheduleItemDetail.class);
+                    intent.putExtra("scheduleItem",item);
+                    mContext.startActivity(intent);
+                }
+            };
+            view.findViewById(R.id.session_image).setOnClickListener(onClickListener);
         }
         return view;
     }
