@@ -3,40 +3,32 @@ package ua.kpi.campus;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.ListFragment;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
+import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v13.app.FragmentPagerAdapter;
-import android.os.Bundle;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.*;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
-
 import ua.kpi.campus.api.SyncSchedule;
-import ua.kpi.campus.model.ScheduleItem;
 import ua.kpi.campus.provider.ScheduleProvider;
 import ua.kpi.campus.ui.ScheduleAdapter;
 import ua.kpi.campus.ui.ScheduleFragment;
@@ -45,6 +37,10 @@ import ua.kpi.campus.ui.WelcomeActivity;
 import ua.kpi.campus.ui.widgets.SlidingTabLayout;
 import ua.kpi.campus.util.PrefUtils;
 import ua.kpi.campus.util.ShakeListener;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 
 public class MainActivity extends ActionBarActivity implements ScheduleFragment.Listener {
@@ -141,10 +137,6 @@ public class MainActivity extends ActionBarActivity implements ScheduleFragment.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        WEEK_NAMES=new String[] {
-               getApplicationContext().getString(R.string.week)+" 1",
-                getApplicationContext().getString(R.string.week)+" 2"
-        };
         if (!PrefUtils.isTosAccepted(this)) {
             Intent intent = new Intent(this, WelcomeActivity.class);
             startActivity(intent);
@@ -175,6 +167,7 @@ public class MainActivity extends ActionBarActivity implements ScheduleFragment.
                 //TODO: implement th feedback activity
 
                 Toast.makeText(getApplicationContext(), "Shake", Toast.LENGTH_SHORT).show();
+                giveFeedback();
             }
         });
 
@@ -183,8 +176,7 @@ public class MainActivity extends ActionBarActivity implements ScheduleFragment.
 
         viewPager = (ViewPager) findViewById(R.id.view_pager);
 
-        int i;
-        for (i = 0; i < 2; i++) {
+        for (int i = 0; i < 2; i++) {
             mScheduleAdapters[i] = new ScheduleAdapter(this);
         }
 
@@ -199,8 +191,7 @@ public class MainActivity extends ActionBarActivity implements ScheduleFragment.
         if (!welcomeScreenShown) {
             SharedPreferences.Editor editor = mPrefs.edit();
             editor.putBoolean(welcomeScreenShownPref, true);
-            editor.commit();
-
+            editor.apply(); //let it be async
         }
 
         ScheduleProvider scheduleProvider = new ScheduleProvider(getApplicationContext());
@@ -545,6 +536,7 @@ public class MainActivity extends ActionBarActivity implements ScheduleFragment.
                 //startActivity(intent);
                 //finish();
                 Toast.makeText(getApplicationContext(), "Feedback", Toast.LENGTH_SHORT).show();
+                giveFeedback();
                 break;
         }
     }
@@ -602,6 +594,18 @@ public class MainActivity extends ActionBarActivity implements ScheduleFragment.
         for (int i = 0; i < 2; i++) {
             slidingTabLayout.setContentDescription(i,
                     getString(R.string.my_schedule_tab_desc_a11y, getWeekName(i)));
+        }
+    }
+
+    private void giveFeedback(){
+        try {
+            Resources resources = getResources();
+            startActivity(Intent.createChooser(new Intent(Intent.ACTION_SENDTO,
+                                                          Uri.parse(
+                                                                  resources.getString(R.string.mail_to_support)
+                                                          )), resources.getString(R.string.navdrawer_item_feedback)));
+        } catch (ActivityNotFoundException e) {
+            Toast.makeText(this, R.string.email_app_not_found, Toast.LENGTH_SHORT).show();
         }
     }
 }
