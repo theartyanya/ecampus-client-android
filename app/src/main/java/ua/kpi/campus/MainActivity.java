@@ -95,10 +95,7 @@ public class MainActivity extends ActionBarActivity implements ScheduleFragment.
             R.string.navdrawer_item_feedback                             // Feedback
     };
 
-    private static final String[] WEEK_NAMES = new String[] {
-        "Week 1",
-        "Week 2"
-    };
+    private static String[] WEEK_NAMES = new String[2];
 
     //icons for navdrawer items
     private static final int[] NAVDRAWER_ICON_RES_ID = new int[]{
@@ -144,6 +141,10 @@ public class MainActivity extends ActionBarActivity implements ScheduleFragment.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        WEEK_NAMES=new String[] {
+               getApplicationContext().getString(R.string.week)+" 1",
+                getApplicationContext().getString(R.string.week)+" 2"
+        };
         if (!PrefUtils.isTosAccepted(this)) {
             Intent intent = new Intent(this, WelcomeActivity.class);
             startActivity(intent);

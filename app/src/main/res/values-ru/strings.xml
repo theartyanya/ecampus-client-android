@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name">Campus</string>
+    <string name="accept">Принять</string>
+    <string name="action_settings">Настройки</string>
+    <string name="attract_text">Перед тем как мы начнём, есть важная информация об этом приложении. Это не займёт много времени!</string>
+    <string name="decline">Отказаться</string>
+    <string name="drawer_close"></string>
+    <string name="drawer_open">Выбрать пункт</string>
+    <string name="legacy_text">Это приложение создано Командой Кампуса как часть projectVenco(https://github.com/projectVenco). \n\nПриложение с открытым исходным кодом и распространяется на официальном аккаунте GitHub КБ ИС(https://github.com/DOIS/ecampus-client-android). Делайте форки или оценивайте нас на GitHub! \n\nВ будущем мы будем использовать Google Analytics в этом приложении, но не сейчас. Так же тут будет нормальное лицензионное соглашение!</string>
+    <string name="my_schedule_page_desc_a11y">Сейчас отображается расписание для <xliff:g id="day">%1$s</xliff:g>.</string>
+    <string name="my_schedule_tab_desc_a11y">Коснись чтобы показать расписание для <xliff:g id="day">%1$s</xliff:g>.</string>
+    <string name="navdrawer_item_feedback">Обратная связь</string>
+    <string name="navdrawer_item_my_lessons">Занятия</string>
+    <string name="navdrawer_item_my_notes">Заметки</string>
+    <string name="navdrawer_item_my_schedule">Расписание</string>
+    <string name="navdrawer_item_settings">Настройки</string>
+    <string name="navdrawer_item_my_tasks">Задачи</string>
+    <string name="pref_default_display_name"></string>
+    <string name="pref_header_notifications">Уведомления</string>
+    <string name="pref_header_general">Общие</string>
+    <string name="pref_ringtone_silent">Без звука</string>
+    <string name="pref_title_add_friends_to_messages">Добавить друзей</string>
+    <string name="pref_title_display_name">Отображаемое имя</string>
+    <string name="pref_title_new_message_notifications">Уведомления о новых сообщениях</string>
+    <string name="pref_title_ringtone">Рингтон</string>
+    <string name="pref_title_social_recommendations">Включить рекомендации социальных сетей</string>
+    <string name="pref_title_sync_frequency">Частота синхронизациии</string>
+    <string name="pref_title_system_sync_settings">Настройки синхронизации</string>
+    <string name="pref_title_vibrate">Вибрация</string>
+    <string name="title_activity_settings">Настройки</string>
+    <string name="title_activity_welcome">Добро пожаловать!</string>
+    <string name="welcome_to_campus_app">Добро пожаловать в Campus!</string>
+    <string name="monday">Понедельник</string>
+    <string name="tuesday">Вторник</string>
+    <string name="wednesday">Среда</string>
+    <string name="thursday">Четверг</string>
+    <string name="friday">Пятница</string>
+    <string name="saturday">Суббота</string>
+    <string name="week">Неделя</string>
+</resources>

@@ -31,16 +31,22 @@ public class ScheduleAdapter implements ListAdapter, AbsListView.RecyclerListene
     ArrayList<DataSetObserver> mObservers = new ArrayList<DataSetObserver>();
 
     int mDefaultLessonColor;
-
+    private String[] days = new String[6];
     public ScheduleAdapter(Context mContext) {
         this.mContext = mContext;
-
+        days= new String[] {
+                mContext.getString(R.string.monday),
+                mContext.getString(R.string.tuesday),
+                mContext.getString(R.string.wednesday),
+                mContext.getString(R.string.thursday),
+                mContext.getString(R.string.friday),
+                mContext.getString(R.string.saturday)
+        };
         mDefaultLessonColor = mContext.getResources().getColor(R.color.primary);
     }
+    Resources system = Resources.getSystem();
 
-    private String[] days = new String[] {
-        "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"
-    };
+
 
     @Override
     public boolean areAllItemsEnabled() {
