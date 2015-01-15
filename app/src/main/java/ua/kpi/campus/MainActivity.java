@@ -142,7 +142,10 @@ public class MainActivity extends ActionBarActivity implements ScheduleFragment.
             startActivity(intent);
             finish();
         }
-        
+        WEEK_NAMES = new String[] {
+                getApplicationContext().getString(R.string.week)+" 1",
+                getApplicationContext().getString(R.string.week)+" 2"
+        };
         //Trying to setup NavDrawer
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
