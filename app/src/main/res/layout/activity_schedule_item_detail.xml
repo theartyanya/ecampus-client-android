@@ -265,6 +265,7 @@
             android:layout_margin="16dp"
             app:fab_colorNormal="?attr/colorAccent"
             app:fab_colorPressed="?attr/colorAccent"
-            android:id="@+id/floating_button"/>
+            android:id="@+id/floating_button"
+            android:onClick="auth"/>
     </RelativeLayout>
 </LinearLayout>

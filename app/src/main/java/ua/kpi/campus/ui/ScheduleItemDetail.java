@@ -1,7 +1,9 @@
 package ua.kpi.campus.ui;
 
 import android.content.Intent;
+import android.net.IpPrefix;
 import android.os.Bundle;
+import android.preference.PreferenceScreen;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
@@ -18,7 +20,9 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import ua.kpi.campus.R;
+import ua.kpi.campus.api.Auth;
 import ua.kpi.campus.model.ScheduleItem;
+import ua.kpi.campus.util.PrefUtils;
 
 public class ScheduleItemDetail extends ActionBarActivity {
 
@@ -32,12 +36,15 @@ public class ScheduleItemDetail extends ActionBarActivity {
 
         //init toolbar
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        
         initViews();
         
         if (actionBar != null) 
             actionBar.setDisplayHomeAsUpEnabled(true);
-        
+
+
+
+
+
         
     }
 
@@ -150,5 +157,19 @@ public class ScheduleItemDetail extends ActionBarActivity {
     protected void startSettingsActivity(){
         Intent intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);
+    }
+
+    public void auth(View view) {
+        //TODO get off this from here
+        PrefUtils.putLoginAndPassword(getApplicationContext(), "2", "21");
+        Auth authClient = new Auth(this);
+        authClient.execute();
+        try{
+            //result codes are in Auth class
+            Log.d("asyncTask result", "code:"+Integer.toString(authClient.get())+" auth:"+PrefUtils.getAuthKey(this));
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }
     }
 }
