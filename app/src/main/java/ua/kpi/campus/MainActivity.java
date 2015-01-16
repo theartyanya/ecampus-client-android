@@ -7,17 +7,26 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ScrollView;
+import android.widget.Spinner;
 
 import ua.kpi.campus.provider.ScheduleProvider;
 import ua.kpi.campus.ui.ScheduleAdapter;
 import ua.kpi.campus.ui.ScheduleFragment;
+import ua.kpi.campus.ui.SpinnerAdapter;
 import ua.kpi.campus.ui.widgets.SlidingTabLayout;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 
@@ -34,6 +43,7 @@ public class MainActivity extends BaseActivity implements ScheduleFragment.Liste
     MyViewPagerAdapter viewPagerAdapter;
     private Set<ScheduleFragment> mScheduleFragments = new HashSet<ScheduleFragment>();
 
+    private List<String> spinnerList = new ArrayList<String>();
     //private ActionBarDrawerToggle drawerToggle;
 
     //SwipeRefreshLayout refreshLayout = null;
@@ -58,6 +68,26 @@ public class MainActivity extends BaseActivity implements ScheduleFragment.Liste
         setContentView(R.layout.activity_main);
         super.setUpNavDrawer(); //we can now findById our views
 
+        spinnerList.add("Schedule");
+        spinnerList.add("Teachers");
+        
+        Toolbar toolbar = mToolbar;
+
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        
+        View spinnerContainer = LayoutInflater.from(this).inflate(R.layout.toolbar_spinner,
+                toolbar, false);
+        ActionBar.LayoutParams lp = new ActionBar.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        toolbar.addView(spinnerContainer, lp);
+        
+        SpinnerAdapter spinnerAdapter = new SpinnerAdapter(getApplicationContext());
+        spinnerAdapter.addItems(spinnerList);
+        
+        Spinner spinner = (Spinner) spinnerContainer.findViewById(R.id.toolbar_spinner);
+        spinner.setAdapter(spinnerAdapter);
+        
+        
         WEEK_NAMES = new String[] {
                 getApplicationContext().getString(R.string.week)+" 1",
                 getApplicationContext().getString(R.string.week)+" 2"
