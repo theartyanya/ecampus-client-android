@@ -134,9 +134,19 @@ public class SyncSchedule {
         Log.d(LOG_TAG, itemsArrayList.size() + "");
         provider.clear();
         
+        int incre = 1;
         for(ScheduleItem i: itemsArrayList) {
-            Log.d(LOG_TAG, "Add");
+            Log.d(LOG_TAG, "Adding lesson #"+ incre++);
             provider.addToScheduleDatabase(i);
+        }
+        
+        Log.d(LOG_TAG, "Done for schedule");
+        
+        incre = 1;
+        
+        for (TeacherItem i: teacherList) {
+            Log.d(LOG_TAG, "Adding teacher #" + incre++);
+            provider.addToTeachersDatabase(i);
         }
     }
 

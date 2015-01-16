@@ -9,6 +9,7 @@ import android.util.Log;
 import java.util.ArrayList;
 
 import ua.kpi.campus.model.ScheduleItem;
+import ua.kpi.campus.model.TeacherItem;
 import ua.kpi.campus.provider.ScheduleContract.*;
 import ua.kpi.campus.ui.ScheduleAdapter;
 
@@ -24,6 +25,7 @@ public class ScheduleProvider {
     private Context mContext;
     private String LOG_TAG = "ScheduleProvider";
     private String SCHEDULE = "schedule";
+    private String TEACHERS = "teachers";
 
     private int lastday = 0;
 
@@ -62,6 +64,22 @@ public class ScheduleProvider {
         }
     }
 
+    //Adding Teacher Item to database
+    public void addToTeachersDatabase(TeacherItem item){
+        //Checking is ScheduleItem is not null
+        if (item != null) {
+            cv = new ContentValues();
+
+            Log.d(LOG_TAG, "Putting ContentValues");
+
+            //Adding content values
+            cv.put(TeacherColumns.TEACHER_ID, item.getTeacherId());
+            cv.put(TeacherColumns.TEACHER_NAME, item.getTeacherName());
+
+            db.insert(TEACHERS, null, cv);
+        }
+    }
+    
     //Returns Item from ScheduleDatabase
     public ArrayList<ScheduleItem> getScheduleItemsFromDatabase(int week) {
         ArrayList<ScheduleItem> items = new ArrayList<ScheduleItem>();
@@ -121,6 +139,28 @@ public class ScheduleProvider {
                      items.add(item);
                  }
              } while (cursor.moveToNext());
+        }
+        return items;
+    }
+
+    public ArrayList<TeacherItem> getTeachersFromDatabase() {
+        ArrayList<TeacherItem> items = new ArrayList<TeacherItem>();
+        Cursor cursor = db.query(TEACHERS, null, null, null, null, null, null);
+
+        if (cursor.moveToFirst()) {
+            int teacher_id = cursor.getColumnIndex(TeacherColumns.TEACHER_ID);
+            int teacher_name = cursor.getColumnIndex(TeacherColumns.TEACHER_NAME);
+
+
+            do {
+                TeacherItem item = new TeacherItem();
+
+                item.setTeacherId(cursor.getInt(teacher_id))
+                    .setTeacherName(cursor.getString(teacher_name));
+                
+                items.add(item);
+                
+            } while (cursor.moveToNext());
         }
         return items;
     }

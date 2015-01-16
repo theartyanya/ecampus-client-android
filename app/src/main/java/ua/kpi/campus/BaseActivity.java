@@ -15,12 +15,15 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import ua.kpi.campus.api.SyncSchedule;
 import ua.kpi.campus.ui.SettingsActivity;
 import ua.kpi.campus.ui.WelcomeActivity;
 import ua.kpi.campus.util.PrefUtils;
@@ -89,16 +92,20 @@ public class BaseActivity extends ActionBarActivity {
 	private Sensor mAccelerometer;
 	private ShakeListener shakeListener;
 
+    private String LOG_TAG = "BaseActivity";
 	@Override
 	protected void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
+        
+        
 		checkForAgreement();
 		setUpShakeListener();
+        scheduleSyncer();
 		//Initializing mHandler
 		mHandler = new Handler();
 	}
 
-	public static void setAccessibilityIgnore(View view) {
+    public static void setAccessibilityIgnore(View view) {
 		view.setClickable(false);
 		view.setFocusable(false);
 		view.setContentDescription("");
@@ -394,9 +401,9 @@ public class BaseActivity extends ActionBarActivity {
 	}
 
 	protected void startSettingsActivity(){
-		Intent intent = new Intent(this, SettingsActivity.class);
-		startActivity(intent);
-	}
+        Intent intent = new Intent(this, SettingsActivity.class);
+        startActivity(intent);
+    }
 
 	private void giveFeedback(){
 		try {
@@ -428,4 +435,13 @@ public class BaseActivity extends ActionBarActivity {
 		if (!PrefUtils.isTosAccepted(this))
 			startTopLevelActivity(this, WelcomeActivity.class);
 	}
+    
+    private void scheduleSyncer() {
+        if (!PrefUtils.isScheduleUploaded(this)) {
+            Log.d(LOG_TAG, "Starting syncing schedule");
+            SyncSchedule sync = SyncSchedule.getSyncSchedule("IK-31", getApplicationContext());
+            SyncSchedule.Connect connect = new SyncSchedule.Connect();
+            connect.execute();
+        }
+    }
 }

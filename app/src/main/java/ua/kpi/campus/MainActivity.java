@@ -3,17 +3,15 @@ package ua.kpi.campus;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.ListFragment;
-import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ScrollView;
-import ua.kpi.campus.api.SyncSchedule;
+
 import ua.kpi.campus.provider.ScheduleProvider;
 import ua.kpi.campus.ui.ScheduleAdapter;
 import ua.kpi.campus.ui.ScheduleFragment;
@@ -52,8 +50,6 @@ public class MainActivity extends BaseActivity implements ScheduleFragment.Liste
             = "ua.kpi.campus.ARG_SCHEDULE_WEEK_INDEX";
 
     private ScheduleAdapter[] mScheduleAdapters = new ScheduleAdapter[2];
-
-    SharedPreferences mPrefs;
     final String welcomeScreenShownPref = "welcomeScreenShown";
 
     @Override
@@ -70,19 +66,6 @@ public class MainActivity extends BaseActivity implements ScheduleFragment.Liste
 
         for (int i = 0; i < 2; i++) {
             mScheduleAdapters[i] = new ScheduleAdapter(this);
-        }
-
-        mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
-        Boolean welcomeScreenShown = mPrefs.getBoolean(welcomeScreenShownPref, false);
-
-        SyncSchedule sync = SyncSchedule.getSyncSchedule("IK-31", getApplicationContext());
-        SyncSchedule.Connect connect = new SyncSchedule.Connect();
-        connect.execute();
-
-        if (!welcomeScreenShown) {
-            SharedPreferences.Editor editor = mPrefs.edit();
-            editor.putBoolean(welcomeScreenShownPref, true);
-            editor.apply(); //let it be async
         }
 
         ScheduleProvider scheduleProvider = new ScheduleProvider(getApplicationContext());
