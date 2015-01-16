@@ -37,5 +37,6 @@
     <string name="to_study">To study</string>
     <string name="homework">Homework</string>
     <string name="exams">Exams</string>
+    <string name="debug_text">DebugText</string>
 
 </resources>

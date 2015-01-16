@@ -1,20 +1,29 @@
 package ua.kpi.campus.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
-import ua.kpi.campus.BaseActivity;
 import ua.kpi.campus.R;
 import ua.kpi.campus.model.ScheduleItem;
 
-public class ScheduleItemDetail extends BaseActivity {
+public class ScheduleItemDetail extends ActionBarActivity {
 
+    private Toolbar toolbar;
+    private ActionBar actionBar;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_schedule_item_detail);
-        setUpNavDrawer();
+
+        //init toolbar
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        
         initViews();
     }
 
@@ -43,9 +52,14 @@ public class ScheduleItemDetail extends BaseActivity {
                 break;
         }
 
-        mToolbar.setTitle(item.getLessonName() + ", " +
+        //setting title for toolbar
+        toolbar.setTitle(item.getLessonName() + ", " +
                                   getString(R.string.week).substring(0, 1) +
                                   item.getLessonWeek() + ", " + dayOfWeek);
+        
+        //setting supportActionBar
+        setSupportActionBar(toolbar);
+        actionBar = getSupportActionBar();
 
         ((TextView) findViewById(R.id.week)).setText(dayOfWeek); //abundant object creation will slow down gc
         ((TextView) findViewById(R.id.lessonName)).setText(item.getLessonName());
@@ -64,5 +78,10 @@ public class ScheduleItemDetail extends BaseActivity {
             startSettingsActivity();
 
         return super.onOptionsItemSelected(item);
+    }
+
+    protected void startSettingsActivity(){
+        Intent intent = new Intent(this, SettingsActivity.class);
+        startActivity(intent);
     }
 }
