@@ -8,6 +8,10 @@ You can talk with us in our Gitter chat room! Enjoy this! :sparkles:
 
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/DOIS/ecampus-client-android?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
+#### To import the project into IDE older than the latest Android Studio:
+1. Change `classpath 'com.android.tools.build:gradle:1.0.0'` version to `0.14.2` or older in top level `build.gradle` file.
+2. Set the language level 8 for the entire project (e.g. to support implicit type parameters).
+
 ####License
 
 Copyright 2014 DOIS
