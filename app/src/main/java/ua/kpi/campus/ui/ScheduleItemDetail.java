@@ -5,9 +5,18 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 import ua.kpi.campus.R;
 import ua.kpi.campus.model.ScheduleItem;
 
@@ -53,17 +62,70 @@ public class ScheduleItemDetail extends ActionBarActivity {
         }
 
         //setting title for toolbar
-        toolbar.setTitle(item.getLessonName() + ", " +
-                                  getString(R.string.week).substring(0, 1) +
-                                  item.getLessonWeek() + ", " + dayOfWeek);
+        toolbar.setTitle(dayOfWeek + ", " +
+                         getString(R.string.week)+" " +item.getLessonWeek());
         
         //setting supportActionBar
         setSupportActionBar(toolbar);
         actionBar = getSupportActionBar();
 
-        ((TextView) findViewById(R.id.week)).setText(dayOfWeek); //abundant object creation will slow down gc
+        //((TextView) findViewById(R.id.week)).setText(dayOfWeek); //abundant object creation will slow down gc
         ((TextView) findViewById(R.id.lessonName)).setText(item.getLessonName());
         ((TextView) findViewById(R.id.audience)).setText(item.getLessonRoom());
+
+
+        //calculating Time
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+            Calendar currentTime = Calendar.getInstance();
+            currentTime.add(Calendar.DAY_OF_WEEK,-1);
+            Calendar lessonStart = Calendar.getInstance();
+            //TODO
+            //parity of the week
+            //maybe some optimization
+            lessonStart.setTimeInMillis(System.currentTimeMillis());
+            lessonStart.set(Calendar.HOUR_OF_DAY,sdf.parse(item.getTimeStart()).getHours());
+            lessonStart.set(Calendar.MINUTE,sdf.parse(item.getTimeStart()).getMinutes());
+            lessonStart.set(Calendar.DAY_OF_WEEK,item.getDayNumber());
+
+            Calendar lessonEnd = Calendar.getInstance();
+            lessonEnd.setTimeInMillis(System.currentTimeMillis());
+            lessonEnd.set(Calendar.HOUR_OF_DAY,sdf.parse(item.getTimeEnd()).getHours());
+            lessonEnd.set(Calendar.MINUTE, sdf.parse(item.getTimeEnd()).getMinutes());
+            lessonEnd.set(Calendar.DAY_OF_WEEK,item.getDayNumber());
+
+            /*DEBUG INFO
+            Log.i("timeStart",lessonStart.get(Calendar.DAY_OF_WEEK)+"-day, "+lessonStart.get(Calendar.HOUR_OF_DAY)+":"+lessonStart.get(Calendar.MINUTE));
+            Log.i("timeEnd",lessonEnd.get(Calendar.DAY_OF_WEEK)+"-day, "+lessonEnd.get(Calendar.HOUR_OF_DAY)+":"+lessonEnd.get(Calendar.MINUTE));
+            Log.i("timeCurrent",currentTime.get(Calendar.DAY_OF_WEEK)+"-day, "+currentTime.get(Calendar.HOUR_OF_DAY)+":"+currentTime.get(Calendar.MINUTE));
+
+            Log.i("timeStartInMillis",Long.toString(lessonStart.getTimeInMillis()));
+            Log.i("timeEndInMillis",Long.toString(lessonEnd.getTimeInMillis()));
+            Log.i("timeCurrentInMillis",Long.toString(currentTime.getTimeInMillis()));
+            */
+
+            //check is lesson in progress
+            if(currentTime.getTimeInMillis()>lessonStart.getTimeInMillis() && currentTime.getTimeInMillis()<lessonEnd.getTimeInMillis()){
+                Calendar timeToLessonEnd = Calendar.getInstance();
+                timeToLessonEnd.setTimeInMillis(lessonEnd.getTimeInMillis()-currentTime.getTimeInMillis());
+                ((TextView)findViewById(R.id.timeToLesson)).setText(
+                        timeToLessonEnd.get(Calendar.HOUR_OF_DAY)+getString(R.string.hour).substring(0,1)+" "
+                                +timeToLessonEnd.get(Calendar.MINUTE)+getString(R.string.minute).substring(0,1));
+                //calculating progressBar
+                long lessonProgress =100L*((currentTime.get(Calendar.HOUR_OF_DAY)*60+currentTime.get(Calendar.MINUTE))-(lessonStart.get(Calendar.HOUR_OF_DAY)*60+lessonStart.get(Calendar.MINUTE)))
+                        /((lessonEnd.get(Calendar.HOUR_OF_DAY)*60+lessonEnd.get(Calendar.MINUTE))-(lessonStart.get(Calendar.HOUR_OF_DAY)*60+lessonStart.get(Calendar.MINUTE)));
+                ((ProgressBar)findViewById(R.id.lessonProgressBar)).setProgress((int)lessonProgress);
+            }else{
+                ((TextView)findViewById(R.id.timeToLesson)).setVisibility(View.GONE);
+                ((ProgressBar)findViewById(R.id.lessonProgressBar)).setVisibility(View.GONE);
+            }
+
+
+
+
+        }catch(ParseException e){
+            e.printStackTrace();
+        }
     }
 
     @Override

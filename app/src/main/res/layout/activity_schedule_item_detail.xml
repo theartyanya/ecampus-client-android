@@ -59,10 +59,10 @@
                         android:textColor="@color/dark"
                         android:text="@string/debug_text"
                         android:textSize="18dp"
-                        android:layout_above="@+id/progressBar"
+                        android:layout_above="@+id/lessonProgressBar"
                         android:layout_marginBottom="8dp"
                         android:fontFamily="@string/font_fontFamily_medium"
-                        />
+                        android:id="@+id/lessonName" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -71,17 +71,17 @@
                         android:textSize="16dp"
                         android:layout_alignParentRight="true"
                         android:textStyle="@integer/font_textStyle_medium"
-                        android:layout_above="@+id/progressBar"
+                        android:layout_above="@+id/lessonProgressBar"
                         android:layout_marginBottom="8dp"
                         android:fontFamily="@string/font_fontFamily_medium"
-                        />
+                        android:id="@+id/timeToLesson" />
 
                     <ProgressBar
                         style="@style/Widget.AppCompat.ProgressBar.Horizontal"
                         android:layout_width="fill_parent"
                         android:layout_height="10dp"
                         android:layout_alignParentBottom="true"
-                        android:id="@+id/progressBar"
+                        android:id="@+id/lessonProgressBar"
                         android:progress="50" />
                 </RelativeLayout>
                 </RelativeLayout>
@@ -107,7 +107,7 @@
                             android:textColor="@color/dark"
                             android:text="@string/debug_text"
                             android:textSize="18sp"
-                            android:id="@+id/debugText2"
+                            android:id="@+id/audience"
                             android:fontFamily="@string/font_fontFamily_medium"
                             />
                         <TextView
@@ -118,7 +118,7 @@
                             android:text="@string/debug_text"
                             android:layout_marginTop="4dp"
                             android:textSize="16sp"
-                            android:layout_below="@+id/debugText2"
+                            android:layout_below="@+id/audience"
                             android:fontFamily="@string/font_fontFamily_medium"
                             />
                         
@@ -188,7 +188,7 @@
                     android:layout_height="36dp"
                     android:gravity="center_vertical"
                     android:textColor="@color/body_text_3"
-                    android:text="@string/debug_text"
+                    android:text="@string/to_study"
                     android:textSize="14dp"
                     android:fontFamily="@string/font_fontFamily_medium"
                     android:textStyle="@integer/font_textStyle_medium"/>
@@ -205,7 +205,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/dark"
-                        android:text="@string/debug_text"
+                        android:text="@string/homework"
                         android:textSize="18dp"
                         android:id="@+id/debugText3"
                         android:fontFamily="@string/font_fontFamily_medium"
@@ -235,7 +235,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="@color/dark"
-                            android:text="@string/debug_text"
+                            android:text="@string/exams"
                             android:textSize="18sp"
                             android:id="@+id/debugText4"
                             android:fontFamily="@string/font_fontFamily_medium"
@@ -265,7 +265,6 @@
             android:layout_margin="16dp"
             app:fab_colorNormal="?attr/colorAccent"
             app:fab_colorPressed="?attr/colorAccent"
-            android:id="@+id/floating_button"
-            android:src=""/>
+            android:id="@+id/floating_button"/>
     </RelativeLayout>
 </LinearLayout>

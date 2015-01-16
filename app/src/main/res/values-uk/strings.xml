@@ -28,4 +28,12 @@
     <string name="saturday">Субота</string>
     <string name="week">Неділя</string>
     <string name="today_plan">План на сьогоднi</string>
+    <string name="email_app_not_found">Додаток пошти не знайдено</string>
+    <string name="exams">Iспити</string>
+    <string name="homework">Домашнє завдання</string>
+    <string name="to_study">Вивчити</string>
+    <string name="seconds">секунд</string>
+    <string name="minute">хвилин</string>
+    <string name="hour">годин</string>
+    <string name="days">днiв</string>
 </resources>

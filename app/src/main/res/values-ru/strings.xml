@@ -39,4 +39,13 @@
     <string name="saturday">Суббота</string>
     <string name="week">Неделя</string>
     <string name="today_plan">План на сегодня</string>
+    <string name="title_activity_schedule_item_detail"> </string>
+    <string name="email_app_not_found">Приложение почты не найдено</string>
+    <string name="exams">Экзамены</string>
+    <string name="homework">Домашнее задание</string>
+    <string name="to_study">Выучить</string>
+    <string name="seconds">секунд</string>
+    <string name="minute">минут</string>
+    <string name="hour">часов</string>
+    <string name="days">дней</string>
 </resources>
