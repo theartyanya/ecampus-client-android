@@ -47,5 +47,13 @@
     <string name="exit_login">Close</string>
     <string name="enter_your_group">Enter your Group</string>
     <string name="logo">Logo</string>
+    <string name="title_activity_about">About app</string>
+    <string name="application_name">Application name</string>
+    <string name="build_name">Build name</string>
+    <string name="build_date">Build date</string>
+    <string name="build_type">Build type</string>
+    <string name="build_version">Build version</string>
+    <string name="about_summary">Show information about app</string>
+    <string name="title_activity_teacher">Teachers</string>
 
 </resources>

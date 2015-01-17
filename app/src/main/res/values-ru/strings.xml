@@ -24,9 +24,9 @@
     <string name="pref_title_display_name">Отображаемое имя</string>
     <string name="pref_title_new_message_notifications">Уведомления о новых сообщениях</string>
     <string name="pref_title_ringtone">Рингтон</string>
-    <string name="pref_title_social_recommendations">Включить рекомендации социальных сетей</string>
+    <string name="pref_title_social_recommendations">Включить рекламу</string>
     <string name="pref_title_sync_frequency">Частота синхронизациии</string>
-    <string name="pref_title_system_sync_settings">Настройки синхронизации</string>
+    <string name="pref_title_system_sync_settings">О приложении</string>
     <string name="pref_title_vibrate">Вибрация</string>
     <string name="title_activity_settings">Настройки</string>
     <string name="title_activity_welcome">Добро пожаловать!</string>
@@ -48,4 +48,11 @@
     <string name="minute">минут</string>
     <string name="hour">часов</string>
     <string name="days">дней</string>
+    <string name="application_name">Название приложения</string>
+    <string name="title_activity_about">О приложении</string>
+    <string name="about_summary">Показать информацию о приложении</string>
+    <string name="build_name">Кодовое имя</string>
+    <string name="build_date">Дата сборки</string>
+    <string name="build_type">Тип сборки</string>
+    <string name="build_version">Версия сборки</string>
 </resources>

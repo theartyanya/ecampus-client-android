@@ -40,6 +40,19 @@
             android:name=".ui.LoginActivity"
             android:label="@string/title_activity_login" >
         </activity>
+        <activity
+            android:name=".ui.AboutActivity"
+            android:label="@string/title_activity_about"
+            android:parentActivityName=".ui.SettingsActivity"
+            android:theme="@style/AppThemeWithActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ua.kpi.campus.ui.SettingsActivity" />
+        </activity>
+        <activity
+            android:name=".ui.TeacherActivity"
+            android:label="@string/title_activity_teacher" >
+        </activity>
     </application>
 
 </manifest>

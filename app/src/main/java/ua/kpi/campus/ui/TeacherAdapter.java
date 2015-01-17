@@ -28,6 +28,7 @@ public class TeacherAdapter implements ListAdapter {
     Resources system = Resources.getSystem();
     ScheduleProvider scheduleProvider;
     ArrayList<TeacherItem> mItems;
+    
     public TeacherAdapter(Context mContext){
         this.mContext=mContext;
         scheduleProvider = new ScheduleProvider(mContext);

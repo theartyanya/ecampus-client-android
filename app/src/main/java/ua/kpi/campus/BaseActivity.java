@@ -100,7 +100,7 @@ public class BaseActivity extends ActionBarActivity {
         
 		checkForAgreement();
 		setUpShakeListener();
-        scheduleSyncer();
+        
 		//Initializing mHandler
 		mHandler = new Handler();
 	}
@@ -436,12 +436,13 @@ public class BaseActivity extends ActionBarActivity {
 			startTopLevelActivity(this, WelcomeActivity.class);
 	}
     
-    private void scheduleSyncer() {
+    protected void scheduleSyncer() {
         if (!PrefUtils.isScheduleUploaded(this)) {
             Log.d(LOG_TAG, "Starting syncing schedule");
             SyncSchedule sync = SyncSchedule.getSyncSchedule("IK-31", getApplicationContext());
             SyncSchedule.Connect connect = new SyncSchedule.Connect();
             connect.execute();
+            PrefUtils.markScheduleUploaded(this);
         }
     }
 }

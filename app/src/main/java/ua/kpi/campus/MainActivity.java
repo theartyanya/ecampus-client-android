@@ -2,8 +2,8 @@ package ua.kpi.campus;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.app.ListFragment;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v13.app.FragmentPagerAdapter;
@@ -19,13 +19,12 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ScrollView;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import ua.kpi.campus.provider.ScheduleProvider;
 import ua.kpi.campus.ui.ScheduleAdapter;
 import ua.kpi.campus.ui.ScheduleFragment;
 import ua.kpi.campus.ui.SpinnerAdapter;
-import ua.kpi.campus.ui.TeachersFragment;
+import ua.kpi.campus.ui.TeacherActivity;
 import ua.kpi.campus.ui.widgets.SlidingTabLayout;
 
 import java.util.ArrayList;
@@ -62,6 +61,7 @@ public class MainActivity extends BaseActivity implements ScheduleFragment.Liste
     private final String LOG_TAG = "MainActivity";
     private static final String ARG_SCHEDULE_WEEK_INDEX
             = "ua.kpi.campus.ARG_SCHEDULE_WEEK_INDEX";
+    
 
     private ScheduleAdapter[] mScheduleAdapters = new ScheduleAdapter[2];
     final String welcomeScreenShownPref = "welcomeScreenShown";
@@ -71,12 +71,13 @@ public class MainActivity extends BaseActivity implements ScheduleFragment.Liste
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         super.setUpNavDrawer(); //we can now findById our views
+        super.scheduleSyncer();
 
         spinnerList.add("Schedule");
         spinnerList.add("Teachers");
         
         Toolbar toolbar = mToolbar;
-
+        
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         
         View spinnerContainer = LayoutInflater.from(this).inflate(R.layout.toolbar_spinner,
@@ -97,21 +98,22 @@ public class MainActivity extends BaseActivity implements ScheduleFragment.Liste
                                        int position, long id) {
                 switch(position){
                     case 0:
-
+                        //Do nothing
                         break;
                     case 1:
-                        //TODO not working
-                        Fragment newFragment = new TeachersFragment();
-                        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                        transaction.replace(R.id.holder, newFragment);
-                        transaction.addToBackStack(null);
-                        Log.d("teachersFragment","in create transaction");
-                        transaction.commit();
+                        Intent intent = new Intent(MainActivity.this, TeacherActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                        startActivity(intent);
+                        
+                        finish();
+                        overridePendingTransition(0, 0);
                         break;
+
                 }
             }
             @Override
             public void onNothingSelected(AdapterView<?> arg0) {
+                //Do nothing
             }
         });
         
@@ -124,7 +126,7 @@ public class MainActivity extends BaseActivity implements ScheduleFragment.Liste
         for (int i = 0; i < 2; i++) {
             mScheduleAdapters[i] = new ScheduleAdapter(this);
         }
-
+        
         ScheduleProvider scheduleProvider = new ScheduleProvider(getApplicationContext());
 
         mScheduleAdapters[0].updateItems(scheduleProvider.getScheduleItemsFromDatabase(1));
@@ -134,6 +136,7 @@ public class MainActivity extends BaseActivity implements ScheduleFragment.Liste
         viewPager.setAdapter(viewPagerAdapter);
 
         slidingTabLayout = (SlidingTabLayout) findViewById(R.id.sliding_tabs);
+        
         slidingTabLayout.setCustomTabView(R.layout.tab_indicator, android.R.id.text1);
 
         Resources res = getResources();

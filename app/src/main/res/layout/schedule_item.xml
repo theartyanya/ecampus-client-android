@@ -43,23 +43,12 @@
         android:layout_width="0dp"
         android:layout_weight="1"
         android:layout_height="match_parent">
-
-        <!-- Background photo -->
-        <!--<ua.kpi.campus.ui.widgets.BezelImageView
-            app:maskDrawable="@drawable/schedule_background_mask"
-            android:id="@+id/background_image"
+        
+        <View
+            android:id="@+id/color_view"
+            android:background="@drawable/schedule_background_mask"
             android:layout_height="match_parent"
-            android:layout_width="match_parent"
-            android:scaleType="centerCrop" />-->
-
-        <!-- Session photo -->
-        <ua.kpi.campus.ui.widgets.BezelImageView
-            app:maskDrawable="@drawable/schedule_background_mask"
-            android:id="@+id/session_image"
-            android:background="@color/primary"
-            android:layout_height="match_parent"
-            android:layout_width="match_parent"
-            android:scaleType="centerCrop" />
+            android:layout_width="match_parent" />
 
         <!-- Block/slot chip contents -->
         <LinearLayout

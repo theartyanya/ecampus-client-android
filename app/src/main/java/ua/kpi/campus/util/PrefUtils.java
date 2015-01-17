@@ -66,7 +66,7 @@ public class PrefUtils {
     
     public static void markScheduleUploaded(final Context context) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-        sp.edit().putBoolean(PREF_SCHEDULE_UPLOADED, true);
+        sp.edit().putBoolean(PREF_SCHEDULE_UPLOADED, true).commit();
     }
 
     public static void putLoginAndPassword(final Context context, String login, String password){

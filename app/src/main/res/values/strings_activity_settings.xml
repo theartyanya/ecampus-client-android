@@ -6,7 +6,7 @@
     <!-- Example General settings -->
     <string name="pref_header_general" translatable="false">General</string>
 
-    <string name="pref_title_social_recommendations" translatable="false">Enable social recommendations</string>
+    <string name="pref_title_social_recommendations" translatable="false">Enable promo</string>
     <string name="pref_description_social_recommendations" translatable="false">Recommendations for people to contact
         based on your message history
     </string>
@@ -27,7 +27,7 @@
     </string-array>
 
     <!-- Example settings for Data & Sync -->
-    <string name="pref_header_data_sync" translatable="false">Data &amp; sync</string>
+    <string name="pref_header_data_sync" translatable="false">About</string>
 
     <string name="pref_title_sync_frequency" translatable="false">Sync frequency</string>
     <string-array name="pref_sync_frequency_titles">
@@ -47,7 +47,7 @@
         <item>-1</item>
     </string-array>
 
-    <string name="pref_title_system_sync_settings" translatable="false">System sync settings</string>
+    <string name="pref_title_system_sync_settings" translatable="false">About app</string>
 
     <!-- Example settings for Notifications -->
     <string name="pref_header_notifications" translatable="false">Notifications</string>

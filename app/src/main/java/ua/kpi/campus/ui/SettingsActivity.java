@@ -83,10 +83,8 @@ public class SettingsActivity extends ActionBarActivity {
             addPreferencesFromResource(R.xml.pref_data_sync);
 
 
-            bindPreferenceSummaryToValue(findPreference("example_text"));
-            bindPreferenceSummaryToValue(findPreference("example_list"));
-            bindPreferenceSummaryToValue(findPreference("notifications_new_message_ringtone"));
-            bindPreferenceSummaryToValue(findPreference("sync_frequency"));
+            //bindPreferenceSummaryToValue(findPreference("notifications_new_message_ringtone"));
+            //bindPreferenceSummaryToValue(findPreference("sync_frequency"));
         }
     }
 

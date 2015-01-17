@@ -28,12 +28,6 @@
                 android:minHeight="@dimen/toolbar_height"
                 android:background="?attr/colorPrimary"
                 app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
-
-            <ua.kpi.campus.ui.widgets.SlidingTabLayout
-                android:background="?attr/colorPrimary"
-                android:id="@+id/sliding_tabs"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
         </LinearLayout>
 
         <RelativeLayout
@@ -43,17 +37,23 @@
             android:foreground="?android:windowContentOverlay"
             android:id="@+id/holder">
 
-            <android.support.v4.view.ViewPager
+            <ListView xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/list_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/view_pager"/>
-        
+                android:scrollbarStyle="outsideOverlay"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
+                android:divider="@null"
+                android:dividerHeight="0dp"
+                android:clipToPadding="false" />
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="5dp"
                 android:background="@drawable/toolbar_shadow" />
 
-            </RelativeLayout>
+        </RelativeLayout>
 
 
 

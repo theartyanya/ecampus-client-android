@@ -1,0 +1,18 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="ua.kpi.campus.ui.AboutActivity">
+    
+    <ListView
+        android:id="@+id/about_list_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbarStyle="outsideOverlay"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp"
+        android:divider="@color/body_text_3"
+        android:dividerHeight="1dp"
+        android:clipToPadding="false" />
+</LinearLayout>

@@ -18,7 +18,7 @@ import ua.kpi.campus.R;
 import ua.kpi.campus.model.ScheduleItem;
 
 /**
- * Created by Admin on 12.01.2015.
+ * Created by doroshartyom on 12.01.2015.
  */
 public class ScheduleAdapter implements ListAdapter, AbsListView.RecyclerListener {
 
@@ -141,11 +141,13 @@ public class ScheduleAdapter implements ListAdapter, AbsListView.RecyclerListene
             endTimeView = (TextView) view.findViewById(R.id.end_time);
             TextView slotTitleView = (TextView) view.findViewById(R.id.slot_title);
             TextView slotSubtitleView = (TextView) view.findViewById(R.id.slot_subtitle);
+            TextView place = (TextView) view.findViewById(R.id.slot_room);
 
 
 
             slotTitleView.setText(item.getLessonName());
             slotSubtitleView.setText(item.getTeacherName());
+            place.setText(item.getLessonRoom());
 
             startTimeView.setText(item.getTimeStart());
             endTimeView.setText(item.getTimeEnd());
@@ -156,7 +158,7 @@ public class ScheduleAdapter implements ListAdapter, AbsListView.RecyclerListene
                     mContext.startActivity(intent);
                 }
             };
-            view.findViewById(R.id.session_image).setOnClickListener(onClickListener);
+            view.findViewById(R.id.color_view).setOnClickListener(onClickListener);
         }
         return view;
     }
