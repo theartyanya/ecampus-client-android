@@ -11,25 +11,25 @@ import android.view.ViewGroup;
 import ua.kpi.campus.R;
 
 /**
- * Created by doroshartyom on 08.01.2015.
+ * Created by dmitry on 17.01.15.
  */
-public class ScheduleFragment extends ListFragment {
-
+public class TeachersFragment extends ListFragment {
     private String mContentDescription = null;
     private View mRoot = null;
 
     public interface Listener {
         public void onFragmentViewCreated(ListFragment fragment);
-        public void onFragmentAttached(ScheduleFragment fragment);
-        public void onFragmentDetached(ScheduleFragment fragment);
+        public void onFragmentAttached(TeachersFragment fragment);
+        public void onFragmentDetached(TeachersFragment fragment);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mRoot = inflater.inflate(R.layout.fragment_my_schedule, container, false);
+        mRoot = inflater.inflate(R.layout.fragment_my_teachers, container, false);
         if (mContentDescription != null) {
             mRoot.setContentDescription(mContentDescription);
         }
+        Log.d("teachersFragment","in onCreateView");
         return mRoot;
     }
 

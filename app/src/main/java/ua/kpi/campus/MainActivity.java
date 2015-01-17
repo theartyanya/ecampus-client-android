@@ -2,6 +2,7 @@ package ua.kpi.campus;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.app.ListFragment;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -15,13 +16,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ScrollView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import ua.kpi.campus.provider.ScheduleProvider;
 import ua.kpi.campus.ui.ScheduleAdapter;
 import ua.kpi.campus.ui.ScheduleFragment;
 import ua.kpi.campus.ui.SpinnerAdapter;
+import ua.kpi.campus.ui.TeachersFragment;
 import ua.kpi.campus.ui.widgets.SlidingTabLayout;
 
 import java.util.ArrayList;
@@ -86,7 +90,30 @@ public class MainActivity extends BaseActivity implements ScheduleFragment.Liste
         
         Spinner spinner = (Spinner) spinnerContainer.findViewById(R.id.toolbar_spinner);
         spinner.setAdapter(spinnerAdapter);
-        
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view,
+                                       int position, long id) {
+                switch(position){
+                    case 0:
+
+                        break;
+                    case 1:
+                        //TODO not working
+                        Fragment newFragment = new TeachersFragment();
+                        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                        transaction.replace(R.id.holder, newFragment);
+                        transaction.addToBackStack(null);
+                        Log.d("teachersFragment","in create transaction");
+                        transaction.commit();
+                        break;
+                }
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+            }
+        });
         
         WEEK_NAMES = new String[] {
                 getApplicationContext().getString(R.string.week)+" 1",
