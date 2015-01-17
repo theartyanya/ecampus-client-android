@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/item_size"
+    android:padding="@dimen/keyline_1"
+    android:background="@color/white">
+
+    <ImageView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/person_image_empty"
+        android:contentDescription="@string/logo" />
+    
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/keyline_3"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/keyline_3">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/debug_text"
+            android:textSize="18sp"
+            android:id="@+id/teacher_name"
+            android:fontFamily="@string/font_fontFamily_medium"
+            android:textColor="@color/body_text_2"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/debug_text"
+            android:textSize="16sp"
+            android:id="@+id/teacher_subject"
+            android:textColor="@color/body_text_3"
+            android:layout_below="@+id/teacher_name"/>
+        
+        </RelativeLayout>
+</RelativeLayout>

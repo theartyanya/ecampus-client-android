@@ -20,7 +20,7 @@ public class WelcomeActivity extends Activity {
             @Override
             public void onClick(View v) {
                 PrefUtils.markTosAccepted(WelcomeActivity.this);
-                Intent intent = new Intent(WelcomeActivity.this, MainActivity.class);
+                Intent intent = new Intent(WelcomeActivity.this, LoginActivity.class);
                 startActivity(intent);
                 finish();
             }

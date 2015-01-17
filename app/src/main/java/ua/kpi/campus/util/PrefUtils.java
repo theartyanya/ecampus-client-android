@@ -25,6 +25,20 @@ public class PrefUtils {
 
     public static final String PREF_AUTH_KEY = "pref_auth_key";
     
+    public static final String PREF_AUTH_PASSED = "pref_auth_passed";
+    
+    public static final String PREF_GUEST_MODE = "pref_guest_mode";
+    
+    public static boolean isAuthPassed(final Context context) {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        return sp.getBoolean(PREF_AUTH_PASSED, false);
+    }
+
+    public static void markAuthPassed(final Context context) {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        sp.edit().putBoolean(PREF_AUTH_PASSED, true).commit();
+    }
+    
     public static String getPrefGroupName(final Context context){
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
         return sp.getString(PREF_GROUP_NAME, "");       

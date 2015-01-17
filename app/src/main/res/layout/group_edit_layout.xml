@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="24dp">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/text_large"
+        android:textColor="?attr/colorPrimaryDark"
+        android:layout_gravity="center"
+        android:textStyle="@integer/font_textStyle_medium"
+        android:fontFamily="@string/font_fontFamily_medium"
+        android:text="@string/enter_your_group" />
+
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Login"
+        android:id="@+id/login_input"
+        app:floatingLabel="highlight"
+        />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="36dp">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="OK"
+            android:id="@+id/enter_group"
+            android:textSize="18sp"
+            android:textAllCaps="false"
+            android:textColor="?attr/colorPrimary"
+            android:background="@android:color/transparent"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Help"
+            android:textAllCaps="false"
+            android:textSize="18sp"
+            android:textColor="@color/body_text_3"
+            android:background="@android:color/transparent"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"/>
+
+    </RelativeLayout>
+
+</LinearLayout>

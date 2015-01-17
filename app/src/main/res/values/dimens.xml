@@ -16,4 +16,5 @@
     <dimen name="toolbar_big">112dp</dimen>
     <dimen name="item_size">72dp</dimen>
     <dimen name="keyline_3">56dp</dimen>
+    <dimen name="toolbar_height">56dp</dimen>
 </resources>
