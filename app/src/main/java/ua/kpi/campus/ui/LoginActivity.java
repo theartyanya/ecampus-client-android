@@ -3,12 +3,20 @@ package ua.kpi.campus.ui;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
+import com.nispok.snackbar.Snackbar;
+import com.nispok.snackbar.SnackbarManager;
+import com.rengwuxian.materialedittext.MaterialEditText;
+
+import ua.kpi.campus.MainActivity;
 import ua.kpi.campus.R;
+import ua.kpi.campus.api.Auth;
 import ua.kpi.campus.util.PrefUtils;
 
 public class LoginActivity extends ActionBarActivity {
@@ -60,5 +68,54 @@ public class LoginActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void signIn(View view) {
+        //TODO get off this from here
+        PrefUtils.putLoginAndPassword(getApplicationContext(), ((MaterialEditText)findViewById(R.id.login_input)).getText().toString(), ((MaterialEditText)findViewById(R.id.password_input)).getText().toString());
+        Auth authClient = new Auth(this);
+        authClient.execute();
+        try{
+            switch (authClient.get()){
+                case 200:
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    break;
+                case 403:
+                    SnackbarManager.show(
+                            Snackbar.with(this)
+                                    .text(getString(R.string.invalid_auth_data)));
+                    break;
+                case 500:
+                    SnackbarManager.show(
+                            Snackbar.with(this)
+                                    .text(getString(R.string.server_is_down)+" (500)"));
+                    break;
+                case -2:
+                    SnackbarManager.show(
+                            Snackbar.with(this)
+                                    .text(getString(R.string.server_is_down)+" (-2)"));
+                    break;
+                case -1:
+                    SnackbarManager.show(
+                            Snackbar.with(this)
+                                    .text(getString(R.string.internal_error)+" (-1)"));
+                    break;
+                case -3:
+                    SnackbarManager.show(
+                            Snackbar.with(this)
+                                    .text(getString(R.string.no_internet)));
+                    break;
+                default:
+                    SnackbarManager.show(
+                            Snackbar.with(this)
+                                    .text(getString(R.string.internal_error)+" (d)"));
+                    break;
+
+            }
+        }catch(Exception e){
+
+        }
+
     }
 }

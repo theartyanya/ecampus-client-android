@@ -55,4 +55,18 @@
     <string name="build_date">Дата сборки</string>
     <string name="build_type">Тип сборки</string>
     <string name="build_version">Версия сборки</string>
+    <string name="invalid_auth_data">Неправильный логин или пароль</string>
+    <string name="login_into_campus">Войти в Campus</string>
+    <string name="logo">Логотип</string>
+    <string name="enter_your_group">Укажите Вашу группу</string>
+    <string name="exit_login">Закрыть</string>
+    <string name="schedule">Расписание</string>
+    <string name="teachers">Преподаватели</string>
+    <string name="title_activity_login">Логин</string>
+    <string name="title_activity_teacher">Преподаватели</string>
+    <string name="password">Пароль</string>
+    <string name="login">Логин</string>
+    <string name="server_is_down">Сервер недоступен, попробуйте позже</string>
+    <string name="internal_error">Внутренняя ошибка, пожалуйста сообщите нам об этом.</string>
+    <string name="no_internet">Проверьте соединение</string>
 </resources>

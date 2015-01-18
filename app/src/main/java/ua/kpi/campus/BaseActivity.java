@@ -439,7 +439,7 @@ public class BaseActivity extends ActionBarActivity {
     protected void scheduleSyncer() {
         if (!PrefUtils.isScheduleUploaded(this)) {
             Log.d(LOG_TAG, "Starting syncing schedule");
-            SyncSchedule sync = SyncSchedule.getSyncSchedule("IK-31", getApplicationContext());
+            SyncSchedule sync = SyncSchedule.getSyncSchedule("ФБ-41", getApplicationContext());
             SyncSchedule.Connect connect = new SyncSchedule.Connect();
             connect.execute();
             PrefUtils.markScheduleUploaded(this);

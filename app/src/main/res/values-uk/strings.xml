@@ -36,4 +36,23 @@
     <string name="minute">хвилин</string>
     <string name="hour">годин</string>
     <string name="days">днiв</string>
+    <string name="schedule">Розклад</string>
+    <string name="teachers">Викладачi</string>
+    <string name="invalid_auth_data">Логiн або пароль неправильний</string>
+    <string name="login_into_campus">Увiйти до Campus</string>
+    <string name="logo">Логотип</string>
+    <string name="build_date"></string>
+    <string name="application_name">Назва додатка</string>
+    <string name="about_summary">Показати iнформацiю про додаток</string>
+    <string name="enter_your_group">Вкажiть Вашу групу</string>
+    <string name="exit_login">Закрити</string>
+    <string name="title_activity_login">Логiн</string>
+    <string name="title_activity_about">Про додаток</string>
+    <string name="title_activity_teacher">Викладачi</string>
+    <string name="build_version"></string>
+    <string name="password">Пароль</string>
+    <string name="login">Логiн</string>
+    <string name="server_is_down">Сервер тимчасово недоступний, спробуйте пiзнiше</string>
+    <string name="internal_error">Внутрішня помилка. Будь ласка, повiдомте нас про це</string>
+    <string name="no_internet">Перевiрте з\'єднання</string>
 </resources>

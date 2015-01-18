@@ -160,16 +160,6 @@ public class ScheduleItemDetail extends ActionBarActivity {
     }
 
     public void auth(View view) {
-        //TODO get off this from here
-        PrefUtils.putLoginAndPassword(getApplicationContext(), "2", "21");
-        Auth authClient = new Auth(this);
-        authClient.execute();
-        try{
-            //result codes are in Auth class
-            Log.d("asyncTask result", "code:"+Integer.toString(authClient.get())+" auth:"+PrefUtils.getAuthKey(this));
 
-        }catch(Exception e){
-            e.printStackTrace();
-        }
     }
 }
