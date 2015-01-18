@@ -17,4 +17,5 @@
     <dimen name="item_size">72dp</dimen>
     <dimen name="keyline_3">56dp</dimen>
     <dimen name="toolbar_height">56dp</dimen>
+    <dimen name="card_background_default_radius">2dp</dimen>
 </resources>

@@ -14,7 +14,7 @@
             android:id="@+id/profile_cover_image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/primary"
+            android:background="@drawable/navdrawer_back"
             android:scaleType="centerCrop"
             android:tint="@color/session_photo_scrim"/>
 
@@ -24,7 +24,7 @@
             android:paddingLeft="@dimen/keyline_1"
             android:paddingRight="@dimen/keyline_1"
             android:paddingTop="@dimen/keyline_1">
-
+            
             <ua.kpi.campus.ui.widgets.BezelImageView
                 android:id="@+id/profile_image"
                 android:layout_width="@dimen/navdrawer_profile_image_size"
@@ -57,7 +57,7 @@
                 android:maxLines="1"
                 android:paddingBottom="16dp"
                 android:singleLine="true"
-                android:text="doroshartyom@gmail.com"
+                android:text="Nightly build"
                 android:textColor="@color/body_text_1_inverse"
                 android:textSize="@dimen/text_size_medium"
                 />
@@ -72,7 +72,7 @@
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:singleLine="true"
-                android:text="Artyom Dorosh"
+                android:text="Guest"
                 android:textColor="@color/body_text_1_inverse"
                 android:textSize="@dimen/text_size_large"
                 android:textStyle="bold"/>

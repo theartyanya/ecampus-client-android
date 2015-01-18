@@ -12,7 +12,7 @@
         android:scrollbarStyle="outsideOverlay"
         android:paddingTop="16dp"
         android:paddingBottom="16dp"
-        android:divider="@color/body_text_3"
-        android:dividerHeight="1dp"
+        android:divider="@null"
+        android:dividerHeight="0px"
         android:clipToPadding="false" />
 </LinearLayout>
