@@ -24,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import ua.kpi.campus.api.SyncSchedule;
+import ua.kpi.campus.ui.LoginActivity;
 import ua.kpi.campus.ui.SettingsActivity;
 import ua.kpi.campus.ui.WelcomeActivity;
 import ua.kpi.campus.util.PrefUtils;
@@ -437,11 +438,14 @@ public class BaseActivity extends ActionBarActivity {
 	}
     
     protected void scheduleSyncer() {
-        if (!PrefUtils.isScheduleUploaded(this)) {
+        if (!PrefUtils.isScheduleUploaded(this) && PrefUtils.isTosAccepted(this)) {
             Log.d(LOG_TAG, "Starting syncing schedule");
-            SyncSchedule sync = SyncSchedule.getSyncSchedule("ФБ-41", getApplicationContext());
+            String groupName = PrefUtils.getPrefStudyGroupName(this);
+            Log.i(LOG_TAG, groupName);
+            SyncSchedule sync = SyncSchedule.getSyncSchedule(groupName, getApplicationContext());
+
             SyncSchedule.Connect connect = new SyncSchedule.Connect();
-            connect.execute();
+            connect.execute(this);
             PrefUtils.markScheduleUploaded(this);
         }
     }

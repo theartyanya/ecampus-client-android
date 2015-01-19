@@ -28,6 +28,10 @@ public class PrefUtils {
     public static final String PREF_AUTH_PASSED = "pref_auth_passed";
     
     public static final String PREF_GUEST_MODE = "pref_guest_mode";
+
+    public static final String PREF_STUDY_GROUP_NAME = "pref_study_group_name";
+
+    public static final String PREF_STUDY_FULLNAME = "pref_study_fullname";
     
     public static boolean isAuthPassed(final Context context) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
@@ -69,6 +73,11 @@ public class PrefUtils {
         sp.edit().putBoolean(PREF_SCHEDULE_UPLOADED, true).commit();
     }
 
+    public static void unMarkScheduleUploaded(final Context context) {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        sp.edit().putBoolean(PREF_SCHEDULE_UPLOADED, false).commit();
+    }
+
     public static void putLoginAndPassword(final Context context, String login, String password){
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
         sp.edit().putString(PREF_LOGIN, login).putString(PREF_PASSWORD, password).commit();
@@ -92,5 +101,25 @@ public class PrefUtils {
     public static String getAuthKey(final Context context){
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
         return sp.getString(PREF_AUTH_KEY,"");
+    }
+
+    public static String getPrefStudyGroupName(final Context context){
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        return sp.getString(PREF_STUDY_GROUP_NAME,"");
+    }
+
+    public static void putPrefStudyGroupName(final Context context, String groupName){
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        sp.edit().putString(PREF_STUDY_GROUP_NAME, groupName).commit();
+    }
+
+    public static String getPrefStudyFullname(final Context context){
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        return sp.getString(PREF_STUDY_FULLNAME,"");
+    }
+
+    public static void putPrefStudyFullname(final Context context, String groupName){
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        sp.edit().putString(PREF_STUDY_FULLNAME, groupName).commit();
     }
 }

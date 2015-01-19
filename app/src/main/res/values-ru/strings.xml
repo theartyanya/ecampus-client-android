@@ -69,4 +69,8 @@
     <string name="server_is_down">Сервер недоступен, попробуйте позже</string>
     <string name="internal_error">Внутренняя ошибка, пожалуйста сообщите нам об этом.</string>
     <string name="no_internet">Проверьте соединение</string>
+    <string name="in_progress">Пожалуйста, подождите&#8230;</string>
+    <string name="have_no_account">Нет аккаунта?</string>
+    <string name="help">Помощь</string>
+    <string name="sign_in">Войти</string>
 </resources>
