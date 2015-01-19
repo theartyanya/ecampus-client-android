@@ -16,6 +16,7 @@ import android.widget.EditText;
 
 import com.nispok.snackbar.Snackbar;
 import com.nispok.snackbar.SnackbarManager;
+import com.nispok.snackbar.listeners.ActionClickListener;
 import com.rengwuxian.materialedittext.MaterialAutoCompleteTextView;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
@@ -37,13 +38,6 @@ public class LoginActivity extends ActionBarActivity {
 
         final ViewGroup card = (ViewGroup) findViewById(R.id.login_card);
         card.addView(View.inflate(this, R.layout.sign_in_layout, null));
-        
-        findViewById(R.id.button_close).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
         
         findViewById(R.id.guest_mode).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,16 +108,32 @@ public class LoginActivity extends ActionBarActivity {
 
     public void signIn(View view) {
         //TODO get off this from here
-        PrefUtils.putLoginAndPassword(getApplicationContext(), ((MaterialEditText)findViewById(R.id.login_input)).getText().toString(), ((MaterialEditText)findViewById(R.id.password_input)).getText().toString());
-        Auth authClient = new Auth(this);
-        authClient.execute();
+        if (Connectivity.isConnected(getApplicationContext())) {
+            PrefUtils.putLoginAndPassword(getApplicationContext(), ((MaterialEditText) findViewById(R.id.login_input)).getText().toString(), ((MaterialEditText) findViewById(R.id.password_input)).getText().toString());
+            Auth authClient = new Auth(this);
+            authClient.execute();
 
-        try{
-            if(authClient.getStatus() == AsyncTask.Status.FINISHED && authClient.get()==200){
-                isFinishedNormaly();
+            try {
+                if (authClient.getStatus() == AsyncTask.Status.FINISHED && authClient.get() == 200) {
+                    isFinishedNormaly();
+                }
+            } catch (Exception e) {
+
             }
-        }catch(Exception e){
-
+        } else {
+            SnackbarManager.show(
+                    Snackbar.with(getApplicationContext())
+                            .text(getResources().getString(R.string.no_internet))
+                            .actionLabel(getResources().getString(R.string.settings))
+                            .actionColor(getResources().getColor(R.color.primary))
+                            .actionListener(new ActionClickListener() {
+                                @Override
+                                public void onActionClicked(Snackbar snackbar) {
+                                    startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+                                }
+                            })
+                            .duration(Snackbar.SnackbarDuration.LENGTH_INDEFINITE)
+                    , this);
         }
     }
 
@@ -136,12 +146,25 @@ public class LoginActivity extends ActionBarActivity {
             PrefUtils.markScheduleUploaded(this);
             isFinishedNormaly();
         } else {
-            
+            SnackbarManager.show(
+                    Snackbar.with(getApplicationContext())
+                            .text(getResources().getString(R.string.no_internet))
+                            .actionLabel(getResources().getString(R.string.settings))
+                            .actionColor(getResources().getColor(R.color.primary))
+                            .actionListener(new ActionClickListener() {
+                                @Override
+                                public void onActionClicked(Snackbar snackbar) {
+                                    startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+                                }
+                            })
+                            .duration(Snackbar.SnackbarDuration.LENGTH_INDEFINITE)
+                    , this);
         }
         
     }
     
     private void isFinishedNormaly() {
+        PrefUtils.markLoginDone(this);
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         startActivity(intent);
         overridePendingTransition(R.anim.fade_in_activity, R.anim.fade_out_activity);

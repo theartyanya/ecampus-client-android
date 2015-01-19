@@ -12,8 +12,8 @@ public class ConfigUtils {
     
     public static String BUILD_TYPE = "nightly";
     
-    public static final String LATEST_BUILD = "17.01.2015";
-    
+    public static final String LATEST_BUILD = "19.01.2015";
+
     public static String getVersionBuild(final Context context) {
         String versionName = "";
         try {

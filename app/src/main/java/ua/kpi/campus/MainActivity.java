@@ -70,6 +70,7 @@ public class MainActivity extends BaseActivity implements ScheduleFragment.Liste
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        super.checkForLoginDone();
         super.setUpNavDrawer(); //we can now findById our views
         super.scheduleSyncer();
 

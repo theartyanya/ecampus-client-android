@@ -100,6 +100,7 @@ public class BaseActivity extends ActionBarActivity {
         
         
 		checkForAgreement();
+        checkForLoginDone();
 		setUpShakeListener();
         
 		//Initializing mHandler
@@ -448,5 +449,14 @@ public class BaseActivity extends ActionBarActivity {
             connect.execute(this);
             PrefUtils.markScheduleUploaded(this);
         }
+    }
+    
+    protected void checkForLoginDone() {
+        if (!PrefUtils.isLoginDone(this)) {
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+            finish();
+        }
+        
     }
 }

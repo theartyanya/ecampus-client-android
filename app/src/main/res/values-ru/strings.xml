@@ -16,19 +16,6 @@
     <string name="navdrawer_item_my_schedule">Расписание</string>
     <string name="navdrawer_item_settings">Настройки</string>
     <string name="navdrawer_item_my_tasks">Задачи</string>
-    <string name="pref_default_display_name"></string>
-    <string name="pref_header_notifications">Уведомления</string>
-    <string name="pref_header_general">Общие</string>
-    <string name="pref_ringtone_silent">Без звука</string>
-    <string name="pref_title_add_friends_to_messages">Добавить друзей</string>
-    <string name="pref_title_display_name">Отображаемое имя</string>
-    <string name="pref_title_new_message_notifications">Уведомления о новых сообщениях</string>
-    <string name="pref_title_ringtone">Рингтон</string>
-    <string name="pref_title_social_recommendations">Включить рекламу</string>
-    <string name="pref_title_sync_frequency">Частота синхронизациии</string>
-    <string name="pref_title_system_sync_settings">О приложении</string>
-    <string name="pref_title_vibrate">Вибрация</string>
-    <string name="title_activity_settings">Настройки</string>
     <string name="title_activity_welcome">Добро пожаловать!</string>
     <string name="welcome_to_campus_app">Добро пожаловать в Campus!</string>
     <string name="monday">Понедельник</string>
@@ -73,4 +60,5 @@
     <string name="have_no_account">Нет аккаунта?</string>
     <string name="help">Помощь</string>
     <string name="sign_in">Войти</string>
+    <string name="settings">Настройки</string>
 </resources>

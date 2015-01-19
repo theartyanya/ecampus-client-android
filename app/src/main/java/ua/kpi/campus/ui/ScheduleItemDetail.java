@@ -38,14 +38,8 @@ public class ScheduleItemDetail extends ActionBarActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         initViews();
         
-        if (actionBar != null) 
-            actionBar.setDisplayHomeAsUpEnabled(true);
-
-
-
-
-
-        
+        actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
 

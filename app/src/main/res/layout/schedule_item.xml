@@ -22,8 +22,7 @@
             android:gravity="bottom"
             android:textSize="@dimen/text_size_medium"
             android:maxLength="5"
-            android:textColor="@color/body_text_2"
-            android:text="@string/placeholder_session_start_time" />
+            android:textColor="@color/body_text_2"/>
 
         <TextView
             android:id="@+id/end_time"
@@ -31,8 +30,7 @@
             android:layout_height="wrap_content"
             android:maxLength="5"
             android:textSize="@dimen/text_size_small"
-            android:textColor="@color/body_text_3"
-            android:text="@string/placeholder_session_end_time" />
+            android:textColor="@color/body_text_3" />
 
 
     </LinearLayout>
@@ -66,7 +64,6 @@
                 android:layout_height="36dp"
                 android:gravity="bottom"
                 android:textColor="@color/white"
-                android:text="@string/placeholder_session_title"
                 android:textSize="@dimen/text_size_large"
                 android:ellipsize="end"
                 android:maxLines="1" />
@@ -76,7 +73,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/primaryLight"
-                android:text="@string/placeholder_session_subtitle"
                 android:textSize="@dimen/text_size_small"
                 />
             <TextView
@@ -84,7 +80,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/primaryLight"
-                android:text="@string/placeholder_session_subtitle"
                 android:textSize="@dimen/text_size_small"
                 android:layout_gravity="bottom"
                 />

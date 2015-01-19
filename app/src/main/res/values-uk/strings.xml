@@ -5,6 +5,7 @@
     <string name="action_settings">Налаштування</string>
     <string name="attract_text">До того як ми почнемо є важлива інформація про цей додаток. Це не займе багато часу!</string>
     <string name="decline">Відхилити</string>
+    <string name="drawer_close"></string>
     <string name="drawer_open">Обрати пункт</string>
     <string name="legacy_text">Цей додаток створений Командою Кампуса як частина projectVenco(https://github.com/projectVenco). \n\nДодаток з відкритим вихідним кодом і поширюється на офіційному акаунті GitHub КБ ІС(https://github.com/DOIS/ecampus-client-android). Робіть форки або оцінюйте нас на GitHub! \n\nУ майбутньому ми будемо використовувати Google Analytics у цьому дотатку, але не зараз. Також тут буде нормальна ліцензійна угода!</string>
     <string name="my_schedule_page_desc_a11y">Зараз відображаеться твій розклад для <xliff:g id="day">%1$s</xliff:g>.</string>
@@ -16,8 +17,6 @@
     <string name="navdrawer_item_my_tasks">Завдання</string>
     <string name="navdrawer_item_settings">Налаштування</string>
     <string name="placeholder_session_subtitle"></string>
-    <string name="pref_header_data_sync" translatable="false"></string>
-    <string name="title_activity_settings">Налаштування</string>
     <string name="title_activity_welcome">Ласкаво просимо!</string>
     <string name="welcome_to_campus_app">Ласкаво просимо до Campus!</string>
     <string name="monday">Понеділок</string>
@@ -41,7 +40,6 @@
     <string name="invalid_auth_data">Логiн або пароль неправильний</string>
     <string name="login_into_campus">Увiйти до Campus</string>
     <string name="logo">Логотип</string>
-    <string name="build_date"></string>
     <string name="application_name">Назва додатка</string>
     <string name="about_summary">Показати iнформацiю про додаток</string>
     <string name="enter_your_group">Вкажiть Вашу групу</string>
@@ -49,7 +47,10 @@
     <string name="title_activity_login">Логiн</string>
     <string name="title_activity_about">Про додаток</string>
     <string name="title_activity_teacher">Викладачi</string>
-    <string name="build_version"></string>
+    <string name="build_name">Назва збірки</string>
+    <string name="build_date">Дата збірки</string>
+    <string name="build_type">Тип збірки</string>
+    <string name="build_version">Версія збірки</string>
     <string name="password">Пароль</string>
     <string name="login">Логiн</string>
     <string name="server_is_down">Сервер тимчасово недоступний, спробуйте пiзнiше</string>
@@ -59,4 +60,6 @@
     <string name="have_no_account">Немає акаунта?</string>
     <string name="help">Допомога</string>
     <string name="sign_in">Увiйти</string>
+    <string name="settings">Налаштування</string>
+    <string name="title_activity_schedule_item_detail"></string>
 </resources>
