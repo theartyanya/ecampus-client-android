@@ -73,8 +73,8 @@ public class MainActivity extends BaseActivity implements ScheduleFragment.Liste
         super.setUpNavDrawer(); //we can now findById our views
         super.scheduleSyncer();
 
-        spinnerList.add("Schedule");
-        spinnerList.add("Teachers");
+        spinnerList.add(getString(R.string.schedule));
+        spinnerList.add(getString(R.string.teachers));
         
         Toolbar toolbar = mToolbar;
         

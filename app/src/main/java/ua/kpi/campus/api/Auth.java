@@ -6,6 +6,7 @@ import android.util.Log;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -14,6 +15,7 @@ import org.json.JSONObject;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.UnknownHostException;
 
 import ua.kpi.campus.util.PrefUtils;
 
@@ -47,13 +49,18 @@ public class Auth extends AsyncTask<Context, Integer, Integer> {
                 case 403:
                     return 403; //access denied
                 case 500:
-                    Log.i("async","500");
                     return 500; //internal server problems
                 default:
-                    Log.i("async","0");
                     return 0; //unlisted code
             }
-        }catch(Exception e){
+        }catch(ClientProtocolException e){
+            e.printStackTrace();
+            return -2; //connection problems
+        }
+        catch(UnknownHostException e){
+            return -3;
+        }
+        catch(Exception e){
             Log.e("error",e.toString());
             e.printStackTrace();
             return -1; //exception raised

@@ -3,18 +3,12 @@ package ua.kpi.campus.ui;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-
-import com.rengwuxian.materialedittext.MaterialAutoCompleteTextView;
 
 import ua.kpi.campus.R;
-import ua.kpi.campus.util.Connectivity;
 import ua.kpi.campus.util.PrefUtils;
 
 public class LoginActivity extends ActionBarActivity {
@@ -41,48 +35,6 @@ public class LoginActivity extends ActionBarActivity {
                 
                 card.removeAllViews();
                 card.addView(View.inflate(LoginActivity.this, R.layout.group_edit_layout,null));
-            }
-        });
-
-        final MaterialAutoCompleteTextView textView = (MaterialAutoCompleteTextView) findViewById(R.id.group_input);
-        
-        String[] groups = getResources().getStringArray(R.array.Groups);
-        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(LoginActivity.this,
-                R.layout.auto_complete_item, groups);
-        
-        textView.setAdapter(adapter);
-        textView.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (textView.getText().toString().contains("И")) {
-                    String str = textView.getText().toString().replace('И', 'І');
-                    textView.setText(str);
-                    textView.setSelection(str.length());
-                }
-                if (textView.getText().toString().contains("и")) {
-                    String str = textView.getText().toString().replace('и', 'і');
-                    textView.setText(str);
-                    textView.setSelection(str.length());
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-        
-        findViewById(R.id.enter_group).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (Connectivity.isConnected(LoginActivity.this)) {
-                    
-                }
             }
         });
     }
