@@ -37,7 +37,7 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="Sign In"
+                android:text="@string/sign_in"
                 android:id="@+id/sign_in"
                 android:textSize="18sp"
                 android:textAllCaps="false"
@@ -50,7 +50,7 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="Help"
+                android:text="@string/help"
                 android:textAllCaps="false"
                 android:textSize="18sp"
                 android:textColor="@color/body_text_3"
@@ -66,7 +66,7 @@
             android:layout_marginTop="8dp"
             android:layout_gravity="center_horizontal"
             android:background="@android:color/transparent"
-            android:text="Have no account?"
+            android:text="@string/have_no_account"
             android:id="@+id/guest_mode"
             android:textColor="?attr/colorPrimary"
             android:textSize="16sp"

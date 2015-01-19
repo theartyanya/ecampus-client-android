@@ -1,14 +1,24 @@
 package ua.kpi.campus.ui;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
+import com.nispok.snackbar.Snackbar;
+import com.nispok.snackbar.SnackbarManager;
+import com.rengwuxian.materialedittext.MaterialEditText;
+
+import ua.kpi.campus.MainActivity;
 import ua.kpi.campus.R;
+import ua.kpi.campus.api.Auth;
+import ua.kpi.campus.api.SyncSchedule;
 import ua.kpi.campus.util.PrefUtils;
 
 public class LoginActivity extends ActionBarActivity {
@@ -60,5 +70,28 @@ public class LoginActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void signIn(View view) {
+        //TODO get off this from here
+        PrefUtils.putLoginAndPassword(getApplicationContext(), ((MaterialEditText)findViewById(R.id.login_input)).getText().toString(), ((MaterialEditText)findViewById(R.id.password_input)).getText().toString());
+        Auth authClient = new Auth(this);
+        authClient.execute();
+
+        try{
+            if(authClient.getStatus() == AsyncTask.Status.FINISHED && authClient.get()==200){
+
+            }
+        }catch(Exception e){
+
+        }
+    }
+
+    public void guestSignIn(View view) {
+        PrefUtils.putPrefStudyGroupName(this,((EditText)findViewById(R.id.group_input)).getText().toString());
+        SyncSchedule sync = SyncSchedule.getSyncSchedule(PrefUtils.getPrefStudyGroupName(this), this);
+        SyncSchedule.Connect connect = new SyncSchedule.Connect();
+        connect.execute(this);
+        PrefUtils.markScheduleUploaded(this);
     }
 }

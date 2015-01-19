@@ -63,5 +63,9 @@
     <string name="server_is_down">Server temporarily unavailable, please try again later</string>
     <string name="internal_error">Internal error occurred. Please let us know about it.</string>
     <string name="no_internet">Check your Internet connection</string>
+    <string name="in_progress">Wait please&#8230;</string>
+    <string name="sign_in">Sign in</string>
+    <string name="help">Help</string>
+    <string name="have_no_account">Have no account?</string>
 
 </resources>

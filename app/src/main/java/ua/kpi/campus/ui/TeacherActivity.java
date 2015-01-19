@@ -38,8 +38,8 @@ public class TeacherActivity extends BaseActivity {
         super.setUpNavDrawer();
         super.scheduleSyncer();
 
-        spinnerList.add("Schedule");
-        spinnerList.add("Teachers");
+        spinnerList.add(getString(R.string.schedule));
+        spinnerList.add(getString(R.string.teachers));
         
         Toolbar toolbar = mToolbar;
 

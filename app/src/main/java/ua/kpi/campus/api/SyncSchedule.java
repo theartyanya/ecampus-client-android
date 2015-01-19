@@ -2,8 +2,12 @@ package ua.kpi.campus.api;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
+
+import com.nispok.snackbar.Snackbar;
+import com.nispok.snackbar.SnackbarManager;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -17,9 +21,12 @@ import java.io.InputStreamReader;
 import java.net.URI;
 import java.util.ArrayList;
 
+import ua.kpi.campus.MainActivity;
+import ua.kpi.campus.R;
 import ua.kpi.campus.model.ScheduleItem;
 import ua.kpi.campus.model.TeacherItem;
 import ua.kpi.campus.provider.ScheduleProvider;
+import ua.kpi.campus.util.PrefUtils;
 
 /**
  * Created by doroshartyom on 08.01.2015.
@@ -43,25 +50,23 @@ public class SyncSchedule {
     private SyncSchedule(String groupName, Context context) {
         SyncSchedule.GROUP= groupName;
         SyncSchedule.context = context;
+
     }
 
     public static SyncSchedule getSyncSchedule(String groupName, Context context) {
 
         if (syncSchedule != null)
             return syncSchedule;
-
         syncSchedule = new SyncSchedule(groupName, context);
+
         return syncSchedule;
     }
 
     /*This method sends request to http://api.... and gets JSON object
         then we add Subject objects to database
      */
-    public static void getSchedule() throws Exception{
-
-        String URL = "http://api.rozklad.org.ua/v1/groups/"+GROUP+"/lessons";
-
-
+    public static void getSchedule(Context context) throws Exception{
+        String URL = "http://api.rozklad.org.ua/v1/groups/"+PrefUtils.getPrefStudyGroupName(context)+"/lessons";
         BufferedReader in = null;
 
         HttpClient client = new DefaultHttpClient();
@@ -148,6 +153,8 @@ public class SyncSchedule {
             Log.d(LOG_TAG, "Adding teacher #" + incre++);
             provider.addToTeachersDatabase(i);
         }
+
+
     }
 
     //Method sends request to APi and gets what week is now
@@ -167,19 +174,26 @@ public class SyncSchedule {
     }
 
     //Inner class to send requests not from main thread
-    public static class Connect extends AsyncTask<Void, Void, Void> {
-
+    public static class Connect extends AsyncTask<Context, Void, Void> {
+        Context asyncContext;
         @Override
-        public Void doInBackground(Void... arg) {
+        public Void doInBackground(Context... arg) {
             try {
+                asyncContext = arg[0];
                 Log.d(LOG_TAG, "Trying to get items");
-                getSchedule();
+                getSchedule(arg[0]);
                 return null;
 
             }catch (Exception e) {
+                PrefUtils.unMarkScheduleUploaded(arg[0]);
                 e.printStackTrace();
             }
             return null;
+        }
+        @Override
+        protected void onPostExecute(Void v){
+            if(PrefUtils.isTosAccepted(asyncContext))
+                asyncContext.startActivity(new Intent(asyncContext.getApplicationContext(), MainActivity.class));
         }
     }
 

@@ -55,4 +55,8 @@
     <string name="server_is_down">Сервер тимчасово недоступний, спробуйте пiзнiше</string>
     <string name="internal_error">Внутрішня помилка. Будь ласка, повiдомте нас про це</string>
     <string name="no_internet">Перевiрте з\'єднання</string>
+    <string name="in_progress">Зачекайте, будь-ласка&#8230;</string>
+    <string name="have_no_account">Немає акаунта?</string>
+    <string name="help">Допомога</string>
+    <string name="sign_in">Увiйти</string>
 </resources>

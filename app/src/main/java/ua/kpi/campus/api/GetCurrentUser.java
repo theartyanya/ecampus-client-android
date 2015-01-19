@@ -19,8 +19,6 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
 
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.net.UnknownHostException;
 
 import ua.kpi.campus.MainActivity;
@@ -28,12 +26,12 @@ import ua.kpi.campus.R;
 import ua.kpi.campus.util.PrefUtils;
 
 /**
- * Created by doroshartyom on 08.01.2015.
+ * Created by dmitry on 18.01.15.
  */
-public class Auth extends AsyncTask<Context, Integer, Integer> {
+public class GetCurrentUser extends AsyncTask<Context, Integer, Integer> {
 
     private Context mContext;
-    public Auth(Context context){
+    public GetCurrentUser(Context context){
         mContext=context;
     }
 
@@ -41,7 +39,7 @@ public class Auth extends AsyncTask<Context, Integer, Integer> {
     protected Integer doInBackground(Context... params) {
         HttpClient httpclient = new DefaultHttpClient();
 
-        HttpGet httpget = new HttpGet("http://campus-api.azurewebsites.net/User/Auth?login="+PrefUtils.getLogin(mContext)+"&password="+PrefUtils.getPassword(mContext));
+        HttpGet httpget = new HttpGet("http://campus-api.azurewebsites.net/User/GetCurrentUser?sessionId="+PrefUtils.getAuthKey(mContext));
         try{
 
             HttpResponse response = httpclient.execute(httpget);
@@ -49,48 +47,48 @@ public class Auth extends AsyncTask<Context, Integer, Integer> {
             String answer = EntityUtils.toString(httpEntity, "UTF-8");
 
             JSONObject jsonResponce = new JSONObject(answer);
-            Log.d("JSONanswer",jsonResponce.toString());
+            Log.d("JSONanswer", jsonResponce.toString());
             switch (jsonResponce.getInt("StatusCode")){
                 case 200:
-                    PrefUtils.putAuthKey(mContext, jsonResponce.getString("Data"));
+                    String groupName =  jsonResponce.getJSONObject("Data").getJSONArray("Personalities").getJSONObject(0).getString("StudyGroupName");
+                    PrefUtils.putPrefStudyGroupName(mContext, groupName);
+                    PrefUtils.putPrefStudyFullname(mContext, jsonResponce.getJSONObject("Data").getString("FullName"));
                     return 200; //it seems everything is good
                 case 403:
                     makeSnackBarInUI(403);
                     return 403; //access denied
                 case 500:
-                    makeSnackBarInUI(500);
                     return 500; //internal server problems
                 default:
-                    makeSnackBarInUI(0);
                     return 0; //unlisted code
             }
         }catch(ClientProtocolException e){
             e.printStackTrace();
-            makeSnackBarInUI(-2);
             return -2; //connection problems
         }
         catch(UnknownHostException e){
-            makeSnackBarInUI(-3);
             return -3;
         }
         catch(Exception e){
+            Log.e("error",e.toString());
             e.printStackTrace();
-            makeSnackBarInUI(-1);
             return -1; //exception raised
         }
     }
     @Override
     protected void onPostExecute(Integer result) {
         if(!PrefUtils.getAuthKey(mContext).isEmpty()){
-            SnackbarManager.show(
-                    Snackbar.with(mContext)
-                            .text(mContext.getString(R.string.in_progress)));
-            GetCurrentUser gcu = new GetCurrentUser(mContext);
-            gcu.execute();
+            if(!PrefUtils.isScheduleUploaded(mContext)){
+                SyncSchedule sync = SyncSchedule.getSyncSchedule(PrefUtils.getPrefStudyGroupName(mContext), mContext);
+                SyncSchedule.Connect connect = new SyncSchedule.Connect();
+                connect.execute(mContext);
+                PrefUtils.markScheduleUploaded(mContext);
+            }
+
+
         }
 
     }
-
     public void makeSnackBarInUI(final int i){
         new Handler(Looper.getMainLooper()).post(new Runnable() {
             @Override
@@ -99,7 +97,7 @@ public class Auth extends AsyncTask<Context, Integer, Integer> {
                     case 403:
                         SnackbarManager.show(
                                 Snackbar.with(mContext)
-                                        .text(mContext.getString(R.string.invalid_auth_data)));
+                                        .text("Invalid sessionID"));
                         break;
                     case 500:
                         SnackbarManager.show(
