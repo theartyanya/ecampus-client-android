@@ -15,7 +15,7 @@
         android:fontFamily="@string/font_fontFamily_medium"
         android:text="@string/enter_your_group" />
 
-    <com.rengwuxian.materialedittext.MaterialEditText
+    <com.rengwuxian.materialedittext.MaterialAutoCompleteTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/enter_your_group"

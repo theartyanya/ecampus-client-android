@@ -4,24 +4,31 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 
 import com.nispok.snackbar.Snackbar;
 import com.nispok.snackbar.SnackbarManager;
+import com.rengwuxian.materialedittext.MaterialAutoCompleteTextView;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
 import ua.kpi.campus.MainActivity;
 import ua.kpi.campus.R;
 import ua.kpi.campus.api.Auth;
 import ua.kpi.campus.api.SyncSchedule;
+import ua.kpi.campus.util.Connectivity;
 import ua.kpi.campus.util.PrefUtils;
 
 public class LoginActivity extends ActionBarActivity {
+    
+    MaterialAutoCompleteTextView textView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,8 +52,41 @@ public class LoginActivity extends ActionBarActivity {
                 
                 card.removeAllViews();
                 card.addView(View.inflate(LoginActivity.this, R.layout.group_edit_layout,null));
+
+                textView = (MaterialAutoCompleteTextView) findViewById(R.id.group_input);
+                String[] array = getResources().getStringArray(R.array.Groups);
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(LoginActivity.this,
+                        R.layout.auto_complete_item, array);
+                textView.setAdapter(adapter);
+                textView.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        if (textView.getText().toString().contains("И")) {
+                            String str = textView.getText().toString().replace('И', 'І');
+                            textView.setText(str);
+                            textView.setSelection(str.length());
+                        }
+                        if (textView.getText().toString().contains("и")) {
+                            String str = textView.getText().toString().replace('и', 'і');
+                            textView.setText(str);
+                            textView.setSelection(str.length());
+                        }
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+
+                    }
+                });
             }
         });
+
+        
     }
 
 
@@ -80,7 +120,7 @@ public class LoginActivity extends ActionBarActivity {
 
         try{
             if(authClient.getStatus() == AsyncTask.Status.FINISHED && authClient.get()==200){
-
+                isFinishedNormaly();
             }
         }catch(Exception e){
 
@@ -88,10 +128,25 @@ public class LoginActivity extends ActionBarActivity {
     }
 
     public void guestSignIn(View view) {
-        PrefUtils.putPrefStudyGroupName(this,((EditText)findViewById(R.id.group_input)).getText().toString());
-        SyncSchedule sync = SyncSchedule.getSyncSchedule(PrefUtils.getPrefStudyGroupName(this), this);
-        SyncSchedule.Connect connect = new SyncSchedule.Connect();
-        connect.execute(this);
-        PrefUtils.markScheduleUploaded(this);
+        if (Connectivity.isConnected(getApplicationContext())) {
+            PrefUtils.putPrefStudyGroupName(this, textView.getText().toString());
+            SyncSchedule sync = SyncSchedule.getSyncSchedule(PrefUtils.getPrefStudyGroupName(this), this);
+            SyncSchedule.Connect connect = new SyncSchedule.Connect();
+            connect.execute(this);
+            PrefUtils.markScheduleUploaded(this);
+            isFinishedNormaly();
+        } else {
+            
+        }
+        
+    }
+    
+    private void isFinishedNormaly() {
+        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.fade_in_activity, R.anim.fade_out_activity);
+        finish();
+        
+        
     }
 }

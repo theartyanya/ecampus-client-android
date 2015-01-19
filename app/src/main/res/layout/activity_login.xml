@@ -43,27 +43,6 @@
             </FrameLayout>
         </ScrollView>
 
-        <!-- Button bar -->
-        <LinearLayout
-            android:layout_height="48dp"
-            android:background="?attr/colorPrimary"
-            android:layout_gravity="bottom"
-            android:layout_width="match_parent">
-            <Button
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="match_parent"
-                android:background="@android:color/transparent"
-                android:text="@string/exit_login"
-                android:textColor="#8fff"
-                android:textSize="@dimen/text_size_medium"
-                android:textStyle="@integer/font_textStyle_medium"
-                android:fontFamily="@string/font_fontFamily_medium"
-                android:textAllCaps="true"
-                android:id="@+id/button_close" />
-
-        </LinearLayout>
-
 
     </FrameLayout>
 
