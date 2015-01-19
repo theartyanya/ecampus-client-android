@@ -192,8 +192,14 @@ public class SyncSchedule {
         }
         @Override
         protected void onPostExecute(Void v){
-            if(PrefUtils.isTosAccepted(asyncContext))
+            if(PrefUtils.getPrefStudyGroupName(asyncContext).isEmpty()){
+                PrefUtils.markLoginUndone(asyncContext);
+            }else if(PrefUtils.isTosAccepted(asyncContext)){
+                PrefUtils.markLoginDone(asyncContext);
+                PrefUtils.markScheduleUploaded(asyncContext);
                 asyncContext.startActivity(new Intent(asyncContext.getApplicationContext(), MainActivity.class));
+            }
+
         }
     }
 

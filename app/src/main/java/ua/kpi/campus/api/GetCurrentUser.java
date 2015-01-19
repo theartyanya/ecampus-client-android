@@ -53,6 +53,7 @@ public class GetCurrentUser extends AsyncTask<Context, Integer, Integer> {
                     String groupName =  jsonResponce.getJSONObject("Data").getJSONArray("Personalities").getJSONObject(0).getString("StudyGroupName");
                     PrefUtils.putPrefStudyGroupName(mContext, groupName);
                     PrefUtils.putPrefStudyFullname(mContext, jsonResponce.getJSONObject("Data").getString("FullName"));
+                    Log.d("fullname",PrefUtils.getPrefStudyFullname(mContext)+" group "+PrefUtils.getPrefStudyGroupName(mContext));
                     return 200; //it seems everything is good
                 case 403:
                     makeSnackBarInUI(403);
@@ -79,10 +80,10 @@ public class GetCurrentUser extends AsyncTask<Context, Integer, Integer> {
     protected void onPostExecute(Integer result) {
         if(!PrefUtils.getAuthKey(mContext).isEmpty()){
             if(!PrefUtils.isScheduleUploaded(mContext)){
-                SyncSchedule sync = SyncSchedule.getSyncSchedule(PrefUtils.getPrefStudyGroupName(mContext), mContext);
+                //SyncSchedule sync = SyncSchedule.getSyncSchedule(PrefUtils.getPrefStudyGroupName(mContext), mContext);
                 SyncSchedule.Connect connect = new SyncSchedule.Connect();
                 connect.execute(mContext);
-                PrefUtils.markScheduleUploaded(mContext);
+
             }
 
 

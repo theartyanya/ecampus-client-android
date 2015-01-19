@@ -100,9 +100,10 @@ public class BaseActivity extends ActionBarActivity {
         
         
 		checkForAgreement();
+        Log.d(LOG_TAG,""+PrefUtils.isLoginDone(this));
         checkForLoginDone();
 		setUpShakeListener();
-        
+
 		//Initializing mHandler
 		mHandler = new Handler();
 	}
@@ -167,6 +168,7 @@ public class BaseActivity extends ActionBarActivity {
 				invalidateOptionsMenu();
 			}
 
+
 		};
 
 		//Adding items to  Nav Drawer
@@ -181,7 +183,8 @@ public class BaseActivity extends ActionBarActivity {
 
 		//Syncs Toggle
 		mDrawerToggle.syncState();
-
+        ((TextView)findViewById(R.id.profile_name_text)).setText(PrefUtils.getPrefStudyFullname(this));
+        ((TextView)findViewById(R.id.profile_email_text)).setText(PrefUtils.getPrefStudyGroupName(this));
 	}
 
 	private void setUpShakeListener(){
@@ -452,10 +455,8 @@ public class BaseActivity extends ActionBarActivity {
     }
     
     protected void checkForLoginDone() {
-        if (!PrefUtils.isLoginDone(this)) {
-            Intent intent = new Intent(this, LoginActivity.class);
-            startActivity(intent);
-            finish();
+        if (!PrefUtils.isLoginDone(this) && PrefUtils.isTosAccepted(this)) {
+            startTopLevelActivity(this, LoginActivity.class);
         }
         
     }

@@ -115,12 +115,12 @@ public class PrefUtils {
 
     public static String getPrefStudyFullname(final Context context){
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-        return sp.getString(PREF_STUDY_FULLNAME,"");
+        return sp.getString(PREF_STUDY_FULLNAME,"Anonymous");
     }
 
-    public static void putPrefStudyFullname(final Context context, String groupName){
+    public static void putPrefStudyFullname(final Context context, String fullname){
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-        sp.edit().putString(PREF_STUDY_FULLNAME, groupName).commit();
+        sp.edit().putString(PREF_STUDY_FULLNAME, fullname).commit();
     }
     
     public static boolean isLoginDone(final Context context) {

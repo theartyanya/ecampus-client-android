@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ScrollView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import ua.kpi.campus.provider.ScheduleProvider;
 import ua.kpi.campus.ui.ScheduleAdapter;
@@ -26,6 +27,7 @@ import ua.kpi.campus.ui.ScheduleFragment;
 import ua.kpi.campus.ui.SpinnerAdapter;
 import ua.kpi.campus.ui.TeacherActivity;
 import ua.kpi.campus.ui.widgets.SlidingTabLayout;
+import ua.kpi.campus.util.PrefUtils;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -76,7 +78,7 @@ public class MainActivity extends BaseActivity implements ScheduleFragment.Liste
 
         spinnerList.add(getString(R.string.schedule));
         spinnerList.add(getString(R.string.teachers));
-        
+
         Toolbar toolbar = mToolbar;
         
         getSupportActionBar().setDisplayShowTitleEnabled(false);

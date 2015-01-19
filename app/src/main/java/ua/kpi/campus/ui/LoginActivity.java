@@ -112,14 +112,6 @@ public class LoginActivity extends ActionBarActivity {
             PrefUtils.putLoginAndPassword(getApplicationContext(), ((MaterialEditText) findViewById(R.id.login_input)).getText().toString(), ((MaterialEditText) findViewById(R.id.password_input)).getText().toString());
             Auth authClient = new Auth(this);
             authClient.execute();
-
-            try {
-                if (authClient.getStatus() == AsyncTask.Status.FINISHED && authClient.get() == 200) {
-                    isFinishedNormaly();
-                }
-            } catch (Exception e) {
-
-            }
         } else {
             SnackbarManager.show(
                     Snackbar.with(getApplicationContext())
@@ -144,7 +136,6 @@ public class LoginActivity extends ActionBarActivity {
             SyncSchedule.Connect connect = new SyncSchedule.Connect();
             connect.execute(this);
             PrefUtils.markScheduleUploaded(this);
-            isFinishedNormaly();
         } else {
             SnackbarManager.show(
                     Snackbar.with(getApplicationContext())
@@ -162,14 +153,6 @@ public class LoginActivity extends ActionBarActivity {
         }
         
     }
-    
-    private void isFinishedNormaly() {
-        PrefUtils.markLoginDone(this);
-        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-        startActivity(intent);
-        overridePendingTransition(R.anim.fade_in_activity, R.anim.fade_out_activity);
-        finish();
-        
-        
-    }
+
+
 }

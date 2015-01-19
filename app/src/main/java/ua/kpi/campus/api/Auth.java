@@ -82,10 +82,12 @@ public class Auth extends AsyncTask<Context, Integer, Integer> {
     @Override
     protected void onPostExecute(Integer result) {
         if(!PrefUtils.getAuthKey(mContext).isEmpty()){
+            PrefUtils.markLoginDone(mContext);
             SnackbarManager.show(
                     Snackbar.with(mContext)
                             .text(mContext.getString(R.string.in_progress)));
             GetCurrentUser gcu = new GetCurrentUser(mContext);
+
             gcu.execute();
         }
 
