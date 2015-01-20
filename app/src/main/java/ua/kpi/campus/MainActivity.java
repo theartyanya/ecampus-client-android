@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v13.app.FragmentPagerAdapter;
+import android.support.v13.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
@@ -48,7 +49,9 @@ public class MainActivity extends BaseActivity implements ScheduleFragment.Liste
     SlidingTabLayout slidingTabLayout = null;
     ViewPager viewPager = null;
     MyViewPagerAdapter viewPagerAdapter;
-    SwipeRefreshLayout refreshLayout;
+    
+    SwipeRefreshLayout firstRefreshLayout, secondRefreshLayout;
+    
     private Set<ScheduleFragment> mScheduleFragments = new HashSet<ScheduleFragment>();
 
     private List<String> spinnerList = new ArrayList<String>();
@@ -69,7 +72,6 @@ public class MainActivity extends BaseActivity implements ScheduleFragment.Liste
     
 
     private ScheduleAdapter[] mScheduleAdapters = new ScheduleAdapter[2];
-    final String welcomeScreenShownPref = "welcomeScreenShown";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,10 +80,6 @@ public class MainActivity extends BaseActivity implements ScheduleFragment.Liste
         super.checkForLoginDone();
         super.setUpNavDrawer(); //we can now findById our views
         super.scheduleSyncer();
-
-        refreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh);
-        refreshLayout.setColorScheme(R.color.green ,R.color.red, R.color.blue, R.color.orange);
-        refreshLayout.setOnRefreshListener(this);
 
         spinnerList.add(getString(R.string.schedule));
         spinnerList.add(getString(R.string.teachers));
@@ -145,6 +143,7 @@ public class MainActivity extends BaseActivity implements ScheduleFragment.Liste
         viewPagerAdapter = new MyViewPagerAdapter(getFragmentManager());
         viewPager.setAdapter(viewPagerAdapter);
 
+        
         slidingTabLayout = (SlidingTabLayout) findViewById(R.id.sliding_tabs);
         
         slidingTabLayout.setCustomTabView(R.layout.tab_indicator, android.R.id.text1);
@@ -169,6 +168,7 @@ public class MainActivity extends BaseActivity implements ScheduleFragment.Liste
                 public void onPageScrollStateChanged(int state) {}
             });
         }
+        
     }
 
     @Override
@@ -200,6 +200,8 @@ public class MainActivity extends BaseActivity implements ScheduleFragment.Liste
         int dayIndex = fragment.getArguments().getInt(ARG_SCHEDULE_WEEK_INDEX, 0);
         fragment.setListAdapter(mScheduleAdapters[dayIndex]);
         fragment.setListAdapter(mScheduleAdapters[dayIndex]);
+        
+        
     }
 
     @Override
@@ -214,7 +216,8 @@ public class MainActivity extends BaseActivity implements ScheduleFragment.Liste
 
     @Override
     public void onRefresh() {
-        SyncSchedule sync = SyncSchedule.getSyncSchedule(PrefUtils.getPrefStudyGroupName(this), getApplicationContext());
+        SyncSchedule sync = SyncSchedule.getSyncSchedule(
+                PrefUtils.getPrefStudyGroupName(this), this);
 
         SyncSchedule.Connect connect = new SyncSchedule.Connect(this);
         connect.execute(this);
@@ -227,7 +230,8 @@ public class MainActivity extends BaseActivity implements ScheduleFragment.Liste
 
     @Override
     public void taskCompleted(boolean completed) {
-        refreshLayout.setRefreshing(false);
+        firstRefreshLayout.setRefreshing(false);
+        secondRefreshLayout.setRefreshing(false);
 
     }
 

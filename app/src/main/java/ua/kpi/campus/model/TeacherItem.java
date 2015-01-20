@@ -9,6 +9,7 @@ public class TeacherItem implements Serializable {
     
     private int TEACHER_ID;
     private String TEACHER_NAME;
+    private String TEACHER_SUBJECT;
 
     public TeacherItem() {
     }
@@ -53,5 +54,14 @@ public class TeacherItem implements Serializable {
         int result = TEACHER_ID;
         result = 31 * result + TEACHER_NAME.hashCode();
         return result;
+    }
+
+    public String getTeacherSubject() {
+        return TEACHER_SUBJECT;
+    }
+
+    public TeacherItem setTeacherSubject(String TEACHER_SUBJECT) {
+        this.TEACHER_SUBJECT = TEACHER_SUBJECT;
+        return this;
     }
 }

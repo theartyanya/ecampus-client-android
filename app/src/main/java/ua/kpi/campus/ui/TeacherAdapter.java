@@ -12,6 +12,9 @@ import android.widget.ListAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 
 import ua.kpi.campus.R;
 import ua.kpi.campus.model.TeacherItem;
@@ -33,6 +36,13 @@ public class TeacherAdapter implements ListAdapter {
         this.mContext=mContext;
         scheduleProvider = new ScheduleProvider(mContext);
         mItems = scheduleProvider.getTeachersFromDatabase();
+
+        Collections.sort(mItems, new Comparator<TeacherItem>() {
+            @Override
+            public int compare(TeacherItem lhs, TeacherItem rhs) {
+                return lhs.getTeacherName().compareTo(rhs.getTeacherName());
+            }
+        });
     }
 
     @Override
@@ -97,6 +107,8 @@ public class TeacherAdapter implements ListAdapter {
         view = ((LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE))
                 .inflate(layoutResId, parent, false);
         ((TextView)view.findViewById(R.id.teacher_name)).setText(item.getTeacherName());
+        ((TextView)view.findViewById(R.id.teacher_subject)).setText(item.getTeacherSubject());
+        ((TextView)view.findViewById(R.id.name_label)).setText(Character.toString(item.getTeacherName().charAt(0)));
 
 
         return view;

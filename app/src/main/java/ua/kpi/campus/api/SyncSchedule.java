@@ -113,6 +113,7 @@ public class SyncSchedule {
                 String teacher_name = teacher.getString("teacher_name");
 
                 teacherItem.setTeacherId(teacher_id)
+                        .setTeacherSubject(obj.getString("lesson_name"))
                         .setTeacherName(teacher_name);
 
                 

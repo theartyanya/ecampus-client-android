@@ -48,6 +48,7 @@ public class ScheduleDatabase extends SQLiteOpenHelper {
             + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
             + TeacherColumns.TEACHER_ID + " INTEGER NOT NULL,"
             + TeacherColumns.TEACHER_NAME + " TEXT,"
+            + TeacherColumns.TEACHER_SUBJECT + " TEXT,"
             +"UNIQUE (" + TeacherColumns.TEACHER_ID + ") ON CONFLICT REPLACE)");
 
         Log.d(LOG_TAG, "Databases created");

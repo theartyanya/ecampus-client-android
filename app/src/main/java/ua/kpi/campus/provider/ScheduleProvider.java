@@ -75,6 +75,7 @@ public class ScheduleProvider {
             //Adding content values
             cv.put(TeacherColumns.TEACHER_ID, item.getTeacherId());
             cv.put(TeacherColumns.TEACHER_NAME, item.getTeacherName());
+            cv.put(TeacherColumns.TEACHER_SUBJECT, item.getTeacherSubject());
 
             db.insert(TEACHERS, null, cv);
         }
@@ -150,12 +151,14 @@ public class ScheduleProvider {
         if (cursor.moveToFirst()) {
             int teacher_id = cursor.getColumnIndex(TeacherColumns.TEACHER_ID);
             int teacher_name = cursor.getColumnIndex(TeacherColumns.TEACHER_NAME);
+            int teacher_subject = cursor.getColumnIndex(TeacherColumns.TEACHER_SUBJECT);
 
 
             do {
                 TeacherItem item = new TeacherItem();
 
                 item.setTeacherId(cursor.getInt(teacher_id))
+                    .setTeacherSubject(cursor.getString(teacher_subject))
                     .setTeacherName(cursor.getString(teacher_name));
                 
                 items.add(item);

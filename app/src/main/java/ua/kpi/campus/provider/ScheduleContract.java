@@ -21,5 +21,6 @@ public class ScheduleContract {
     interface TeacherColumns {
         String TEACHER_ID = "teacher_id";
         String TEACHER_NAME = "teacher_name";
+        String TEACHER_SUBJECT = "teacher_subject";
     }
 }
