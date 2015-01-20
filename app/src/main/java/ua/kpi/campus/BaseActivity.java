@@ -39,7 +39,7 @@ import java.util.ArrayList;
  *
  * infm created it with love on 1/16/15. Enjoy ;)
  */
-public class BaseActivity extends ActionBarActivity {
+public class BaseActivity extends ActionBarActivity implements SyncSchedule.CallBacks{
 	//NavDrawer Items
 	protected static final int NAVDRAWER_ITEM_MY_SCHEDULE = 0;
 	protected static final int NAVDRAWER_ITEM_MY_TASKS = 1;
@@ -448,7 +448,7 @@ public class BaseActivity extends ActionBarActivity {
             Log.i(LOG_TAG, groupName);
             SyncSchedule sync = SyncSchedule.getSyncSchedule(groupName, getApplicationContext());
 
-            SyncSchedule.Connect connect = new SyncSchedule.Connect();
+            SyncSchedule.Connect connect = new SyncSchedule.Connect(this);
             connect.execute(this);
             PrefUtils.markScheduleUploaded(this);
         }
@@ -459,5 +459,15 @@ public class BaseActivity extends ActionBarActivity {
             startTopLevelActivity(this, LoginActivity.class);
         }
         
+    }
+
+    @Override
+    public Context getContext() {
+        return this;
+    }
+
+    @Override
+    public void taskCompleted(boolean completed) {
+
     }
 }

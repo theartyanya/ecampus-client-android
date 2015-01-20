@@ -2,8 +2,10 @@ package ua.kpi.campus.ui;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -22,15 +24,18 @@ import java.util.List;
 import ua.kpi.campus.BaseActivity;
 import ua.kpi.campus.MainActivity;
 import ua.kpi.campus.R;
+import ua.kpi.campus.api.SyncSchedule;
 import ua.kpi.campus.provider.ScheduleProvider;
+import ua.kpi.campus.util.PrefUtils;
 
 /**
  * Created by Admin on 17.01.2015.
  */
-public class TeacherActivity extends BaseActivity {
+public class TeacherActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener, SyncSchedule.CallBacks {
 
     private List<String> spinnerList = new ArrayList<String>();
     
+    SwipeRefreshLayout refreshLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +43,10 @@ public class TeacherActivity extends BaseActivity {
         super.checkForLoginDone();
         super.setUpNavDrawer();
         super.scheduleSyncer();
+
+        refreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh);
+        refreshLayout.setColorScheme(R.color.green ,R.color.red, R.color.blue, R.color.orange);
+        refreshLayout.setOnRefreshListener(this);
 
         spinnerList.add(getString(R.string.schedule));
         spinnerList.add(getString(R.string.teachers));
@@ -111,5 +120,24 @@ public class TeacherActivity extends BaseActivity {
             startSettingsActivity();
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onRefresh() {
+        SyncSchedule sync = SyncSchedule.getSyncSchedule(PrefUtils.getPrefGroupName(this), getApplicationContext());
+
+        SyncSchedule.Connect connect = new SyncSchedule.Connect(this);
+        connect.execute(this);
+    }
+
+    @Override
+    public Context getContext() {
+        return this;
+    }
+
+    @Override
+    public void taskCompleted(boolean completed) {
+        refreshLayout.setRefreshing(false);
+
     }
 }

@@ -47,6 +47,12 @@ public class SyncSchedule {
     private static ArrayList<ScheduleItem> itemsArrayList = new ArrayList<ScheduleItem>();
     private static ArrayList<TeacherItem> teacherList = new ArrayList<TeacherItem>();
 
+
+    public interface CallBacks {
+        Context getContext();
+        void taskCompleted(boolean completed);
+    }
+    
     private SyncSchedule(String groupName, Context context) {
         SyncSchedule.GROUP= groupName;
         SyncSchedule.context = context;
@@ -176,6 +182,13 @@ public class SyncSchedule {
     //Inner class to send requests not from main thread
     public static class Connect extends AsyncTask<Context, Void, Void> {
         Context asyncContext;
+        
+        CallBacks callBacks;
+        
+        public Connect(CallBacks mCallBacks) {
+            this.callBacks = mCallBacks;
+            
+        }
         @Override
         public Void doInBackground(Context... arg) {
             try {
@@ -192,12 +205,13 @@ public class SyncSchedule {
         }
         @Override
         protected void onPostExecute(Void v){
+            callBacks.taskCompleted(true);
+            
             if(PrefUtils.getPrefStudyGroupName(asyncContext).isEmpty()){
                 PrefUtils.markLoginUndone(asyncContext);
             }else if(PrefUtils.isTosAccepted(asyncContext)){
                 PrefUtils.markLoginDone(asyncContext);
                 PrefUtils.markScheduleUploaded(asyncContext);
-                asyncContext.startActivity(new Intent(asyncContext.getApplicationContext(), MainActivity.class));
             }
 
         }

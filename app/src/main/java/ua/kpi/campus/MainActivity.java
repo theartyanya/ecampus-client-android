@@ -3,11 +3,13 @@ package ua.kpi.campus;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.ListFragment;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -19,8 +21,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ScrollView;
 import android.widget.Spinner;
-import android.widget.TextView;
 
+import ua.kpi.campus.api.SyncSchedule;
 import ua.kpi.campus.provider.ScheduleProvider;
 import ua.kpi.campus.ui.ScheduleAdapter;
 import ua.kpi.campus.ui.ScheduleFragment;
@@ -35,7 +37,7 @@ import java.util.List;
 import java.util.Set;
 
 
-public class MainActivity extends BaseActivity implements ScheduleFragment.Listener {
+public class MainActivity extends BaseActivity implements ScheduleFragment.Listener, SwipeRefreshLayout.OnRefreshListener, SyncSchedule.CallBacks {
 
     //private LinearLayout mAccountListContainer;
     //private ImageView mExpandAccountBoxIndicator;
@@ -46,6 +48,7 @@ public class MainActivity extends BaseActivity implements ScheduleFragment.Liste
     SlidingTabLayout slidingTabLayout = null;
     ViewPager viewPager = null;
     MyViewPagerAdapter viewPagerAdapter;
+    SwipeRefreshLayout refreshLayout;
     private Set<ScheduleFragment> mScheduleFragments = new HashSet<ScheduleFragment>();
 
     private List<String> spinnerList = new ArrayList<String>();
@@ -75,6 +78,10 @@ public class MainActivity extends BaseActivity implements ScheduleFragment.Liste
         super.checkForLoginDone();
         super.setUpNavDrawer(); //we can now findById our views
         super.scheduleSyncer();
+
+        refreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh);
+        refreshLayout.setColorScheme(R.color.green ,R.color.red, R.color.blue, R.color.orange);
+        refreshLayout.setOnRefreshListener(this);
 
         spinnerList.add(getString(R.string.schedule));
         spinnerList.add(getString(R.string.teachers));
@@ -203,6 +210,25 @@ public class MainActivity extends BaseActivity implements ScheduleFragment.Liste
     @Override
     public void onFragmentDetached(ScheduleFragment fragment) {
         mScheduleFragments.remove(fragment);
+    }
+
+    @Override
+    public void onRefresh() {
+        SyncSchedule sync = SyncSchedule.getSyncSchedule(PrefUtils.getPrefGroupName(this), getApplicationContext());
+
+        SyncSchedule.Connect connect = new SyncSchedule.Connect(this);
+        connect.execute(this);
+    }
+
+    @Override
+    public Context getContext() {
+        return this;
+    }
+
+    @Override
+    public void taskCompleted(boolean completed) {
+        refreshLayout.setRefreshing(false);
+
     }
 
     private class MyViewPagerAdapter extends FragmentPagerAdapter {

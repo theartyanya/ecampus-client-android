@@ -21,4 +21,9 @@
     <color name="secondary_text">#727272</color>
     <color name="card_pressed">#10000000</color>
     <color name="card_activated">#ADE1F4</color>
+
+    <color name="green">#009688</color>
+    <color name="red">#f44336</color>
+    <color name="blue">#2196f3</color>
+    <color name="orange">#ffc107</color>
 </resources>

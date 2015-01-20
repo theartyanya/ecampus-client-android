@@ -1,5 +1,6 @@
 package ua.kpi.campus.ui;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
@@ -27,7 +28,7 @@ import ua.kpi.campus.api.SyncSchedule;
 import ua.kpi.campus.util.Connectivity;
 import ua.kpi.campus.util.PrefUtils;
 
-public class LoginActivity extends ActionBarActivity {
+public class LoginActivity extends ActionBarActivity implements SyncSchedule.CallBacks{
     
     MaterialAutoCompleteTextView textView;
 
@@ -133,7 +134,7 @@ public class LoginActivity extends ActionBarActivity {
         if (Connectivity.isConnected(getApplicationContext())) {
             PrefUtils.putPrefStudyGroupName(this, textView.getText().toString());
             SyncSchedule sync = SyncSchedule.getSyncSchedule(PrefUtils.getPrefStudyGroupName(this), this);
-            SyncSchedule.Connect connect = new SyncSchedule.Connect();
+            SyncSchedule.Connect connect = new SyncSchedule.Connect(this);
             connect.execute(this);
             PrefUtils.markScheduleUploaded(this);
         } else {
@@ -155,4 +156,13 @@ public class LoginActivity extends ActionBarActivity {
     }
 
 
+    @Override
+    public Context getContext() {
+        return this;
+    }
+
+    @Override
+    public void taskCompleted(boolean completed) {
+
+    }
 }

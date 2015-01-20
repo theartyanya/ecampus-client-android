@@ -81,8 +81,8 @@ public class GetCurrentUser extends AsyncTask<Context, Integer, Integer> {
         if(!PrefUtils.getAuthKey(mContext).isEmpty()){
             if(!PrefUtils.isScheduleUploaded(mContext)){
                 //SyncSchedule sync = SyncSchedule.getSyncSchedule(PrefUtils.getPrefStudyGroupName(mContext), mContext);
-                SyncSchedule.Connect connect = new SyncSchedule.Connect();
-                connect.execute(mContext);
+                //SyncSchedule.Connect connect = new SyncSchedule.Connect();
+                //connect.execute(mContext);
 
             }
 
