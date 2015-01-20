@@ -214,7 +214,7 @@ public class MainActivity extends BaseActivity implements ScheduleFragment.Liste
 
     @Override
     public void onRefresh() {
-        SyncSchedule sync = SyncSchedule.getSyncSchedule(PrefUtils.getPrefGroupName(this), getApplicationContext());
+        SyncSchedule sync = SyncSchedule.getSyncSchedule(PrefUtils.getPrefStudyGroupName(this), getApplicationContext());
 
         SyncSchedule.Connect connect = new SyncSchedule.Connect(this);
         connect.execute(this);

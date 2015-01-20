@@ -184,10 +184,16 @@ public class SyncSchedule {
         Context asyncContext;
         
         CallBacks callBacks;
+        Boolean useContext=false;
         
         public Connect(CallBacks mCallBacks) {
             this.callBacks = mCallBacks;
             
+        }
+
+        public Connect(Context asyncContext,Boolean useContext){
+            this.asyncContext=asyncContext;
+            this.useContext=useContext;
         }
         @Override
         public Void doInBackground(Context... arg) {
@@ -205,6 +211,7 @@ public class SyncSchedule {
         }
         @Override
         protected void onPostExecute(Void v){
+            if(!useContext)
             callBacks.taskCompleted(true);
             
             if(PrefUtils.getPrefStudyGroupName(asyncContext).isEmpty()){
@@ -212,6 +219,7 @@ public class SyncSchedule {
             }else if(PrefUtils.isTosAccepted(asyncContext)){
                 PrefUtils.markLoginDone(asyncContext);
                 PrefUtils.markScheduleUploaded(asyncContext);
+                asyncContext.startActivity(new Intent(asyncContext.getApplicationContext(), MainActivity.class));
             }
 
         }

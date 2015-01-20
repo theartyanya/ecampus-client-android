@@ -21,6 +21,7 @@ import java.util.Calendar;
 
 import ua.kpi.campus.R;
 import ua.kpi.campus.api.Auth;
+import ua.kpi.campus.api.GetCurrentUser;
 import ua.kpi.campus.model.ScheduleItem;
 import ua.kpi.campus.util.PrefUtils;
 
@@ -28,7 +29,7 @@ public class ScheduleItemDetail extends ActionBarActivity {
 
     private Toolbar toolbar;
     private ActionBar actionBar;
-    
+    private final String LOG_TAG = "ScheduleItemDetail";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +41,7 @@ public class ScheduleItemDetail extends ActionBarActivity {
         
         actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
+        Log.d(LOG_TAG, GetCurrentUser.getFaculty(this));
     }
 
 
