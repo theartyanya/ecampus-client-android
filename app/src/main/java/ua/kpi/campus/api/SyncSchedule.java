@@ -47,7 +47,6 @@ public class SyncSchedule {
     private static ArrayList<ScheduleItem> itemsArrayList = new ArrayList<ScheduleItem>();
     private static ArrayList<TeacherItem> teacherList = new ArrayList<TeacherItem>();
 
-
     public interface CallBacks {
         Context getContext();
         void taskCompleted(boolean completed);

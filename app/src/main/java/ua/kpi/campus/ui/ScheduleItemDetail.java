@@ -156,6 +156,7 @@ public class ScheduleItemDetail extends ActionBarActivity {
     }
 
     public void auth(View view) {
-
+        Auth.exit(this);
+        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
     }
 }

@@ -16,6 +16,9 @@ public class ScheduleContract {
         String LESSON_WEEK = "lesson_week";
         String TIME_START = "time_start";
         String TIME_END = "time_end";
+        String GROUP_ID="group_id";
+        String GROUP_NAME="group_name";
+
     }
 
     interface TeacherColumns {

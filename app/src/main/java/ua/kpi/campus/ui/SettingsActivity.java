@@ -56,6 +56,7 @@ public class SettingsActivity extends ActionBarActivity {
         // use action bar here
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
+
     }
 
 

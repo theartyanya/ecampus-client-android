@@ -22,9 +22,13 @@ import org.json.JSONObject;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 
 import ua.kpi.campus.MainActivity;
 import ua.kpi.campus.R;
+import ua.kpi.campus.model.TeacherItem;
+import ua.kpi.campus.provider.ScheduleDatabase;
+import ua.kpi.campus.provider.ScheduleProvider;
 import ua.kpi.campus.util.PrefUtils;
 
 /**
@@ -131,6 +135,15 @@ public class Auth extends AsyncTask<Context, Integer, Integer> {
                 }
             }
         });
+    }
+
+    public static void exit(Context context){
+        PrefUtils.unMarkScheduleUploaded(context);
+        PrefUtils.markLoginUndone(context);
+        ScheduleDatabase.deleteDatabase(context);
+        ScheduleProvider sp = new ScheduleProvider(context);
+        ArrayList<TeacherItem> item = sp.getTeachersFromDatabase();
+        Log.d("EXIT",item.get(0).toString());
     }
 
 }

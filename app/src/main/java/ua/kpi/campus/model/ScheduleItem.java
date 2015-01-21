@@ -7,17 +7,17 @@ import java.io.Serializable;
  */
 public class ScheduleItem implements Serializable {
 
-    private int LESSON_ID;
-    private int DAY_NUMBER;
-    private int LESSON_NUMBER;
-    private String LESSON_NAME;
-    private String LESSON_ROOM;
-    private String TEACHER_NAME;
-    private int TEACHER_ID;
-    private int LESSON_WEEK;
-    private String TIME_START;
-    private String TIME_END;
-    private boolean DEVIDER;
+    protected int LESSON_ID;
+    protected int DAY_NUMBER;
+    protected int LESSON_NUMBER;
+    protected String LESSON_NAME;
+    protected String LESSON_ROOM;
+    protected String TEACHER_NAME;
+    protected int TEACHER_ID;
+    protected int LESSON_WEEK;
+    protected String TIME_START;
+    protected String TIME_END;
+    protected boolean DEVIDER;
 
 
     public int getLessonId() {
