@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 import ua.kpi.campus.R;
 import ua.kpi.campus.model.AboutItem;
+import ua.kpi.campus.ui.adapters.AboutListAdapter;
 import ua.kpi.campus.util.ConfigUtils;
 
 public class AboutActivity extends ActionBarActivity {

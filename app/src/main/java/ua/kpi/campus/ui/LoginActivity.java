@@ -163,6 +163,8 @@ public class LoginActivity extends ActionBarActivity implements SyncSchedule.Cal
 
     @Override
     public void taskCompleted(boolean completed) {
-
+        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

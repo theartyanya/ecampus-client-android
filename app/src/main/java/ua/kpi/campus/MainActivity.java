@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v13.app.FragmentPagerAdapter;
-import android.support.v13.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
@@ -23,11 +22,15 @@ import android.widget.AdapterView;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 
+import com.nispok.snackbar.Snackbar;
+import com.nispok.snackbar.SnackbarManager;
+import com.nispok.snackbar.listeners.ActionClickListener;
+
 import ua.kpi.campus.api.SyncSchedule;
 import ua.kpi.campus.provider.ScheduleProvider;
-import ua.kpi.campus.ui.ScheduleAdapter;
-import ua.kpi.campus.ui.ScheduleFragment;
-import ua.kpi.campus.ui.SpinnerAdapter;
+import ua.kpi.campus.ui.adapters.ScheduleAdapter;
+import ua.kpi.campus.ui.fragments.ScheduleFragment;
+import ua.kpi.campus.ui.adapters.SpinnerAdapter;
 import ua.kpi.campus.ui.TeacherActivity;
 import ua.kpi.campus.ui.widgets.SlidingTabLayout;
 import ua.kpi.campus.util.PrefUtils;
@@ -49,6 +52,8 @@ public class MainActivity extends BaseActivity implements ScheduleFragment.Liste
     SlidingTabLayout slidingTabLayout = null;
     ViewPager viewPager = null;
     MyViewPagerAdapter viewPagerAdapter;
+
+    ScheduleProvider scheduleProvider;
     
     SwipeRefreshLayout firstRefreshLayout, secondRefreshLayout;
     
@@ -135,7 +140,7 @@ public class MainActivity extends BaseActivity implements ScheduleFragment.Liste
             mScheduleAdapters[i] = new ScheduleAdapter(this);
         }
         
-        ScheduleProvider scheduleProvider = new ScheduleProvider(getApplicationContext());
+        scheduleProvider = new ScheduleProvider(getApplicationContext());
 
         mScheduleAdapters[0].updateItems(scheduleProvider.getScheduleItemsFromDatabase(1));
         mScheduleAdapters[1].updateItems(scheduleProvider.getScheduleItemsFromDatabase(2));
@@ -230,8 +235,6 @@ public class MainActivity extends BaseActivity implements ScheduleFragment.Liste
 
     @Override
     public void taskCompleted(boolean completed) {
-        firstRefreshLayout.setRefreshing(false);
-        secondRefreshLayout.setRefreshing(false);
 
     }
 
@@ -269,6 +272,26 @@ public class MainActivity extends BaseActivity implements ScheduleFragment.Liste
             slidingTabLayout.setContentDescription(i,
                     getString(R.string.my_schedule_tab_desc_a11y, getWeekName(i)));
         }
+    }
+    
+    public void notifyAdapters() {
+        //Updating fragments
+        mScheduleAdapters[0].updateItems(scheduleProvider.getScheduleItemsFromDatabase(1));
+        mScheduleAdapters[1].updateItems(scheduleProvider.getScheduleItemsFromDatabase(2));
+
+        SnackbarManager.show(
+                Snackbar.with(getApplicationContext())
+                        .text(getResources().getString(R.string.up_to_date))
+                        .actionLabel(getResources().getString(R.string.ok))
+                        .actionColor(getResources().getColor(R.color.primary))
+                        .actionListener(new ActionClickListener() {
+                            @Override
+                            public void onActionClicked(Snackbar snackbar) {
+                            }
+                        })
+                        .duration(Snackbar.SnackbarDuration.LENGTH_SHORT)
+                , this);
+
     }
 
 }

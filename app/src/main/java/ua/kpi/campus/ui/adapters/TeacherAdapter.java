@@ -1,4 +1,4 @@
-package ua.kpi.campus.ui;
+package ua.kpi.campus.ui.adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -19,6 +19,7 @@ import java.util.Comparator;
 import ua.kpi.campus.R;
 import ua.kpi.campus.model.TeacherItem;
 import ua.kpi.campus.provider.ScheduleProvider;
+import ua.kpi.campus.ui.TeacherScheduleActivity;
 
 /**
  * Created by dmitry on 17.01.15.
@@ -109,6 +110,16 @@ public class TeacherAdapter implements ListAdapter {
         ((TextView)view.findViewById(R.id.teacher_name)).setText(item.getTeacherName());
         ((TextView)view.findViewById(R.id.teacher_subject)).setText(item.getTeacherSubject());
         ((TextView)view.findViewById(R.id.name_label)).setText(Character.toString(item.getTeacherName().charAt(0)));
+        
+        view.setOnLongClickListener(null);
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext.getApplicationContext(),TeacherScheduleActivity.class);
+                intent.putExtra("teacherItem",item);
+                mContext.startActivity(intent);
+            }
+        });
 
 
         return view;

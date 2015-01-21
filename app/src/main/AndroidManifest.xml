@@ -58,6 +58,10 @@
             android:name=".ui.TeacherActivity"
             android:label="@string/title_activity_teacher" >
         </activity>
+        <activity
+            android:name=".ui.TeacherScheduleActivity"
+            android:label="" >
+        </activity>
     </application>
 
 </manifest>

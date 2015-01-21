@@ -62,4 +62,7 @@
     <string name="sign_in">Увiйти</string>
     <string name="settings">Налаштування</string>
     <string name="title_activity_schedule_item_detail"></string>
+    <string name="log_out">Вийти</string>
+    <string name="up_to_date">Розклад оновлений</string>
+    <string name="ok">OK</string>
 </resources>

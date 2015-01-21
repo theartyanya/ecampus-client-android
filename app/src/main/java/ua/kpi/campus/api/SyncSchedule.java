@@ -219,7 +219,6 @@ public class SyncSchedule {
             }else if(PrefUtils.isTosAccepted(asyncContext)){
                 PrefUtils.markLoginDone(asyncContext);
                 PrefUtils.markScheduleUploaded(asyncContext);
-                asyncContext.startActivity(new Intent(asyncContext.getApplicationContext(), MainActivity.class));
             }
 
         }

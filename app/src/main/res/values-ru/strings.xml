@@ -61,4 +61,7 @@
     <string name="help">Помощь</string>
     <string name="sign_in">Войти</string>
     <string name="settings">Настройки</string>
+    <string name="log_out">Выйти</string>
+    <string name="up_to_date">Расписание обновлено</string>
+    <string name="ok">OK</string>
 </resources>

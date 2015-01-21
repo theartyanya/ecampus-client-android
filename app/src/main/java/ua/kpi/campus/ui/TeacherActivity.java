@@ -1,14 +1,11 @@
 package ua.kpi.campus.ui;
 
-import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,6 +15,10 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Spinner;
 
+import com.nispok.snackbar.Snackbar;
+import com.nispok.snackbar.SnackbarManager;
+import com.nispok.snackbar.listeners.ActionClickListener;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,16 +27,20 @@ import ua.kpi.campus.MainActivity;
 import ua.kpi.campus.R;
 import ua.kpi.campus.api.SyncSchedule;
 import ua.kpi.campus.provider.ScheduleProvider;
+import ua.kpi.campus.ui.adapters.SpinnerAdapter;
+import ua.kpi.campus.ui.adapters.TeacherAdapter;
 import ua.kpi.campus.util.PrefUtils;
 
 /**
- * Created by Admin on 17.01.2015.
+ * Created by doroshartyom on 17.01.2015.
  */
 public class TeacherActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener, SyncSchedule.CallBacks {
 
     private List<String> spinnerList = new ArrayList<String>();
     
     SwipeRefreshLayout refreshLayout;
+    TeacherAdapter adapter;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,7 +100,7 @@ public class TeacherActivity extends BaseActivity implements SwipeRefreshLayout.
         ScheduleProvider scheduleProvider = new ScheduleProvider(getApplicationContext());
 
         ListView list = (ListView) findViewById(R.id.list_view);
-        TeacherAdapter adapter = new TeacherAdapter(this);
+        adapter = new TeacherAdapter(this);
         list.setAdapter(adapter);
         
 
@@ -139,5 +144,17 @@ public class TeacherActivity extends BaseActivity implements SwipeRefreshLayout.
     public void taskCompleted(boolean completed) {
         refreshLayout.setRefreshing(false);
 
+        SnackbarManager.show(
+                Snackbar.with(getApplicationContext())
+                        .text(getResources().getString(R.string.up_to_date))
+                        .actionLabel(getResources().getString(R.string.ok))
+                        .actionColor(getResources().getColor(R.color.primary))
+                        .actionListener(new ActionClickListener() {
+                            @Override
+                            public void onActionClicked(Snackbar snackbar) {
+                            }
+                        })
+                        .duration(Snackbar.SnackbarDuration.LENGTH_SHORT)
+                , this);
     }
 }

@@ -1,4 +1,4 @@
-package ua.kpi.campus.ui;
+package ua.kpi.campus.ui.adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,32 +9,36 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
-import android.widget.ListAdapter;
+import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
 import ua.kpi.campus.R;
 import ua.kpi.campus.model.ScheduleItem;
+import ua.kpi.campus.model.ScheduleItemTeacher;
+import ua.kpi.campus.ui.ScheduleItemDetail;
 
 /**
- * Created by doroshartyom on 12.01.2015.
+ * Created by doroshartyom on 21.01.2015.
  */
-public class ScheduleAdapter implements ListAdapter, AbsListView.RecyclerListener {
 
-    private static final String LOG_TAG = "ScheduleAdapter";
+public class TeacherScheduleAdapter extends BaseAdapter implements AbsListView.RecyclerListener {
+
+    private static final String LOG_TAG = "TeacherScheduleAdapter";
 
     private final Context mContext;
-    
+
 
     int mContentTopClearance = 0;
 
-    ArrayList<ScheduleItem> mItems = new ArrayList<ScheduleItem>();
+
+    ArrayList<ScheduleItemTeacher> mItems = new ArrayList<ScheduleItemTeacher>();
     ArrayList<DataSetObserver> mObservers = new ArrayList<DataSetObserver>();
 
     int mDefaultLessonColor;
     private String[] days = new String[6];
-    public ScheduleAdapter(Context mContext) {
+    public TeacherScheduleAdapter(Context mContext) {
         this.mContext = mContext;
         days= new String[] {
                 mContext.getString(R.string.monday),
@@ -117,7 +121,7 @@ public class ScheduleAdapter implements ListAdapter, AbsListView.RecyclerListene
             return view;
         }
 
-        final ScheduleItem item = mItems.get(position);
+        final ScheduleItemTeacher item = mItems.get(position);
         ScheduleItem nextItem = (position < mItems.size() - 1) ? mItems.get(position + 1) : null;
 
         if (item.isDevider()) {
@@ -146,7 +150,7 @@ public class ScheduleAdapter implements ListAdapter, AbsListView.RecyclerListene
 
 
             slotTitleView.setText(item.getLessonName());
-            slotSubtitleView.setText(item.getTeacherName());
+            slotSubtitleView.setText(item.getGroupName());
             place.setText(item.getLessonRoom());
 
             startTimeView.setText(item.getTimeStart());
@@ -183,20 +187,24 @@ public class ScheduleAdapter implements ListAdapter, AbsListView.RecyclerListene
 
     }
 
-    public void updateItems(ArrayList<ScheduleItem> items) {
+    public void updateItems(ArrayList<ScheduleItemTeacher> items) {
         mItems.clear();
         if (items != null) {
-            for (ScheduleItem item : items) {
-                Log.d(LOG_TAG, "Adding schedule item");
+            for (ScheduleItemTeacher item : items) {
+                Log.d(LOG_TAG, "Adding teacher item");
                 mItems.add(item);
             }
         }
-        notifyObservers();
+        this.notifyDataSetChanged();
     }
 
     private void notifyObservers() {
         for (DataSetObserver observer : mObservers) {
             observer.onChanged();
         }
+    }
+
+    public void forceUpdate() {
+        notifyObservers();
     }
 }

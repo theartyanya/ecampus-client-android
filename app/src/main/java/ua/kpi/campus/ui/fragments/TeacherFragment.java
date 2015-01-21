@@ -1,4 +1,4 @@
-package ua.kpi.campus.ui;
+package ua.kpi.campus.ui.fragments;
 
 import android.app.Activity;
 import android.app.ListFragment;
@@ -9,36 +9,33 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-
 import ua.kpi.campus.R;
-import ua.kpi.campus.api.SyncSchedule;
-import ua.kpi.campus.util.PrefUtils;
+import ua.kpi.campus.api.SyncScheduleTeacher;
 
 /**
- * Created by doroshartyom on 08.01.2015.
+ * Created by doroshartyom on 21.01.2015.
  */
-public class ScheduleFragment extends ListFragment implements SwipeRefreshLayout.OnRefreshListener, SyncSchedule.CallBacks {
+public class TeacherFragment extends ListFragment implements SwipeRefreshLayout.OnRefreshListener, SyncScheduleTeacher.CallBacks {
 
     private String mContentDescription = null;
     private View mRoot = null;
-    
+
     public SwipeRefreshLayout refreshLayout;
 
-    
+
 
     public interface Listener {
         public void onFragmentViewCreated(ListFragment fragment);
-        public void onFragmentAttached(ScheduleFragment fragment);
-        public void onFragmentDetached(ScheduleFragment fragment);
+        public void onFragmentAttached(TeacherFragment fragment);
+        public void onFragmentDetached(TeacherFragment fragment);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mRoot = inflater.inflate(R.layout.fragment_my_schedule, container, false);
-        
+
         mRoot.setContentDescription(mContentDescription);
         refreshLayout = (SwipeRefreshLayout) mRoot.findViewById(R.id.swipe_refresh);
-        
 
         return mRoot;
     }
@@ -56,12 +53,12 @@ public class ScheduleFragment extends ListFragment implements SwipeRefreshLayout
         if (getActivity() instanceof Listener) {
             ((Listener) getActivity()).onFragmentViewCreated(this);
 
-        refreshLayout.setColorScheme(R.color.green,
-                R.color.red,
-                R.color.blue,
-                R.color.orange);
+            refreshLayout.setColorScheme(R.color.green,
+                    R.color.red,
+                    R.color.blue,
+                    R.color.orange);
 
-        refreshLayout.setOnRefreshListener(this);
+            refreshLayout.setOnRefreshListener(this);
         }
     }
 
@@ -83,10 +80,10 @@ public class ScheduleFragment extends ListFragment implements SwipeRefreshLayout
 
     @Override
     public void onRefresh() {
-        SyncSchedule sync = SyncSchedule.getSyncSchedule(PrefUtils.getPrefStudyGroupName(getActivity().getApplicationContext()), getActivity().getApplicationContext());
+        //SyncSchedule sync = SyncSchedule.getSyncSchedule(PrefUtils.getPrefStudyGroupName(getActivity().getApplicationContext()), getActivity().getApplicationContext());
 
-        SyncSchedule.Connect connect = new SyncSchedule.Connect(this);
-        connect.execute(getActivity());
+        //SyncSchedule.Connect connect = new SyncSchedule.Connect(this);
+        //connect.execute(getActivity());
     }
 
     @Override
@@ -97,6 +94,10 @@ public class ScheduleFragment extends ListFragment implements SwipeRefreshLayout
     @Override
     public void taskCompleted(boolean completed) {
         refreshLayout.setRefreshing(false);
-
+    }
+    
+    @Override
+    public void taskStarted(boolean started){ 
+        //do nothing
     }
 }

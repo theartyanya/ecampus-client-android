@@ -26,18 +26,19 @@ import ua.kpi.campus.util.PrefUtils;
  */
 public class SyncScheduleTeacher {
     private static final String LOG_TAG="SyncScheduleTeacher";
-    private static String teacherId;
+    private static int teacherId;
     private static Context mContext;
     private static ScheduleProvider provider;
     private static ArrayList<ScheduleItemTeacher> itemsArrayList = new ArrayList<>();
 
 
-    public SyncScheduleTeacher(Context context, String teacherId){
+    public SyncScheduleTeacher(Context context, int teacherId){
         SyncScheduleTeacher.mContext=context;
         SyncScheduleTeacher.teacherId=teacherId;
     }
     public interface CallBacks {
         Context getContext();
+        void taskStarted(boolean started);
         void taskCompleted(boolean completed);
     }
     public static void getSchedule() throws Exception{
@@ -53,18 +54,20 @@ public class SyncScheduleTeacher {
             JSONArray data = jsonResponse.getJSONArray("data");
 
             for(int i = 0; i<data.length();i++){
+                Log.d(LOG_TAG, "Adding to schedule shit #" + i);
                 JSONObject lesson = data.getJSONObject(i);
                 ScheduleItemTeacher lessonItem = new ScheduleItemTeacher();
 
                 lessonItem.setLessonId(Integer.parseInt(lesson.getString("lesson_id")));
                 lessonItem.setGroupId(Integer.parseInt(lesson.getString("group_id")));
+                
                 //getting group name
-                    HttpGet httpget2 = new HttpGet("http://api.rozklad.org.ua/v2/groups/"+lessonItem.getGroupId());
-                    HttpResponse response2 = httpclient.execute(httpget);
-                    HttpEntity httpEntity2 =response.getEntity();
-                    String answer2 = EntityUtils.toString(httpEntity, "UTF-8");
-                    JSONObject jsonResponse2 = new JSONObject(answer);
-                    JSONObject data2 = jsonResponse.getJSONObject("data");
+                HttpGet httpget2 = new HttpGet("http://api.rozklad.org.ua/v2/groups/"+lessonItem.getGroupId());
+                HttpResponse response2 = httpclient.execute(httpget2);
+                HttpEntity httpEntity2 =response2.getEntity();
+                String answer2 = EntityUtils.toString(httpEntity2, "UTF-8");
+                JSONObject jsonResponse2 = new JSONObject(answer2);
+                JSONObject data2 = jsonResponse2.getJSONObject("data");
 
                 lessonItem.setGroupName(data2.getString("group_full_name"));
                 lessonItem.setDayNumber(Integer.parseInt(lesson.getString("day_number")));
@@ -79,7 +82,7 @@ public class SyncScheduleTeacher {
                 itemsArrayList.add(lessonItem);
 
             }
-            provider=new ScheduleProvider(SyncScheduleTeacher.mContext);
+            provider = new ScheduleProvider(SyncScheduleTeacher.mContext);
             provider.clearTeacherSchedule();
 
             for(ScheduleItemTeacher item : itemsArrayList){
@@ -125,6 +128,12 @@ public class SyncScheduleTeacher {
         protected void onPostExecute(Void v){
             if(!useContext)
                 callBacks.taskCompleted(true);
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            callBacks.taskStarted(true);
         }
     }
 

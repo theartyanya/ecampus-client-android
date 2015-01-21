@@ -1,4 +1,4 @@
-package ua.kpi.campus.ui;
+package ua.kpi.campus.ui.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;

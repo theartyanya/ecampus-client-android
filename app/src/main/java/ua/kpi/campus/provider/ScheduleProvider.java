@@ -12,7 +12,6 @@ import ua.kpi.campus.model.ScheduleItem;
 import ua.kpi.campus.model.ScheduleItemTeacher;
 import ua.kpi.campus.model.TeacherItem;
 import ua.kpi.campus.provider.ScheduleContract.*;
-import ua.kpi.campus.ui.ScheduleAdapter;
 
 /**
  * Created by doroshartyom on 08.01.2015.

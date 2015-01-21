@@ -41,7 +41,7 @@ public class ScheduleItemDetail extends ActionBarActivity {
         
         actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-        Log.d(LOG_TAG, GetCurrentUser.getFaculty(this));
+        //Log.d(LOG_TAG, GetCurrentUser.getFaculty(this));
     }
 
 
