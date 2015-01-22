@@ -66,6 +66,7 @@ public class ScheduleDatabase extends SQLiteOpenHelper {
             + ScheduleColumns.TIME_END + " TEXT,"
             + ScheduleColumns.GROUP_ID +" INTEGER,"
             + ScheduleColumns.GROUP_NAME +" TEXT,"
+            + ScheduleColumns.GROUPS_JSON+" TEXT,"
             + "UNIQUE (" + ScheduleColumns.LESSON_ID + ") ON CONFLICT REPLACE)");
 
         Log.d(LOG_TAG, "Databases created");

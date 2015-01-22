@@ -201,7 +201,7 @@ public class TeacherScheduleActivity extends ActionBarActivity implements Teache
 
     @Override
     public void taskCompleted(boolean completed) {
-        progressDialog.dismiss();
+       progressDialog.dismiss();
 
         ArrayList<ScheduleItemTeacher> first = scheduleProvider.getScheduleItemsTeacherFromDatabase(1);
         ArrayList<ScheduleItemTeacher> second = scheduleProvider.getScheduleItemsTeacherFromDatabase(2);
@@ -212,13 +212,12 @@ public class TeacherScheduleActivity extends ActionBarActivity implements Teache
         } else {
             Toast.makeText(this, "EMPTY", Toast.LENGTH_SHORT).show();
         }
-        
         Toast.makeText(this, "FIRST:" + first.size(), Toast.LENGTH_SHORT).show();
         Toast.makeText(this, "SECOND:" + second.size(), Toast.LENGTH_SHORT).show();
 
         mTeacherAdapters[0].notifyDataSetChanged();
         mTeacherAdapters[1].notifyDataSetChanged();
-        
+
         
     }
 

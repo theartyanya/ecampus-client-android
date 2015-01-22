@@ -23,6 +23,7 @@ import ua.kpi.campus.R;
 import ua.kpi.campus.api.Auth;
 import ua.kpi.campus.api.GetCurrentUser;
 import ua.kpi.campus.model.ScheduleItem;
+import ua.kpi.campus.model.TeacherItem;
 import ua.kpi.campus.util.PrefUtils;
 
 public class ScheduleItemDetail extends ActionBarActivity {
@@ -156,6 +157,12 @@ public class ScheduleItemDetail extends ActionBarActivity {
     }
 
     public void auth(View view) {
-        startActivity(new Intent(ScheduleItemDetail.this, TeacherScheduleActivity.class));
+        Intent intent = new Intent(ScheduleItemDetail.this, TeacherScheduleActivity.class);
+        TeacherItem teacher = new TeacherItem();
+        teacher.setTeacherName("testName");
+        teacher.setTeacherId(3);
+        teacher.setTeacherSubject("TestSubject");
+        intent.putExtra("teacherItem", teacher);
+        startActivity(intent);
     }
 }

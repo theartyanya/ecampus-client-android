@@ -18,6 +18,7 @@ public class ScheduleContract {
         String TIME_END = "time_end";
         String GROUP_ID="group_id";
         String GROUP_NAME="group_name";
+        String GROUPS_JSON="groups_json";
 
     }
 

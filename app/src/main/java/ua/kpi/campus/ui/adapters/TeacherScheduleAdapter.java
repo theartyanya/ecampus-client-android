@@ -150,7 +150,7 @@ public class TeacherScheduleAdapter extends BaseAdapter implements AbsListView.R
 
 
             slotTitleView.setText(item.getLessonName());
-            slotSubtitleView.setText(item.getGroupName());
+            slotSubtitleView.setText(item.getGroupNamesString(item.getGroupsJSON()));
             place.setText(item.getLessonRoom());
 
             startTimeView.setText(item.getTimeStart());

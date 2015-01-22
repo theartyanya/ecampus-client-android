@@ -50,6 +50,7 @@ public class SyncScheduleTeacher {
             HttpEntity httpEntity =response.getEntity();
             String answer = EntityUtils.toString(httpEntity, "UTF-8");
             JSONObject jsonResponse = new JSONObject(answer);
+            Log.d(LOG_TAG,"JSONResponce: "+jsonResponse.toString());
             JSONArray data = jsonResponse.getJSONArray("data");
 
             for(int i = 0; i<data.length();i++){
@@ -58,17 +59,8 @@ public class SyncScheduleTeacher {
                 ScheduleItemTeacher lessonItem = new ScheduleItemTeacher();
 
                 lessonItem.setLessonId(Integer.parseInt(lesson.getString("lesson_id")));
-                lessonItem.setGroupId(Integer.parseInt(lesson.getString("group_id")));
-                
-                //getting group name
-                HttpGet httpget2 = new HttpGet("http://api.rozklad.org.ua/v2/groups/"+lessonItem.getGroupId());
-                HttpResponse response2 = httpclient.execute(httpget2);
-                HttpEntity httpEntity2 =response2.getEntity();
-                String answer2 = EntityUtils.toString(httpEntity2, "UTF-8");
-                JSONObject jsonResponse2 = new JSONObject(answer2);
-                JSONObject data2 = jsonResponse2.getJSONObject("data");
-
-                lessonItem.setGroupName(data2.getString("group_full_name"));
+                //getting groups
+                lessonItem.setGroupsJSON(lesson.getJSONArray("groups").toString());
                 lessonItem.setDayNumber(Integer.parseInt(lesson.getString("day_number")));
                 lessonItem.setLessonName(lesson.getString("lesson_name"));
                 lessonItem.setLessonNumber(Integer.parseInt(lesson.getString("lesson_number")));

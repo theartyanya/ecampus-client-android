@@ -52,6 +52,7 @@ public class ScheduleProvider {
             cv.put(ScheduleColumns.LESSON_ID, item.getLessonId());
             cv.put(ScheduleColumns.DAY_NUMBER, item.getDayNumber());
             cv.put(ScheduleColumns.LESSON_NUMBER, item.getLessonNumber());
+            Log.d(LOG_TAG, "Adding lesson "+item.getLessonName());
             cv.put(ScheduleColumns.LESSON_NAME, item.getLessonName());
             cv.put(ScheduleColumns.LESSON_ROOM, item.getLessonRoom());
             cv.put(ScheduleColumns.TEACHER_NAME, item.getTeacherName());
@@ -59,8 +60,8 @@ public class ScheduleProvider {
             cv.put(ScheduleColumns.LESSON_WEEK, item.getLessonWeek());
             cv.put(ScheduleColumns.TIME_START, item.getTimeStart());
             cv.put(ScheduleColumns.TIME_END, item.getTimeEnd());
-            cv.put(ScheduleColumns.GROUP_ID,item.getGroupId());
-            cv.put(ScheduleColumns.GROUP_NAME,item.getGroupName());
+            Log.d(LOG_TAG, "Adding groups "+item.getGroupNamesString(item.getGroupsJSON()));
+            cv.put(ScheduleColumns.GROUPS_JSON,item.getGroupsJSON());
 
             db.insert(SCHEDULE_TEACHER, null, cv);
         }
@@ -123,6 +124,7 @@ public class ScheduleProvider {
             int time_end = cursor.getColumnIndex(ScheduleColumns.TIME_END);
             int group_id = cursor.getColumnIndex(ScheduleColumns.GROUP_ID);
             int group_name = cursor.getColumnIndex(ScheduleColumns.GROUP_NAME);
+            int groups_json = cursor.getColumnIndex(ScheduleColumns.GROUPS_JSON);
 
 
             do {
@@ -147,8 +149,7 @@ public class ScheduleProvider {
                                 .setTimeStart("")
                                 .setTimeEnd("")
                                 .setDevider(true);
-                        dividerItem.setGroupName("");
-                        dividerItem.setGroupId(0);
+                       dividerItem.setGroupsJSON("");
 
 
                         items.add(dividerItem);
@@ -164,9 +165,10 @@ public class ScheduleProvider {
                             .setTimeStart(cursor.getString(time_start))
                             .setTimeEnd(cursor.getString(time_end))
                             .setDevider(false);
-                    item.setGroupName(cursor.getString(group_name));
-                    item.setGroupId(cursor.getInt(group_id));
-
+                    item.setGroupsJSON(cursor.getString(groups_json));
+                  //  item.setGroupName(cursor.getString(group_name));
+                  //  item.setGroupId(cursor.getInt(group_id));
+                    Log.d(LOG_TAG, "Getting teacher lesson for "+item.getGroupNamesString(item.getGroupsJSON()));
                     items.add(item);
                 }
             } while (cursor.moveToNext());
