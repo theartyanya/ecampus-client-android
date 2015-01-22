@@ -24,11 +24,12 @@ import com.rengwuxian.materialedittext.MaterialEditText;
 import ua.kpi.campus.MainActivity;
 import ua.kpi.campus.R;
 import ua.kpi.campus.api.Auth;
+import ua.kpi.campus.api.GetCurrentUser;
 import ua.kpi.campus.api.SyncSchedule;
 import ua.kpi.campus.util.Connectivity;
 import ua.kpi.campus.util.PrefUtils;
 
-public class LoginActivity extends ActionBarActivity implements SyncSchedule.CallBacks{
+public class LoginActivity extends ActionBarActivity implements SyncSchedule.CallBacks, GetCurrentUser.CallBacks, Auth.CallBacks{
     
     MaterialAutoCompleteTextView textView;
 
@@ -111,8 +112,12 @@ public class LoginActivity extends ActionBarActivity implements SyncSchedule.Cal
         //TODO get off this from here
         if (Connectivity.isConnected(getApplicationContext())) {
             PrefUtils.putLoginAndPassword(getApplicationContext(), ((MaterialEditText) findViewById(R.id.login_input)).getText().toString(), ((MaterialEditText) findViewById(R.id.password_input)).getText().toString());
-            Auth authClient = new Auth(this);
+            Auth authClient = new Auth(this, this);
             authClient.execute();
+
+
+
+
         } else {
             SnackbarManager.show(
                     Snackbar.with(getApplicationContext())
@@ -154,17 +159,33 @@ public class LoginActivity extends ActionBarActivity implements SyncSchedule.Cal
         }
         
     }
+    @Override
+    public void AuthCompleted(boolean completed) {
+        GetCurrentUser gcu = new GetCurrentUser(this, this); //first 'this' is context, second is callback
+        gcu.execute();
+    }
 
+
+    @Override
+    public void GetCurrentUserCompleted(boolean completed){
+        SyncSchedule.Connect connect = new SyncSchedule.Connect(this);
+        connect.execute(this);
+    }
+
+    @Override
+    public void syncScheduleCompleted(boolean completed) {
+        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
 
     @Override
     public Context getContext() {
         return this;
     }
 
-    @Override
-    public void taskCompleted(boolean completed) {
-        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-        startActivity(intent);
-        finish();
-    }
+
+
+
+
 }

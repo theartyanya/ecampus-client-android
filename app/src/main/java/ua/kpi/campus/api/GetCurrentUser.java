@@ -33,10 +33,16 @@ import ua.kpi.campus.util.PrefUtils;
  * Created by dmitry on 18.01.15.
  */
 public class GetCurrentUser extends AsyncTask<Context, Integer, Integer> {
-
+    CallBacks callBacks;
     private Context mContext;
-    public GetCurrentUser(Context context){
+    public GetCurrentUser(Context context, CallBacks mCallbacks){
         mContext=context;
+        this.callBacks=mCallbacks;
+    }
+    public static boolean completed=false;
+    public interface CallBacks{
+        Context getContext();
+        void GetCurrentUserCompleted(boolean completed);
     }
 
     @Override
@@ -105,18 +111,15 @@ public class GetCurrentUser extends AsyncTask<Context, Integer, Integer> {
     @Override
     protected void onPostExecute(Integer result) {
         if(!PrefUtils.getAuthKey(mContext).isEmpty()){
-            if(!PrefUtils.isScheduleUploaded(mContext)){
-
-                SyncSchedule sync = SyncSchedule.getSyncSchedule(PrefUtils.getPrefStudyGroupName(mContext), mContext);
-                SyncSchedule.Connect connect = new SyncSchedule.Connect(mContext, true);
-                connect.execute(mContext);
-
-            }
+            callBacks.GetCurrentUserCompleted(true);
 
 
         }
 
     }
+
+
+
     public void makeSnackBarInUI(final int i){
         new Handler(Looper.getMainLooper()).post(new Runnable() {
             @Override

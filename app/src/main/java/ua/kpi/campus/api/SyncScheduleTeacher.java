@@ -31,7 +31,6 @@ public class SyncScheduleTeacher {
     private static ScheduleProvider provider;
     private static ArrayList<ScheduleItemTeacher> itemsArrayList = new ArrayList<>();
 
-
     public SyncScheduleTeacher(Context context, int teacherId){
         SyncScheduleTeacher.mContext=context;
         SyncScheduleTeacher.teacherId=teacherId;

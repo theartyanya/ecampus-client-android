@@ -35,12 +35,17 @@ import ua.kpi.campus.util.PrefUtils;
  * Created by doroshartyom on 08.01.2015.
  */
 public class Auth extends AsyncTask<Context, Integer, Integer> {
-
+    CallBacks callBacks;
     private Context mContext;
-    public Auth(Context context){
+    public Auth(Context context, CallBacks mCallback){
         mContext=context;
+        this.callBacks=mCallback;
     }
-
+    public static boolean completed = false;
+    public interface CallBacks{
+        Context getContext();
+        void AuthCompleted(boolean completed);
+    }
     @Override
     protected Integer doInBackground(Context... params) {
         HttpClient httpclient = new DefaultHttpClient();
@@ -57,6 +62,7 @@ public class Auth extends AsyncTask<Context, Integer, Integer> {
             switch (jsonResponce.getInt("StatusCode")){
                 case 200:
                     PrefUtils.putAuthKey(mContext, jsonResponce.getString("Data"));
+
                     return 200; //it seems everything is good
                 case 403:
                     makeSnackBarInUI(403);
@@ -85,14 +91,16 @@ public class Auth extends AsyncTask<Context, Integer, Integer> {
     }
     @Override
     protected void onPostExecute(Integer result) {
+        Log.d("auth","in onPost");
+        callBacks.AuthCompleted(true);
         if(!PrefUtils.getAuthKey(mContext).isEmpty()){
+            Auth.completed=true;
             PrefUtils.markLoginDone(mContext);
+
             SnackbarManager.show(
                     Snackbar.with(mContext)
                             .text(mContext.getString(R.string.in_progress)));
-            GetCurrentUser gcu = new GetCurrentUser(mContext);
 
-            gcu.execute();
         }
 
     }
@@ -140,6 +148,8 @@ public class Auth extends AsyncTask<Context, Integer, Integer> {
     public static void exit(Context context){
         PrefUtils.unMarkScheduleUploaded(context);
         PrefUtils.markLoginUndone(context);
+        PrefUtils.setIsStudent(context,true);
+        PrefUtils.putPrefStudyFullname(context, "");
         ScheduleDatabase.deleteDatabase(context);
         ScheduleProvider sp = new ScheduleProvider(context);
         ArrayList<TeacherItem> item = sp.getTeachersFromDatabase();

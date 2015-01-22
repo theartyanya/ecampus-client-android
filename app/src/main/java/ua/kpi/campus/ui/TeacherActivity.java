@@ -141,7 +141,7 @@ public class TeacherActivity extends BaseActivity implements SwipeRefreshLayout.
     }
 
     @Override
-    public void taskCompleted(boolean completed) {
+    public void syncScheduleCompleted(boolean completed) {
         refreshLayout.setRefreshing(false);
 
         SnackbarManager.show(

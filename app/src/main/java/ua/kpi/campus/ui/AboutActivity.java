@@ -56,16 +56,16 @@ public class AboutActivity extends ActionBarActivity implements ObservableScroll
         
         ArrayList<DeveloperItem> developers = new ArrayList<DeveloperItem>();
         DeveloperItem dnihze = new DeveloperItem();
-        DeveloperItem deepnekroz = new DeveloperItem();
+        DeveloperItem deepnekro = new DeveloperItem();
         dnihze.setOptionName(getResources().getString(R.string.dnihze))
               .setOptionDescription("Development & Design")
               .setPhoto(R.drawable.dev_1);
-        deepnekroz.setOptionName(getResources().getString(R.string.deepnekroz))
+        deepnekro.setOptionName(getResources().getString(R.string.deepnekroz))
                   .setOptionDescription("Development & API")
                   .setPhoto(R.drawable.dev_2);
         
         developers.add(dnihze);
-        developers.add(deepnekroz);
+        developers.add(deepnekro);
 
         DevelopersAdapter developersAdapter = new DevelopersAdapter(this, R.layout.item_developer, developers);
         devList.setAdapter(developersAdapter);

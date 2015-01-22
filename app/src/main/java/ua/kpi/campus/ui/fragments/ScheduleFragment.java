@@ -96,7 +96,7 @@ public class ScheduleFragment extends ListFragment implements SwipeRefreshLayout
     }
 
     @Override
-    public void taskCompleted(boolean completed) {
+    public void syncScheduleCompleted(boolean completed) {
         refreshLayout.setRefreshing(false);
         ((MainActivity)getActivity()).notifyAdapters();
     }

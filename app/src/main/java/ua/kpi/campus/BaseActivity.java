@@ -467,7 +467,7 @@ public class BaseActivity extends ActionBarActivity implements SyncSchedule.Call
     }
 
     @Override
-    public void taskCompleted(boolean completed) {
+    public void syncScheduleCompleted(boolean completed) {
 
     }
 }

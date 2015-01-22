@@ -234,7 +234,7 @@ public class MainActivity extends BaseActivity implements ScheduleFragment.Liste
     }
 
     @Override
-    public void taskCompleted(boolean completed) {
+    public void syncScheduleCompleted(boolean completed) {
 
     }
 

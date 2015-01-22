@@ -49,7 +49,7 @@ public class SyncSchedule {
 
     public interface CallBacks {
         Context getContext();
-        void taskCompleted(boolean completed);
+        void syncScheduleCompleted(boolean completed);
     }
     
     private SyncSchedule(String groupName, Context context) {
@@ -184,17 +184,12 @@ public class SyncSchedule {
         Context asyncContext;
         
         CallBacks callBacks;
-        Boolean useContext=false;
         
         public Connect(CallBacks mCallBacks) {
             this.callBacks = mCallBacks;
             
         }
 
-        public Connect(Context asyncContext,Boolean useContext){
-            this.asyncContext=asyncContext;
-            this.useContext=useContext;
-        }
         @Override
         public Void doInBackground(Context... arg) {
             try {
@@ -211,14 +206,14 @@ public class SyncSchedule {
         }
         @Override
         protected void onPostExecute(Void v){
-            if(!useContext)
-            callBacks.taskCompleted(true);
+
             
             if(PrefUtils.getPrefStudyGroupName(asyncContext).isEmpty()){
                 PrefUtils.markLoginUndone(asyncContext);
             }else if(PrefUtils.isTosAccepted(asyncContext)){
                 PrefUtils.markLoginDone(asyncContext);
                 PrefUtils.markScheduleUploaded(asyncContext);
+                callBacks.syncScheduleCompleted(true);
             }
 
         }
