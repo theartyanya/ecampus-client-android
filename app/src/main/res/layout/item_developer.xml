@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/item_size"
+    android:paddingLeft="@dimen/keyline_1"
+    android:paddingRight="@dimen/keyline_1"
+    android:background="@color/white">
+
+    <ua.kpi.campus.ui.widgets.BezelImageView
+        app:maskDrawable="@drawable/circle_mask"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_centerVertical="true"
+        android:src="@drawable/dev_1"
+        android:id="@+id/photo"
+        android:scaleType="centerCrop"
+        android:background="@drawable/circle_drawable"/>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/keyline_3"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/keyline_3">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/debug_text"
+            android:textSize="18sp"
+            android:id="@+id/developer_name"
+            android:fontFamily="@string/font_fontFamily_medium"
+            android:textColor="@color/body_text_2"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/debug_text"
+            android:textSize="16sp"
+            android:id="@+id/developer_work"
+            android:textColor="@color/body_text_3"
+            android:layout_below="@+id/developer_name"/>
+
+    </RelativeLayout>
+</RelativeLayout>

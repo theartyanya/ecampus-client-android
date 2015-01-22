@@ -65,4 +65,7 @@
     <string name="log_out">Вийти</string>
     <string name="up_to_date">Розклад оновлений</string>
     <string name="ok">OK</string>
+    <string name="dnihze">dniHze</string>
+    <string name="deepnekroz">Deepnekroz</string>
+    <string name="lipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam est arcu, pulvinar varius aliquet nec, hendrerit nec lectus. Mauris sed consequat dolor. Ut vitae rhoncus orci, id iaculis arcu. Ut sollicitudin, diam et bibendum ullamcorper, purus turpis finibus orci, sed pretium justo nisi sit amet diam. Donec eu pellentesque massa, vulputate efficitur ante. Donec sit amet sagittis diam, quis hendrerit augue. Quisque lacus nibh, vulputate id pharetra vel, mollis non risus.\n\n         Sed molestie pellentesque ex nec aliquam. In a sollicitudin dui. Vestibulum dapibus turpis sit amet rhoncus vehicula. Donec a nisl enim. Quisque vitae pretium augue. Praesent ac bibendum neque. Nulla id pretium massa. Curabitur egestas odio urna, at aliquam mauris tempus vitae. Praesent vehicula arcu non tincidunt vestibulum. Suspendisse at nulla pretium, fringilla est congue, ultrices tellus. Vivamus at tristique diam, id ornare mauris. Nulla sollicitudin varius metus quis dictum.</string>
 </resources>

@@ -48,8 +48,7 @@
         <activity
             android:name=".ui.AboutActivity"
             android:label="@string/title_activity_about"
-            android:parentActivityName=".ui.SettingsActivity"
-            android:theme="@style/AppThemeWithActionBar">
+            android:parentActivityName=".ui.SettingsActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ua.kpi.campus.ui.SettingsActivity" />

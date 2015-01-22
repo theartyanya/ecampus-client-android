@@ -9,7 +9,7 @@ android {
         minSdkVersion 14
         targetSdkVersion 21
         versionCode 1
-        versionName "0.1.0"
+        versionName "0.1.1"
     }
     buildTypes {
         release {
@@ -28,4 +28,5 @@ dependencies {
     compile 'com.melnykov:floatingactionbutton:1.1.0'
     compile 'com.nispok:snackbar:2.7.4'
     compile 'com.rengwuxian.materialedittext:library:1.8.1'
+    compile 'com.github.ksoichiro:android-observablescrollview:1.4.0'
 }

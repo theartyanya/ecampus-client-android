@@ -17,37 +17,37 @@ import ua.kpi.campus.model.AboutItem;
  */
 public class AboutListAdapter extends ArrayAdapter<AboutItem> {
 
-    private static class ViewHolder {
-        private TextView itemName;
-        private TextView itemSubtitle;
-    }
-
-    public AboutListAdapter(Context context, int textViewResourceId, ArrayList<AboutItem> items) {
-        super(context, textViewResourceId, items);
-    }
-
-    public View getView(int position, View convertView, ViewGroup parent) {
-
-        ViewHolder viewHolder;
-        if (convertView == null) {
-            convertView = LayoutInflater.from(this.getContext())
-                    .inflate(R.layout.item_about, parent, false);
-
-            viewHolder = new ViewHolder();
-            viewHolder.itemName = (TextView) convertView.findViewById(R.id.text1);
-            viewHolder.itemSubtitle = (TextView) convertView.findViewById(R.id.text2);
-
-            convertView.setTag(viewHolder);
-        } else {
-            viewHolder = (ViewHolder) convertView.getTag();
+        private static class ViewHolder {
+            private TextView itemName;
+            private TextView itemSubtitle;
         }
 
-        AboutItem item = getItem(position);
-        if (item != null) {
-            viewHolder.itemName.setText(item.getOptionName());
-            viewHolder.itemSubtitle.setText(item.getOptionDescription());
+        public AboutListAdapter(Context context, int textViewResourceId, ArrayList<AboutItem> items) {
+            super(context, textViewResourceId, items);
         }
 
-        return convertView;
-    }
+        public View getView(int position, View convertView, ViewGroup parent) {
+
+            ViewHolder viewHolder;
+            if (convertView == null) {
+                convertView = LayoutInflater.from(this.getContext())
+                        .inflate(R.layout.item_about, parent, false);
+
+                viewHolder = new ViewHolder();
+                viewHolder.itemName = (TextView) convertView.findViewById(R.id.text1);
+                viewHolder.itemSubtitle = (TextView) convertView.findViewById(R.id.text2);
+
+                convertView.setTag(viewHolder);
+            } else {
+                viewHolder = (ViewHolder) convertView.getTag();
+            }
+
+            AboutItem item = getItem(position);
+            if (item != null) {
+                viewHolder.itemName.setText(item.getOptionName());
+                viewHolder.itemSubtitle.setText(item.getOptionDescription());
+            }
+
+            return convertView;
+        }
 }

@@ -7,24 +7,24 @@ import java.io.Serializable;
  */
 public class AboutItem implements Serializable {
     
-    private String OPTION_NAME;
-    private String OPTION_DESCRIPTION;
+        private String OPTION_NAME;
+        private String OPTION_DESCRIPTION;
 
 
-    public String getOptionName() {
-        return OPTION_NAME;
-    }
+        public String getOptionName() {
+            return OPTION_NAME;
+        }
 
-    public AboutItem setOptionName(String OPTION_NAME) {
-        this.OPTION_NAME = OPTION_NAME;
-        return this;
-    }
+        public AboutItem setOptionName(String OPTION_NAME) {
+            this.OPTION_NAME = OPTION_NAME;
+            return this;
+        }
 
-    public String getOptionDescription() {
-        return OPTION_DESCRIPTION;
-    }
+        public String getOptionDescription() {
+            return OPTION_DESCRIPTION;
+        }
 
-    public void setOptionDescription(String OPTION_DESCRIPTION) {
-        this.OPTION_DESCRIPTION = OPTION_DESCRIPTION;
-    }
+        public void setOptionDescription(String OPTION_DESCRIPTION) {
+            this.OPTION_DESCRIPTION = OPTION_DESCRIPTION;
+        }
 }
