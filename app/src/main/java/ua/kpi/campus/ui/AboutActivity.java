@@ -18,6 +18,7 @@ import com.github.ksoichiro.android.observablescrollview.ScrollState;
 import com.github.ksoichiro.android.observablescrollview.ScrollUtils;
 import com.nineoldandroids.view.ViewHelper;
 import com.nineoldandroids.view.ViewPropertyAnimator;
+import com.r0adkll.slidr.Slidr;
 
 import java.util.ArrayList;
 
@@ -52,6 +53,7 @@ public class AboutActivity extends ActionBarActivity implements ObservableScroll
 
         setSupportActionBar((Toolbar)findViewById(R.id.toolbar));
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ListView devList = (ListView) findViewById(R.id.dev_list_view);
         
         ArrayList<DeveloperItem> developers = new ArrayList<DeveloperItem>();
@@ -59,9 +61,11 @@ public class AboutActivity extends ActionBarActivity implements ObservableScroll
         DeveloperItem deepnekro = new DeveloperItem();
         dnihze.setOptionName(getResources().getString(R.string.dnihze))
               .setOptionDescription("Development & Design")
+              .setLink("https://github.com/doroshartyom")
               .setPhoto(R.drawable.dev_1);
         deepnekro.setOptionName(getResources().getString(R.string.deepnekroz))
                   .setOptionDescription("Development & API")
+                  .setLink("https://github.com/Deepnekroz")
                   .setPhoto(R.drawable.dev_2);
         
         developers.add(dnihze);
@@ -127,7 +131,9 @@ public class AboutActivity extends ActionBarActivity implements ObservableScroll
                 mScrollView.scrollTo(0, mFlexibleSpaceImageHeight - mActionBarSize);
             }
         });
-        
+
+        //Attaching this activity to Slidr
+        Slidr.attach(this);
     }
 
 

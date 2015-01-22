@@ -4,7 +4,7 @@
     android:layout_height="@dimen/item_size"
     android:paddingLeft="@dimen/keyline_1"
     android:paddingRight="@dimen/keyline_1"
-    android:background="@color/white">
+    android:background="@drawable/white_background">
 
     <RelativeLayout
         android:layout_width="40dp"

@@ -29,4 +29,5 @@ dependencies {
     compile 'com.nispok:snackbar:2.7.4'
     compile 'com.rengwuxian.materialedittext:library:1.8.1'
     compile 'com.github.ksoichiro:android-observablescrollview:1.4.0'
+    compile 'com.r0adkll:slidableactivity:2.0.1'
 }
