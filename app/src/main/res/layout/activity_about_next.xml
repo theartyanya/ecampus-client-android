@@ -38,16 +38,29 @@
                 android:paddingRight="@dimen/activity_horizontal_margin"
                 android:paddingTop="@dimen/activity_vertical_margin"
                 android:text="@string/lipsum" />
-            <TextView
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:paddingLeft="@dimen/keyline_1"
-                android:paddingRight="@dimen/keyline_1"
-                android:text="Developers"
-                android:background="@color/background_material_light"
-                android:textSize="16sp"
-                android:textColor="@color/body_text_2"
-                android:gravity="center_vertical"/>
+                android:background="@color/background_material_light">
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="4dp"
+                    android:background="@drawable/shadow_start"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/keyline_1"
+                    android:paddingRight="@dimen/keyline_1"
+                    android:text="Developers"
+                    android:layout_centerVertical="true"
+                    android:textSize="16sp"
+                    android:textColor="@color/body_text_3"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="#ffe0e0e0"
+                    android:layout_alignParentBottom="true"/>
+            </RelativeLayout>
             <ListView
                 android:id="@+id/dev_list_view"
                 android:background="@android:color/white"
@@ -55,16 +68,29 @@
                 android:layout_height="144dp"
                 android:divider="@null"
                 android:dividerHeight="0px"/>
-            <TextView
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:paddingLeft="@dimen/keyline_1"
-                android:paddingRight="@dimen/keyline_1"
-                android:text="About build"
-                android:background="@color/background_material_light"
-                android:textSize="16sp"
-                android:textColor="@color/body_text_2"
-                android:gravity="center_vertical"/>
+                android:background="@color/background_material_light">
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="4dp"
+                    android:background="@drawable/shadow_start"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/keyline_1"
+                    android:paddingRight="@dimen/keyline_1"
+                    android:text="About build"
+                    android:textSize="16sp"
+                    android:textColor="@color/body_text_3"
+                    android:layout_centerVertical="true"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#ffe0e0e0"
+                    android:layout_alignParentBottom="true"/>
+            </RelativeLayout>
             <ListView
                 android:id="@+id/about_list_view"
                 android:background="@android:color/white"
@@ -86,7 +112,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingLeft="@dimen/keyline_1">
+        android:paddingLeft="@dimen/keyline_3">
         <TextView
             android:id="@+id/title"
             android:layout_width="match_parent"

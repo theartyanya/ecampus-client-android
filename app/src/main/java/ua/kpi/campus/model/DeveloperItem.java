@@ -10,6 +10,7 @@ public class DeveloperItem implements Serializable {
     private String OPTION_NAME;
     private String OPTION_DESCRIPTION;
     private int PHOTO;
+    private String LINK;
 
     public String getOptionName() {
         return OPTION_NAME;
@@ -35,5 +36,14 @@ public class DeveloperItem implements Serializable {
 
     public void setPhoto(int PHOTO) {
         this.PHOTO = PHOTO;
+    }
+
+    public String getLink() {
+        return LINK;
+    }
+
+    public DeveloperItem setLink(String LINK) {
+        this.LINK = LINK;
+        return this;
     }
 }

@@ -1,6 +1,8 @@
 package ua.kpi.campus.ui.adapters;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,12 +49,21 @@ public class DevelopersAdapter extends ArrayAdapter<DeveloperItem> {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        DeveloperItem item = getItem(position);
+        final DeveloperItem item = getItem(position);
         if (item != null) {
             viewHolder.itemName.setText(item.getOptionName());
             viewHolder.itemSubtitle.setText(item.getOptionDescription());
             viewHolder.imageView.setImageResource(item.getPhoto());
         }
+        
+        convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse(item.getLink()));
+                getContext().startActivity(intent);
+            }
+        });
 
         return convertView;
     }
