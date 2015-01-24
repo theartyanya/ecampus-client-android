@@ -47,10 +47,22 @@ public class PrefUtils {
 
     public static final String PREF_FACULTY_NAME = "pref_faculty_name";
 
+    public static final String PREF_MY_ID="pref_my_id";
+
+    public static void putPrefMyId(final Context context, int id){
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        sp.edit().putInt(PREF_MY_ID, id).commit();
+    }
+
+    public static int getMyId(final Context context){
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        return sp.getInt(PREF_MY_ID, -1);
+    }
+
 
     public static void putPrefFacultyName(final Context context, String facultyName) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-        sp.edit().putString(PREF_FACULTY_NAME,facultyName);
+        sp.edit().putString(PREF_FACULTY_NAME,facultyName).commit();
     }
 
     public static String getPrefFacultyName(final Context context) {
@@ -65,7 +77,7 @@ public class PrefUtils {
 
     public static void setIsStudent(final Context context, boolean isStudent){
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-        sp.edit().putBoolean(PREF_IS_STUDENT, isStudent);
+        sp.edit().putBoolean(PREF_IS_STUDENT, isStudent).commit();
     }
 
     public static String getPrefStudyPhotoUrl(final Context context) {

@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
+import ua.kpi.campus.BaseActivity;
 import ua.kpi.campus.R;
 import ua.kpi.campus.api.SyncScheduleTeacher;
 import ua.kpi.campus.model.ScheduleItemTeacher;
@@ -38,7 +39,7 @@ import ua.kpi.campus.ui.widgets.SlidingTabLayout;
 /**
  * Created by doroshartyom on 21.01.2015.
  */
-public class TeacherScheduleActivity extends ActionBarActivity implements TeacherFragment.Listener, SyncScheduleTeacher.CallBacks {
+public class TeacherScheduleActivity extends BaseActivity implements TeacherFragment.Listener, SyncScheduleTeacher.CallBacks {
 
     SlidingTabLayout slidingTabLayout = null;
     ViewPager viewPager = null;
@@ -62,7 +63,8 @@ public class TeacherScheduleActivity extends ActionBarActivity implements Teache
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_teacher_schedule);
-
+        super.checkForLoginDone();
+        super.setUpNavDrawer();
         TeacherItem item = (TeacherItem)getIntent().getSerializableExtra("teacherItem");
         
         //Working with ActionBar View

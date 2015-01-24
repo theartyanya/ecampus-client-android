@@ -24,8 +24,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import ua.kpi.campus.api.SyncSchedule;
+import ua.kpi.campus.model.TeacherItem;
 import ua.kpi.campus.ui.LoginActivity;
 import ua.kpi.campus.ui.SettingsActivity;
+import ua.kpi.campus.ui.TeacherScheduleActivity;
 import ua.kpi.campus.ui.WelcomeActivity;
 import ua.kpi.campus.util.PrefUtils;
 import ua.kpi.campus.util.ShakeListener;
@@ -205,7 +207,22 @@ public class BaseActivity extends ActionBarActivity implements SyncSchedule.Call
 			}
 		});
 	}
-
+    protected void checkIsStudent(){
+        if(PrefUtils.isStudent(this)){
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
+        else{
+            Intent intent = new Intent(this, TeacherScheduleActivity.class);
+            TeacherItem teacherItem = new TeacherItem();
+            teacherItem.setTeacherName(PrefUtils.getPrefStudyFullname(this));
+            teacherItem.setTeacherId(PrefUtils.getMyId(this));
+            intent.putExtra("teacherItem", teacherItem);
+            startActivity(intent);
+            finish();
+        }
+    }
 	private void populateNavDrawer() {
 		//Clearing Nav Drawer Items
 		mNavDrawerItems.clear();
@@ -357,9 +374,20 @@ public class BaseActivity extends ActionBarActivity implements SyncSchedule.Call
 		//Intent intent;
 		switch (item) {
 			case NAVDRAWER_ITEM_MY_SCHEDULE:
-				//intent = new Intent(this, MyScheduleActivity.class);
-				//startActivity(intent);
-				//finish();
+                if(PrefUtils.isStudent(this)){
+                    Intent intent = new Intent(this, MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                }else{
+                    Intent intent = new Intent(this, TeacherScheduleActivity.class);
+                    TeacherItem teacherItem = new TeacherItem();
+                    teacherItem.setTeacherName(PrefUtils.getPrefStudyFullname(this));
+                    teacherItem.setTeacherId(PrefUtils.getMyId(this));
+                    intent.putExtra("teacherItem", teacherItem);
+                    startActivity(intent);
+                    finish();
+                }
+
 				Toast.makeText(getApplicationContext(), "Schedule", Toast.LENGTH_SHORT).show();
 				break;
 			case NAVDRAWER_ITEM_MY_TASKS:

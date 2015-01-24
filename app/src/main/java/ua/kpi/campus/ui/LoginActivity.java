@@ -26,13 +26,14 @@ import ua.kpi.campus.R;
 import ua.kpi.campus.api.Auth;
 import ua.kpi.campus.api.GetCurrentUser;
 import ua.kpi.campus.api.SyncSchedule;
+import ua.kpi.campus.model.TeacherItem;
 import ua.kpi.campus.util.Connectivity;
 import ua.kpi.campus.util.PrefUtils;
 
 public class LoginActivity extends ActionBarActivity implements SyncSchedule.CallBacks, GetCurrentUser.CallBacks, Auth.CallBacks{
     
     MaterialAutoCompleteTextView textView;
-
+    private final String LOG_TAG="LoginActivity";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -168,8 +169,19 @@ public class LoginActivity extends ActionBarActivity implements SyncSchedule.Cal
 
     @Override
     public void GetCurrentUserCompleted(boolean completed){
-        SyncSchedule.Connect connect = new SyncSchedule.Connect(this);
-        connect.execute(this);
+        if(PrefUtils.isStudent(this)){
+            SyncSchedule.Connect connect = new SyncSchedule.Connect(this);
+            connect.execute(this);
+        }
+        else{
+            Intent intent = new Intent(LoginActivity.this, TeacherScheduleActivity.class);
+            TeacherItem teacherItem = new TeacherItem();
+            teacherItem.setTeacherName(PrefUtils.getPrefStudyFullname(this));
+            teacherItem.setTeacherId(PrefUtils.getMyId(this));
+            intent.putExtra("teacherItem", teacherItem);
+            startActivity(intent);
+            finish();
+        }
     }
 
     @Override

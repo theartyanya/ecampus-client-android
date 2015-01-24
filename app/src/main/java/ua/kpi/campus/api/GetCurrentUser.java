@@ -61,21 +61,22 @@ public class GetCurrentUser extends AsyncTask<Context, Integer, Integer> {
             switch (jsonResponce.getInt("StatusCode")){
                 case 200:
                     JSONArray personalities = jsonResponce.getJSONObject("Data").getJSONArray("Personalities");
-                    String groupName =  personalities.getJSONObject(0).getString("StudyGroupName");
-                    PrefUtils.putPrefStudyGroupName(mContext, groupName);
-                    PrefUtils.putPrefStudyFullname(mContext, jsonResponce.getJSONObject("Data").getString("FullName"));
+
                     if(!personalities.isNull(0)){
                         PrefUtils.putStudyPersonalitiesSubdivisionNameAndId(mContext, personalities.getJSONObject(0).getString("SubdivisionName"),personalities.getJSONObject(0).getInt("SubdivisionId"));
+                        String groupName =  personalities.getJSONObject(0).getString("StudyGroupName");
+                        PrefUtils.putPrefStudyGroupName(mContext, groupName);
                     }
-
+                    PrefUtils.putPrefStudyFullname(mContext, jsonResponce.getJSONObject("Data").getString("FullName"));
                     //TODO must be an easier way
                     //check is user student or teacher
                     if(jsonResponce.getJSONObject("Data").getJSONArray("Profiles").getJSONObject(0).getString("ProfileName").equalsIgnoreCase("Студент навчальної групи")){
+
                         PrefUtils.setIsStudent(mContext,true);
                     }else{
                         PrefUtils.setIsStudent(mContext,false);
                     }
-
+                    PrefUtils.putPrefMyId(mContext,jsonResponce.getJSONObject("Data").getInt("UserAccountId"));
                     JSONArray employees = jsonResponce.getJSONObject("Data").getJSONArray("Employees");
                     if(!employees.isNull(0)){
                         PrefUtils.putStudyEmployeesJSON(mContext, employees.toString());
