@@ -100,7 +100,6 @@ public class BaseActivity extends ActionBarActivity implements SyncSchedule.Call
         
         
 		checkForAgreement();
-        Log.d(LOG_TAG,""+PrefUtils.isLoginDone(this));
         checkForLoginDone();
 		setUpShakeListener();
 

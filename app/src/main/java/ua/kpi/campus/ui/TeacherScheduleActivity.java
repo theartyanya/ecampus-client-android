@@ -18,6 +18,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.nispok.snackbar.Snackbar;
+import com.nispok.snackbar.SnackbarManager;
+import com.nispok.snackbar.listeners.ActionClickListener;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
@@ -28,7 +32,6 @@ import ua.kpi.campus.model.ScheduleItemTeacher;
 import ua.kpi.campus.model.TeacherItem;
 import ua.kpi.campus.provider.ScheduleProvider;
 import ua.kpi.campus.ui.adapters.TeacherScheduleAdapter;
-import ua.kpi.campus.ui.fragments.ScheduleFragment;
 import ua.kpi.campus.ui.fragments.TeacherFragment;
 import ua.kpi.campus.ui.widgets.SlidingTabLayout;
 
@@ -48,7 +51,7 @@ public class TeacherScheduleActivity extends ActionBarActivity implements Teache
     private TeacherScheduleAdapter[] mTeacherAdapters = new TeacherScheduleAdapter[2];
     
     ScheduleProvider scheduleProvider;
-    
+    private int teacherID;
     private static final String LOG_TAG = "TeacherScheduleActivity";
     private static final String ARG_SCHEDULE_WEEK_INDEX
             = "ua.kpi.campus.ARG_SCHEDULE_WEEK_INDEX";
@@ -81,17 +84,25 @@ public class TeacherScheduleActivity extends ActionBarActivity implements Teache
         }
 
         scheduleProvider = new ScheduleProvider(getApplicationContext());
-        
-        SyncScheduleTeacher scheduleTeacher = new SyncScheduleTeacher(this, item.getTeacherId());
-        SyncScheduleTeacher.Connect connect = new SyncScheduleTeacher.Connect(this);
-        connect.execute();
 
-        ArrayList<ScheduleItemTeacher> first = scheduleProvider.getScheduleItemsTeacherFromDatabase(1);
-        ArrayList<ScheduleItemTeacher> second = scheduleProvider.getScheduleItemsTeacherFromDatabase(2);
+        teacherID=item.getTeacherId();
 
-        mTeacherAdapters[0].updateItems(scheduleProvider.getScheduleItemsTeacherFromDatabase(1));
-        mTeacherAdapters[1].updateItems(scheduleProvider.getScheduleItemsTeacherFromDatabase(2));
 
+        ArrayList<ScheduleItemTeacher> first = scheduleProvider.getScheduleItemsTeacherFromDatabase(1, item.getTeacherId());
+        ArrayList<ScheduleItemTeacher> second = scheduleProvider.getScheduleItemsTeacherFromDatabase(2, item.getTeacherId());
+
+        if(first.size()==0 && second.size()==0){
+            SyncScheduleTeacher scheduleTeacher = new SyncScheduleTeacher(this, item.getTeacherId());
+            SyncScheduleTeacher.Connect connect = new SyncScheduleTeacher.Connect(this);
+            connect.execute();
+        }
+
+
+        mTeacherAdapters[0].updateItems(scheduleProvider.getScheduleItemsTeacherFromDatabase(1, item.getTeacherId()));
+        mTeacherAdapters[1].updateItems(scheduleProvider.getScheduleItemsTeacherFromDatabase(2, item.getTeacherId()));
+
+        mTeacherAdapters[0].notifyDataSetChanged();
+        mTeacherAdapters[1].notifyDataSetChanged();
 
         viewPagerAdapter = new MyViewPagerAdapter(getFragmentManager());
         viewPager.setAdapter(viewPagerAdapter);
@@ -203,24 +214,45 @@ public class TeacherScheduleActivity extends ActionBarActivity implements Teache
     public void taskCompleted(boolean completed) {
        progressDialog.dismiss();
 
-        ArrayList<ScheduleItemTeacher> first = scheduleProvider.getScheduleItemsTeacherFromDatabase(1);
-        ArrayList<ScheduleItemTeacher> second = scheduleProvider.getScheduleItemsTeacherFromDatabase(2);
-
+        Log.d(LOG_TAG, "taskCompleted");
+        ArrayList<ScheduleItemTeacher> first = scheduleProvider.getScheduleItemsTeacherFromDatabase(1, teacherID);
+        ArrayList<ScheduleItemTeacher> second = scheduleProvider.getScheduleItemsTeacherFromDatabase(2, teacherID);
         if (!first.isEmpty() && !second.isEmpty()) {
-            mTeacherAdapters[0].updateItems(scheduleProvider.getScheduleItemsTeacherFromDatabase(1));
-            mTeacherAdapters[1].updateItems(scheduleProvider.getScheduleItemsTeacherFromDatabase(2));
+            mTeacherAdapters[0].updateItems(scheduleProvider.getScheduleItemsTeacherFromDatabase(1, teacherID));
+            mTeacherAdapters[1].updateItems(scheduleProvider.getScheduleItemsTeacherFromDatabase(2, teacherID));
         } else {
-            Toast.makeText(this, "EMPTY", Toast.LENGTH_SHORT).show();
+          //  Toast.makeText(this, "EMPTY", Toast.LENGTH_SHORT).show();
         }
-        Toast.makeText(this, "FIRST:" + first.size(), Toast.LENGTH_SHORT).show();
-        Toast.makeText(this, "SECOND:" + second.size(), Toast.LENGTH_SHORT).show();
+       // Toast.makeText(this, "FIRST:" + first.size(), Toast.LENGTH_SHORT).show();
+       // Toast.makeText(this, "SECOND:" + second.size(), Toast.LENGTH_SHORT).show();
 
         mTeacherAdapters[0].notifyDataSetChanged();
         mTeacherAdapters[1].notifyDataSetChanged();
+        finish();
+        startActivity(getIntent());
 
         
     }
+    public void notifyAdapters() {
+        //Updating fragments
 
+        mTeacherAdapters[0].updateItems(scheduleProvider.getScheduleItemsTeacherFromDatabase(1, teacherID));
+        mTeacherAdapters[1].updateItems(scheduleProvider.getScheduleItemsTeacherFromDatabase(2, teacherID));
+
+        SnackbarManager.show(
+                Snackbar.with(getApplicationContext())
+                        .text(getResources().getString(R.string.up_to_date))
+                        .actionLabel(getResources().getString(R.string.ok))
+                        .actionColor(getResources().getColor(R.color.primary))
+                        .actionListener(new ActionClickListener() {
+                            @Override
+                            public void onActionClicked(Snackbar snackbar) {
+                            }
+                        })
+                        .duration(Snackbar.SnackbarDuration.LENGTH_SHORT)
+                , this);
+
+    }
     private class MyViewPagerAdapter extends FragmentPagerAdapter {
         public MyViewPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -230,7 +262,7 @@ public class TeacherScheduleActivity extends ActionBarActivity implements Teache
         @Override
         public Fragment getItem(int position) {
             Log.d(LOG_TAG, "Creating fragment #" + position);
-            ScheduleFragment frag = new ScheduleFragment();
+            TeacherFragment frag = new TeacherFragment();
             Bundle args = new Bundle();
             args.putInt(ARG_SCHEDULE_WEEK_INDEX, position);
             frag.setArguments(args);

@@ -105,7 +105,6 @@ public class ScheduleAdapter implements ListAdapter, AbsListView.RecyclerListene
         TextView startTimeView = null;
         TextView endTimeView = null;
         TextView separator = null;
-
         boolean isSeparator = false;
 
         int itemViewType = getItemViewType(position);

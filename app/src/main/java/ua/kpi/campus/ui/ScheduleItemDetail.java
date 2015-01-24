@@ -157,12 +157,5 @@ public class ScheduleItemDetail extends ActionBarActivity {
     }
 
     public void auth(View view) {
-        Intent intent = new Intent(ScheduleItemDetail.this, TeacherScheduleActivity.class);
-        TeacherItem teacher = new TeacherItem();
-        teacher.setTeacherName("testName");
-        teacher.setTeacherId(3);
-        teacher.setTeacherSubject("TestSubject");
-        intent.putExtra("teacherItem", teacher);
-        startActivity(intent);
     }
 }

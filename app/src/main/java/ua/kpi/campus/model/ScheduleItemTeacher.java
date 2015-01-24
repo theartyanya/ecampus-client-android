@@ -38,6 +38,19 @@ public class ScheduleItemTeacher extends ScheduleItem {
         return returnList;
 
     }
+    public String getGroupNamesString(){
+        String returnString="";
+        try{
+            JSONArray array = new JSONArray(this.groupsJSON);
+            for(int j = 0; j<array.length();j++){
+                JSONObject group = array.getJSONObject(j);
+                returnString+=group.getString("group_full_name")+", ";
+            }
+        }catch(JSONException e){
+            e.printStackTrace();
+        }
+        return returnString.toUpperCase();
+    }
     public String getGroupNamesString(String groupsJSON){
         String returnString="";
         try{
@@ -46,6 +59,7 @@ public class ScheduleItemTeacher extends ScheduleItem {
                 JSONObject group = array.getJSONObject(j);
                 returnString+=group.getString("group_full_name")+", ";
             }
+            returnString.substring(0, returnString.length()-1);
         }catch(JSONException e){
             e.printStackTrace();
         }

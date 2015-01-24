@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import ua.kpi.campus.R;
 import ua.kpi.campus.api.SyncScheduleTeacher;
+import ua.kpi.campus.ui.TeacherScheduleActivity;
 
 /**
  * Created by doroshartyom on 21.01.2015.
@@ -93,7 +94,9 @@ public class TeacherFragment extends ListFragment implements SwipeRefreshLayout.
 
     @Override
     public void taskCompleted(boolean completed) {
+
         refreshLayout.setRefreshing(false);
+        ((TeacherScheduleActivity)getActivity()).notifyAdapters();
     }
     
     @Override

@@ -91,7 +91,6 @@ public class Auth extends AsyncTask<Context, Integer, Integer> {
     }
     @Override
     protected void onPostExecute(Integer result) {
-        Log.d("auth","in onPost");
         callBacks.AuthCompleted(true);
         if(!PrefUtils.getAuthKey(mContext).isEmpty()){
             Auth.completed=true;

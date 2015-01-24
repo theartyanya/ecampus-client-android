@@ -107,7 +107,7 @@ public class ScheduleProvider {
         }
     }
 
-    public ArrayList<ScheduleItemTeacher> getScheduleItemsTeacherFromDatabase(int week){
+    public ArrayList<ScheduleItemTeacher> getScheduleItemsTeacherFromDatabase(int week, int teacherId){
         ArrayList<ScheduleItemTeacher> items = new ArrayList<>();
         Cursor cursor = db.query(SCHEDULE_TEACHER, null, null, null, null, null, null);
 
@@ -129,8 +129,8 @@ public class ScheduleProvider {
 
             do {
                 ScheduleItemTeacher item = new ScheduleItemTeacher();
-                ScheduleItemTeacher dividerItem = new ScheduleItemTeacher();
-
+                ScheduleItemTeacher dividerItem = new ScheduleItemTeacher();;
+                if(cursor.getInt(teacher_id) != teacherId) continue; //skip isn't requied teachers
                 if (cursor.getInt(lesson_week) == week) {
 
                     if (cursor.getInt(day_number) != lastday) {
@@ -168,7 +168,6 @@ public class ScheduleProvider {
                     item.setGroupsJSON(cursor.getString(groups_json));
                   //  item.setGroupName(cursor.getString(group_name));
                   //  item.setGroupId(cursor.getInt(group_id));
-                    Log.d(LOG_TAG, "Getting teacher lesson for "+item.getGroupNamesString(item.getGroupsJSON()));
                     items.add(item);
                 }
             } while (cursor.moveToNext());

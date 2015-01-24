@@ -117,6 +117,7 @@ public class TeacherAdapter implements ListAdapter {
             public void onClick(View v) {
                 Intent intent = new Intent(mContext.getApplicationContext(),TeacherScheduleActivity.class);
                 intent.putExtra("teacherItem",item);
+                Log.d(LOG_TAG, "pushed teachedId " +item.getTeacherId());
                 mContext.startActivity(intent);
             }
         });

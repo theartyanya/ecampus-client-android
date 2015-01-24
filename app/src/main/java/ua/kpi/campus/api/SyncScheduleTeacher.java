@@ -68,6 +68,7 @@ public class SyncScheduleTeacher {
                 lessonItem.setTeacherName(lesson.getString("teacher_name"));
                 lessonItem.setLessonWeek(Integer.parseInt(lesson.getString("lesson_week")));
                 lessonItem.setTimeStart(lesson.getString("time_start"));
+                lessonItem.setTeacherId(teacherId);
                 lessonItem.setTimeEnd(lesson.getString("time_end"));
 
                 itemsArrayList.add(lessonItem);
