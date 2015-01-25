@@ -84,6 +84,7 @@ public class MainActivity extends BaseActivity implements ScheduleFragment.Liste
         setContentView(R.layout.activity_main);
         super.checkForLoginDone();
         super.setUpNavDrawer(); //we can now findById our views
+        super.checkIsStudent();
         super.scheduleSyncer();
 
         spinnerList.add(getString(R.string.schedule));

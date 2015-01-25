@@ -35,6 +35,7 @@ import ua.kpi.campus.provider.ScheduleProvider;
 import ua.kpi.campus.ui.adapters.TeacherScheduleAdapter;
 import ua.kpi.campus.ui.fragments.TeacherFragment;
 import ua.kpi.campus.ui.widgets.SlidingTabLayout;
+import ua.kpi.campus.util.PrefUtils;
 
 /**
  * Created by doroshartyom on 21.01.2015.
@@ -72,7 +73,12 @@ public class TeacherScheduleActivity extends BaseActivity implements TeacherFrag
         setSupportActionBar(toolbar);
         
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        if(PrefUtils.isStudent(this)){
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }else{
+            actionBar.setDisplayHomeAsUpEnabled(false);
+        }
+
         actionBar.setTitle(item.getTeacherName());
 
         WEEK_NAMES = new String[] {

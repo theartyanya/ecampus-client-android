@@ -26,7 +26,7 @@ public class ScheduleAdapter implements ListAdapter, AbsListView.RecyclerListene
     private static final String LOG_TAG = "ScheduleAdapter";
 
     private final Context mContext;
-    
+
 
     int mContentTopClearance = 0;
 
@@ -105,6 +105,7 @@ public class ScheduleAdapter implements ListAdapter, AbsListView.RecyclerListene
         TextView startTimeView = null;
         TextView endTimeView = null;
         TextView separator = null;
+
         boolean isSeparator = false;
 
         int itemViewType = getItemViewType(position);

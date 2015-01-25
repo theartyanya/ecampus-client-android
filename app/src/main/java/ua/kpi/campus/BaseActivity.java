@@ -208,12 +208,7 @@ public class BaseActivity extends ActionBarActivity implements SyncSchedule.Call
 		});
 	}
     protected void checkIsStudent(){
-        if(PrefUtils.isStudent(this)){
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
-            finish();
-        }
-        else{
+        if(!PrefUtils.isStudent(this)){
             Intent intent = new Intent(this, TeacherScheduleActivity.class);
             TeacherItem teacherItem = new TeacherItem();
             teacherItem.setTeacherName(PrefUtils.getPrefStudyFullname(this));

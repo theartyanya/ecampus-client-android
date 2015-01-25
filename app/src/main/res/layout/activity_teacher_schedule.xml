@@ -6,7 +6,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
-
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/white">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -47,7 +51,7 @@
             android:background="@drawable/toolbar_shadow" />
 
     </RelativeLayout>
-
-
+    </LinearLayout>
+    <include layout="@layout/navdrawer"/>
 
 </android.support.v4.widget.DrawerLayout>
