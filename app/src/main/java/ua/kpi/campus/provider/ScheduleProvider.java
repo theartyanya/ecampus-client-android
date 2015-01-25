@@ -265,4 +265,7 @@ public class ScheduleProvider {
     public void clear() {
         db.delete(SCHEDULE, null, null);
     }
+    public void clearTeachers(){
+        db.delete(TEACHERS, null, null);
+    }
 }

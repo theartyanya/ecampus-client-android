@@ -26,6 +26,7 @@ import com.nispok.snackbar.Snackbar;
 import com.nispok.snackbar.SnackbarManager;
 import com.nispok.snackbar.listeners.ActionClickListener;
 
+import ua.kpi.campus.api.Auth;
 import ua.kpi.campus.api.SyncSchedule;
 import ua.kpi.campus.provider.ScheduleProvider;
 import ua.kpi.campus.ui.adapters.ScheduleAdapter;
@@ -118,8 +119,6 @@ public class MainActivity extends BaseActivity implements ScheduleFragment.Liste
                         Intent intent = new Intent(MainActivity.this, TeacherActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                         startActivity(intent);
-                        
-                        finish();
                         overridePendingTransition(0, 0);
                         break;
 
@@ -191,9 +190,15 @@ public class MainActivity extends BaseActivity implements ScheduleFragment.Liste
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings)
-            startSettingsActivity();
+
+        switch(id){
+            case R.id.action_settings:
+                startSettingsActivity();
+                break;
+            case R.id.log_out:
+                Auth.exit(this);
+                break;
+        }
 
         return super.onOptionsItemSelected(item);
     }

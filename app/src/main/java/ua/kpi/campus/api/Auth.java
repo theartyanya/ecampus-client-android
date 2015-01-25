@@ -2,9 +2,11 @@ package ua.kpi.campus.api;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Looper;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.nispok.snackbar.Snackbar;
@@ -29,6 +31,7 @@ import ua.kpi.campus.R;
 import ua.kpi.campus.model.TeacherItem;
 import ua.kpi.campus.provider.ScheduleDatabase;
 import ua.kpi.campus.provider.ScheduleProvider;
+import ua.kpi.campus.ui.LoginActivity;
 import ua.kpi.campus.util.PrefUtils;
 
 /**
@@ -145,14 +148,14 @@ public class Auth extends AsyncTask<Context, Integer, Integer> {
     }
 
     public static void exit(Context context){
-        PrefUtils.unMarkScheduleUploaded(context);
-        PrefUtils.markLoginUndone(context);
-        PrefUtils.setIsStudent(context,true);
-        PrefUtils.putPrefStudyFullname(context, "");
-        ScheduleDatabase.deleteDatabase(context);
+        SharedPreferences spref = PreferenceManager.getDefaultSharedPreferences(context);
+        spref.edit().clear().commit();
+        PrefUtils.markTosAccepted(context);
         ScheduleProvider sp = new ScheduleProvider(context);
-        ArrayList<TeacherItem> item = sp.getTeachersFromDatabase();
-        Log.d("EXIT",item.get(0).toString());
+        sp.clear();
+        sp.clearTeacherSchedule();
+        sp.clearTeachers();
+        context.startActivity(new Intent(context.getApplicationContext(), LoginActivity.class));
     }
 
 }

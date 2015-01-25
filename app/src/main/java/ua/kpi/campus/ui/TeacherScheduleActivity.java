@@ -28,6 +28,7 @@ import java.util.Set;
 
 import ua.kpi.campus.BaseActivity;
 import ua.kpi.campus.R;
+import ua.kpi.campus.api.Auth;
 import ua.kpi.campus.api.SyncScheduleTeacher;
 import ua.kpi.campus.model.ScheduleItemTeacher;
 import ua.kpi.campus.model.TeacherItem;
@@ -159,12 +160,17 @@ public class TeacherScheduleActivity extends BaseActivity implements TeacherFrag
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings)
-            startSettingsActivity();
-        
-        if (id == R.id.home)
-            finish();
+        switch(id){
+            case R.id.action_settings:
+                startSettingsActivity();
+                break;
+            case R.id.log_out:
+                Auth.exit(this);
+                break;
+            case R.id.home:
+                finish();
+                break;
+        }
 
         return super.onOptionsItemSelected(item);
     }
