@@ -27,6 +27,7 @@ import ua.kpi.campus.api.SyncSchedule;
 import ua.kpi.campus.model.TeacherItem;
 import ua.kpi.campus.ui.LoginActivity;
 import ua.kpi.campus.ui.SettingsActivity;
+import ua.kpi.campus.ui.notes.SocialActivity;
 import ua.kpi.campus.ui.TeacherScheduleActivity;
 import ua.kpi.campus.ui.WelcomeActivity;
 import ua.kpi.campus.util.PrefUtils;
@@ -398,8 +399,7 @@ public class BaseActivity extends ActionBarActivity implements SyncSchedule.Call
 				Toast.makeText(getApplicationContext(), "Lessons", Toast.LENGTH_SHORT).show();
 				break;
 			case NAVDRAWER_ITEM_MY_NOTES:
-				//intent = new Intent(this, SocialActivity.class);
-				//startActivity(intent);
+				startSocialActivity();
 				//finish();
 				Toast.makeText(getApplicationContext(), "Notes", Toast.LENGTH_SHORT).show();
 				break;
@@ -426,6 +426,11 @@ public class BaseActivity extends ActionBarActivity implements SyncSchedule.Call
 		startActivity(new Intent(context, that));
 		finish();
 	}
+
+    protected void startSocialActivity() {
+        Intent intent = new Intent(this, SocialActivity.class);
+        startActivity(intent);
+    }
 
 	protected void startSettingsActivity(){
         Intent intent = new Intent(this, SettingsActivity.class);
