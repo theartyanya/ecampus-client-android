@@ -1,4 +1,4 @@
-### KPI Campus Android Application
+## KPI Campus Android Application [![Build Status](https://travis-ci.org/DOIS/ecampus-client-android.svg?branch=master)](https://travis-ci.org/DOIS/ecampus-client-android)
 
 Now resources are cleaned before update. Old sorces can be found in **"old-master"** branch!
 
