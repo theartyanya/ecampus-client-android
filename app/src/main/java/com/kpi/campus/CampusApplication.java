@@ -1,0 +1,43 @@
+package com.kpi.campus;
+
+import android.app.Application;
+
+import com.kpi.campus.di.RootModule;
+
+import java.util.List;
+
+import dagger.ObjectGraph;
+
+/**
+ * Android Application extension created to get the control of the application lifecycle.
+ *
+ * Created by Administrator on 26.01.2016.
+ */
+public class CampusApplication extends Application {
+
+    private ObjectGraph objectGraph;
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        initializeDependencyInjector();
+    }
+
+    public ObjectGraph plus(List<Object> modules) {
+        if(modules == null) {
+            throw new IllegalArgumentException("Module is null. Review your getModules() implementation");
+        }
+        return objectGraph.plus(modules.toArray());
+    }
+
+    public void inject(Object object) {
+        objectGraph.inject(object);
+    }
+
+    private void initializeDependencyInjector() {
+        objectGraph = ObjectGraph.create(new RootModule(this));
+        objectGraph.inject(this);
+        objectGraph.injectStatics();
+    }
+
+}
