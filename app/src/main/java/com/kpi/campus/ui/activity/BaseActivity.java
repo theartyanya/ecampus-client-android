@@ -60,7 +60,7 @@ public abstract class BaseActivity extends AppCompatActivity {
      * Replace every field annotated with ButterKnife annotations like @Bind with the proper
      * value.
      */
-    protected void bind() {
+    protected void bindViews() {
         ButterKnife.bind(this);
     }
 }

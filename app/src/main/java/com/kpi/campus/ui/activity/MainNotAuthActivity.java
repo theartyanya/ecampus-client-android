@@ -6,24 +6,31 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.kpi.campus.R;
+import com.kpi.campus.ui.presenter.MainNotAuthPresenter;
 import com.kpi.campus.ui.presenter.UIModule;
 
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.Bind;
 
-public class MainNotAuthActivity extends BaseActivity {
+public class MainNotAuthActivity extends BaseActivity implements MainNotAuthPresenter.IView {
 
     @Bind(R.id.toolbar) Toolbar mToolbar;
+    @Inject
+    MainNotAuthPresenter mPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_not_auth);
-        bind();
+        bindViews();
+        mPresenter.setView(this);
+        mPresenter.initializeViewComponent();
 
-        setSupportActionBar(mToolbar);
+
     }
 
     @Override
@@ -49,4 +56,14 @@ public class MainNotAuthActivity extends BaseActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void setViewComponent() {
+        setToolbar();
+    }
+
+    private void setToolbar() {
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setIcon(R.mipmap.campus);
+    }
 }
