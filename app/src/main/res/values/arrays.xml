@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="partial_subsystem">
+        <item>Новини</item>
+        <item>Розклад</item>
+        <item>Інститути та факультети</item>
+    </string-array>
+
+    <string-array name="full_subsystem">
+        <item>Новини</item>
+        <item>Розклад</item>
+        <item>Інститути та факультети</item>
+        <item>Оголошення</item>
+        <item>Голосування</item>
+        <item>Моніторинг</item>
+        <item>Ректорський</item>
+    </string-array>
+
+    <array name="partial_subsystem_image">
+        <item>@drawable/logo</item>
+        <item>@drawable/logo</item>
+        <item>@drawable/logo</item>
+    </array>
+
+    <array name="full_subsystem_image">
+        <item>@drawable/logo</item>
+        <item>@drawable/logo</item>
+        <item>@drawable/logo</item>
+        <item>@drawable/logo</item>
+        <item>@drawable/logo</item>
+        <item>@drawable/logo</item>
+        <item>@drawable/logo</item>
+    </array>
+
+</resources>
