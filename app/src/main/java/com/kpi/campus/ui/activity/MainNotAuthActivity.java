@@ -10,10 +10,9 @@ import android.view.MenuItem;
 
 import com.kpi.campus.R;
 import com.kpi.campus.model.Subsystem;
-import com.kpi.campus.model.SubsystemManager;
 import com.kpi.campus.ui.adapter.SubsystemAdapter;
 import com.kpi.campus.ui.presenter.MainNotAuthPresenter;
-import com.kpi.campus.ui.presenter.UIModule;
+import com.kpi.campus.di.UIModule;
 
 import java.util.ArrayList;
 import java.util.LinkedList;

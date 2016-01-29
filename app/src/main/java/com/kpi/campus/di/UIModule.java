@@ -1,5 +1,7 @@
-package com.kpi.campus.ui.presenter;
+package com.kpi.campus.di;
 
+import com.kpi.campus.ui.activity.LoginActivity;
+import com.kpi.campus.ui.activity.MainActivity;
 import com.kpi.campus.ui.activity.MainNotAuthActivity;
 
 import dagger.Module;
@@ -11,7 +13,7 @@ import dagger.Module;
  */
 @Module(complete = false,
 injects = {
-        MainNotAuthActivity.class
+        MainNotAuthActivity.class, LoginActivity.class, MainActivity.class
 })
 public final class UIModule {
 }

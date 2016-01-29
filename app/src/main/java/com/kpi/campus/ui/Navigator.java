@@ -6,6 +6,7 @@ import android.content.Intent;
 
 import com.kpi.campus.di.ActivityContext;
 import com.kpi.campus.ui.activity.LoginActivity;
+import com.kpi.campus.ui.activity.MainActivity;
 
 import javax.inject.Inject;
 
@@ -26,6 +27,11 @@ public class Navigator {
 
     public void startLoginActivity() {
         Intent intent = getLaunchIntent(LoginActivity.class);
+        mActivityContext.startActivity(intent);
+    }
+
+    public void startMainActivity() {
+        Intent intent = getLaunchIntent(MainActivity.class);
         mActivityContext.startActivity(intent);
     }
 
