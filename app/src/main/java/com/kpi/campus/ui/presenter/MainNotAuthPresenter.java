@@ -7,6 +7,7 @@ import android.content.res.TypedArray;
 import com.kpi.campus.R;
 import com.kpi.campus.model.Subsystem;
 import com.kpi.campus.model.SubsystemManager;
+import com.kpi.campus.ui.Navigator;
 
 import java.util.List;
 
@@ -19,10 +20,12 @@ public class MainNotAuthPresenter extends BasePresenter {
 
     private IView mView;
     private Context mContext;
+    private Navigator mNavigator;
 
     @Inject
-    public MainNotAuthPresenter(Context context) {
+    public MainNotAuthPresenter(Context context, Navigator navigator) {
         mContext = context;
+        mNavigator = navigator;
     }
 
     public void setView(IView view) {
@@ -42,6 +45,10 @@ public class MainNotAuthPresenter extends BasePresenter {
 
     public TypedArray getSubsystemImageArray() {
         return mContext.getResources().obtainTypedArray(R.array.partial_subsystem_image);
+    }
+
+    public void openLogin() {
+        mNavigator.startLoginActivity();
     }
 
     public interface IView {

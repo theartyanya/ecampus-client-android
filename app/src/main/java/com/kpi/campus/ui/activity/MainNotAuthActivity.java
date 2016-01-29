@@ -25,7 +25,8 @@ import butterknife.Bind;
 
 public class MainNotAuthActivity extends BaseActivity implements MainNotAuthPresenter.IView {
 
-    @Bind(R.id.toolbar) Toolbar mToolbar;
+    @Bind(R.id.toolbar)
+    Toolbar mToolbar;
     @Bind(R.id.recycler_view_subsystems)
     RecyclerView mRecyclerView;
     @Inject
@@ -59,6 +60,9 @@ public class MainNotAuthActivity extends BaseActivity implements MainNotAuthPres
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.action_login:
+                mPresenter.openLogin();
+                break;
             case R.id.action_settings:
                 break;
         }
@@ -84,8 +88,8 @@ public class MainNotAuthActivity extends BaseActivity implements MainNotAuthPres
 
     private void setToolbar() {
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setIcon(R.mipmap.campus);
+        //getSupportActionBar().setDisplayShowHomeEnabled(true);
+        //getSupportActionBar().setIcon(R.mipmap.campus);
         getSupportActionBar().setTitle(R.string.activity_name_main);
     }
 }

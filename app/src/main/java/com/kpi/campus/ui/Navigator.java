@@ -2,8 +2,10 @@ package com.kpi.campus.ui;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 
 import com.kpi.campus.di.ActivityContext;
+import com.kpi.campus.ui.activity.LoginActivity;
 
 import javax.inject.Inject;
 
@@ -20,5 +22,17 @@ public class Navigator {
     @Inject
     public Navigator(@ActivityContext Context context) {
         mActivityContext = (Activity) context;
+    }
+
+    public void startLoginActivity() {
+        Intent intent = getLaunchIntent(LoginActivity.class);
+        mActivityContext.startActivity(intent);
+    }
+
+    /**
+     * Generates the intent needed by the client code to launch this activity.
+     */
+    private Intent getLaunchIntent(Class activityClass) {
+        return new Intent(mActivityContext, activityClass);
     }
 }
