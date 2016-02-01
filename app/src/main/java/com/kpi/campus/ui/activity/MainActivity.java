@@ -66,7 +66,8 @@ public class MainActivity extends BaseActivity implements MainPresenter.IView {
         setSupportActionBar(mToolbar);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-
+        mToolbar.setNavigationIcon(R.mipmap.ic_action_menu);
+        //getSupportActionBar().setLogo(R.mipmap.ic_action_menu);
         getSupportActionBar().setTitle(R.string.activity_name_main);
     }
 }
