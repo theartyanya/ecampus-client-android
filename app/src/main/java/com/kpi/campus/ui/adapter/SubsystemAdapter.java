@@ -54,8 +54,8 @@ public class SubsystemAdapter extends RecyclerView.Adapter<SubsystemAdapter.View
     public void onBindViewHolder(ViewHolder holder, int position) {
         Subsystem subsystem = mSubsystems.get(position);
         holder.name.setText(subsystem.getName());
-        Drawable d = ContextCompat.getDrawable(mContext, mImageArray.getResourceId(position, -1));
-        holder.image.setImageDrawable(d);
+//        Drawable d = ContextCompat.getDrawable(mContext, mImageArray.getResourceId(position, -1));
+//        holder.image.setImageDrawable(d);
     }
 
     @Override

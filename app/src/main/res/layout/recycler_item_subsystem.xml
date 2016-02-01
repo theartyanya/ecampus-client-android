@@ -31,6 +31,7 @@
             android:layout_height="100dp"
             android:layout_weight="2"
             android:scaleType="center"
+            android:background="@mipmap/ic_launcher"
             android:tint="@color/colorDivider" />
     </LinearLayout>
 

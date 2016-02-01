@@ -27,10 +27,6 @@ public class LoginPresenter extends BasePresenter {
     }
 
     public void login(String login, String password) {
-
-    }
-
-    private void openMain() {
         mNavigator.startMainActivity();
     }
 
