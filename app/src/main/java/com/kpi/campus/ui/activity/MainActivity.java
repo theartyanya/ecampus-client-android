@@ -4,9 +4,11 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v7.widget.Toolbar;
+import android.widget.GridView;
 
 import com.kpi.campus.R;
 import com.kpi.campus.di.UIModule;
+import com.kpi.campus.ui.adapter.GridSubsystemAdapter;
 import com.kpi.campus.ui.presenter.MainPresenter;
 
 import java.util.LinkedList;
@@ -20,7 +22,8 @@ public class MainActivity extends BaseActivity implements MainPresenter.IView {
 
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
-
+    @Bind(R.id.grid_view_subsystem)
+    GridView mGridSubsystem;
     @Inject
     MainPresenter mPresenter;
 
@@ -60,6 +63,11 @@ public class MainActivity extends BaseActivity implements MainPresenter.IView {
     @Override
     public void setViewComponent() {
         setToolbar();
+        setGridView();
+    }
+
+    private void setGridView() {
+        mGridSubsystem.setAdapter(new GridSubsystemAdapter(this));
     }
 
     private void setToolbar() {
@@ -67,7 +75,6 @@ public class MainActivity extends BaseActivity implements MainPresenter.IView {
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         mToolbar.setNavigationIcon(R.mipmap.ic_action_menu);
-        //getSupportActionBar().setLogo(R.mipmap.ic_action_menu);
         getSupportActionBar().setTitle(R.string.activity_name_main);
     }
 }
