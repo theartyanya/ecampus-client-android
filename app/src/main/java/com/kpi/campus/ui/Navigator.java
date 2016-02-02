@@ -3,8 +3,10 @@ package com.kpi.campus.ui;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.widget.Button;
 
 import com.kpi.campus.di.ActivityContext;
+import com.kpi.campus.ui.activity.BulletinBoardActivity;
 import com.kpi.campus.ui.activity.LoginActivity;
 import com.kpi.campus.ui.activity.MainActivity;
 
@@ -36,7 +38,7 @@ public class Navigator {
     }
 
     public void startBulletinBoardActivity() {
-        Intent intent = getLaunchIntent(MainActivity.class);
+        Intent intent = getLaunchIntent(BulletinBoardActivity.class);
         mActivityContext.startActivity(intent);
     }
 
