@@ -1,14 +1,14 @@
 package com.kpi.campus.ui.activity;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 
 import com.kpi.campus.R;
 import com.kpi.campus.di.UIModule;
+import com.kpi.campus.ui.adapter.ViewPagerAdapter;
+import com.kpi.campus.ui.fragment.Bb1TabFragment;
 import com.kpi.campus.ui.presenter.BulletinBoardPresenter;
 
 import java.util.ArrayList;
@@ -18,11 +18,21 @@ import javax.inject.Inject;
 
 import butterknife.Bind;
 
-public class BulletinBoardActivity extends BaseActivity implements BulletinBoardPresenter.IView{
+public class BulletinBoardActivity extends BaseActivity implements BulletinBoardPresenter.IView {
 
-    @Bind(R.id.toolbar) Toolbar mToolbar;
+    @Bind(R.id.toolbar)
+    Toolbar mToolbar;
+    @Bind(R.id.tab_layout)
+    TabLayout mTabLayout;
+    @Bind(R.id.view_pager)
+    ViewPager mViewPager;
     @Inject
     BulletinBoardPresenter mPresenter;
+
+    private int[] tabIcons = {
+            android.R.drawable.ic_dialog_email,
+            android.R.drawable.ic_dialog_dialer
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +61,24 @@ public class BulletinBoardActivity extends BaseActivity implements BulletinBoard
     @Override
     public void setViewComponent() {
         setToolbar();
+        setViewPager();
+        setTabLayout();
+    }
+
+    private void setViewPager() {
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager(), new CharSequence[]{"bb1", "bb2"}, 2);
+        mViewPager.setAdapter(adapter);
+    }
+
+    private void setTabLayout() {
+        mTabLayout.setupWithViewPager(mViewPager);
+        //mTabLayout.setDistributeEvenly(true);
+        setupTabIcon();
+    }
+
+    private void setupTabIcon() {
+        mTabLayout.getTabAt(0).setIcon(tabIcons[0]);
+        mTabLayout.getTabAt(1).setIcon(tabIcons[1]);
     }
 
     private void setToolbar() {

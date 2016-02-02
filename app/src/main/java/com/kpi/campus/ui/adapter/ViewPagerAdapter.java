@@ -20,8 +20,8 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
     private int mTabsNumber;
     private List<Fragment> mFragment = new ArrayList<Fragment>(Arrays.asList(new Bb1TabFragment()));
 
-    public final static int PLAYER_TAB_POSITION = 0;
-    public final static int ROUND_TAB_POSITION = 1;
+    public final static int Bb1_TAB_POSITION = 0;
+    public final static int Bb2_TAB_POSITION = 1;
 
     public ViewPagerAdapter(FragmentManager fm, CharSequence titles[], int tabNum) {
         super(fm);
