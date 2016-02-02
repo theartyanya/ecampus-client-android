@@ -72,7 +72,6 @@ public class BulletinBoardActivity extends BaseActivity implements BulletinBoard
 
     private void setTabLayout() {
         mTabLayout.setupWithViewPager(mViewPager);
-        //mTabLayout.setDistributeEvenly(true);
         setupTabIcon();
     }
 

@@ -25,10 +25,10 @@ public class GridSubsystemAdapter extends BaseAdapter
     {
         inflater = LayoutInflater.from(context);
 
-        items.add(new Item("Оголошення", R.drawable.sample_0));
+        items.add(new Item("Оголошення", R.drawable.logo_bulletin_board));
         items.add(new Item("Моніторинг", R.drawable.sample_1));
         items.add(new Item("Голосування", R.drawable.sample_2));
-        items.add(new Item("Розклад", R.drawable.sample_3));
+        items.add(new Item("Розклад", R.drawable.sample_0));
         items.add(new Item("Ректорський", R.drawable.sample_4));
         items.add(new Item("Інститути та факультети", R.drawable.sample_5));
         items.add(new Item("Новини", R.drawable.sample_6));

@@ -18,7 +18,7 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
     private CharSequence mTitles[];
     private int mTabsNumber;
-    private List<Fragment> mFragment = new ArrayList<Fragment>(Arrays.asList(new Bb1TabFragment()));
+    private List<Fragment> mFragment = new ArrayList<Fragment>(Arrays.asList(new Bb1TabFragment(), new Bb1TabFragment()));
 
     public final static int Bb1_TAB_POSITION = 0;
     public final static int Bb2_TAB_POSITION = 1;
