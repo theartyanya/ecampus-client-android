@@ -11,7 +11,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="148dp"
-        android:src="@android:drawable/alert_dark_frame" />
+         />
 
     <TextView
         android:layout_width="match_parent"
