@@ -37,6 +37,16 @@ public class MainPresenter extends BasePresenter {
         mView.setViewComponent();
     }
 
+    public void startActivityBasedOn(int position) {
+        switch (position) {
+            case 0:
+                mNavigator.startBulletinBoardActivity();
+                break;
+            case 1:
+                break;
+        }
+    }
+
     public interface IView {
         void setViewComponent();
     }

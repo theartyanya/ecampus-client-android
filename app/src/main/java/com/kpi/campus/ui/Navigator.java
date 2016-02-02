@@ -35,6 +35,11 @@ public class Navigator {
         mActivityContext.startActivity(intent);
     }
 
+    public void startBulletinBoardActivity() {
+        Intent intent = getLaunchIntent(MainActivity.class);
+        mActivityContext.startActivity(intent);
+    }
+
     /**
      * Generates the intent needed by the client code to launch this activity.
      */
