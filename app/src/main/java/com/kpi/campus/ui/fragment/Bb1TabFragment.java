@@ -32,6 +32,14 @@ public class Bb1TabFragment extends BaseFragment implements Bb1TabPresenter.IVie
     Bb1TabPresenter mPresenter;
 BulletinAdapter mAdapter;
 
+    public static Bb1TabFragment createInstance(int itemsCount) {
+        Bb1TabFragment partThreeFragment = new Bb1TabFragment();
+        Bundle bundle = new Bundle();
+        bundle.putInt("ITEMS_COUNT_KEY", itemsCount);
+        partThreeFragment.setArguments(bundle);
+        return partThreeFragment;
+    }
+
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);

@@ -8,7 +8,6 @@ import android.support.v7.widget.Toolbar;
 import com.kpi.campus.R;
 import com.kpi.campus.di.UIModule;
 import com.kpi.campus.ui.adapter.ViewPagerAdapter;
-import com.kpi.campus.ui.fragment.Bb1TabFragment;
 import com.kpi.campus.ui.presenter.BulletinBoardPresenter;
 
 import java.util.ArrayList;
@@ -66,13 +65,13 @@ public class BulletinBoardActivity extends BaseActivity implements BulletinBoard
     }
 
     private void setViewPager() {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager(), new CharSequence[]{"bb1", "bb2"}, 2);
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager(), new CharSequence[]{"bb1", "bb2"});
         mViewPager.setAdapter(adapter);
     }
 
     private void setTabLayout() {
         mTabLayout.setupWithViewPager(mViewPager);
-        setupTabIcon();
+        //setupTabIcon();
     }
 
     private void setupTabIcon() {
