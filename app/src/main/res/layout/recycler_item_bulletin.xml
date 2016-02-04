@@ -26,12 +26,23 @@
         android:textColor="@color/colorPrimaryText"
         android:textSize="14sp" />
 
+    <ImageButton
+        android:id="@+id/button_bulletin_edit"
+        android:layout_width="22dp"
+        android:layout_height="24dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:background="?selectableItemBackgroundBorderless"
+        android:scaleType="centerInside"
+        android:src="@mipmap/ic_action_editor_mode_edit" />
+
     <TextView
         android:id="@+id/text_view_bulletin_author"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
+        android:layout_marginRight="16dp"
+        android:layout_toStartOf="@+id/button_bulletin_edit"
         android:text="Іваненко І.І."
         android:textColor="@color/colorPrimaryText"
         android:textSize="14sp" />
