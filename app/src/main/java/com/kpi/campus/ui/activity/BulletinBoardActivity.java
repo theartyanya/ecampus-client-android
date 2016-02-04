@@ -3,8 +3,10 @@ package com.kpi.campus.ui.activity;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.NavUtils;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 
 import com.kpi.campus.R;
 import com.kpi.campus.di.UIModule;
@@ -36,6 +38,16 @@ public class BulletinBoardActivity extends BaseActivity implements BulletinBoard
         bindViews();
         mPresenter.setView(this);
         mPresenter.initializeViewComponent();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
