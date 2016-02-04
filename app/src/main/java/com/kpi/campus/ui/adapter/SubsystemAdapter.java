@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.kpi.campus.R;
 import com.kpi.campus.model.Subsystem;
+import com.kpi.campus.util.CollectionValidator;
 
 import java.util.List;
 
@@ -35,7 +36,7 @@ public class SubsystemAdapter extends RecyclerView.Adapter<SubsystemAdapter.View
     }
 
     public void setData(List<Subsystem> list) {
-        //CollectionValidator.validateOnNull(list);
+        CollectionValidator.validateOnNull(list);
         mSubsystems = list;
         notifyDataSetChanged();
     }

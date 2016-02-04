@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.kpi.campus.R;
 import com.kpi.campus.model.Bulletin;
+import com.kpi.campus.util.CollectionValidator;
 
 import org.w3c.dom.Text;
 
@@ -28,7 +29,7 @@ public class BulletinAdapter extends RecyclerView.Adapter<BulletinAdapter.ViewHo
     }
 
     public void setData(List<Bulletin> list) {
-        //CollectionValidator.validateOnNull(list);
+        CollectionValidator.validateOnNull(list);
         mList = list;
         notifyDataSetChanged();
     }
