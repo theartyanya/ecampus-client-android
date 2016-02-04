@@ -47,9 +47,12 @@
         <item name="android:actionMenuTextColor">@android:color/white</item>
     </style>
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light">
+    <style name="ThemeOverlay.AppBar.White" parent="ThemeOverlay.AppCompat.ActionBar">
         <item name="android:textColorPrimary">@android:color/white</item>
-        <item name="android:textColorSecondary">@android:color/white</item>
+        <item name="colorControlNormal">@android:color/white</item>
+        <item name="colorControlHighlight">@android:color/white</item>
     </style>
+
+    <style name="ThemeOverlay.AppBar.White.Popup" parent="ThemeOverlay.AppCompat.Light" />
 
 </resources>
