@@ -33,4 +33,14 @@
         <item>@drawable/logo</item>
     </array>
 
+    <array name="bulletin_board_tab">
+        <item>bb1</item>
+        <item>bb2</item>
+    </array>
+
+    <array name="bulletin_board_tab_icon">
+        <item>@android:drawable/ic_dialog_email</item>
+        <item>@android:drawable/ic_dialog_dialer</item>
+    </array>
+
 </resources>

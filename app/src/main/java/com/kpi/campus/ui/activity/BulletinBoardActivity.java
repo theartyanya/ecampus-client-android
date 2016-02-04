@@ -1,5 +1,6 @@
 package com.kpi.campus.ui.activity;
 
+import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -7,7 +8,7 @@ import android.support.v7.widget.Toolbar;
 
 import com.kpi.campus.R;
 import com.kpi.campus.di.UIModule;
-import com.kpi.campus.ui.adapter.ViewPagerAdapter;
+import com.kpi.campus.ui.adapter.BulletinPagerAdapter;
 import com.kpi.campus.ui.presenter.BulletinBoardPresenter;
 
 import java.util.ArrayList;
@@ -28,11 +29,6 @@ public class BulletinBoardActivity extends BaseActivity implements BulletinBoard
     @Inject
     BulletinBoardPresenter mPresenter;
 
-    private int[] tabIcons = {
-            android.R.drawable.ic_dialog_email,
-            android.R.drawable.ic_dialog_dialer
-    };
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,14 +36,6 @@ public class BulletinBoardActivity extends BaseActivity implements BulletinBoard
         bindViews();
         mPresenter.setView(this);
         mPresenter.initializeViewComponent();
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
     }
 
     @Override
@@ -65,7 +53,8 @@ public class BulletinBoardActivity extends BaseActivity implements BulletinBoard
     }
 
     private void setViewPager() {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager(), new CharSequence[]{"bb1", "bb2"});
+        CharSequence[] tabNames = mPresenter.getTabsName();
+        BulletinPagerAdapter adapter = new BulletinPagerAdapter(getSupportFragmentManager(), tabNames);
         mViewPager.setAdapter(adapter);
     }
 
@@ -75,8 +64,11 @@ public class BulletinBoardActivity extends BaseActivity implements BulletinBoard
     }
 
     private void setupTabIcon() {
-        mTabLayout.getTabAt(0).setIcon(tabIcons[0]);
-        mTabLayout.getTabAt(1).setIcon(tabIcons[1]);
+        TypedArray tabIcon = mPresenter.getTabsIcon();
+        mTabLayout.getTabAt(BulletinPagerAdapter.BULLETIN_TAB_0)
+                .setIcon(tabIcon.getResourceId(BulletinPagerAdapter.BULLETIN_TAB_0, -1));
+        mTabLayout.getTabAt(BulletinPagerAdapter.BULLETIN_TAB_1)
+                .setIcon(tabIcon.getResourceId(BulletinPagerAdapter.BULLETIN_TAB_1, -1));
     }
 
     private void setToolbar() {

@@ -1,7 +1,10 @@
 package com.kpi.campus.ui.presenter;
 
 import android.content.Context;
+import android.content.res.Resources;
+import android.content.res.TypedArray;
 
+import com.kpi.campus.R;
 import com.kpi.campus.ui.Navigator;
 
 import javax.inject.Inject;
@@ -28,6 +31,16 @@ public class BulletinBoardPresenter extends BasePresenter {
     @Override
     public void initializeViewComponent() {
         mView.setViewComponent();
+    }
+
+    public CharSequence[] getTabsName() {
+        Resources r = mContext.getResources();
+        return r.getStringArray(R.array.bulletin_board_tab);
+    }
+
+    public TypedArray getTabsIcon() {
+        Resources r = mContext.getResources();
+        return r.obtainTypedArray(R.array.bulletin_board_tab_icon);
     }
 
     public interface IView {

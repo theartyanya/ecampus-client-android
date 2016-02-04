@@ -14,13 +14,16 @@ import java.util.List;
 /**
  * Created by Admin on 02.02.2016.
  */
-public class ViewPagerAdapter extends FragmentStatePagerAdapter {
+public class BulletinPagerAdapter extends FragmentStatePagerAdapter {
 
     private CharSequence mTitles[];
 
     private List<Fragment> mFragment = new ArrayList<Fragment>(Arrays.asList(new Bb1TabFragment(), new Bb1TabFragment()));
 
-    public ViewPagerAdapter(FragmentManager fm, CharSequence titles[]) {
+    public static int BULLETIN_TAB_0 = 0;
+    public static int BULLETIN_TAB_1 = 1;
+
+    public BulletinPagerAdapter(FragmentManager fm, CharSequence titles[]) {
         super(fm);
         mTitles = titles;
     }
