@@ -8,29 +8,27 @@
     </string-array>
 
     <string-array name="full_subsystem">
-        <item>Новини</item>
-        <item>Розклад</item>
-        <item>Інститути та факультети</item>
         <item>Оголошення</item>
-        <item>Голосування</item>
         <item>Моніторинг</item>
         <item>Ректорський</item>
+        <item>Голосування</item>
+        <item>Навантаження НПП</item>
+        <item>РНП</item>
     </string-array>
 
     <array name="partial_subsystem_image">
-        <item>@drawable/logo</item>
-        <item>@drawable/logo</item>
-        <item>@drawable/logo</item>
+        <item>@drawable/logo_campus</item>
+        <item>@drawable/logo_campus</item>
+        <item>@drawable/logo_campus</item>
     </array>
 
     <array name="full_subsystem_image">
-        <item>@drawable/logo</item>
-        <item>@drawable/logo</item>
-        <item>@drawable/logo</item>
-        <item>@drawable/logo</item>
-        <item>@drawable/logo</item>
-        <item>@drawable/logo</item>
-        <item>@drawable/logo</item>
+        <item>@drawable/logo_bulletin_board</item>
+        <item>@drawable/logo_monitoring</item>
+        <item>@drawable/logo_rektorskiy</item>
+        <item>@drawable/logo_golosuvannya</item>
+        <item>@drawable/logo_navantagennya_npp</item>
+        <item>@drawable/logo_rnp</item>
     </array>
 
     <array name="bulletin_board_tab">

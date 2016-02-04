@@ -28,7 +28,6 @@ public class SubsystemAdapter extends RecyclerView.Adapter<SubsystemAdapter.View
 
     private Context mContext;
     private List<Subsystem> mSubsystems;
-    private TypedArray mImageArray;
 
     public SubsystemAdapter(Context context, List<Subsystem> subsystem) {
         mContext = context;
@@ -41,10 +40,6 @@ public class SubsystemAdapter extends RecyclerView.Adapter<SubsystemAdapter.View
         notifyDataSetChanged();
     }
 
-    public void setImageArray(TypedArray imageArray) {
-        mImageArray = imageArray;
-    }
-
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_item_subsystem, parent, false);
@@ -55,8 +50,7 @@ public class SubsystemAdapter extends RecyclerView.Adapter<SubsystemAdapter.View
     public void onBindViewHolder(ViewHolder holder, int position) {
         Subsystem subsystem = mSubsystems.get(position);
         holder.name.setText(subsystem.getName());
-//        Drawable d = ContextCompat.getDrawable(mContext, mImageArray.getResourceId(position, -1));
-//        holder.image.setImageDrawable(d);
+        holder.image.setImageDrawable(ContextCompat.getDrawable(mContext, subsystem.getIconId()));
     }
 
     @Override

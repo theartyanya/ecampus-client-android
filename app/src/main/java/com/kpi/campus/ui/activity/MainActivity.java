@@ -10,6 +10,7 @@ import android.widget.GridView;
 
 import com.kpi.campus.R;
 import com.kpi.campus.di.UIModule;
+import com.kpi.campus.model.Subsystem;
 import com.kpi.campus.ui.adapter.GridSubsystemAdapter;
 import com.kpi.campus.ui.presenter.MainPresenter;
 
@@ -69,7 +70,8 @@ public class MainActivity extends BaseActivity implements MainPresenter.IView {
     }
 
     private void setGridView() {
-        mGridSubsystem.setAdapter(new GridSubsystemAdapter(this));
+        List<Subsystem> data = mPresenter.getData();
+        mGridSubsystem.setAdapter(new GridSubsystemAdapter(this, data));
         mGridSubsystem.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {

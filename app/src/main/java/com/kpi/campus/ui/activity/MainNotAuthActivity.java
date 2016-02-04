@@ -81,8 +81,7 @@ public class MainNotAuthActivity extends BaseActivity implements MainNotAuthPres
         mAdapter = new SubsystemAdapter(this, new ArrayList<Subsystem>());
         mRecyclerView.setAdapter(mAdapter);
 
-        mAdapter.setData(mPresenter.getSubsystemList());
-        mAdapter.setImageArray(mPresenter.getSubsystemImageArray());
+        mAdapter.setData(mPresenter.getData());
     }
 
     private void setToolbar() {
