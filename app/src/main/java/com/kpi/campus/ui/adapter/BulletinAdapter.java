@@ -4,10 +4,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.TextView;
 
 import com.kpi.campus.R;
 import com.kpi.campus.model.Bulletin;
+import com.kpi.campus.ui.view.OnItemClickListener;
 import com.kpi.campus.util.CollectionValidator;
 
 import org.w3c.dom.Text;
@@ -16,6 +18,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by Administrator on 02.02.2016.
@@ -23,6 +26,7 @@ import butterknife.ButterKnife;
 public class BulletinAdapter extends RecyclerView.Adapter<BulletinAdapter.ViewHolder> {
 
     private List<Bulletin> mList;
+    private OnItemClickListener mListener;
 
     public BulletinAdapter(List<Bulletin> list) {
         mList = list;
@@ -57,6 +61,10 @@ public class BulletinAdapter extends RecyclerView.Adapter<BulletinAdapter.ViewHo
         return (mList != null) ? mList.size() : 0;
     }
 
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        mListener = listener;
+    }
+
     protected class ViewHolder extends RecyclerView.ViewHolder {
 
         @Bind(R.id.text_view_bulletin_date)
@@ -69,6 +77,13 @@ public class BulletinAdapter extends RecyclerView.Adapter<BulletinAdapter.ViewHo
         public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+        }
+
+        @OnClick(R.id.layout_bulletin)
+        public void itemClick(View view) {
+            if (mListener != null) {
+                mListener.onItemClicked(view, getAdapterPosition());
+            }
         }
     }
 }

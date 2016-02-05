@@ -1,20 +1,15 @@
 package com.kpi.campus.ui.fragment;
 
-import android.app.Activity;
-import android.net.Uri;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.kpi.campus.R;
 import com.kpi.campus.model.Bulletin;
 import com.kpi.campus.ui.adapter.BulletinAdapter;
 import com.kpi.campus.ui.presenter.Bb1TabPresenter;
+import com.kpi.campus.ui.view.OnItemClickListener;
 
 import java.util.ArrayList;
 
@@ -30,15 +25,15 @@ public class Bb1TabFragment extends BaseFragment implements Bb1TabPresenter.IVie
     RecyclerView mRecyclerView;
     @Inject
     Bb1TabPresenter mPresenter;
-BulletinAdapter mAdapter;
+    BulletinAdapter mAdapter;
 
-    public static Bb1TabFragment createInstance(int itemsCount) {
-        Bb1TabFragment partThreeFragment = new Bb1TabFragment();
-        Bundle bundle = new Bundle();
-        bundle.putInt("ITEMS_COUNT_KEY", itemsCount);
-        partThreeFragment.setArguments(bundle);
-        return partThreeFragment;
-    }
+    private OnItemClickListener onItemClickListener =
+            new OnItemClickListener() {
+                @Override
+                public void onItemClicked(View view, int position) {
+                    mPresenter.onItemClick(position);
+                }
+            };
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -62,6 +57,7 @@ BulletinAdapter mAdapter;
         mRecyclerView.setHasFixedSize(true);
         mAdapter = new BulletinAdapter(new ArrayList<Bulletin>());
         mAdapter.setData(mPresenter.getData());
+        mAdapter.setOnItemClickListener(onItemClickListener);
         mRecyclerView.setAdapter(mAdapter);
     }
 }
