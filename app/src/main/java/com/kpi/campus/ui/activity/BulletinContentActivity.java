@@ -1,8 +1,10 @@
 package com.kpi.campus.ui.activity;
 
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 
 import com.kpi.campus.R;
 import com.kpi.campus.di.UIModule;
@@ -31,6 +33,16 @@ public class BulletinContentActivity extends BaseActivity implements BulletinCon
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     protected List<Object> getModules() {
         List<Object> modules = new ArrayList<>();
         modules.add(new UIModule());
@@ -47,6 +59,6 @@ public class BulletinContentActivity extends BaseActivity implements BulletinCon
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         mToolbar.setNavigationIcon(R.mipmap.ic_action_navigation_arrow_back);
-        getSupportActionBar().setTitle(R.string.activity_name_bulletin_board);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
     }
 }
