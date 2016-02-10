@@ -38,6 +38,11 @@
             android:name=".ui.activity.BulletinContentActivity"
             android:parentActivityName=".ui.activity.BulletinBoardActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+
+        <provider
+            android:authorities="com.kpi.campus.database.contentprovider"
+            android:name="com.kpi.campus.database.ApiContentProvider"
+            android:exported="false"/>
     </application>
 
 </manifest>
