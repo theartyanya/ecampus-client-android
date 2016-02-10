@@ -31,6 +31,7 @@ android:fitsSystemWindows="true">
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"
+                android:text="mky"
                 android:hint="Логін або Email" />
 
         </android.support.design.widget.TextInputLayout>
@@ -46,6 +47,7 @@ android:fitsSystemWindows="true">
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
+                android:text="mky"
                 android:hint="Пароль"/>
 
         </android.support.design.widget.TextInputLayout>
