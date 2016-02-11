@@ -10,7 +10,7 @@ import android.view.MenuItem;
 
 import com.kpi.campus.R;
 import com.kpi.campus.di.UIModule;
-import com.kpi.campus.ui.adapter.BulletinPagerAdapter;
+import com.kpi.campus.ui.adapter.BulletinTabPagerAdapter;
 import com.kpi.campus.ui.presenter.BulletinBoardPresenter;
 
 import java.util.ArrayList;
@@ -66,7 +66,7 @@ public class BulletinBoardActivity extends BaseActivity implements BulletinBoard
 
     private void setViewPager() {
         CharSequence[] tabNames = mPresenter.getTabsName();
-        BulletinPagerAdapter adapter = new BulletinPagerAdapter(getSupportFragmentManager(), tabNames);
+        BulletinTabPagerAdapter adapter = new BulletinTabPagerAdapter(getSupportFragmentManager(), tabNames);
         mViewPager.setAdapter(adapter);
     }
 
@@ -77,10 +77,10 @@ public class BulletinBoardActivity extends BaseActivity implements BulletinBoard
 
     private void setupTabIcon() {
         TypedArray tabIcon = mPresenter.getTabsIcon();
-        mTabLayout.getTabAt(BulletinPagerAdapter.BULLETIN_TAB_0)
-                .setIcon(tabIcon.getResourceId(BulletinPagerAdapter.BULLETIN_TAB_0, -1));
-        mTabLayout.getTabAt(BulletinPagerAdapter.BULLETIN_TAB_1)
-                .setIcon(tabIcon.getResourceId(BulletinPagerAdapter.BULLETIN_TAB_1, -1));
+        mTabLayout.getTabAt(BulletinTabPagerAdapter.BULLETIN_TAB_0)
+                .setIcon(tabIcon.getResourceId(BulletinTabPagerAdapter.BULLETIN_TAB_0, -1));
+        mTabLayout.getTabAt(BulletinTabPagerAdapter.BULLETIN_TAB_1)
+                .setIcon(tabIcon.getResourceId(BulletinTabPagerAdapter.BULLETIN_TAB_1, -1));
     }
 
     private void setToolbar() {

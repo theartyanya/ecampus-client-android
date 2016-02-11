@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * Created by Admin on 02.02.2016.
  */
-public class BulletinPagerAdapter extends FragmentStatePagerAdapter {
+public class BulletinTabPagerAdapter extends FragmentStatePagerAdapter {
 
     private CharSequence mTitles[];
 
@@ -23,7 +23,7 @@ public class BulletinPagerAdapter extends FragmentStatePagerAdapter {
     public static int BULLETIN_TAB_0 = 0;
     public static int BULLETIN_TAB_1 = 1;
 
-    public BulletinPagerAdapter(FragmentManager fm, CharSequence titles[]) {
+    public BulletinTabPagerAdapter(FragmentManager fm, CharSequence titles[]) {
         super(fm);
         mTitles = titles;
     }
