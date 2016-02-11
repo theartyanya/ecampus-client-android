@@ -12,4 +12,5 @@
     <string name="progress_authenticate">Authenticating…</string>
     <string name="key_login">login</string>
     <string name="key_password">password</string>
+    <string name="settings">Settings</string>
 </resources>

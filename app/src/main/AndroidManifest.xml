@@ -18,11 +18,7 @@
             android:name=".ui.activity.LoginActivity"
             android:theme="@style/AppTheme.Dark" >
 
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
 
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
         </activity>
         <activity
             android:name=".ui.activity.MainActivity"
@@ -33,7 +29,13 @@
         <activity
             android:name=".ui.activity.BulletinBoardActivity"
             android:parentActivityName=".ui.activity.MainActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".ui.activity.BulletinContentActivity"
             android:parentActivityName=".ui.activity.BulletinBoardActivity"
