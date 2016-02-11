@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                                 xmlns:app="http://schemas.android.com/apk/res-auto"
-                                                 xmlns:tools="http://schemas.android.com/tools"
-                                                 android:layout_width="match_parent"
-                                                 android:layout_height="match_parent"
-                                                 xmlns:fab="http://schemas.android.com/apk/res-auto"
-                                                 tools:context="com.kpi.campus.ui.activity.BulletinBoardActivity">
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.kpi.campus.ui.activity.BulletinBoardActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -18,7 +19,7 @@
             android:background="@color/colorPrimary"
             app:layout_scrollFlags="scroll|enterAlways"
             app:popupTheme="@style/ThemeOverlay.AppBar.White.Popup"
-            app:theme="@style/ThemeOverlay.AppBar.White" />
+            app:theme="@style/ThemeOverlay.AppBar.White"/>
 
         <android.support.design.widget.TabLayout
             android:id="@+id/tab_layout"
@@ -27,7 +28,7 @@
             android:background="@color/colorPrimary"
             app:tabIndicatorColor="@android:color/white"
             app:tabSelectedTextColor="@android:color/white"
-            app:tabTextColor="@android:color/white" />
+            app:tabTextColor="@android:color/white"/>
 
     </android.support.design.widget.AppBarLayout>
 
@@ -35,15 +36,15 @@
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
     <!--<android.support.design.widget.FloatingActionButton-->
-        <!--android:id="@+id/fab"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_gravity="bottom|end"-->
-        <!--android:layout_margin="@dimen/fab_margin"-->
-        <!--android:src="@android:drawable/ic_dialog_email" />-->
+    <!--android:id="@+id/fab"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_gravity="bottom|end"-->
+    <!--android:layout_margin="@dimen/fab_margin"-->
+    <!--android:src="@android:drawable/ic_dialog_email" />-->
 
     <com.github.clans.fab.FloatingActionMenu
         android:id="@+id/fab"
@@ -61,8 +62,8 @@
             android:src="@mipmap/ic_action_action_receipt"
             fab:fab_colorNormal="@color/colorAccent"
             fab:fab_colorPressed="@color/colorAccentPressed"
-            fab:fab_size="mini"
-            fab:fab_label="Нове" />
+            fab:fab_label="Нове"
+            fab:fab_size="mini"/>
 
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/menu_item2"
@@ -71,8 +72,8 @@
             android:src="@mipmap/ic_star_mini"
             fab:fab_colorNormal="@color/colorAccent"
             fab:fab_colorPressed="@color/colorAccentPressed"
-            fab:fab_size="mini"
-            fab:fab_label="Інше" />
+            fab:fab_label="Інше"
+            fab:fab_size="mini"/>
 
     </com.github.clans.fab.FloatingActionMenu>
 

@@ -106,7 +106,7 @@ public class BulletinAdapter extends RecyclerView.Adapter<BulletinAdapter.ViewHo
                 public boolean onMenuItemClick(MenuItem menuItem) {
                     switch (menuItem.getItemId()) {
                         case R.id.edit:
-                            ToastUtil.showShortMessage("Setting Yees!", view.getContext());
+                            ToastUtil.showShortMessage("Редагування!", view.getContext());
                             break;
                     }
                     return true;
