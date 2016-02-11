@@ -2,15 +2,19 @@ package com.kpi.campus.ui.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import com.kpi.campus.R;
 import com.kpi.campus.model.Bulletin;
 import com.kpi.campus.ui.view.OnItemClickListener;
 import com.kpi.campus.util.CollectionValidator;
+import com.kpi.campus.util.ToastUtil;
 
 import org.w3c.dom.Text;
 
@@ -54,6 +58,9 @@ public class BulletinAdapter extends RecyclerView.Adapter<BulletinAdapter.ViewHo
         holder.date.setText(bul.getDate());
         holder.theme.setText(bul.getTheme());
         holder.author.setText(bul.getAuthor());
+
+
+
     }
 
     @Override
@@ -74,6 +81,9 @@ public class BulletinAdapter extends RecyclerView.Adapter<BulletinAdapter.ViewHo
         @Bind(R.id.text_view_bulletin_author)
         TextView author;
 
+        @Bind(R.id.button_overflow)
+        ImageButton btnOverflow;
+
         public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
@@ -85,5 +95,24 @@ public class BulletinAdapter extends RecyclerView.Adapter<BulletinAdapter.ViewHo
                 mListener.onItemClicked(view, getAdapterPosition());
             }
         }
+
+        @OnClick(R.id.button_overflow)
+        public void btnOverflowClick(final View view) {
+            PopupMenu menu = new PopupMenu(view.getContext(), view);
+            menu.inflate(R.menu.menu_popup_bulletin);
+            menu.show();
+            menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem menuItem) {
+                    switch (menuItem.getItemId()) {
+                        case R.id.edit:
+                            ToastUtil.showShortMessage("Setting Yees!", view.getContext());
+                            break;
+                    }
+                    return true;
+                }
+            });
+        }
+
     }
 }

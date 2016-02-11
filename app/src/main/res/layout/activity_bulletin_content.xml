@@ -20,23 +20,6 @@
             app:popupTheme="@style/ThemeOverlay.AppBar.White.Popup"
             app:theme="@style/ThemeOverlay.AppBar.White" />
 
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="72dp"
-            android:background="@color/colorPrimary">
-
-            <TextView
-                android:id="@+id/text_view_bulletin_theme"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="72dp"
-                android:text="Методичні ресурси"
-                android:textColor="@color/colorTextIcons"
-                android:textSize="24sp" />
-
-        </FrameLayout>
-
         <TextView
             android:id="@+id/text_view_bulletin_text"
             android:layout_width="wrap_content"
