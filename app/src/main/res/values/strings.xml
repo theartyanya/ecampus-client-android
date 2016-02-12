@@ -18,4 +18,5 @@
     <string name="profile">Профіль</string>
     <string name="subsection">Підрозділ</string>
     <string name="group">Група</string>
+    <string name="add_new_bulletin"/>
 </resources>
