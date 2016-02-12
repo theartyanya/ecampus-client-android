@@ -8,9 +8,11 @@ import android.widget.Button;
 import com.kpi.campus.di.ActivityContext;
 import com.kpi.campus.ui.activity.BulletinBoardActivity;
 import com.kpi.campus.ui.activity.BulletinContentActivity;
+import com.kpi.campus.ui.activity.EditBulletinActivity;
 import com.kpi.campus.ui.activity.LoginActivity;
 import com.kpi.campus.ui.activity.MainActivity;
 import com.kpi.campus.ui.activity.NewBulletinActivity;
+import com.kpi.campus.ui.presenter.EditBulletinPresenter;
 
 import javax.inject.Inject;
 
@@ -63,4 +65,8 @@ public class Navigator {
     }
 
 
+    public void startEditBulletinActivity() {
+        Intent intent = getLaunchIntent(EditBulletinActivity.class);
+        mActivityContext.startActivity(intent);
+    }
 }

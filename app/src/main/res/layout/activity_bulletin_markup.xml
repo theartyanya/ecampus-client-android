@@ -134,38 +134,28 @@
         </android.support.design.widget.TextInputLayout>
 
         <LinearLayout
+            android:layout_marginTop="8dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
+            <EditText
+                android:id="@+id/edit_text_start_period"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1.0">
+                android:layout_weight="1.0"
+                android:hint="Початок показу"
+                android:textColorHint="@color/colorSecondaryText"
+                android:textSize="12sp"/>
 
-                <EditText
-                    android:id="@+id/edit_text_start_period"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColorHint="@color/colorSecondaryText"
-                    android:hint="Початок показу"
-                    android:textSize="12sp"/>
-            </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
+            <EditText
+                android:id="@+id/edit_text_end_period"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1.0">
-
-                <EditText
-                    android:id="@+id/edit_text_end_period"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColorHint="@color/colorSecondaryText"
-                    android:hint="Кінець показу"
-                    android:textSize="12sp"/>
-            </android.support.design.widget.TextInputLayout>
-
+                android:layout_weight="1.0"
+                android:hint="Кінець показу"
+                android:textColorHint="@color/colorSecondaryText"
+                android:textSize="12sp"/>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

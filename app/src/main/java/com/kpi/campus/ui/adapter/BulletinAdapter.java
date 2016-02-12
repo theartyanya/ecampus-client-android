@@ -31,6 +31,7 @@ public class BulletinAdapter extends RecyclerView.Adapter<BulletinAdapter.ViewHo
 
     private List<Bulletin> mList;
     private OnItemClickListener mListener;
+    private PopupMenu.OnMenuItemClickListener mMenuListener;
 
     public BulletinAdapter(List<Bulletin> list) {
         mList = list;
@@ -58,9 +59,6 @@ public class BulletinAdapter extends RecyclerView.Adapter<BulletinAdapter.ViewHo
         holder.date.setText(bul.getDate());
         holder.theme.setText(bul.getTheme());
         holder.author.setText(bul.getAuthor());
-
-
-
     }
 
     @Override
@@ -70,6 +68,10 @@ public class BulletinAdapter extends RecyclerView.Adapter<BulletinAdapter.ViewHo
 
     public void setOnItemClickListener(OnItemClickListener listener) {
         mListener = listener;
+    }
+
+    public void setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener listener) {
+        mMenuListener = listener;
     }
 
     protected class ViewHolder extends RecyclerView.ViewHolder {
@@ -101,17 +103,18 @@ public class BulletinAdapter extends RecyclerView.Adapter<BulletinAdapter.ViewHo
             PopupMenu menu = new PopupMenu(view.getContext(), view);
             menu.inflate(R.menu.menu_popup_bulletin);
             menu.show();
-            menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                @Override
-                public boolean onMenuItemClick(MenuItem menuItem) {
-                    switch (menuItem.getItemId()) {
-                        case R.id.edit:
-                            ToastUtil.showShortMessage("Редагування!", view.getContext());
-                            break;
-                    }
-                    return true;
-                }
-            });
+            menu.setOnMenuItemClickListener(mMenuListener);
+//            menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+//                @Override
+//                public boolean onMenuItemClick(MenuItem menuItem) {
+//                    switch (menuItem.getItemId()) {
+//                        case R.id.edit:
+//                            ToastUtil.showShortMessage("Редагування!", view.getContext());
+//                            break;
+//                    }
+//                    return true;
+//                }
+//            });
         }
 
     }

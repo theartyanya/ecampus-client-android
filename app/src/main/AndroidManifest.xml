@@ -49,6 +49,13 @@
             android:theme="@style/AppTheme.NoActionBar">
 
         </activity>
+
+        <activity
+            android:name=".ui.activity.EditBulletinActivity"
+            android:parentActivityName=".ui.activity.BulletinBoardActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
     </application>
 
 </manifest>

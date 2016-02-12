@@ -3,13 +3,16 @@ package com.kpi.campus.ui.fragment;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.PopupMenu;
 
 import com.kpi.campus.R;
 import com.kpi.campus.model.Bulletin;
 import com.kpi.campus.ui.adapter.BulletinAdapter;
 import com.kpi.campus.ui.presenter.Bb1TabPresenter;
 import com.kpi.campus.ui.view.OnItemClickListener;
+import com.kpi.campus.util.ToastUtil;
 
 import java.util.ArrayList;
 
@@ -35,6 +38,19 @@ public class Bb1TabFragment extends BaseFragment implements Bb1TabPresenter.IVie
                 }
             };
 
+    private PopupMenu.OnMenuItemClickListener onMenuItemClickListener = new PopupMenu.OnMenuItemClickListener() {
+        @Override
+        public boolean onMenuItemClick(MenuItem menuItem) {
+            switch (menuItem.getItemId()) {
+                case R.id.edit:
+//                    ToastUtil.showShortMessage("Редагування ldldl!", getActivity().getApplicationContext());
+                    mPresenter.editBulletin();
+                    break;
+            }
+            return true;
+        }
+    };
+
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -58,6 +74,7 @@ public class Bb1TabFragment extends BaseFragment implements Bb1TabPresenter.IVie
         mAdapter = new BulletinAdapter(new ArrayList<Bulletin>());
         mAdapter.setData(mPresenter.getData());
         mAdapter.setOnItemClickListener(onItemClickListener);
+        mAdapter.setOnMenuItemClickListener(onMenuItemClickListener);
         mRecyclerView.setAdapter(mAdapter);
     }
 }

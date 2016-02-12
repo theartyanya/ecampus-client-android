@@ -54,6 +54,10 @@ public class Bb1TabPresenter extends BasePresenter {
         mNavigator.startBulletinContentActivity(position);
     }
 
+    public void editBulletin() {
+        mNavigator.startEditBulletinActivity();
+    }
+
     public interface IView {
         void setViewComponent();
     }
