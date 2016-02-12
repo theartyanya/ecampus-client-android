@@ -4,7 +4,6 @@ import android.os.Bundle;
 
 import com.kpi.campus.R;
 import com.kpi.campus.di.UIModule;
-import com.kpi.campus.ui.presenter.MainPresenter;
 import com.kpi.campus.ui.presenter.NewBulletinPresenter;
 
 import java.util.ArrayList;
@@ -20,7 +19,7 @@ public class NewBulletinActivity extends BaseActivity  implements NewBulletinPre
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_new_bulletin);
+        setContentView(R.layout.activity_bulletin_markup);
         bindViews();
         mPresenter.setView(this);
         mPresenter.initializeViewComponent();

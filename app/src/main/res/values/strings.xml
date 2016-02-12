@@ -14,4 +14,8 @@
     <string name="key_password">password</string>
     <string name="settings">Settings</string>
     <string name="menu_edit">Редагувати</string>
+    
+    <string name="profile">Профіль</string>
+    <string name="subsection">Підрозділ</string>
+    <string name="group">Група</string>
 </resources>
