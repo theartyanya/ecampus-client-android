@@ -10,6 +10,7 @@ import com.kpi.campus.ui.activity.BulletinBoardActivity;
 import com.kpi.campus.ui.activity.BulletinContentActivity;
 import com.kpi.campus.ui.activity.LoginActivity;
 import com.kpi.campus.ui.activity.MainActivity;
+import com.kpi.campus.ui.activity.NewBulletinActivity;
 
 import javax.inject.Inject;
 
@@ -49,10 +50,17 @@ public class Navigator {
         mActivityContext.startActivity(intent);
     }
 
+    public void startNewBulletinActivity() {
+        Intent intent = getLaunchIntent(NewBulletinActivity.class);
+        mActivityContext.startActivity(intent);
+    }
+
     /**
      * Generates the intent needed by the client code to launch this activity.
      */
     private Intent getLaunchIntent(Class activityClass) {
         return new Intent(mActivityContext, activityClass);
     }
+
+
 }

@@ -43,6 +43,10 @@ public class BulletinBoardPresenter extends BasePresenter {
         return r.obtainTypedArray(R.array.bulletin_board_tab_icon);
     }
 
+    public void onButtonAddClick() {
+        mNavigator.startNewBulletinActivity();
+    }
+
     public interface IView {
         void setViewComponent();
     }

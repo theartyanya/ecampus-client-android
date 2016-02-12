@@ -19,6 +19,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import butterknife.Bind;
+import butterknife.OnClick;
 
 public class BulletinBoardActivity extends BaseActivity implements BulletinBoardPresenter.IView {
 
@@ -89,5 +90,15 @@ public class BulletinBoardActivity extends BaseActivity implements BulletinBoard
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         mToolbar.setNavigationIcon(R.mipmap.ic_action_navigation_arrow_back);
         getSupportActionBar().setTitle(R.string.activity_name_bulletin_board);
+    }
+
+    @OnClick(R.id.fab_add)
+    public void fabAddOnClick() {
+mPresenter.onButtonAddClick();
+    }
+
+    @OnClick(R.id.fab_other)
+    public void fabOtherOnClick() {
+
     }
 }
