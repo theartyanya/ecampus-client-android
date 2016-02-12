@@ -5,7 +5,10 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -14,6 +17,7 @@ import com.kpi.campus.R;
 import com.kpi.campus.di.UIModule;
 import com.kpi.campus.ui.fragment.DatePickerFragment;
 import com.kpi.campus.ui.presenter.NewBulletinPresenter;
+import com.kpi.campus.util.ToastUtil;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -44,6 +48,30 @@ public class NewBulletinActivity extends BaseActivity implements NewBulletinPres
         bindViews();
         mPresenter.setView(this);
         mPresenter.initializeViewComponent();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_add_bulletin, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+            case R.id.action_clear:
+                ToastUtil.showShortMessage("Очищено", this);
+                break;
+            case R.id.action_done:
+                ToastUtil.showShortMessage("Збережено", this);
+                finish();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
