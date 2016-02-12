@@ -1,23 +1,39 @@
 package com.kpi.campus.ui.activity;
 
+import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.DatePicker;
+import android.widget.EditText;
 
 import com.kpi.campus.R;
 import com.kpi.campus.di.UIModule;
+import com.kpi.campus.ui.fragment.DatePickerFragment;
 import com.kpi.campus.ui.presenter.NewBulletinPresenter;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 import javax.inject.Inject;
 
 import butterknife.Bind;
 
-public class NewBulletinActivity extends BaseActivity  implements NewBulletinPresenter.IView{
+public class NewBulletinActivity extends BaseActivity implements NewBulletinPresenter.IView {
 
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
+    @Bind(R.id.edit_text_start_period)
+    EditText mStartDate;
+    @Bind(R.id.edit_text_end_period)
+    EditText mEndDate;
+
     @Inject
     NewBulletinPresenter mPresenter;
 
@@ -40,6 +56,32 @@ public class NewBulletinActivity extends BaseActivity  implements NewBulletinPre
     @Override
     public void setViewComponent() {
         setToolbar();
+        setDateListener();
+    }
+
+    private void setDateListener() {
+        mStartDate.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if(b) {
+                    setDateTo(mStartDate, "2");
+                }
+            }
+        });
+        mEndDate.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if(b) {
+                    setDateTo(mEndDate, "1");
+                }
+            }
+        });
+    }
+
+    private void setDateTo(EditText editText, String str) {
+        DatePickerFragment newFragment = new DatePickerFragment();
+        newFragment.setEditText(editText);
+        newFragment.show(getFragmentManager(), str);
     }
 
     private void setToolbar() {

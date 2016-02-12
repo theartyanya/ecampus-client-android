@@ -108,7 +108,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Тема"
-                    android:inputType="text"/>
+                    android:inputType="text"
+                    android:textSize="14sp"/>
 
             </android.support.design.widget.TextInputLayout>
 
@@ -122,12 +123,45 @@
                     android:id="@+id/edit_text_bulletin_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Текст"
+                    android:hint="Текст оголошення"
                     android:inputType="textMultiLine"
                     android:isScrollContainer="true"
-                    android:minHeight="20dp"/>
+                    android:minHeight="20dp"
+                    android:textSize="14sp"/>
 
             </android.support.design.widget.TextInputLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/edit_text_start_period"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="Початок показу"
+                        android:textSize="12sp"/>
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_marginLeft="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/edit_text_end_period"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="Кінець показу"
+                        android:textSize="12sp"/>
+                </android.support.design.widget.TextInputLayout>
+
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
