@@ -60,6 +60,5 @@ public class BulletinContentActivity extends BaseActivity implements BulletinCon
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         mToolbar.setNavigationIcon(R.mipmap.ic_action_navigation_arrow_back);
         getSupportActionBar().setTitle("Методичні ресурси");
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
     }
 }
