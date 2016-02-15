@@ -10,7 +10,7 @@ import com.kpi.campus.R;
 import com.kpi.campus.api.response.BaseResponse;
 import com.kpi.campus.di.UIModule;
 import com.kpi.campus.loader.TokenLoader;
-import com.kpi.campus.model.Token;
+import com.kpi.campus.model.pojo.Token;
 import com.kpi.campus.ui.presenter.LoginPresenter;
 import com.kpi.campus.util.ToastUtil;
 
@@ -102,7 +102,7 @@ public class LoginActivity extends BaseActivity implements LoginPresenter.IView,
     public void onLoadFinished(Loader<BaseResponse> loader, BaseResponse baseResponse) {
         int id = loader.getId();
         if (id == R.id.api_loader) {
-            List<Token> airports = baseResponse.getTypedAnswer();
+            Token token = baseResponse.getTypedAnswer();
             //do something here
         }
         getLoaderManager().destroyLoader(id);

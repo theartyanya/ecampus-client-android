@@ -1,7 +1,5 @@
 package com.kpi.campus.api.service;
 
-import android.support.annotation.NonNull;
-
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
@@ -21,9 +19,6 @@ public class ServiceCreator {
 
     public static final String API_ENDPOINT = "http://api-campus-kpi-ua.azurewebsites.net";
 
-    //public static final String API_ENDPOINT = "http://nano.aviasales.ru";
-
-
     private static final OkHttpClient.Builder CLIENT = new OkHttpClient.Builder();
 
     static {
@@ -32,45 +27,13 @@ public class ServiceCreator {
         CLIENT.readTimeout(TIMEOUT, TimeUnit.SECONDS);
     }
 
-//    private static final Gson GSON = new GsonBuilder()
-//            .setExclusionStrategies(new ExclusionStrategy() {
-//                @Override
-//                public boolean shouldSkipField(FieldAttributes f) {
-//                    return f.getDeclaringClass().equals(RealmObject.class);
-//                }
-//
-//                @Override
-//                public boolean shouldSkipClass(Class<?> clazz) {
-//                    return false;
-//                }
-//            })
-//            .create();
+    private static Retrofit.Builder builder =
+            new Retrofit.Builder()
+                    .baseUrl(API_ENDPOINT)
+                    .addConverterFactory(GsonConverterFactory.create());
 
-    @NonNull
-    public static AuthService getAirportsService() {
-        return getRetrofit().create(AuthService.class);
+    public static <S> S createService(Class<S> serviceClass) {
+        Retrofit retrofit = builder.client(CLIENT.build()).build();
+        return retrofit.create(serviceClass);
     }
-
-    @NonNull
-    private static Retrofit getRetrofit() {
-        return new Retrofit.Builder()
-                .baseUrl(API_ENDPOINT)
-                .addConverterFactory(GsonConverterFactory.create())
-                .client(CLIENT.build())
-                .build();
-    }
-
-//    public static final String API_ENDPOINT = "http://api-campus-kpi-ua.azurewebsites.net";
-//
-//    private static OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
-//
-//    private static Retrofit.Builder builder =
-//            new Retrofit.Builder()
-//                    .baseUrl(API_ENDPOINT)
-//                    .addConverterFactory(GsonConverterFactory.create());
-//
-//    public static <S> S createService(Class<S> serviceClass) {
-//        Retrofit retrofit = builder.client(httpClient.build()).build();
-//        return retrofit.create(serviceClass);
-//    }
 }

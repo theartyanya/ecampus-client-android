@@ -7,8 +7,7 @@ import com.kpi.campus.api.response.RequestResult;
 import com.kpi.campus.api.response.TokenResponse;
 import com.kpi.campus.api.service.AuthService;
 import com.kpi.campus.api.service.ServiceCreator;
-import com.kpi.campus.model.LoginData;
-import com.kpi.campus.model.Token;
+import com.kpi.campus.model.pojo.Token;
 
 import java.io.IOException;
 
@@ -22,7 +21,7 @@ public class TokenLoader extends BaseLoader {
 
     private final String mUsername;
     private final String mPassword;
-    private AuthService mAuthService;
+    private final String mGrantType = "password";
 
     public TokenLoader(Context context, String username, String pass) {
         super(context);
@@ -32,55 +31,14 @@ public class TokenLoader extends BaseLoader {
 
     @Override
     protected BaseResponse apiCall() throws IOException {
-        //AuthService service = ServiceCreator.createService(AuthService.class);
-        AuthService service = ServiceCreator.getAirportsService();
+        AuthService service = ServiceCreator.createService(AuthService.class);
 
-        Call<Token> call = service.auth(getLoginData());
-
-        Response<Token> c = call.execute();
-        Token airports = c.body();
+        Call<Token> call = service.auth(mUsername, mPassword, mGrantType);
+        Response<Token> resp = call.execute();
+        Token token = resp.body();
 
         return new TokenResponse()
                 .setRequestResult(RequestResult.OK)
-                .setAnswer(airports);
-    }
-
-//    @Override
-//    protected BaseResponse apiCall() throws IOException {
-//        AuthService service = ServiceCreator.getAirportsService();
-//
-//        Call<Token> call = service.auth(getLoginData());
-//        call.enqueue(new Callback<Token>() {
-//            @Override
-//            public void onResponse(Call<Token> call, Response<Token> response) {
-//                if (!response.isSuccess()) {
-//                    return;
-//                }
-//
-//                Token decodedResponse = response.body();
-//
-//                if (decodedResponse == null) return;
-//            }
-//
-//            @Override
-//            public void onFailure(Call<Token> call, Throwable t) {
-//
-//            }
-//        });
-//        return null;
-//    }
-
-//    @Override
-//    protected BaseResponse apiCall() throws IOException {
-//        AuthService service = ServiceCreator.getAirportsService();
-//        Call<List<Airport>> call = service.airports("55.749792,37.6324949");
-//        List<Airport> airports = call.execute().body();
-//        return new TokenResponse()
-//                .setRequestResult(RequestResult.OK)
-//                .setAnswer(airports);
-//    }
-
-    private LoginData getLoginData() {
-        return new LoginData(mUsername, mPassword);
+                .setAnswer(token);
     }
 }
