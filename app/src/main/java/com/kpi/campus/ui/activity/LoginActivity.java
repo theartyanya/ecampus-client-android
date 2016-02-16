@@ -4,6 +4,7 @@ import android.app.LoaderManager;
 import android.app.ProgressDialog;
 import android.content.Loader;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.EditText;
 
 import com.kpi.campus.R;
@@ -28,6 +29,8 @@ public class LoginActivity extends BaseActivity implements LoginPresenter.IView,
     EditText mInputLogin;
     @Bind(R.id.edit_text_input_password)
     EditText mPassword;
+    @Bind(R.id.button_login)
+    Button mBtnLogin;
     @Inject
     LoginPresenter mPresenter;
     private ProgressDialog mProgressDialog;
@@ -59,8 +62,7 @@ public class LoginActivity extends BaseActivity implements LoginPresenter.IView,
 
     @Override
     public void showLoginProgressDialog() {
-        mProgressDialog = new ProgressDialog(LoginActivity.this,
-                R.style.AppTheme_Dark_Dialog);
+        mProgressDialog = new ProgressDialog(LoginActivity.this, R.style.AppTheme_Dark_Dialog);
         mProgressDialog.setIndeterminate(true);
         mProgressDialog.setMessage(getString(R.string.progress_authenticate));
         mProgressDialog.show();
@@ -69,6 +71,11 @@ public class LoginActivity extends BaseActivity implements LoginPresenter.IView,
     @Override
     public void dismissProgressDialog() {
         mProgressDialog.dismiss();
+    }
+
+    @Override
+    public void showLoginButton(boolean shouldShow) {
+        mBtnLogin.setActivated(shouldShow);
     }
 
     @Override
@@ -103,7 +110,7 @@ public class LoginActivity extends BaseActivity implements LoginPresenter.IView,
         int id = loader.getId();
         if (id == R.id.api_loader) {
             Token token = baseResponse.getTypedAnswer();
-            //do something here
+            mPresenter.setLoaderResult(token);
         }
         getLoaderManager().destroyLoader(id);
     }
@@ -112,5 +119,4 @@ public class LoginActivity extends BaseActivity implements LoginPresenter.IView,
     public void onLoaderReset(Loader<BaseResponse> loader) {
 
     }
-
 }
