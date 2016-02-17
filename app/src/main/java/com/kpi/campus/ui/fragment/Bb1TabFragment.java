@@ -12,7 +12,6 @@ import com.kpi.campus.model.Bulletin;
 import com.kpi.campus.ui.adapter.BulletinAdapter;
 import com.kpi.campus.ui.presenter.Bb1TabPresenter;
 import com.kpi.campus.ui.view.OnItemClickListener;
-import com.kpi.campus.util.ToastUtil;
 
 import java.util.ArrayList;
 
@@ -21,6 +20,8 @@ import javax.inject.Inject;
 import butterknife.Bind;
 
 /**
+ * Bb1TabFragment
+ *
  */
 public class Bb1TabFragment extends BaseFragment implements Bb1TabPresenter.IView {
 

@@ -9,6 +9,8 @@ import java.util.List;
 import javax.inject.Inject;
 
 /**
+ * Bb1TabPresenter created to show Bb1TabFragment.
+ *
  * Created by Admin on 02.02.2016.
  */
 public class Bb1TabPresenter extends BasePresenter {

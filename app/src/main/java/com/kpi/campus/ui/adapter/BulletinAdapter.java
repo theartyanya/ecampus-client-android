@@ -2,10 +2,8 @@ package com.kpi.campus.ui.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
 import android.widget.TextView;
@@ -14,9 +12,6 @@ import com.kpi.campus.R;
 import com.kpi.campus.model.Bulletin;
 import com.kpi.campus.ui.view.OnItemClickListener;
 import com.kpi.campus.util.CollectionValidator;
-import com.kpi.campus.util.ToastUtil;
-
-import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -25,6 +20,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
+ * BulletinAdapter manages Bulletin data model and adapts it to RecyclerView, which is in Bb1TabFragment.
+ *
  * Created by Administrator on 02.02.2016.
  */
 public class BulletinAdapter extends RecyclerView.Adapter<BulletinAdapter.ViewHolder> {

@@ -1,12 +1,10 @@
 package com.kpi.campus.ui.presenter;
 
-import android.content.Context;
-
-import com.kpi.campus.ui.Navigator;
-
 import javax.inject.Inject;
 
 /**
+ * NewBulletinPresenter created to manage NewBulletinActivity.
+ * <p/>
  * Created by Admin on 12.02.2016.
  */
 public class NewBulletinPresenter extends BasePresenter {

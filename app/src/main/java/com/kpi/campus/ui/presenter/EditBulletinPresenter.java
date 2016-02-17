@@ -3,6 +3,8 @@ package com.kpi.campus.ui.presenter;
 import javax.inject.Inject;
 
 /**
+ * EditBulletinPresenter created to manage EditBulletinActivity.
+ *
  * Created by Admin on 12.02.2016.
  */
 public class EditBulletinPresenter extends BasePresenter {

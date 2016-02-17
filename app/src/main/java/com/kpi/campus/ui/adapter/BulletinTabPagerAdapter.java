@@ -12,6 +12,8 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
+ * Providing the adapter to populate pages inside of a ViewPager in BulletinBoardActivity.
+ *
  * Created by Admin on 02.02.2016.
  */
 public class BulletinTabPagerAdapter extends FragmentStatePagerAdapter {

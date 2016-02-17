@@ -20,6 +20,8 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
+ * GridSubsystemAdapter manages Subsystem data model and adapts it to GridView, which is in MainActivity.
+ *
  * Created by Administrator on 01.02.2016.
  */
 public class GridSubsystemAdapter extends BaseAdapter {
@@ -71,27 +73,6 @@ public class GridSubsystemAdapter extends BaseAdapter {
         viewHolder.viewTitle.setText(item.getName());
 
         return view;
-
-//        View v = view;
-//        ImageView picture;
-//        TextView name;
-//
-//        if(v == null)
-//        {
-//            v = mInflater.inflate(R.layout.gridview_item_subsystem, viewGroup, false);
-//            v.setTag(R.id.image_view_subsystem_logo, v.findViewById(R.id.image_view_subsystem_logo));
-//            v.setTag(R.id.text_view_subsystem_name, v.findViewById(R.id.text_view_subsystem_name));
-//        }
-//
-//        picture = (ImageView)v.getTag(R.id.image_view_subsystem_logo);
-//        name = (TextView)v.getTag(R.id.text_view_subsystem_name);
-//
-//        Subsystem item = (Subsystem)getItem(i);
-//
-//        picture.setImageDrawable(ContextCompat.getDrawable(mContext, item.getIconId()));
-//        name.setText(item.getName());
-//
-//        return v;
     }
 
     protected static class GridViewHolder {

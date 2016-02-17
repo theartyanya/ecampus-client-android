@@ -21,6 +21,9 @@ import javax.inject.Inject;
 import butterknife.Bind;
 import butterknife.OnClick;
 
+/**
+ * Bulletin board activity.
+ */
 public class BulletinBoardActivity extends BaseActivity implements BulletinBoardPresenter.IView {
 
     @Bind(R.id.toolbar)

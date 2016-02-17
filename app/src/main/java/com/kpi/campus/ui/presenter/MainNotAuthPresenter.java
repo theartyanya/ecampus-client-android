@@ -14,6 +14,8 @@ import java.util.List;
 import javax.inject.Inject;
 
 /**
+ * MainNotAuthPresenter created to manage MainNotAuthActivity.
+ *
  * Created by Administrator on 28.01.2016.
  */
 public class MainNotAuthPresenter extends BasePresenter {

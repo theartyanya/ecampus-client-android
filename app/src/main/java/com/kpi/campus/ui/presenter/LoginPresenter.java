@@ -10,6 +10,8 @@ import com.kpi.campus.ui.activity.LoginActivity;
 import javax.inject.Inject;
 
 /**
+ * LoginPresenter created to manage LoginActivity.
+ *
  * Created by Administrator on 29.01.2016.
  */
 public class LoginPresenter extends BasePresenter {

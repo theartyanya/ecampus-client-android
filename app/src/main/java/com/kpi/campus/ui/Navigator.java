@@ -3,7 +3,6 @@ package com.kpi.campus.ui;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.widget.Button;
 
 import com.kpi.campus.di.ActivityContext;
 import com.kpi.campus.ui.activity.BulletinBoardActivity;
@@ -12,7 +11,6 @@ import com.kpi.campus.ui.activity.EditBulletinActivity;
 import com.kpi.campus.ui.activity.LoginActivity;
 import com.kpi.campus.ui.activity.MainActivity;
 import com.kpi.campus.ui.activity.NewBulletinActivity;
-import com.kpi.campus.ui.presenter.EditBulletinPresenter;
 
 import javax.inject.Inject;
 
@@ -20,6 +18,7 @@ import javax.inject.Inject;
  * Class created to handle all the navigation between activities. This class knows how to open
  * every activity in the application and provides to the client code different methods to start
  * activities with the information needed.
+ * <p/>
  * Created by Administrator on 29.01.2016.
  */
 public class Navigator {

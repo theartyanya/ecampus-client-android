@@ -12,6 +12,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  *
  * This annotation can be replaced with a @Named annotation, but configure before the
  * ActivityModule.
+ *
  * Created by Administrator on 26.01.2016.
  */
 @Qualifier

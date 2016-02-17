@@ -13,6 +13,8 @@ import android.text.TextUtils;
 import com.kpi.campus.database.table.TokenTable;
 
 /**
+ * Manages access to a central repository of data that is returned from API calls.
+ *
  * Created by Administrator on 09.02.2016.
  */
 public class ApiContentProvider extends ContentProvider {

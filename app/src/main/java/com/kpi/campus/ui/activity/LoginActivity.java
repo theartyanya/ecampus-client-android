@@ -23,6 +23,9 @@ import javax.inject.Inject;
 import butterknife.Bind;
 import butterknife.OnClick;
 
+/**
+ * Login activity.
+ */
 public class LoginActivity extends BaseActivity implements LoginPresenter.IView, LoaderManager.LoaderCallbacks<BaseResponse> {
 
     @Bind(R.id.edit_text_input_login)

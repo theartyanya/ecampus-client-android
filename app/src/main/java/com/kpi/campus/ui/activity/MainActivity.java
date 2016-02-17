@@ -21,6 +21,9 @@ import javax.inject.Inject;
 
 import butterknife.Bind;
 
+/**
+ * Main activity for application.
+ */
 public class MainActivity extends BaseActivity implements MainPresenter.IView {
 
     @Bind(R.id.toolbar)

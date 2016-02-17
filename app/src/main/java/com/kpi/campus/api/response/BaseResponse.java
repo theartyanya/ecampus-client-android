@@ -5,8 +5,9 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 /**
- * Represent a single data type for using it in loaders.
- * This type can save a query result. If we want to do something for a particular query, you need to be inherited from this class and override / add  methods.
+ * Represent a single data type for using it as response in loaders.
+ * This type can persists a query result. If its necessary to do something for a particular query, the new class must be inherited from this class and override / add  methods.
+ * <p/>
  * Created by Administrator on 09.02.2016.
  */
 public class BaseResponse {

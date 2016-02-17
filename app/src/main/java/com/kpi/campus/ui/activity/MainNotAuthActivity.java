@@ -22,6 +22,9 @@ import javax.inject.Inject;
 
 import butterknife.Bind;
 
+/**
+ * Main activity when user is not logged in system.
+ */
 public class MainNotAuthActivity extends BaseActivity implements MainNotAuthPresenter.IView {
 
     @Bind(R.id.toolbar)

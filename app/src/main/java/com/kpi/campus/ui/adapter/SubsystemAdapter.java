@@ -1,9 +1,6 @@
 package com.kpi.campus.ui.adapter;
 
 import android.content.Context;
-import android.content.res.TypedArray;
-import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -22,6 +19,8 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
+ * SubsystemAdapter manages Subsystem data model and adapts it to RecyclerView, which is in MainNotAuthActivity.
+ * <p/>
  * Created by Administrator on 28.01.2016.
  */
 public class SubsystemAdapter extends RecyclerView.Adapter<SubsystemAdapter.ViewHolder> {

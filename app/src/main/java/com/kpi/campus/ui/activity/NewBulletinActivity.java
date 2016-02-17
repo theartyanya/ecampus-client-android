@@ -1,16 +1,11 @@
 package com.kpi.campus.ui.activity;
 
-import android.app.DatePickerDialog;
-import android.app.Dialog;
-import android.app.DialogFragment;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.DatePicker;
 import android.widget.EditText;
 
 import com.kpi.campus.R;
@@ -19,11 +14,8 @@ import com.kpi.campus.ui.fragment.DatePickerFragment;
 import com.kpi.campus.ui.presenter.NewBulletinPresenter;
 import com.kpi.campus.util.ToastUtil;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
-import java.util.Locale;
 
 import javax.inject.Inject;
 
@@ -120,3 +112,5 @@ public class NewBulletinActivity extends BaseActivity implements NewBulletinPres
         getSupportActionBar().setTitle(R.string.add_new_bulletin);
     }
 }
+
+//public class BulletinRecipientAdapter extends

@@ -3,6 +3,8 @@ package com.kpi.campus.model.pojo;
 import com.google.gson.annotations.SerializedName;
 
 /**
+ * POJO class for convenient GSON serialization.
+ * <p/>
  * Created by Administrator on 08.02.2016.
  */
 public class Token {
@@ -24,5 +26,4 @@ public class Token {
     public void setAccessToken(String accessToken) {
         this.mAccessToken = accessToken;
     }
-
 }

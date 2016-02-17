@@ -8,6 +8,8 @@ import android.net.Uri;
 import com.kpi.campus.database.table.TokenTable;
 
 /**
+ * Manage database creation and version management.
+ *
  * Created by Administrator on 09.02.2016.
  */
 public class SqlHelper extends SQLiteOpenHelper {

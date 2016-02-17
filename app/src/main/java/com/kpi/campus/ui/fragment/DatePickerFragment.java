@@ -7,13 +7,13 @@ import android.os.Bundle;
 import android.widget.DatePicker;
 import android.widget.EditText;
 
-import com.kpi.campus.ui.activity.NewBulletinActivity;
-
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
 /**
+ * DatePickerFragment hosts each date picker which provides controls for the user to a date as ready-to-use dialogs.
+ * <p/>
  * Created by Admin on 12.02.2016.
  */
 public class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {

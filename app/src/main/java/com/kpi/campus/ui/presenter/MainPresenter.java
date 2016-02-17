@@ -14,6 +14,8 @@ import java.util.List;
 import javax.inject.Inject;
 
 /**
+ * MainPresenter created to manage MainActivity.
+ *
  * Created by Administrator on 01.02.2016.
  */
 public class MainPresenter extends BasePresenter {

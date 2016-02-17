@@ -9,6 +9,8 @@ import com.kpi.campus.api.response.RequestResult;
 import java.io.IOException;
 
 /**
+ * Base loader manages request and response operations.
+ *
  * Created by Administrator on 09.02.2016.
  */
 public abstract class BaseLoader extends AsyncTaskLoader<BaseResponse> {
