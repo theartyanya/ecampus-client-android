@@ -2,6 +2,8 @@ package com.kpi.campus.ui.activity;
 
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -10,6 +12,7 @@ import android.widget.EditText;
 
 import com.kpi.campus.R;
 import com.kpi.campus.di.UIModule;
+import com.kpi.campus.ui.adapter.BulletinsRecipientAdapter;
 import com.kpi.campus.ui.fragment.DatePickerFragment;
 import com.kpi.campus.ui.presenter.NewBulletinPresenter;
 import com.kpi.campus.util.ToastUtil;
@@ -20,6 +23,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import butterknife.Bind;
+import butterknife.OnClick;
 
 public class NewBulletinActivity extends BaseActivity implements NewBulletinPresenter.IView {
 
@@ -29,9 +33,13 @@ public class NewBulletinActivity extends BaseActivity implements NewBulletinPres
     EditText mStartDate;
     @Bind(R.id.edit_text_end_period)
     EditText mEndDate;
+    @Bind(R.id.recycler_view_buffer_recipients)
+    RecyclerView mRecyclerView;
 
     @Inject
     NewBulletinPresenter mPresenter;
+
+    private BulletinsRecipientAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,13 +85,21 @@ public class NewBulletinActivity extends BaseActivity implements NewBulletinPres
     public void setViewComponent() {
         setToolbar();
         setDateListener();
+        setRecyclerView();
+    }
+
+    @OnClick(R.id.button_add_recipient)
+    public void onAddItem() {
+        List<String> l = new ArrayList<>();
+        l.add("Item 1");
+        mAdapter.addItem(l);
     }
 
     private void setDateListener() {
         mStartDate.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean b) {
-                if(b) {
+                if (b) {
                     setDateTo(mStartDate, "2");
                 }
             }
@@ -91,17 +107,17 @@ public class NewBulletinActivity extends BaseActivity implements NewBulletinPres
         mEndDate.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean b) {
-                if(b) {
+                if (b) {
                     setDateTo(mEndDate, "1");
                 }
             }
         });
     }
 
-    private void setDateTo(EditText editText, String str) {
+    private void setDateTo(EditText editText, String uniqueString) {
         DatePickerFragment newFragment = new DatePickerFragment();
         newFragment.setEditText(editText);
-        newFragment.show(getFragmentManager(), str);
+        newFragment.show(getFragmentManager(), uniqueString);
     }
 
     private void setToolbar() {
@@ -111,6 +127,10 @@ public class NewBulletinActivity extends BaseActivity implements NewBulletinPres
         mToolbar.setNavigationIcon(R.mipmap.ic_action_navigation_arrow_back);
         getSupportActionBar().setTitle(R.string.add_new_bulletin);
     }
-}
 
-//public class BulletinRecipientAdapter extends
+    private void setRecyclerView() {
+        mAdapter = new BulletinsRecipientAdapter();
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerView.setAdapter(mAdapter);
+    }
+}

@@ -127,6 +127,7 @@
             android:prompt="@string/subsection" />
 
         <Button
+            android:id="@+id/button_add_recipient"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorPrimary"
