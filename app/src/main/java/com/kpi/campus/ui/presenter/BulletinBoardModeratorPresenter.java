@@ -52,8 +52,8 @@ public class BulletinBoardModeratorPresenter extends BasePresenter {
         return new ArrayList<Fragment>(Arrays.asList(new Bb3TabFragment(), new Bb3TabFragment()));
     }
 
-    public void onButtonAddClick() {
-        mNavigator.startNewBulletinActivity();
+    public void onButtonAddClick(String title) {
+        mNavigator.startNewBulletinActivity(title);
     }
 
     public interface IView {

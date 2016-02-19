@@ -45,7 +45,7 @@ public class Bb3TabFragment extends BaseFragment implements Bb3TabPresenter.IVie
         public boolean onMenuItemClick(MenuItem menuItem) {
             switch (menuItem.getItemId()) {
                 case R.id.edit:
-                    mPresenter.editBulletin();
+                    mPresenter.editBulletin(getString(R.string.edit_new_bulletin));
                     break;
             }
             return true;

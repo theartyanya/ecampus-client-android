@@ -44,11 +44,11 @@ public class NewBulletinActivity extends BaseActivity implements NewBulletinPres
     Spinner spinner2;
     @Bind(R.id.spinner3)
     Spinner spinner3;
-
     @Inject
     NewBulletinPresenter mPresenter;
 
     private BulletinsRecipientAdapter mAdapter;
+    private String mActivityTitle = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +56,7 @@ public class NewBulletinActivity extends BaseActivity implements NewBulletinPres
         setContentView(R.layout.activity_bulletin_markup);
         bindViews();
         mPresenter.setView(this);
+        mActivityTitle = getIntent().getStringExtra("KEY_TITLE");
         mPresenter.initializeViewComponent();
     }
 
@@ -151,7 +152,7 @@ public class NewBulletinActivity extends BaseActivity implements NewBulletinPres
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         mToolbar.setNavigationIcon(R.mipmap.ic_action_navigation_arrow_back);
-        getSupportActionBar().setTitle(R.string.add_new_bulletin);
+        getSupportActionBar().setTitle(mActivityTitle);
     }
 
     private void setRecyclerView() {

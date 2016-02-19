@@ -27,6 +27,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
         <activity
             android:name=".ui.activity.BulletinBoardActivity"
@@ -45,15 +46,11 @@
 
         <activity
             android:name=".ui.activity.NewBulletinActivity"
-            android:parentActivityName=".ui.activity.BulletinBoardActivity"
+            android:parentActivityName=".ui.activity.BulletinBoardModeratorActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden" >
-        </activity>
-        <activity
-            android:name=".ui.activity.EditBulletinActivity"
-            android:parentActivityName=".ui.activity.BulletinBoardActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="stateHidden" >
+
+
         </activity>
         <activity android:name=".ui.activity.BulletinBoardModeratorActivity"
             android:parentActivityName=".ui.activity.BulletinBoardActivity"

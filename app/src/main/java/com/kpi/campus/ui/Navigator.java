@@ -8,7 +8,6 @@ import com.kpi.campus.di.ActivityContext;
 import com.kpi.campus.ui.activity.BulletinBoardActivity;
 import com.kpi.campus.ui.activity.BulletinBoardModeratorActivity;
 import com.kpi.campus.ui.activity.BulletinContentActivity;
-import com.kpi.campus.ui.activity.EditBulletinActivity;
 import com.kpi.campus.ui.activity.LoginActivity;
 import com.kpi.campus.ui.activity.MainActivity;
 import com.kpi.campus.ui.activity.NewBulletinActivity;
@@ -52,8 +51,9 @@ public class Navigator {
         mActivityContext.startActivity(intent);
     }
 
-    public void startNewBulletinActivity() {
+    public void startNewBulletinActivity(String title) {
         Intent intent = getLaunchIntent(NewBulletinActivity.class);
+        intent.putExtra("KEY_TITLE", title);
         mActivityContext.startActivity(intent);
     }
 
@@ -62,12 +62,6 @@ public class Navigator {
      */
     private Intent getLaunchIntent(Class activityClass) {
         return new Intent(mActivityContext, activityClass);
-    }
-
-
-    public void startEditBulletinActivity() {
-        Intent intent = getLaunchIntent(EditBulletinActivity.class);
-        mActivityContext.startActivity(intent);
     }
 
     public void startBulletinBoardModeratorActivity() {

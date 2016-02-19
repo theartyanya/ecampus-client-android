@@ -103,7 +103,7 @@ public class BulletinBoardModeratorActivity extends BaseActivity implements Bull
 
     @OnClick(R.id.fab_add)
     public void fabAddOnClick() {
-        mPresenter.onButtonAddClick();
+        mPresenter.onButtonAddClick(getString(R.string.add_new_bulletin));
     }
 
     @OnClick(R.id.fab_other)
