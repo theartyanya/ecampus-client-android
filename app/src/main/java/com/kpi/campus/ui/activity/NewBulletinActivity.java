@@ -100,9 +100,25 @@ public class NewBulletinActivity extends BaseActivity implements NewBulletinPres
 
     @OnClick(R.id.button_add_recipient)
     public void onAddItem() {
-        List<String> l = new ArrayList<>();
-        l.add("Item 1");
-        mAdapter.addItem(l);
+        List<String> recipients = new ArrayList<>();
+
+        if (!isTitleSelected(spinner1)) {
+            recipients.add(spinner1.getSelectedItem().toString());
+        }
+        if (!isTitleSelected(spinner2)) {
+            recipients.add(spinner2.getSelectedItem().toString());
+        }
+        if (!isTitleSelected(spinner3)) {
+            recipients.add(spinner3.getSelectedItem().toString());
+        }
+        mAdapter.addItem(recipients);
+    }
+
+    private boolean isTitleSelected(Spinner spinner) {
+        if (spinner.getSelectedItemPosition() == HintSpinnerAdapter.HINT_ITEM_POSITION) {
+            return true;
+        }
+        return false;
     }
 
     private void setDateListener() {
@@ -152,10 +168,8 @@ public class NewBulletinActivity extends BaseActivity implements NewBulletinPres
     }
 
     private void setSpinnerValue(Spinner spinner, String[] objects) {
-        HintSpinnerAdapter adapter = new HintSpinnerAdapter(getApplicationContext(), android.R.layout.simple_spinner_item, objects);
+        HintSpinnerAdapter adapter = new HintSpinnerAdapter(getApplicationContext(), R.layout.spinner_item, objects);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
-
-        spinner.setSelection(HintSpinnerAdapter.HINT_ITEM_POSITION, false);
     }
 }

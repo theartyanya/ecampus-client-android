@@ -44,5 +44,4 @@ public class HintSpinnerAdapter extends ArrayAdapter<String> {
         }
         return view;
     }
-
 }
