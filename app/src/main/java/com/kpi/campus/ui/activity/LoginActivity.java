@@ -83,7 +83,7 @@ public class LoginActivity extends BaseActivity implements LoginPresenter.IView,
 
     @Override
     public void onLoginFailed() {
-        ToastUtil.showShortMessage("Login failed", getApplicationContext());
+        ToastUtil.showShortMessage(getString(R.string.login_failed), getApplicationContext());
     }
 
     @Override
@@ -100,9 +100,9 @@ public class LoginActivity extends BaseActivity implements LoginPresenter.IView,
     public Loader<BaseResponse> onCreateLoader(int i, Bundle bundle) {
         switch (i) {
             case R.id.api_loader:
-                String s1 = bundle.getString(KEY_LOGIN);
-                String s2 = bundle.getString(KEY_PASSWORD);
-                return new TokenLoader(getApplicationContext(), s1, s2);
+                String login = bundle.getString(KEY_LOGIN);
+                String pass = bundle.getString(KEY_PASSWORD);
+                return new TokenLoader(getApplicationContext(), login, pass);
             default:
                 return null;
         }

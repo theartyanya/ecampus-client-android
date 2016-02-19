@@ -1,7 +1,6 @@
 package com.kpi.campus.ui.presenter;
 
 import android.os.Bundle;
-import android.os.Handler;
 
 import com.kpi.campus.model.pojo.Token;
 import com.kpi.campus.ui.Navigator;
@@ -18,7 +17,6 @@ public class LoginPresenter extends BasePresenter {
 
     private IView mView;
     private Navigator mNavigator;
-    private Token mAuthToken;
 
     @Inject
     public LoginPresenter(Navigator navigator) {
@@ -37,26 +35,10 @@ public class LoginPresenter extends BasePresenter {
     public void login(String login, String password) {
         mView.showLoginProgressDialog();
         mView.showLoginButton(false);
-
-        startValidation(login, password);
-
-        /// TODO: rewrite this method
-        new Handler().postDelayed(
-                new Runnable() {
-                    public void run() {
-                        mView.dismissProgressDialog();
-                    }
-                }, 3000);
-
-        mView.showLoginButton(true);
-        if(mAuthToken==null) {
-            mView.onLoginFailed();
-        } else {
-            mNavigator.startMainActivity();
-        }
+        validateUser(login, password);
     }
 
-    private void startValidation(String login, String password) {
+    private void validateUser(String login, String password) {
         Bundle args = new Bundle();
         args.putString(LoginActivity.KEY_LOGIN, login);
         args.putString(LoginActivity.KEY_PASSWORD, password);
@@ -64,7 +46,13 @@ public class LoginPresenter extends BasePresenter {
     }
 
     public void setLoaderResult(Token token) {
-        mAuthToken = token;
+        mView.dismissProgressDialog();
+        mView.showLoginButton(true);
+        if(token != null) {
+            mNavigator.startMainActivity();
+        } else {
+            mView.onLoginFailed();
+        }
     }
 
     public interface IView {

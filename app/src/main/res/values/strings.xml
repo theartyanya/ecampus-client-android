@@ -21,4 +21,5 @@
     <string name="add_new_bulletin">Додати</string>
     <string name="edit_new_bulletin">Редагувати</string>
     <string name="action_moderator">M</string>
+    <string name="login_failed">Логін або пароль невірні</string>
 </resources>
