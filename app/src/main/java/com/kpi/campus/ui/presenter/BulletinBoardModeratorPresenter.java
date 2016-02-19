@@ -7,7 +7,7 @@ import android.support.v4.app.Fragment;
 
 import com.kpi.campus.R;
 import com.kpi.campus.ui.Navigator;
-import com.kpi.campus.ui.fragment.Bb1TabFragment;
+import com.kpi.campus.ui.fragment.Bb3TabFragment;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,18 +16,15 @@ import java.util.List;
 import javax.inject.Inject;
 
 /**
- * BulletinBoardPresenter created to manage BulletinBoardActivity.
- *
- * Created by Admin on 02.02.2016.
+ * Created by Administrator on 19.02.2016.
  */
-public class BulletinBoardPresenter extends BasePresenter {
-
+public class BulletinBoardModeratorPresenter extends BasePresenter {
     private IView mView;
     private Context mContext;
     private Navigator mNavigator;
 
     @Inject
-    public BulletinBoardPresenter(Context context, Navigator navigator) {
+    public BulletinBoardModeratorPresenter(Context context, Navigator navigator) {
         mContext = context;
         mNavigator = navigator;
     }
@@ -52,15 +49,11 @@ public class BulletinBoardPresenter extends BasePresenter {
     }
 
     public List<Fragment> getFragments() {
-        return new ArrayList<Fragment>(Arrays.asList(new Bb1TabFragment(), new Bb1TabFragment()));
+        return new ArrayList<Fragment>(Arrays.asList(new Bb3TabFragment(), new Bb3TabFragment()));
     }
 
-    public boolean isModerator() {
-        return true;
-    }
-
-    public void openBulletinModeratorActivity() {
-        mNavigator.startBulletinBoardModeratorActivity();
+    public void onButtonAddClick() {
+        mNavigator.startNewBulletinActivity();
     }
 
     public interface IView {

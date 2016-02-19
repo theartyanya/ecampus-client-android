@@ -13,7 +13,7 @@ import android.view.MenuItem;
 import com.kpi.campus.R;
 import com.kpi.campus.di.UIModule;
 import com.kpi.campus.ui.adapter.BulletinTabPagerAdapter;
-import com.kpi.campus.ui.presenter.BulletinBoardPresenter;
+import com.kpi.campus.ui.presenter.BulletinBoardModeratorPresenter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,11 +21,9 @@ import java.util.List;
 import javax.inject.Inject;
 
 import butterknife.Bind;
+import butterknife.OnClick;
 
-/**
- * Bulletin board activity.
- */
-public class BulletinBoardActivity extends BaseActivity implements BulletinBoardPresenter.IView {
+public class BulletinBoardModeratorActivity extends BaseActivity implements BulletinBoardModeratorPresenter.IView {
 
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
@@ -34,28 +32,20 @@ public class BulletinBoardActivity extends BaseActivity implements BulletinBoard
     @Bind(R.id.view_pager)
     ViewPager mViewPager;
     @Inject
-    BulletinBoardPresenter mPresenter;
-
-    private boolean mIsModerator;
+    BulletinBoardModeratorPresenter mPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bulletin_board);
+        setContentView(R.layout.activity_bulletin_board_moderator);
         bindViews();
         mPresenter.setView(this);
         mPresenter.initializeViewComponent();
-
-        mIsModerator = mPresenter.isModerator();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if(mIsModerator) {
-            getMenuInflater().inflate(R.menu.menu_bulletin_board_moderator, menu);
-        } else {
-            getMenuInflater().inflate(R.menu.menu_bulletin_board, menu);
-        }
+        getMenuInflater().inflate(R.menu.menu_bulletin_board, menu);
         return true;
     }
 
@@ -64,9 +54,6 @@ public class BulletinBoardActivity extends BaseActivity implements BulletinBoard
         switch (item.getItemId()) {
             case android.R.id.home:
                 NavUtils.navigateUpFromSameTask(this);
-                return true;
-            case R.id.action_moderator:
-                mPresenter.openBulletinModeratorActivity();
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -86,10 +73,18 @@ public class BulletinBoardActivity extends BaseActivity implements BulletinBoard
         setTabLayout();
     }
 
+    private void setToolbar() {
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        mToolbar.setNavigationIcon(R.mipmap.ic_action_navigation_arrow_back);
+        getSupportActionBar().setTitle(R.string.activity_name_bulletin_board);
+    }
+
     private void setViewPager() {
         CharSequence[] tabNames = mPresenter.getTabsName();
         List<Fragment> fragments = mPresenter.getFragments();
-        BulletinTabPagerAdapter adapter = new BulletinTabPagerAdapter(getSupportFragmentManager(), tabNames, fragments);
+        BulletinTabPagerAdapter adapter = new BulletinTabPagerAdapter(getSupportFragmentManager(), tabNames,fragments);
         mViewPager.setAdapter(adapter);
     }
 
@@ -106,11 +101,13 @@ public class BulletinBoardActivity extends BaseActivity implements BulletinBoard
                 .setIcon(tabIcon.getResourceId(BulletinTabPagerAdapter.BULLETIN_TAB_1, -1));
     }
 
-    private void setToolbar() {
-        setSupportActionBar(mToolbar);
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        mToolbar.setNavigationIcon(R.mipmap.ic_action_navigation_arrow_back);
-        getSupportActionBar().setTitle(R.string.activity_name_bulletin_board);
+    @OnClick(R.id.fab_add)
+    public void fabAddOnClick() {
+        mPresenter.onButtonAddClick();
+    }
+
+    @OnClick(R.id.fab_other)
+    public void fabOtherOnClick() {
+
     }
 }

@@ -29,9 +29,11 @@ public class BulletinAdapter extends RecyclerView.Adapter<BulletinAdapter.ViewHo
     private List<Bulletin> mList;
     private OnItemClickListener mListener;
     private PopupMenu.OnMenuItemClickListener mMenuListener;
+    private boolean mIsModerator = false;
 
-    public BulletinAdapter(List<Bulletin> list) {
+    public BulletinAdapter(List<Bulletin> list, boolean isModerator) {
         mList = list;
+        mIsModerator = isModerator;
     }
 
     public void setData(List<Bulletin> list) {
@@ -56,6 +58,10 @@ public class BulletinAdapter extends RecyclerView.Adapter<BulletinAdapter.ViewHo
         holder.date.setText(bul.getDate());
         holder.theme.setText(bul.getTheme());
         holder.author.setText(bul.getAuthor());
+
+        if(mIsModerator) {
+            holder.btnOverflow.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override

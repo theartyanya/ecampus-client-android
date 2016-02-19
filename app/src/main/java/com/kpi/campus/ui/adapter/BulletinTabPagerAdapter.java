@@ -5,10 +5,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.kpi.campus.ui.fragment.Bb1TabFragment;
-
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -20,20 +16,21 @@ public class BulletinTabPagerAdapter extends FragmentStatePagerAdapter {
 
     private CharSequence mTitles[];
 
-    private List<Fragment> mFragment = new ArrayList<Fragment>(Arrays.asList(new Bb1TabFragment(), new Bb1TabFragment()));
+    private List<Fragment> mFragments;// = new ArrayList<Fragment>(Arrays.asList(new Bb1TabFragment(), new Bb1TabFragment()));
 
     public static int BULLETIN_TAB_0 = 0;
     public static int BULLETIN_TAB_1 = 1;
 
-    public BulletinTabPagerAdapter(FragmentManager fm, CharSequence titles[]) {
+    public BulletinTabPagerAdapter(FragmentManager fm, CharSequence titles[], List<Fragment> fragments) {
         super(fm);
         mTitles = titles;
+        mFragments = fragments;
     }
 
     //This method return the fragment for the every position in the View Pager
     @Override
     public Fragment getItem(int position) {
-        return mFragment.get(position);
+        return mFragments.get(position);
     }
 
     // Return the titles for the Tabs in the Tab Strip

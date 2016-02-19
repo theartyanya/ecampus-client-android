@@ -6,6 +6,7 @@ import android.content.Intent;
 
 import com.kpi.campus.di.ActivityContext;
 import com.kpi.campus.ui.activity.BulletinBoardActivity;
+import com.kpi.campus.ui.activity.BulletinBoardModeratorActivity;
 import com.kpi.campus.ui.activity.BulletinContentActivity;
 import com.kpi.campus.ui.activity.EditBulletinActivity;
 import com.kpi.campus.ui.activity.LoginActivity;
@@ -66,6 +67,11 @@ public class Navigator {
 
     public void startEditBulletinActivity() {
         Intent intent = getLaunchIntent(EditBulletinActivity.class);
+        mActivityContext.startActivity(intent);
+    }
+
+    public void startBulletinBoardModeratorActivity() {
+        Intent intent = getLaunchIntent(BulletinBoardModeratorActivity.class);
         mActivityContext.startActivity(intent);
     }
 }
