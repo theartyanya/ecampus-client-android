@@ -1,5 +1,6 @@
 package com.kpi.campus.ui.activity;
 
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,10 +10,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 import com.kpi.campus.R;
 import com.kpi.campus.di.UIModule;
 import com.kpi.campus.ui.adapter.BulletinsRecipientAdapter;
+import com.kpi.campus.ui.adapter.HintSpinnerAdapter;
 import com.kpi.campus.ui.fragment.DatePickerFragment;
 import com.kpi.campus.ui.presenter.NewBulletinPresenter;
 import com.kpi.campus.util.ToastUtil;
@@ -35,6 +38,12 @@ public class NewBulletinActivity extends BaseActivity implements NewBulletinPres
     EditText mEndDate;
     @Bind(R.id.recycler_view_buffer_recipients)
     RecyclerView mRecyclerView;
+    @Bind(R.id.spinner1)
+    Spinner spinner1;
+    @Bind(R.id.spinner2)
+    Spinner spinner2;
+    @Bind(R.id.spinner3)
+    Spinner spinner3;
 
     @Inject
     NewBulletinPresenter mPresenter;
@@ -86,6 +95,7 @@ public class NewBulletinActivity extends BaseActivity implements NewBulletinPres
         setToolbar();
         setDateListener();
         setRecyclerView();
+        setSpinner();
     }
 
     @OnClick(R.id.button_add_recipient)
@@ -132,5 +142,20 @@ public class NewBulletinActivity extends BaseActivity implements NewBulletinPres
         mAdapter = new BulletinsRecipientAdapter();
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setAdapter(mAdapter);
+    }
+
+    private void setSpinner() {
+        Resources resources = getResources();
+        setSpinnerValue(spinner1, resources.getStringArray(R.array.spinner_profile));
+        setSpinnerValue(spinner2, resources.getStringArray(R.array.spinner_subsystem));
+        setSpinnerValue(spinner3, resources.getStringArray(R.array.spinner_group));
+    }
+
+    private void setSpinnerValue(Spinner spinner, String[] objects) {
+        HintSpinnerAdapter adapter = new HintSpinnerAdapter(getApplicationContext(), android.R.layout.simple_spinner_item, objects);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+
+        spinner.setSelection(HintSpinnerAdapter.HINT_ITEM_POSITION, false);
     }
 }
