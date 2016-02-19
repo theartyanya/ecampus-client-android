@@ -21,6 +21,6 @@
         android:layout_gravity="center"
         android:layout_margin="4dp"
         android:background="@null"
-        android:src="@android:drawable/ic_delete" />
+        android:src="@mipmap/ic_action_navigation_close" />
 
 </LinearLayout>
