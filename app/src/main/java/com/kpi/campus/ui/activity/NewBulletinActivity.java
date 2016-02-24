@@ -38,7 +38,7 @@ public class NewBulletinActivity extends BaseActivity implements NewBulletinPres
     EditText mEndDate;
     @Bind(R.id.recycler_view_buffer_recipients)
     RecyclerView mRecyclerView;
-    @Bind(R.id.spinner1)
+    @Bind(R.id.spinner_profile)
     Spinner spinner1;
     @Bind(R.id.spinner2)
     Spinner spinner2;

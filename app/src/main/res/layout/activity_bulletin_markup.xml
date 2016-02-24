@@ -125,9 +125,9 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_below="@id/text_view_author"
+                    android:layout_marginTop="16dp"
                     android:text="@string/bulletin_actuality"
                     android:textColor="@color/colorSecondaryText"
-                    android:layout_marginTop="16dp"
                     android:textSize="8sp" />
 
 
@@ -135,9 +135,9 @@
 
             <RelativeLayout
                 android:layout_width="0dp"
-                android:layout_weight="1.0"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp">
+                android:layout_marginTop="16dp"
+                android:layout_weight="1.0">
 
                 <TextView
                     android:id="@+id/text_view_creation_date"
@@ -151,8 +151,8 @@
                     android:id="@+id/text_view_change_actuality_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
                     android:layout_below="@id/text_view_creation_date"
+                    android:layout_marginTop="16dp"
                     android:text="@string/bulletin_date_change_actuality"
                     android:textColor="@color/colorSecondaryText"
                     android:textSize="8sp" />
@@ -171,6 +171,9 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/colorDivider" />
+
+
+        <!--
 
         <Spinner
             android:id="@+id/spinner1"
@@ -192,14 +195,45 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:layout_marginTop="8dp" />
+            -->
+
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp">
+
+            <RadioButton
+                android:id="@+id/rbLeft"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="Всім"/>
+
+            <RadioButton
+                android:id="@+id/rbCenter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="За профілем"/>
+
+        </RadioGroup>
+
+        <Spinner
+            android:id="@+id/spinner_profile"
+            android:enabled="false"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="16dp" />
 
         <Button
             android:id="@+id/button_add_recipient"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="8dp"
             android:background="@color/colorPrimary"
             android:text="Додати"
+            android:textSize="10sp"
             android:textColor="@color/colorTextIcons" />
 
         <android.support.v7.widget.RecyclerView
