@@ -40,7 +40,7 @@ public class BulletinBoardModeratorPresenter extends BasePresenter {
 
     public CharSequence[] getTabsName() {
         Resources r = mContext.getResources();
-        return r.getStringArray(R.array.bulletin_board_tab);
+        return r.getStringArray(R.array.bulletin_board_moderator_tab);
     }
 
     public TypedArray getTabsIcon() {
@@ -49,7 +49,7 @@ public class BulletinBoardModeratorPresenter extends BasePresenter {
     }
 
     public List<Fragment> getFragments() {
-        return new ArrayList<Fragment>(Arrays.asList(new Bb3TabFragment(), new Bb3TabFragment()));
+        return new ArrayList<Fragment>(Arrays.asList(new Bb3TabFragment(), new Bb3TabFragment(), new Bb3TabFragment(), new Bb3TabFragment(), new Bb3TabFragment()));
     }
 
     public void onButtonAddClick(String title) {

@@ -78,7 +78,7 @@ public class BulletinBoardModeratorActivity extends BaseActivity implements Bull
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         mToolbar.setNavigationIcon(R.mipmap.ic_action_navigation_arrow_back);
-        getSupportActionBar().setTitle(R.string.activity_name_bulletin_board);
+        getSupportActionBar().setTitle(R.string.activity_bulletin_moderator_mode_title);
     }
 
     private void setViewPager() {

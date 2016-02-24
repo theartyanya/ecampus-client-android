@@ -23,4 +23,9 @@
     <string name="action_moderator">M</string>
     <string name="login_failed">Логін або пароль невірні</string>
     <string name="bulletin_text_content">Текст оголошення</string>
+    <string name="activity_bulletin_moderator_mode_title">Режим модератора</string>
+    <string name="bulletin_author">Автор: Тарасенко Т.Т. </string>
+    <string name="bulletin_creation_date">Дата створення: 24.02.2016</string>
+    <string name="bulletin_actuality">Актуальність: Так</string>
+    <string name="bulletin_date_change_actuality">Дата зміни: 24.02.2016</string>
 </resources>
