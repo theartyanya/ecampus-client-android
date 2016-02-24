@@ -39,11 +39,8 @@ public class NewBulletinActivity extends BaseActivity implements NewBulletinPres
     @Bind(R.id.recycler_view_buffer_recipients)
     RecyclerView mRecyclerView;
     @Bind(R.id.spinner_profile)
-    Spinner spinner1;
-    @Bind(R.id.spinner2)
-    Spinner spinner2;
-    @Bind(R.id.spinner3)
-    Spinner spinner3;
+    Spinner spinner_profile;
+
     @Inject
     NewBulletinPresenter mPresenter;
 
@@ -103,14 +100,8 @@ public class NewBulletinActivity extends BaseActivity implements NewBulletinPres
     public void onAddItem() {
         List<String> recipients = new ArrayList<>();
 
-        if (!isTitleSelected(spinner1)) {
-            recipients.add(spinner1.getSelectedItem().toString());
-        }
-        if (!isTitleSelected(spinner2)) {
-            recipients.add(spinner2.getSelectedItem().toString());
-        }
-        if (!isTitleSelected(spinner3)) {
-            recipients.add(spinner3.getSelectedItem().toString());
+        if (!isTitleSelected(spinner_profile)) {
+            recipients.add(spinner_profile.getSelectedItem().toString());
         }
         mAdapter.addItem(recipients);
     }
@@ -163,9 +154,7 @@ public class NewBulletinActivity extends BaseActivity implements NewBulletinPres
 
     private void setSpinner() {
         Resources resources = getResources();
-        setSpinnerValue(spinner1, resources.getStringArray(R.array.spinner_profile));
-        setSpinnerValue(spinner2, resources.getStringArray(R.array.spinner_subsystem));
-        setSpinnerValue(spinner3, resources.getStringArray(R.array.spinner_group));
+        setSpinnerValue(spinner_profile, resources.getStringArray(R.array.spinner_profile));
     }
 
     private void setSpinnerValue(Spinner spinner, String[] objects) {
