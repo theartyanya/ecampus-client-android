@@ -22,4 +22,5 @@
     <string name="edit_new_bulletin">Редагувати</string>
     <string name="action_moderator">M</string>
     <string name="login_failed">Логін або пароль невірні</string>
+    <string name="bulletin_text_content">Текст оголошення</string>
 </resources>

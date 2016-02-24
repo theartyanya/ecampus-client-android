@@ -52,7 +52,7 @@ public class BulletinBoardPresenter extends BasePresenter {
     }
 
     public List<Fragment> getFragments() {
-        return new ArrayList<Fragment>(Arrays.asList(new Bb1TabFragment(), new Bb1TabFragment()));
+        return new ArrayList<Fragment>(Arrays.asList(new Bb1TabFragment(), new Bb1TabFragment(), new Bb1TabFragment()));
     }
 
     public boolean isModerator() {

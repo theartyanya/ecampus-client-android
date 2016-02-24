@@ -32,8 +32,9 @@
     </array>
 
     <array name="bulletin_board_tab">
-        <item>bb1</item>
-        <item>bb2</item>
+        <item>Всі</item>
+        <item>Профіль</item>
+        <item>Підрозділ</item>
     </array>
 
     <array name="bulletin_board_tab_icon">
