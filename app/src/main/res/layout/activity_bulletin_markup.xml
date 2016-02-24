@@ -46,6 +46,7 @@
                 android:id="@+id/edit_text_bulletin_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@null"
                 android:hint="Тема"
                 android:inputType="text"
                 android:textSize="14sp" />
@@ -62,6 +63,7 @@
                 android:id="@+id/edit_text_bulletin_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@null"
                 android:hint="Текст оголошення"
                 android:inputType="textMultiLine"
                 android:isScrollContainer="true"
@@ -81,6 +83,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.0"
+                android:background="@null"
                 android:hint="Початок показу"
                 android:textColorHint="@color/colorSecondaryText"
                 android:textSize="12sp" />
@@ -90,10 +93,59 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.0"
+                android:background="@null"
                 android:hint="Кінець показу"
                 android:textColorHint="@color/colorSecondaryText"
                 android:textSize="12sp" />
         </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp">
+
+            <TextView
+                android:id="@+id/text_view_author"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/bulletin_author"
+                android:textColor="@color/colorSecondaryText"
+                android:layout_alignParentLeft="true"
+                android:textSize="8sp" />
+
+            <TextView
+                android:id="@+id/text_view_creation_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="150dp"
+                android:text="@string/bulletin_creation_date"
+                android:textColor="@color/colorSecondaryText"
+                android:textSize="8sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp">
+
+            <TextView
+                android:id="@+id/text_view_actuality"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/bulletin_actuality"
+                android:layout_alignParentLeft="true"
+                android:textColor="@color/colorSecondaryText"
+                android:textSize="8sp" />
+
+            <TextView
+                android:id="@+id/text_view_change_actuality_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="@string/bulletin_date_change_actuality"
+                android:textColor="@color/colorSecondaryText"
+                android:textSize="8sp" />
+        </RelativeLayout>
 
         <TextView
             android:layout_width="wrap_content"
@@ -112,32 +164,31 @@
             android:id="@+id/spinner1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="4dp"
-             />
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="16dp" />
 
         <Spinner
             android:id="@+id/spinner2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="4dp"/>
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp" />
 
         <Spinner
             android:id="@+id/spinner3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="4dp"/>
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp" />
 
         <Button
             android:id="@+id/button_add_recipient"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
+            android:layout_marginTop="4dp"
             android:background="@color/colorPrimary"
-            android:textColor="@color/colorTextIcons"
-            android:text="Додати" />
+            android:text="Додати"
+            android:textColor="@color/colorTextIcons" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_view_buffer_recipients"
