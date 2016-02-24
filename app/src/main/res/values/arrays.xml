@@ -23,11 +23,11 @@
     </array>
 
     <array name="full_subsystem_image">
-        <item>@drawable/logo_bulletin_board</item>
+        <item>@drawable/logo_ogoloshennya</item>
         <item>@drawable/logo_monitoring</item>
         <item>@drawable/logo_rektorskiy</item>
         <item>@drawable/logo_golosuvannya</item>
-        <item>@drawable/logo_navantagennya_npp</item>
+        <item>@drawable/logo_navantajenna_npp</item>
         <item>@drawable/logo_rnp</item>
     </array>
 
