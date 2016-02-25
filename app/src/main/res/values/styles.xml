@@ -45,6 +45,8 @@
 
     <style name="ThemeOverlay.AppBar.White.Popup" parent="ThemeOverlay.AppCompat.Light" />
 
-
+    <style name="Margin">
+        <item name="android:layout_marginLeft">16dp</item>
+    </style>
 
 </resources>

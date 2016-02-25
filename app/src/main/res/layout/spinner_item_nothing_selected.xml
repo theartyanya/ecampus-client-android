@@ -8,4 +8,4 @@
     android:ellipsize="marquee"
     android:textSize="14sp"
     android:textColor="@color/colorSecondaryText"
-    android:text="Введіть підрозділ..." />
+    android:text="Виберіть профіль..." />
