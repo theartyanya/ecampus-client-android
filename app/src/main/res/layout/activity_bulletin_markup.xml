@@ -172,59 +172,58 @@
             android:layout_height="1dp"
             android:background="@color/colorDivider" />
 
-
-        <!--
-
-        <Spinner
-            android:id="@+id/spinner1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginTop="16dp" />
-
-        <Spinner
-            android:id="@+id/spinner2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginTop="8dp" />
-
-        <Spinner
-            android:id="@+id/spinner3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginTop="8dp" />
-            -->
-
         <RadioGroup
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
             android:layout_marginTop="8dp">
 
             <RadioButton
-                android:id="@+id/rbLeft"
+                android:id="@+id/rb_all"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="12sp"
                 android:checked="true"
-                android:text="Всім"/>
+                android:text="Всім" />
 
             <RadioButton
-                android:id="@+id/rbCenter"
+                android:id="@+id/rb_profile"
+                android:textSize="12sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="За профілем"/>
-
+                android:text="За профілем" />
         </RadioGroup>
 
         <Spinner
             android:id="@+id/spinner_profile"
-            android:enabled="false"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
             android:layout_marginTop="16dp" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp">
+
+            <com.kpi.campus.ui.view.DelayAutoCompleteTextView
+                android:id="@+id/text_view_auto_recipient"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:imeOptions="flagNoExtractUi|actionSearch"
+                android:inputType="textCapSentences"
+                android:textSize="12sp"
+                android:hint="Введіть одержувача..."
+                android:paddingRight="32dp" />
+
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                style="?android:attr/progressBarStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|right"
+                android:layout_marginRight="16dp"
+                android:visibility="gone"/>
+
+        </FrameLayout>
 
         <Button
             android:id="@+id/button_add_recipient"
@@ -233,8 +232,8 @@
             android:layout_marginTop="8dp"
             android:background="@color/colorPrimary"
             android:text="Додати"
-            android:textSize="10sp"
-            android:textColor="@color/colorTextIcons" />
+            android:textColor="@color/colorTextIcons"
+            android:textSize="10sp" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_view_buffer_recipients"
