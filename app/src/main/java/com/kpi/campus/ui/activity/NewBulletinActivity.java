@@ -1,6 +1,5 @@
 package com.kpi.campus.ui.activity;
 
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,15 +8,21 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 
 import com.kpi.campus.R;
 import com.kpi.campus.di.UIModule;
+import com.kpi.campus.model.Recipient;
 import com.kpi.campus.ui.adapter.BulletinsRecipientAdapter;
-import com.kpi.campus.ui.adapter.HintSpinnerAdapter;
+import com.kpi.campus.ui.adapter.RecipientAutoCompleteAdapter;
+import com.kpi.campus.ui.adapter.SpinnerProfileAdapter;
 import com.kpi.campus.ui.fragment.DatePickerFragment;
 import com.kpi.campus.ui.presenter.NewBulletinPresenter;
+import com.kpi.campus.ui.view.DelayAutoCompleteTextView;
 import com.kpi.campus.util.ToastUtil;
 
 import java.util.ArrayList;
@@ -39,7 +44,9 @@ public class NewBulletinActivity extends BaseActivity implements NewBulletinPres
     @Bind(R.id.recycler_view_buffer_recipients)
     RecyclerView mRecyclerView;
     @Bind(R.id.spinner_profile)
-    Spinner spinner_profile;
+    Spinner mSpinnerProfile;
+    @Bind(R.id.text_view_auto_recipient)
+    DelayAutoCompleteTextView mAutoCompleteRecipient;
 
     @Inject
     NewBulletinPresenter mPresenter;
@@ -93,24 +100,15 @@ public class NewBulletinActivity extends BaseActivity implements NewBulletinPres
         setToolbar();
         setDateListener();
         setRecyclerView();
-        setSpinner();
+        setProfileSpinner();
+        setAutoCompleteRecipient();
     }
 
     @OnClick(R.id.button_add_recipient)
     public void onAddItem() {
         List<String> recipients = new ArrayList<>();
-
-        if (!isTitleSelected(spinner_profile)) {
-            recipients.add(spinner_profile.getSelectedItem().toString());
-        }
+        recipients.add(mSpinnerProfile.getSelectedItem().toString());
         mAdapter.addItem(recipients);
-    }
-
-    private boolean isTitleSelected(Spinner spinner) {
-        if (spinner.getSelectedItemPosition() == HintSpinnerAdapter.HINT_ITEM_POSITION) {
-            return true;
-        }
-        return false;
     }
 
     private void setDateListener() {
@@ -152,14 +150,29 @@ public class NewBulletinActivity extends BaseActivity implements NewBulletinPres
         mRecyclerView.setAdapter(mAdapter);
     }
 
-    private void setSpinner() {
-        Resources resources = getResources();
-        setSpinnerValue(spinner_profile, resources.getStringArray(R.array.spinner_profile));
+    private void setProfileSpinner() {
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.spinner_profile, R.layout.spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        mSpinnerProfile.setAdapter(new SpinnerProfileAdapter(
+                adapter,
+                R.layout.spinner_item_nothing_selected,
+                this));
     }
 
-    private void setSpinnerValue(Spinner spinner, String[] objects) {
-        HintSpinnerAdapter adapter = new HintSpinnerAdapter(getApplicationContext(), R.layout.spinner_item, objects);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
+    private void setAutoCompleteRecipient() {
+        mAutoCompleteRecipient.setThreshold(1);
+
+        mAutoCompleteRecipient.setAdapter(new RecipientAutoCompleteAdapter(getApplicationContext()));
+        mAutoCompleteRecipient.setLoadingIndicator((ProgressBar) findViewById(R.id.progress_bar));
+        mAutoCompleteRecipient.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                Recipient recipient = (Recipient) adapterView.getItemAtPosition(position);
+                mAutoCompleteRecipient.setText(recipient.getName());
+            }
+        });
     }
+
+
 }

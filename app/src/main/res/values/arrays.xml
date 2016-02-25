@@ -51,24 +51,11 @@
     </array>
 
     <array name="spinner_profile">
-        <item>Профіль</item>
-        <item>Модератор до ФІОТ</item>
-        <item>Модератор до ТК</item>
-        <item>Модератор до ОТ</item>
-    </array>
-
-    <array name="spinner_subsystem">
-        <item>Підрозділ</item>
-        <item>Студент групи ІК-21</item>
-        <item>Студент групи ІК-22</item>
-        <item>Студент групи ІК-23</item>
-    </array>
-
-    <array name="spinner_group">
-        <item>Група</item>
-        <item>Студент групи ІК-31</item>
-        <item>Студент групи ІК-32</item>
-        <item>Студент групи ІК-33</item>
+        <item>Викладач</item>
+        <item>Студент</item>
+        <item>Куратор</item>
+        <item>Староста</item>
+        <item>Профорг</item>
     </array>
 
 </resources>
