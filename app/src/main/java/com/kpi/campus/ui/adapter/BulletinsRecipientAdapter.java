@@ -11,7 +11,6 @@ import android.widget.TextView;
 import com.kpi.campus.R;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -51,13 +50,13 @@ public class BulletinsRecipientAdapter extends RecyclerView.Adapter<BulletinsRec
         return mDataList.size();
     }
 
-    public void addItem(final List<String> list) {
+    public void addItem(final String item) {
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                mDataList.addAll(list);
-                notifyItemRangeInserted(mDataList.size()-1, list.size());
+                mDataList.add(item);
+                notifyItemInserted(mDataList.size()-1);
             }
         }, NOTIFY_DELAY);
     }

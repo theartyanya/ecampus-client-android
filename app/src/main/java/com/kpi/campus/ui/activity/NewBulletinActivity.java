@@ -5,6 +5,7 @@ import android.support.v4.app.NavUtils;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 
@@ -48,7 +50,10 @@ public class NewBulletinActivity extends BaseActivity implements NewBulletinPres
     Spinner mSpinnerProfile;
     @Bind(R.id.text_view_auto_recipient)
     DelayAutoCompleteTextView mAutoCompleteRecipient;
-
+    @Bind(R.id.rb_all)
+    RadioButton mRbAll;
+    @Bind(R.id.rb_profile)
+    RadioButton mRbProfile;
     @Inject
     NewBulletinPresenter mPresenter;
 
@@ -67,7 +72,6 @@ public class NewBulletinActivity extends BaseActivity implements NewBulletinPres
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_add_bulletin, menu);
         return true;
     }
@@ -127,9 +131,21 @@ public class NewBulletinActivity extends BaseActivity implements NewBulletinPres
 
     @OnClick(R.id.button_add_recipient)
     public void onAddItem() {
-        List<String> recipients = new ArrayList<>();
-        recipients.add(mSpinnerProfile.getSelectedItem().toString());
-        mAdapter.addItem(recipients);
+        /// TODO: rewrite!
+
+      String recipient = "";
+        Editable autocompleteSubdivision = mAutoCompleteRecipient.getText();
+
+        if(mRbAll.isChecked()) {
+            if(autocompleteSubdivision != null && !autocompleteSubdivision.toString().isEmpty()) {
+                recipient = autocompleteSubdivision.toString();
+            }
+        } else if(mRbProfile.isChecked()) {
+            if (mSpinnerProfile.getSelectedItem() != null && autocompleteSubdivision != null && !autocompleteSubdivision.toString().isEmpty()) {
+                recipient = mSpinnerProfile.getSelectedItem().toString().concat("-").concat(autocompleteSubdivision.toString());
+            }
+        }
+        mAdapter.addItem(recipient);
     }
 
     private void setDateListener() {
@@ -167,7 +183,9 @@ public class NewBulletinActivity extends BaseActivity implements NewBulletinPres
 
     private void setRecyclerView() {
         mAdapter = new BulletinsRecipientAdapter();
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        mRecyclerView.setLayoutManager(linearLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
     }
 
@@ -194,10 +212,8 @@ public class NewBulletinActivity extends BaseActivity implements NewBulletinPres
     }
 
     private void setVisibility(int visibility, View... views) {
-        for(View v : views) {
+        for (View v : views) {
             v.setVisibility(visibility);
         }
     }
-
-
 }
