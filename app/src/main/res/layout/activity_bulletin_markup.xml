@@ -172,6 +172,7 @@
                 android:background="@color/colorDivider" />
 
             <RadioGroup
+                android:id="@+id/radio_group_recipient"
                 style="@style/Margin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -196,6 +197,7 @@
             <Spinner
                 android:id="@+id/spinner_profile"
                 style="@style/Margin"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp" />

@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 
 import com.kpi.campus.R;
@@ -102,6 +103,26 @@ public class NewBulletinActivity extends BaseActivity implements NewBulletinPres
         setRecyclerView();
         setProfileSpinner();
         setAutoCompleteRecipient();
+        setRadioGroup();
+    }
+
+    private void setRadioGroup() {
+        RadioGroup radioGroup = (RadioGroup) findViewById(R.id.radio_group_recipient);
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
+                switch (checkedId) {
+                    case R.id.rb_all:
+                        setVisibility(View.GONE, mSpinnerProfile);
+                        break;
+                    case R.id.rb_profile:
+                        setVisibility(View.VISIBLE, mSpinnerProfile);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
     }
 
     @OnClick(R.id.button_add_recipient)
@@ -153,7 +174,6 @@ public class NewBulletinActivity extends BaseActivity implements NewBulletinPres
     private void setProfileSpinner() {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.spinner_profile, R.layout.spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
         mSpinnerProfile.setAdapter(new SpinnerProfileAdapter(
                 adapter,
                 R.layout.spinner_item_nothing_selected,
@@ -162,7 +182,6 @@ public class NewBulletinActivity extends BaseActivity implements NewBulletinPres
 
     private void setAutoCompleteRecipient() {
         mAutoCompleteRecipient.setThreshold(1);
-
         mAutoCompleteRecipient.setAdapter(new RecipientAutoCompleteAdapter(getApplicationContext()));
         mAutoCompleteRecipient.setLoadingIndicator((ProgressBar) findViewById(R.id.progress_bar));
         mAutoCompleteRecipient.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -172,6 +191,12 @@ public class NewBulletinActivity extends BaseActivity implements NewBulletinPres
                 mAutoCompleteRecipient.setText(recipient.getName());
             }
         });
+    }
+
+    private void setVisibility(int visibility, View... views) {
+        for(View v : views) {
+            v.setVisibility(visibility);
+        }
     }
 
 
