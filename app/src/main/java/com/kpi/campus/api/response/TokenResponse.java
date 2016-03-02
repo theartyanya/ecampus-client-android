@@ -2,7 +2,6 @@ package com.kpi.campus.api.response;
 
 import android.content.Context;
 
-import com.kpi.campus.database.table.TokenTable;
 import com.kpi.campus.model.pojo.Token;
 
 /**
@@ -17,7 +16,7 @@ public class TokenResponse extends BaseResponse {
     public void save(Context context) {
         Token token = getTypedAnswer();
         if (token != null) {
-            TokenTable.save(context, token);
+            //TokenTable.save(context, token);
         }
     }
 }

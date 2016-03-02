@@ -232,12 +232,12 @@
                 android:id="@+id/button_add_recipient"
                 style="@style/Margin"
                 android:layout_width="match_parent"
-                android:layout_height="16dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:background="@color/colorPrimary"
                 android:text="Додати"
                 android:textColor="@color/colorTextIcons"
-                android:textSize="10sp" />
+                android:textSize="12sp" />
         </LinearLayout>
     </ScrollView>
 

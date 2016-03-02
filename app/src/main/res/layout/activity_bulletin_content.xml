@@ -29,7 +29,6 @@
             android:text="Методичні ресурси"
             android:textColor="@color/colorPrimaryText"
             android:textSize="16sp"
-            android:textStyle="italic"
             app:compoundDrawableHeight="24dp"
             app:compoundDrawableWidth="24dp" />
 
@@ -41,9 +40,9 @@
             android:layout_marginLeft="64dp"
             android:layout_marginRight="16dp"
             android:layout_marginTop="24dp"
-            android:text="До уваги всіх модераторів. До уваги всіх модераторів.До уваги всіх модераторів."
+            android:text="До уваги всіх модераторів. До уваги всіх модераторів.До уваги всіх модераторів. До уваги всіх модераторів. "
             android:textColor="@color/colorPrimaryText"
-            android:textSize="16sp" />
+            android:textSize="14sp" />
 
         <com.kpi.campus.ui.view.TextViewDrawableSize
             android:id="@+id/bulletin_period"
@@ -58,7 +57,7 @@
             android:gravity="center"
             android:text="Період показу"
             android:textColor="@color/colorSecondaryText"
-            android:textSize="8sp"
+            android:textSize="11sp"
             app:compoundDrawableHeight="24dp"
             app:compoundDrawableWidth="24dp" />
 
@@ -73,7 +72,7 @@
             android:layout_toRightOf="@id/bulletin_period"
             android:text="15.01.2016"
             android:textColor="@color/colorSecondaryText"
-            android:textSize="8sp" />
+            android:textSize="10sp" />
 
         <TextView
             android:id="@+id/text_view_bulletin_end_date"
@@ -86,7 +85,7 @@
             android:layout_toRightOf="@id/text_view_bulletin_start_date"
             android:text="20.01.2016"
             android:textColor="@color/colorSecondaryText"
-            android:textSize="8sp" />
+            android:textSize="10sp" />
 
         <com.kpi.campus.ui.view.TextViewDrawableSize
             android:id="@+id/bulletin_author"
@@ -101,7 +100,7 @@
             android:gravity="center"
             android:text="Публікатор"
             android:textColor="@color/colorSecondaryText"
-            android:textSize="8sp"
+            android:textSize="11sp"
             app:compoundDrawableHeight="24dp"
             app:compoundDrawableWidth="24dp" />
 
@@ -116,7 +115,7 @@
             android:layout_toRightOf="@id/bulletin_author"
             android:text="Іваненко І.І."
             android:textColor="@color/colorSecondaryText"
-            android:textSize="8sp" />
+            android:textSize="10sp" />
 
 
     </RelativeLayout>
