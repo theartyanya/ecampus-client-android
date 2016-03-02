@@ -45,9 +45,23 @@
         <item>В</item>
     </array>
 
-    <array name="bulletin_board_tab_icon">
+    <array name="bulletin_board_tab_icon0">
         <item>@android:drawable/ic_dialog_email</item>
         <item>@android:drawable/ic_dialog_dialer</item>
+    </array>
+
+    <array name="bulletin_board_tab_icon">
+        <item>@mipmap/ic_action_actual</item>
+        <item>@mipmap/ic_action_by_profile</item>
+        <item>@mipmap/ic_action_by_susdivision</item>
+    </array>
+
+    <array name="bulletin_board_moderator_tab_icon">
+        <item>@mipmap/ic_action_all</item>
+        <item>@mipmap/ic_action_actual</item>
+        <item>@mipmap/ic_action_by_profile</item>
+        <item>@mipmap/ic_action_by_susdivision</item>
+        <item>@mipmap/ic_action_action_delete</item>
     </array>
 
     <array name="spinner_profile">
