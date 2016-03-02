@@ -8,12 +8,12 @@
     </string-array>
 
     <string-array name="full_subsystem">
-        <item>Оголошення</item>
-        <item>Моніторинг</item>
-        <item>Ректорський</item>
-        <item>Голосування</item>
-        <item>Навантаження НПП</item>
-        <item>РНП</item>
+        <item>@string/bulletin</item>
+        <item>@string/monitoring</item>
+        <item>@string/rectorial</item>
+        <item>@string/vote</item>
+        <item>@string/npp</item>
+        <item>@string/rnp</item>
     </string-array>
 
     <array name="partial_subsystem_image">

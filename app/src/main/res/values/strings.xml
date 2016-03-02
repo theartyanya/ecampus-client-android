@@ -28,4 +28,11 @@
     <string name="bulletin_creation_date">Дата створення: 24.02.2016</string>
     <string name="bulletin_actuality">Актуальність: Так</string>
     <string name="bulletin_date_change_actuality">Дата зміни: 24.02.2016</string>
+
+    <string name="bulletin">Оголошення</string>
+    <string name="monitoring">Моніторінг</string>
+    <string name="rectorial">Ректорський</string>
+    <string name="vote">Голосування</string>
+    <string name="npp">Навантаження НПП</string>
+    <string name="rnp">РНП</string>
 </resources>
