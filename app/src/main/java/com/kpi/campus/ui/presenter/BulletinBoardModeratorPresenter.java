@@ -45,7 +45,7 @@ public class BulletinBoardModeratorPresenter extends BasePresenter {
 
     public TypedArray getTabsIcon() {
         Resources r = mContext.getResources();
-        return r.obtainTypedArray(R.array.bulletin_board_tab_icon);
+        return r.obtainTypedArray(R.array.bulletin_board_moderator_tab_icon);
     }
 
     public List<Fragment> getFragments() {

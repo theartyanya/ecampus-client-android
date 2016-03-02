@@ -95,7 +95,7 @@ public class BulletinBoardActivity extends BaseActivity implements BulletinBoard
 
     private void setTabLayout() {
         mTabLayout.setupWithViewPager(mViewPager);
-        //setupTabIcon();
+        setupTabIcon();
     }
 
     private void setupTabIcon() {
@@ -104,6 +104,8 @@ public class BulletinBoardActivity extends BaseActivity implements BulletinBoard
                 .setIcon(tabIcon.getResourceId(BulletinTabPagerAdapter.BULLETIN_TAB_0, -1));
         mTabLayout.getTabAt(BulletinTabPagerAdapter.BULLETIN_TAB_1)
                 .setIcon(tabIcon.getResourceId(BulletinTabPagerAdapter.BULLETIN_TAB_1, -1));
+        mTabLayout.getTabAt(BulletinTabPagerAdapter.BULLETIN_TAB_2)
+                .setIcon(tabIcon.getResourceId(BulletinTabPagerAdapter.BULLETIN_TAB_2, -1));
     }
 
     private void setToolbar() {

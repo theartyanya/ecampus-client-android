@@ -90,7 +90,7 @@ public class BulletinBoardModeratorActivity extends BaseActivity implements Bull
 
     private void setTabLayout() {
         mTabLayout.setupWithViewPager(mViewPager);
-        //setupTabIcon();
+        setupTabIcon();
     }
 
     private void setupTabIcon() {
@@ -99,6 +99,12 @@ public class BulletinBoardModeratorActivity extends BaseActivity implements Bull
                 .setIcon(tabIcon.getResourceId(BulletinTabPagerAdapter.BULLETIN_TAB_0, -1));
         mTabLayout.getTabAt(BulletinTabPagerAdapter.BULLETIN_TAB_1)
                 .setIcon(tabIcon.getResourceId(BulletinTabPagerAdapter.BULLETIN_TAB_1, -1));
+        mTabLayout.getTabAt(BulletinTabPagerAdapter.BULLETIN_TAB_2)
+                .setIcon(tabIcon.getResourceId(BulletinTabPagerAdapter.BULLETIN_TAB_2, -1));
+        mTabLayout.getTabAt(BulletinTabPagerAdapter.BULLETIN_TAB_3)
+                .setIcon(tabIcon.getResourceId(BulletinTabPagerAdapter.BULLETIN_TAB_3, -1));
+        mTabLayout.getTabAt(BulletinTabPagerAdapter.BULLETIN_TAB_4)
+                .setIcon(tabIcon.getResourceId(BulletinTabPagerAdapter.BULLETIN_TAB_4, -1));
     }
 
     @OnClick(R.id.fab_add)

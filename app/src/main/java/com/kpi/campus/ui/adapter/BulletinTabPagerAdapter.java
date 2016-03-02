@@ -20,6 +20,9 @@ public class BulletinTabPagerAdapter extends FragmentStatePagerAdapter {
 
     public static int BULLETIN_TAB_0 = 0;
     public static int BULLETIN_TAB_1 = 1;
+    public static int BULLETIN_TAB_2 = 2;
+    public static int BULLETIN_TAB_3 = 3;
+    public static int BULLETIN_TAB_4 = 4;
 
     public BulletinTabPagerAdapter(FragmentManager fm, CharSequence titles[], List<Fragment> fragments) {
         super(fm);
@@ -36,7 +39,7 @@ public class BulletinTabPagerAdapter extends FragmentStatePagerAdapter {
     // Return the titles for the Tabs in the Tab Strip
     @Override
     public CharSequence getPageTitle(int position) {
-        return mTitles[position];
+        return null;
     }
 
     // Return the Number of tabs for the tabs Strip
