@@ -24,6 +24,7 @@ import static com.kpi.campus.custom.OrientationChangeAction.orientationLandscape
 import static com.kpi.campus.custom.OrientationChangeAction.orientationPortrait;
 
 /**
+ * Tests to verify that the behavior of {@link LoginActivityTest} is correct.
  * Created by Administrator on 29.02.2016.
  */
 @RunWith(AndroidJUnit4.class)
@@ -41,8 +42,7 @@ public class LoginActivityTest {
      */
     @Test
     public void testInputCredentials() {
-        onView(withId(R.id.edit_text_input_login)).perform(typeText("mylogin"), closeSoftKeyboard());
-        onView(withId(R.id.edit_text_input_password)).perform(typeText("mypassword"), closeSoftKeyboard());
+        inputCredentials("mylogin", "mypassword");
     }
 
     /**
@@ -58,11 +58,27 @@ public class LoginActivityTest {
      * Tests that correct intent is sent by clicking on a login button
      */
     @Test
-    public void testIntent() {
-        onView(withId(R.id.edit_text_input_login)).perform(typeText("mky"), closeSoftKeyboard());
-        onView(withId(R.id.edit_text_input_password)).perform(typeText("mky"), closeSoftKeyboard());
+    public void testSendIntent() {
+        inputCredentials("mky", "mky");
         onView(withId(R.id.button_login)).perform(click());
         // Asserts that the given component class name matches intent sent by the application under test.
         intended(hasComponent(hasShortClassName(SHORT_CLASS_NAME)));
+    }
+
+//    @Test
+//    public void testShowToast() {
+//        inputCredentials("faillogin", "failpass");
+//        onView(withId(R.id.button_login)).perform(click());
+//        onView(withText(R.string.login_failed)).inRoot(withDecorView(not(mActivityRule.getActivity().getWindow().getDecorView()))).check(matches(isDisplayed()));
+//    }
+
+    /**
+     * Helper method
+     * @param login
+     * @param password
+     */
+    private void inputCredentials(String login, String password) {
+        onView(withId(R.id.edit_text_input_login)).perform(typeText(login), closeSoftKeyboard());
+        onView(withId(R.id.edit_text_input_password)).perform(typeText(password), closeSoftKeyboard());
     }
 }
