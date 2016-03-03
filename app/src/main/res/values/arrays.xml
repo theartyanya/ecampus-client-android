@@ -39,10 +39,10 @@
 
     <array name="bulletin_board_moderator_tab">
         <item>Всі</item>
-        <item>А</item>
-        <item>П1</item>
-        <item>П2</item>
-        <item>В</item>
+        <item>Актуальні</item>
+        <item>Профіль</item>
+        <item>Підрозділ</item>
+        <item>Видалені</item>
     </array>
 
     <array name="bulletin_board_tab_icon0">
