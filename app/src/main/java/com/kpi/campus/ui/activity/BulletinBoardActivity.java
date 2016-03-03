@@ -2,6 +2,7 @@ package com.kpi.campus.ui.activity;
 
 import android.content.res.TypedArray;
 import android.os.Bundle;
+import android.support.annotation.VisibleForTesting;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.NavUtils;
@@ -114,5 +115,10 @@ public class BulletinBoardActivity extends BaseActivity implements BulletinBoard
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         mToolbar.setNavigationIcon(R.mipmap.ic_action_navigation_arrow_back);
         getSupportActionBar().setTitle(R.string.activity_name_bulletin_board);
+    }
+
+    @VisibleForTesting
+    public boolean userIsModerator() {
+        return mIsModerator;
     }
 }
