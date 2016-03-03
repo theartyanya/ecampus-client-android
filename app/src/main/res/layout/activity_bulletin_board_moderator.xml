@@ -38,35 +38,43 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-    <com.github.clans.fab.FloatingActionMenu
-        android:id="@+id/fam"
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        fab:menu_colorNormal="@color/colorAccent"
-        fab:menu_colorPressed="@color/colorAccentPressed">
+        android:src="@mipmap/ic_action_content_add" />
 
-        <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/fab_add"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/ic_action_action_receipt"
-            fab:fab_colorNormal="@color/colorAccent"
-            fab:fab_colorPressed="@color/colorAccentPressed"
-            fab:fab_label="Нове"
-            fab:fab_size="mini" />
+    <!--<com.github.clans.fab.FloatingActionMenu-->
+    <!--android:id="@+id/fam"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_gravity="bottom|end"-->
+    <!--android:layout_margin="@dimen/fab_margin"-->
+    <!--fab:menu_colorNormal="@color/colorAccent"-->
+    <!--fab:menu_colorPressed="@color/colorAccentPressed">-->
 
-        <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/fab_other"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/ic_star_mini"
-            fab:fab_colorNormal="@color/colorAccent"
-            fab:fab_colorPressed="@color/colorAccentPressed"
-            fab:fab_label="Інше"
-            fab:fab_size="mini" />
+    <!--<com.github.clans.fab.FloatingActionButton-->
+    <!--android:id="@+id/fab_add"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:src="@mipmap/ic_action_action_receipt"-->
+    <!--fab:fab_colorNormal="@color/colorAccent"-->
+    <!--fab:fab_colorPressed="@color/colorAccentPressed"-->
+    <!--fab:fab_label="Нове"-->
+    <!--fab:fab_size="mini" />-->
 
-    </com.github.clans.fab.FloatingActionMenu>
+    <!--<com.github.clans.fab.FloatingActionButton-->
+    <!--android:id="@+id/fab_other"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:src="@mipmap/ic_star_mini"-->
+    <!--fab:fab_colorNormal="@color/colorAccent"-->
+    <!--fab:fab_colorPressed="@color/colorAccentPressed"-->
+    <!--fab:fab_label="Інше"-->
+    <!--fab:fab_size="mini" />-->
+
+    <!--</com.github.clans.fab.FloatingActionMenu>-->
 
 </android.support.design.widget.CoordinatorLayout>
