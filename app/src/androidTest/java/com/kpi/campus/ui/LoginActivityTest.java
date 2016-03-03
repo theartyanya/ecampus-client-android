@@ -20,8 +20,8 @@ import static android.support.test.espresso.intent.matcher.ComponentNameMatchers
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static android.support.test.espresso.matcher.ViewMatchers.isRoot;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static com.kpi.campus.custom.OrientationChangeAction.orientationLandscape;
-import static com.kpi.campus.custom.OrientationChangeAction.orientationPortrait;
+import static com.kpi.campus.helper.action.OrientationChangeAction.orientationLandscape;
+import static com.kpi.campus.helper.action.OrientationChangeAction.orientationPortrait;
 
 /**
  * Tests to verify that the behavior of {@link LoginActivityTest} is correct.
