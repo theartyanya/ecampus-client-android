@@ -12,6 +12,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.swipeLeft;
@@ -27,6 +28,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static com.kpi.campus.helper.action.OrientationChangeAction.orientationLandscape;
 import static com.kpi.campus.helper.action.OrientationChangeAction.orientationPortrait;
 import static com.kpi.campus.helper.matcher.EspressoTestsMatchers.withDrawable;
+import static org.hamcrest.Matchers.anything;
 
 /**
  * Tests to verify that the behavior of {@link BulletinBoardActivity} is correct.
@@ -37,6 +39,8 @@ import static com.kpi.campus.helper.matcher.EspressoTestsMatchers.withDrawable;
 public class BulletinBoardActivityTest {
 
     private final String SHORT_CLASS_NAME_BULLETIN_MODERATOR = ".ui.activity.BulletinBoardModeratorActivity";
+
+    private final String SHORT_CLASS_NAME_BULLETIN_CONTENT = ".ui.activity.BulletinContentActivity";
 
     @Rule
     public IntentsTestRule<BulletinBoardActivity> mActivityRule = new IntentsTestRule<>(
@@ -119,6 +123,15 @@ public class BulletinBoardActivityTest {
         onView(withDrawable(R.mipmap.ic_action_by_susdivision)).check(matches(isDisplayed()));
         onView(isRoot()).perform(orientationLandscape());
         onView(isRoot()).perform(orientationPortrait());
+    }
+
+    /**
+     * Tests that correct intent is sent by clicking on a list item
+     */
+    @Test
+    public void testSendIntentContent() {
+        onData(anything()).inAdapterView(withId(R.id.recycler_view_bulletin)).atPosition(0).perform(click());
+        intended(hasComponent(hasShortClassName(SHORT_CLASS_NAME_BULLETIN_CONTENT)));
     }
 
 
