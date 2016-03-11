@@ -6,8 +6,10 @@ import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.LargeTest;
 
 import com.kpi.campus.R;
+import com.kpi.campus.helper.Sleep;
 import com.kpi.campus.ui.activity.BulletinBoardActivity;
 
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,7 +30,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static com.kpi.campus.helper.action.OrientationChangeAction.orientationLandscape;
 import static com.kpi.campus.helper.action.OrientationChangeAction.orientationPortrait;
 import static com.kpi.campus.helper.matcher.EspressoTestsMatchers.withDrawable;
-import static org.hamcrest.Matchers.anything;
+import static org.hamcrest.Matchers.allOf;
 
 /**
  * Tests to verify that the behavior of {@link BulletinBoardActivity} is correct.
@@ -52,7 +54,6 @@ public class BulletinBoardActivityTest {
      * Tests that trying to swipe beyond the end of a view pager has no effect.
      * Tests that swiping across tab displays correct views
      */
-    //@Ignore
     @Test
     public void testSwipeLeftRight() {
         onView(withDrawable(R.mipmap.ic_action_actual)).check(matches(isDisplayed()));
@@ -111,12 +112,14 @@ public class BulletinBoardActivityTest {
         onView(withDrawable(R.mipmap.ic_action_actual)).check(matches(isDisplayed()));
         onView(isRoot()).perform(orientationLandscape());
         onView(isRoot()).perform(orientationPortrait());
+        Sleep.sleepThread();
         onView(withId(R.id.view_pager)).perform(swipeLeft());
 
         // second tab
         onView(withDrawable(R.mipmap.ic_action_by_profile)).check(matches(isDisplayed()));
         onView(isRoot()).perform(orientationLandscape());
         onView(isRoot()).perform(orientationPortrait());
+        Sleep.sleepThread();
         onView(withId(R.id.view_pager)).perform(swipeLeft());
 
         //third tab
@@ -125,12 +128,15 @@ public class BulletinBoardActivityTest {
         onView(isRoot()).perform(orientationPortrait());
     }
 
+
+
     /**
      * Tests that correct intent is sent by clicking on a list item
-     */
+    */
+    @Ignore
     @Test
     public void testSendIntentContent() {
-        onData(anything()).inAdapterView(withId(R.id.recycler_view_bulletin)).atPosition(0).perform(click());
+        onData(allOf(withId(R.id.recycler_view_bulletin), isDisplayed())).inAdapterView(withId(R.id.recycler_view_bulletin)).atPosition(0).perform(click());
         intended(hasComponent(hasShortClassName(SHORT_CLASS_NAME_BULLETIN_CONTENT)));
     }
 
