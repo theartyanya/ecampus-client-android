@@ -18,10 +18,10 @@ import javax.inject.Inject;
 import butterknife.Bind;
 
 /**
- * Bb1TabFragment
+ * BbActualTabFragment
  *
  */
-public class Bb1TabFragment extends BaseFragment implements Bb1TabPresenter.IView {
+public class BbActualTabFragment extends BaseFragment implements Bb1TabPresenter.IView {
 
     @Bind(R.id.recycler_view_bulletin)
     RecyclerView mRecyclerView;

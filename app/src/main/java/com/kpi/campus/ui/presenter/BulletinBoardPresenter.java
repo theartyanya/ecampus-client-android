@@ -7,7 +7,7 @@ import android.support.v4.app.Fragment;
 
 import com.kpi.campus.R;
 import com.kpi.campus.ui.Navigator;
-import com.kpi.campus.ui.fragment.Bb1TabFragment;
+import com.kpi.campus.ui.fragment.BbActualTabFragment;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -52,7 +52,7 @@ public class BulletinBoardPresenter extends BasePresenter {
     }
 
     public List<Fragment> getFragments() {
-        return new ArrayList<Fragment>(Arrays.asList(new Bb1TabFragment(), new Bb1TabFragment(), new Bb1TabFragment()));
+        return new ArrayList<Fragment>(Arrays.asList(new BbActualTabFragment(), new BbActualTabFragment(), new BbActualTabFragment()));
     }
 
     public boolean isModerator() {

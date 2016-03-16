@@ -16,7 +16,7 @@ public class BulletinTabPagerAdapter extends FragmentStatePagerAdapter {
 
     private CharSequence mTitles[];
 
-    private List<Fragment> mFragments;// = new ArrayList<Fragment>(Arrays.asList(new Bb1TabFragment(), new Bb1TabFragment()));
+    private List<Fragment> mFragments;// = new ArrayList<Fragment>(Arrays.asList(new BbActualTabFragment(), new BbActualTabFragment()));
 
     public static int BULLETIN_TAB_0 = 0;
     public static int BULLETIN_TAB_1 = 1;

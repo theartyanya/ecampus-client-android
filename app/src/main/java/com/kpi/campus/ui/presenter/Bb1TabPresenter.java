@@ -9,7 +9,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 /**
- * Bb1TabPresenter created to show Bb1TabFragment.
+ * Bb1TabPresenter created to show BbActualTabFragment.
  *
  * Created by Admin on 02.02.2016.
  */

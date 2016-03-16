@@ -7,7 +7,7 @@ import com.kpi.campus.ui.activity.LoginActivity;
 import com.kpi.campus.ui.activity.MainActivity;
 import com.kpi.campus.ui.activity.MainNotAuthActivity;
 import com.kpi.campus.ui.activity.NewBulletinActivity;
-import com.kpi.campus.ui.fragment.Bb1TabFragment;
+import com.kpi.campus.ui.fragment.BbActualTabFragment;
 import com.kpi.campus.ui.fragment.Bb3TabFragment;
 
 import dagger.Module;
@@ -19,7 +19,7 @@ import dagger.Module;
  */
 @Module(complete = false,
 injects = {
-        MainNotAuthActivity.class, LoginActivity.class, MainActivity.class, BulletinBoardActivity.class, Bb1TabFragment.class, BulletinContentActivity.class, NewBulletinActivity.class, BulletinBoardModeratorActivity.class, Bb3TabFragment.class
+        MainNotAuthActivity.class, LoginActivity.class, MainActivity.class, BulletinBoardActivity.class, BbActualTabFragment.class, BulletinContentActivity.class, NewBulletinActivity.class, BulletinBoardModeratorActivity.class, Bb3TabFragment.class
 })
 public final class UIModule {
 }

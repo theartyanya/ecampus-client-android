@@ -20,7 +20,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * BulletinAdapter manages Bulletin data model and adapts it to RecyclerView, which is in Bb1TabFragment.
+ * BulletinAdapter manages Bulletin data model and adapts it to RecyclerView, which is in BbActualTabFragment.
  *
  * Created by Administrator on 02.02.2016.
  */
