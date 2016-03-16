@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.kpi.campus.Config;
 import com.kpi.campus.R;
 import com.kpi.campus.api.response.BaseResponse;
 import com.kpi.campus.di.UIModule;
@@ -38,9 +39,6 @@ public class LoginActivity extends BaseActivity implements LoginPresenter.IView,
     LoginPresenter mPresenter;
     private ProgressDialog mProgressDialog;
 
-    public static String KEY_LOGIN;
-    public static String KEY_PASSWORD;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,12 +53,6 @@ public class LoginActivity extends BaseActivity implements LoginPresenter.IView,
         LinkedList<Object> modules = new LinkedList<>();
         modules.add(new UIModule());
         return modules;
-    }
-
-    @Override
-    public void setStringResources() {
-        KEY_LOGIN = getString(R.string.key_login);
-        KEY_PASSWORD = getString(R.string.key_password);
     }
 
     @Override
@@ -100,8 +92,8 @@ public class LoginActivity extends BaseActivity implements LoginPresenter.IView,
     public Loader<BaseResponse> onCreateLoader(int i, Bundle bundle) {
         switch (i) {
             case R.id.api_loader:
-                String login = bundle.getString(KEY_LOGIN);
-                String pass = bundle.getString(KEY_PASSWORD);
+                String login = bundle.getString(Config.KEY_LOGIN);
+                String pass = bundle.getString(Config.KEY_PASSWORD);
                 return new TokenLoader(getApplicationContext(), login, pass);
             default:
                 return null;

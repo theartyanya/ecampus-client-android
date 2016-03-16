@@ -2,9 +2,9 @@ package com.kpi.campus.ui.presenter;
 
 import android.os.Bundle;
 
+import com.kpi.campus.Config;
 import com.kpi.campus.model.pojo.Token;
 import com.kpi.campus.ui.Navigator;
-import com.kpi.campus.ui.activity.LoginActivity;
 
 import javax.inject.Inject;
 
@@ -29,7 +29,6 @@ public class LoginPresenter extends BasePresenter {
 
     @Override
     public void initializeViewComponent() {
-        mView.setStringResources();
     }
 
     public void login(String login, String password) {
@@ -40,8 +39,8 @@ public class LoginPresenter extends BasePresenter {
 
     private void validateUser(String login, String password) {
         Bundle args = new Bundle();
-        args.putString(LoginActivity.KEY_LOGIN, login);
-        args.putString(LoginActivity.KEY_PASSWORD, password);
+        args.putString(Config.KEY_LOGIN, login);
+        args.putString(Config.KEY_PASSWORD, password);
         mView.initLoader(args);
     }
 
@@ -56,7 +55,6 @@ public class LoginPresenter extends BasePresenter {
     }
 
     public interface IView {
-        void setStringResources();
         void showLoginProgressDialog();
         void dismissProgressDialog();
         void showLoginButton(boolean shouldShow);
