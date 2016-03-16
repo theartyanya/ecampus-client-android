@@ -1,9 +1,11 @@
 package com.kpi.campus.ui.presenter;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 
+import com.kpi.campus.Config;
 import com.kpi.campus.R;
 import com.kpi.campus.model.Subsystem;
 import com.kpi.campus.ui.Navigator;
@@ -49,6 +51,16 @@ public class MainPresenter extends BasePresenter {
         }
     }
 
+    public void logout() {
+        SharedPreferences preferences = mView.getSharedPreferences();
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean(Config.IS_LOGGED_SHARED_PREF, false);
+        editor.putString(Config.TOKEN_SHARED_PREF, "");
+        editor.commit();
+
+        mNavigator.startLoginActivity();
+    }
+
     public List<Subsystem> getData() {
         List<Subsystem> subsystems = new ArrayList<>();
 
@@ -76,5 +88,6 @@ public class MainPresenter extends BasePresenter {
 
     public interface IView {
         void setViewComponent();
+        SharedPreferences getSharedPreferences();
     }
 }

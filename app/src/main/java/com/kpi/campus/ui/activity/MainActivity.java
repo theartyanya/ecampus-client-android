@@ -1,13 +1,18 @@
 package com.kpi.campus.ui.activity;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
+import com.kpi.campus.Config;
 import com.kpi.campus.R;
 import com.kpi.campus.di.UIModule;
 import com.kpi.campus.model.Subsystem;
@@ -59,10 +64,31 @@ public class MainActivity extends BaseActivity implements MainPresenter.IView {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.action_logout:
+                showLogoutDialog();
             case R.id.action_settings:
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void showLogoutDialog() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setMessage(R.string.logout_confirmation);
+        alertDialogBuilder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                mPresenter.logout();
+            }
+        });
+        alertDialogBuilder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // Do nothing
+            }
+        });
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
     }
 
 
@@ -70,6 +96,11 @@ public class MainActivity extends BaseActivity implements MainPresenter.IView {
     public void setViewComponent() {
         setToolbar();
         setGridView();
+    }
+
+    @Override
+    public SharedPreferences getSharedPreferences() {
+        return getSharedPreferences(Config.SHARED_PREF_NAME, Context.MODE_PRIVATE);
     }
 
     private void setGridView() {
