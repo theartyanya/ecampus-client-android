@@ -3,8 +3,10 @@ package com.kpi.campus.api.service;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit.GsonConverterFactory;
+import retrofit.Retrofit;
+import retrofit.RxJavaCallAdapterFactory;
+
 
 /**
  * This class creates a new REST client with a given API_Endpoint.
@@ -30,10 +32,21 @@ public class ServiceCreator {
     private static Retrofit.Builder builder =
             new Retrofit.Builder()
                     .baseUrl(API_ENDPOINT)
-                    .addConverterFactory(GsonConverterFactory.create());
+                    .addConverterFactory(GsonConverterFactory.create())
+                  .addCallAdapterFactory(RxJavaCallAdapterFactory.create());
 
+    /**
+     * Creates a retrofit service from an arbitrary class
+     * @param serviceClass Java interface of the retrofit service
+     * @return retrofit service with defined endpoint
+     */
     public static <S> S createService(Class<S> serviceClass) {
-        Retrofit retrofit = builder.client(CLIENT.build()).build();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(API_ENDPOINT)
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
         return retrofit.create(serviceClass);
     }
+
 }

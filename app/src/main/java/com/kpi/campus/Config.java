@@ -7,6 +7,8 @@ package com.kpi.campus;
  */
 public class Config {
 
+    public static final String LOG = "kpi.campus";
+
     public static final String KEY_LOGIN = "login";
     public static final String KEY_PASSWORD = "password";
 

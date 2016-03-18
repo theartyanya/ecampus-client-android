@@ -11,8 +11,9 @@ import com.kpi.campus.model.pojo.Token;
 
 import java.io.IOException;
 
-import retrofit2.Call;
-import retrofit2.Response;
+import retrofit.Call;
+import retrofit.Response;
+
 
 /**
  * Loads Token data.

@@ -2,12 +2,21 @@ package com.kpi.campus.ui.presenter;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.kpi.campus.Config;
+import com.kpi.campus.api.service.ServiceCreator;
+import com.kpi.campus.api.service.UserService;
+import com.kpi.campus.model.User;
 import com.kpi.campus.model.pojo.Token;
 import com.kpi.campus.ui.Navigator;
 
 import javax.inject.Inject;
+
+import rx.Observable;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * LoginPresenter created to manage LoginActivity.
@@ -66,11 +75,18 @@ public class LoginPresenter extends BasePresenter {
         mView.dismissProgressDialog();
         mView.showLoginButton(true);
         if(token != null) {
-            saveStateToPref(token.getAccessToken());
+            saveToken(token.getAccessToken());
+            loadInfoAboutUser();
+
             mNavigator.startMainActivity();
         } else {
             mView.onLoginFailed();
         }
+    }
+
+    public void saveToken(String token) {
+        saveTokenToUserModel(token);
+        saveStateToPref(token);
     }
 
     /**
@@ -99,6 +115,34 @@ public class LoginPresenter extends BasePresenter {
 
         //Saving values to editor
         editor.commit();
+    }
+
+    private void saveTokenToUserModel(String token) {
+        User.getInstance().token = token;
+    }
+
+    private void loadInfoAboutUser() {
+        UserService service = ServiceCreator.createService(UserService.class);
+        Observable<User> observable = service.getUser("bearer " + User.getInstance().token);
+        observable
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<User>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e(Config.LOG, e.getMessage());
+                    }
+
+                    @Override
+                    public void onNext(User user) {
+                        Log.d(Config.LOG, "Successful download of information about the User ".concat(User.getInstance().name));
+                    }
+                });
     }
 
     public interface IView {

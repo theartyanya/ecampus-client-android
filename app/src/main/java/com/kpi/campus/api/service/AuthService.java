@@ -2,10 +2,11 @@ package com.kpi.campus.api.service;
 
 import com.kpi.campus.model.pojo.Token;
 
-import retrofit2.Call;
-import retrofit2.http.Field;
-import retrofit2.http.FormUrlEncoded;
-import retrofit2.http.POST;
+import retrofit.Call;
+import retrofit.http.Field;
+import retrofit.http.FormUrlEncoded;
+import retrofit.http.POST;
+
 
 /**
  * Contains list of APIs related to authentication.

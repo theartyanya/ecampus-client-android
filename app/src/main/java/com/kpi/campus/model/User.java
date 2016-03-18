@@ -21,10 +21,11 @@ public class User {
     }
 
     public String name;
-    public String email;
-    public String profile;
+    public List<String> position;
     public String subdivision;
     public List<String> descendantSubdivisions;
     public boolean isBulletinBoardModerator = false;
 
+    // may be error
+    public String token;
 }
