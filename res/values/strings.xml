@@ -2,79 +2,31 @@
 <resources>
 
     <string name="app_name">Campus</string>
-    <string name="action_settings">Settings</string>
-    <string name="my_profile">Мій профіль</string>
-    <string name="dummy_section_text">Section %1d is just a dummy section.</string>
-    <string name="demo_external_activity">Demo External Activity</string>
-    <string name="demo_collection">Demo Collection</string>
-    <string name="message_view">Перегляд повідомлення</string>
-    <string name="section1_main_info">Мій профіль</string>
-    <string name="section2_desk">Дошка оголошень</string>
-    <string name="section3_message">Повідомлення</string>
-    <string name="section4_userlist">Користувачі</string>
-    <string name="section4_stat">Статистика</string>
-    <string name="yes">Так</string>
-    <string name="no">Ні</string>
-    <string name="permission_yes">Дозволено</string>
-    <string name="permission_no">Не дозволено</string>
-    <string name="time_today">сьогодні о </string>
-
-
-    <string name="task_working">Working (%1$d)…</string>
-    <string name="task_starting">Починаємо завантаження…</string>
-    <string name="task_cancelled">Зупинено</string>
-    <string name="task_completed">Task is completed with result (%1$s)</string>
-
-
-    <string name="login_activity_auth_work">Зачекайте, проходить авторизація…</string>
-    <string name="login_activity_getuser_work">Авторизація успішна, завантажуємо дані користувача…</string>
-    <string name="login_activity_auth_fail">Авторизація невдала!</string>
-    <string name="login_activity_fill_warning">Заповните всі поля, будь ласка</string>
-    <string name="login_activity_json_error">Помилка обробки даних!\nСпробуйте здійснити вхід пізніше.</string>
-    <string name="access_denied">Помилка доступу</string>
-    <string name="access_denied_code">Помилка доступу. Код %s</string>
-
-    <string name="bulletin_created_by">Створено </string>
-    <string name="bulletin_activity_name">Оголошення</string>
-
-    <string name="message_sent">Надіслано</string>
-    <string name="message_failed_sent">Надіслати не вдалося</string>
-    <string name="message_failed_sent_code">Надіслати не вдалося. Код %s</string>
-
-    <string name="main_activity_avatar">Фото</string>
-    <string name="main_activity_profile_group">Група</string>
-    <string name="main_activity_profile_contract">Контракт</string>
-    <string name="main_activity_profile_speciality">Спеціальність</string>
-    <string name="main_activity_profile_academic_degree">Вчена ступінь</string>
-    <string name="main_activity_profile_academic_status">Вчене звання</string>
-
-    <string name="subsystem_isCreate">Створювати</string>
-    <string name="subsystem_isRead">Читати</string>
-    <string name="subsystem_isUpdate">Оновлювати</string>
-    <string name="subsystem_isDelete">Видаляти</string><string name="send">Надіслати</string>
-
-    <string name="pull_to_refresh_release_label">Відпустіть для оновлення…</string>
-    <string name="pull_to_refresh_refreshing_label">Завантаження…</string>
-    <string name="pull_to_refresh_tap_label">Клацніть для оновлення…</string>
-    <string name="pull_to_refresh_pull_label">Протягніть донизу для оновлення…</string>
-
-
-    <!-- Just use standard Pull Down String when pulling up. These can be set for languages which require it -->
-    <string name="pull_to_refresh_from_bottom_pull_label">@string/pull_to_refresh_pull_label</string>
-    <string name="pull_to_refresh_from_bottom_release_label">@string/pull_to_refresh_release_label</string>
-    <string name="pull_to_refresh_from_bottom_refreshing_label">@string/pull_to_refresh_refreshing_label</string>
-
-    <string name="users">Користувачі</string>
-    <string name="create_message">Надіслати повідомлення</string>
-    <string name="create_conversation">Кому:</string>
-    <string name="create_conversation_fail">Не вдалося надіслати</string>
-    <string name="create_conversation_subject">Тема:</string>
-    <string name="create_conversation_text">Текст повідомлення:</string>
-    <string name="create_conversation_fill_subject">Введіть тему!</string>
-    <string name="create_conversation_fill_text">Введіть текст повідомлення!</string>
-    <string name="create_fill_text">Заповните повідомлення</string>
-    <string name="create_fill_subject">Заповните тему</string>
-
-    <string name="userlist_select_one">Виберіть хоча б одного користувача</string>
-
+	<string name="login_hint">Логин</string>
+	<string name="password_hint">Пароль</string>
+	<string name="auth_button">Войти</string>
+	<string name="info_page_title">Профиль</string>
+	<string name="board_page_title">Объявления</string>
+    <string name="message_page_title">Сообщения</string>
+	<string name="please_auth">Здрасьте! Введите логин и пароль</string>
+	<string name="auth_wait">Дозваниваемся до сервера…</string>
+	<string name="auth_okay">Вы авторизованы</string>
+	<string name="auth_error">Неправильный логин или пароль!</string>
+	<string name="connection_error">Не получается подключиться к серверу :(</string>
+	<string name="access_error">Ошибка доступа :(</string>
+	<string name="subject_hint">Заголовок</string>
+	<string name="post_body_hint">Текст объявления</string>
+	<string name="submit_button">Готово</string>
+	<string name="date_label">По дате изменения:</string>
+	<string name="from_label">От:</string>
+	<string name="to_label">До:</string>
+	<string name="subdiv_label">Факультет:</string>
+	<string name="group_label">Группа:</string>
+	<string name="profile_label">Профиль:</string>
+	<string name="reset_filter">Сбросить фильтр</string>
+	<string name="subdiv_hint">Факультет</string>
+	<string name="group_hint">Группа</string>
+	<string name="profile_hint">Профиль</string>
+	<string name="access_settings">Настройки доступа</string>
+	
 </resources>
