@@ -1,14 +1,14 @@
 package com.kpi.campus.ui.presenter;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 
-import com.kpi.campus.Config;
 import com.kpi.campus.R;
 import com.kpi.campus.model.Subsystem;
+import com.kpi.campus.model.User;
 import com.kpi.campus.ui.Navigator;
+import com.kpi.campus.ui.Preference;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,11 +25,13 @@ public class MainPresenter extends BasePresenter {
     private IView mView;
     private Context mContext;
     private Navigator mNavigator;
+    private Preference mPreference;
 
     @Inject
-    public MainPresenter(Context context, Navigator navigator) {
+    public MainPresenter(Context context, Navigator navigator, Preference preference) {
         mContext = context;
         mNavigator = navigator;
+        mPreference = preference;
     }
 
     public void setView(IView view) {
@@ -52,12 +54,9 @@ public class MainPresenter extends BasePresenter {
     }
 
     public void logout() {
-        SharedPreferences preferences = mView.getSharedPreferences();
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putBoolean(Config.IS_LOGGED_SHARED_PREF, false);
-        editor.putString(Config.TOKEN_SHARED_PREF, "");
-        editor.commit();
+        mPreference.saveLogoutInfo();
 
+        User.getInstance().token = "";
         mNavigator.startLoginActivity();
     }
 
@@ -88,6 +87,5 @@ public class MainPresenter extends BasePresenter {
 
     public interface IView {
         void setViewComponent();
-        SharedPreferences getSharedPreferences();
     }
 }

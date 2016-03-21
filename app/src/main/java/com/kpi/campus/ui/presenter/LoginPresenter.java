@@ -1,22 +1,15 @@
 package com.kpi.campus.ui.presenter;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 
 import com.kpi.campus.Config;
-import com.kpi.campus.api.service.ServiceCreator;
-import com.kpi.campus.api.service.UserService;
 import com.kpi.campus.model.User;
 import com.kpi.campus.model.pojo.Token;
+import com.kpi.campus.rx.UserRxLoader;
 import com.kpi.campus.ui.Navigator;
+import com.kpi.campus.ui.Preference;
 
 import javax.inject.Inject;
-
-import rx.Observable;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 /**
  * LoginPresenter created to manage LoginActivity.
@@ -27,11 +20,13 @@ public class LoginPresenter extends BasePresenter {
 
     private IView mView;
     private Navigator mNavigator;
+    private Preference mPreference;
     private boolean mIsUserLogged = false;
 
     @Inject
-    public LoginPresenter(Navigator navigator) {
+    public LoginPresenter(Navigator navigator, Preference preference) {
         mNavigator = navigator;
+        mPreference = preference;
     }
 
     public void setView(IView view) {
@@ -74,14 +69,17 @@ public class LoginPresenter extends BasePresenter {
     public void setLoaderResult(Token token) {
         mView.dismissProgressDialog();
         mView.showLoginButton(true);
-        if(token != null) {
-            saveToken(token.getAccessToken());
-            loadInfoAboutUser();
-
-            mNavigator.startMainActivity();
+        if (token != null) {
+            onLoginSuccess(token.getAccessToken());
         } else {
             mView.onLoginFailed();
         }
+    }
+
+    private void onLoginSuccess(String token) {
+        saveToken(token);
+        loadInfoAboutUser();
+        mNavigator.startMainActivity();
     }
 
     public void saveToken(String token) {
@@ -93,28 +91,19 @@ public class LoginPresenter extends BasePresenter {
      * Check if user logged or not.
      * If user if logged, start directly MainActivity.
      * If not, leave LoginActivity (do nothing).
-     * @param sharedPrefs reference to SharedPreferences
      */
-    public void checkUserIsLogged(SharedPreferences sharedPrefs) {
-        mIsUserLogged = sharedPrefs.getBoolean(Config.IS_LOGGED_SHARED_PREF, false);
+    public void checkUserIsLogged() {
+        mIsUserLogged = mPreference.getIsLogged();
         if(mIsUserLogged){
             mNavigator.startMainActivity();
         }
     }
 
     /**
-     * Save values to SharedPreferences.
+     * Save login values to SharedPreferences.
      */
     private void saveStateToPref(String tokenValue) {
-        SharedPreferences sharedPrefs = mView.getSharedPreferences();
-        SharedPreferences.Editor editor = sharedPrefs.edit();
-
-        //Adding values to editor
-        editor.putBoolean(Config.IS_LOGGED_SHARED_PREF, true);
-        editor.putString(Config.TOKEN_SHARED_PREF, tokenValue);
-
-        //Saving values to editor
-        editor.commit();
+        mPreference.saveLoginInfo(tokenValue);
     }
 
     private void saveTokenToUserModel(String token) {
@@ -122,27 +111,8 @@ public class LoginPresenter extends BasePresenter {
     }
 
     private void loadInfoAboutUser() {
-        UserService service = ServiceCreator.createService(UserService.class);
-        Observable<User> observable = service.getUser("bearer " + User.getInstance().token);
-        observable
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<User>() {
-                    @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.e(Config.LOG, e.getMessage());
-                    }
-
-                    @Override
-                    public void onNext(User user) {
-                        Log.d(Config.LOG, "Successful download of information about the User ".concat(User.getInstance().name));
-                    }
-                });
+        UserRxLoader loader = new UserRxLoader();
+        loader.apiCall();
     }
 
     public interface IView {
@@ -151,6 +121,5 @@ public class LoginPresenter extends BasePresenter {
         void showLoginButton(boolean shouldShow);
         void onLoginFailed();
         void initLoader(Bundle args);
-        SharedPreferences getSharedPreferences();
     }
 }
