@@ -120,4 +120,10 @@ public class LoginActivity extends BaseActivity implements LoginPresenter.IView,
     public void onLoaderReset(Loader<BaseResponse> loader) {
 
     }
+
+    @Override
+    public void onBackPressed() {
+        // Disable going back to the MainActivity
+        moveTaskToBack(true);
+    }
 }
