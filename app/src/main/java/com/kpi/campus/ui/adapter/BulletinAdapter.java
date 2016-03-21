@@ -31,6 +31,10 @@ public class BulletinAdapter extends RecyclerView.Adapter<BulletinAdapter.ViewHo
     private PopupMenu.OnMenuItemClickListener mMenuListener;
     private boolean mIsModerator = false;
 
+    /** after reorientation test this member
+     * or one extra request will be sent after each reorientation*/
+    private boolean mAllItemsLoaded;
+
     public BulletinAdapter(List<Bulletin> list, boolean isModerator) {
         mList = list;
         mIsModerator = isModerator;
@@ -38,7 +42,12 @@ public class BulletinAdapter extends RecyclerView.Adapter<BulletinAdapter.ViewHo
 
     public void setData(List<Bulletin> list) {
         CollectionValidator.validateOnNull(list);
-        mList = list;
+
+        if (list.size() == 0) {
+            mAllItemsLoaded = true;
+            return;
+        }
+        mList.addAll(list);
         notifyDataSetChanged();
     }
 
@@ -55,9 +64,9 @@ public class BulletinAdapter extends RecyclerView.Adapter<BulletinAdapter.ViewHo
     @Override
     public void onBindViewHolder(BulletinAdapter.ViewHolder holder, int position) {
         Bulletin bul = mList.get(position);
-        holder.date.setText(bul.getDate());
-        holder.theme.setText(bul.getTheme());
-        holder.author.setText(bul.getAuthor());
+        holder.date.setText(bul.getDateCreate());
+        holder.theme.setText(bul.getSubject());
+        holder.author.setText(bul.getCreatorName());
 
         if(mIsModerator) {
             holder.btnOverflow.setVisibility(View.VISIBLE);
@@ -75,6 +84,10 @@ public class BulletinAdapter extends RecyclerView.Adapter<BulletinAdapter.ViewHo
 
     public void setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener listener) {
         mMenuListener = listener;
+    }
+
+    public boolean isAllItemsLoaded() {
+        return mAllItemsLoaded;
     }
 
     protected class ViewHolder extends RecyclerView.ViewHolder {
@@ -107,17 +120,6 @@ public class BulletinAdapter extends RecyclerView.Adapter<BulletinAdapter.ViewHo
             menu.inflate(R.menu.menu_popup_bulletin);
             menu.show();
             menu.setOnMenuItemClickListener(mMenuListener);
-//            menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-//                @Override
-//                public boolean onMenuItemClick(MenuItem menuItem) {
-//                    switch (menuItem.getItemId()) {
-//                        case R.id.edit:
-//                            ToastUtil.showShortMessage("Редагування!", view.getContext());
-//                            break;
-//                    }
-//                    return true;
-//                }
-//            });
         }
 
     }
