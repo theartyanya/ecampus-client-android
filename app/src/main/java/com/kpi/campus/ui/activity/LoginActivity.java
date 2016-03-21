@@ -2,9 +2,7 @@ package com.kpi.campus.ui.activity;
 
 import android.app.LoaderManager;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Loader;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -53,9 +51,7 @@ public class LoginActivity extends BaseActivity implements LoginPresenter.IView,
     @Override
     protected void onResume() {
         super.onResume();
-
-        SharedPreferences sharedPrefs = getSharedPreferences(Config.SHARED_PREF_NAME, Context.MODE_PRIVATE);
-        mPresenter.checkUserIsLogged(sharedPrefs);
+        mPresenter.checkUserIsLogged();
     }
 
     @Override
@@ -91,11 +87,6 @@ public class LoginActivity extends BaseActivity implements LoginPresenter.IView,
     @Override
     public void initLoader(Bundle args) {
         getLoaderManager().initLoader(R.id.api_loader, args, this);
-    }
-
-    @Override
-    public SharedPreferences getSharedPreferences() {
-        return getSharedPreferences(Config.SHARED_PREF_NAME, Context.MODE_PRIVATE);
     }
 
     @OnClick(R.id.button_login)
