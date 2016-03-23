@@ -3,7 +3,6 @@ package com.kpi.campus.ui.activity;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.NavUtils;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
@@ -82,10 +81,10 @@ public class BulletinBoardModeratorActivity extends BaseActivity implements Bull
     }
 
     private void setViewPager() {
-        CharSequence[] tabNames = mPresenter.getTabsName();
-        List<Fragment> fragments = mPresenter.getFragments();
-        BulletinTabPagerAdapter adapter = new BulletinTabPagerAdapter(getSupportFragmentManager(), tabNames,fragments);
-        mViewPager.setAdapter(adapter);
+//        CharSequence[] tabNames = mPresenter.getTabsName();
+//        List<Fragment> fragments = mPresenter.getFragments();
+//        BulletinTabPagerAdapter adapter = new BulletinTabPagerAdapter(getSupportFragmentManager(), tabNames,fragments);
+//        mViewPager.setAdapter(adapter);
     }
 
     private void setTabLayout() {

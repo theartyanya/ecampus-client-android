@@ -90,7 +90,7 @@ public class BulletinBoardActivity extends BaseActivity implements BulletinBoard
     private void setViewPager() {
         CharSequence[] tabNames = mPresenter.getTabsName();
         List<Fragment> fragments = mPresenter.getFragments();
-        BulletinTabPagerAdapter adapter = new BulletinTabPagerAdapter(getSupportFragmentManager(), tabNames, fragments);
+        BulletinTabPagerAdapter adapter = new BulletinTabPagerAdapter(getSupportFragmentManager(), tabNames);
         mViewPager.setAdapter(adapter);
     }
 
@@ -103,10 +103,10 @@ public class BulletinBoardActivity extends BaseActivity implements BulletinBoard
         TypedArray tabIcon = mPresenter.getTabsIcon();
         mTabLayout.getTabAt(BulletinTabPagerAdapter.BULLETIN_TAB_0)
                 .setIcon(tabIcon.getResourceId(BulletinTabPagerAdapter.BULLETIN_TAB_0, -1));
-//        mTabLayout.getTabAt(BulletinTabPagerAdapter.BULLETIN_TAB_1)
-//                .setIcon(tabIcon.getResourceId(BulletinTabPagerAdapter.BULLETIN_TAB_1, -1));
-//        mTabLayout.getTabAt(BulletinTabPagerAdapter.BULLETIN_TAB_2)
-//                .setIcon(tabIcon.getResourceId(BulletinTabPagerAdapter.BULLETIN_TAB_2, -1));
+        mTabLayout.getTabAt(BulletinTabPagerAdapter.BULLETIN_TAB_1)
+                .setIcon(tabIcon.getResourceId(BulletinTabPagerAdapter.BULLETIN_TAB_1, -1));
+        mTabLayout.getTabAt(BulletinTabPagerAdapter.BULLETIN_TAB_2)
+                .setIcon(tabIcon.getResourceId(BulletinTabPagerAdapter.BULLETIN_TAB_2, -1));
     }
 
     private void setToolbar() {
