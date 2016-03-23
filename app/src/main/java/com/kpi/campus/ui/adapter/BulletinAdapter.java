@@ -40,7 +40,7 @@ public class BulletinAdapter extends RecyclerView.Adapter<BulletinAdapter.ViewHo
         mIsModerator = isModerator;
     }
 
-    public void setData(List<BulletinBoard> list) {
+    public void addData(List<BulletinBoard> list) {
         CollectionValidator.validateOnNull(list);
 
         if (list.size() == 0) {
@@ -48,6 +48,11 @@ public class BulletinAdapter extends RecyclerView.Adapter<BulletinAdapter.ViewHo
             return;
         }
         mList.addAll(list);
+        notifyDataSetChanged();
+    }
+
+    public void setData(List<BulletinBoard> list) {
+        mList = list;
         notifyDataSetChanged();
     }
 

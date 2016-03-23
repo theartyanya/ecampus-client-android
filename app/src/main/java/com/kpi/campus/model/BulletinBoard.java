@@ -37,6 +37,12 @@ public class BulletinBoard {
     @Expose
     private String dateEnd;
 
+    public BulletinBoard(String theme, String author, String dateCreate) {
+        this.subject = theme;
+        this.creatorName = author;
+        this.dateCreate = dateCreate;
+    }
+
     /**
      *
      * @return

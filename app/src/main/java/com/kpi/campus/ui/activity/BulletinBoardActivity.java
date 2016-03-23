@@ -6,13 +6,16 @@ import android.support.annotation.VisibleForTesting;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.NavUtils;
-import android.support.v4.view.ViewPager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.kpi.campus.R;
 import com.kpi.campus.di.UIModule;
+import com.kpi.campus.model.BulletinBoard;
+import com.kpi.campus.ui.adapter.BulletinAdapter;
 import com.kpi.campus.ui.adapter.BulletinTabPagerAdapter;
 import com.kpi.campus.ui.presenter.BulletinBoardPresenter;
 
@@ -32,12 +35,18 @@ public class BulletinBoardActivity extends BaseActivity implements BulletinBoard
     Toolbar mToolbar;
     @Bind(R.id.tab_layout)
     TabLayout mTabLayout;
-    @Bind(R.id.view_pager)
-    ViewPager mViewPager;
+    @Bind(R.id.recycler_view_bulletin)
+    RecyclerView mRecyclerView;
     @Inject
     BulletinBoardPresenter mPresenter;
+    BulletinAdapter mAdapter;
 
     private boolean mIsModerator;
+    private final boolean IS_MODERATOR_MODE = false;
+
+    List<BulletinBoard> list1;
+    List<BulletinBoard> list2;
+    List<BulletinBoard> list3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,11 +57,20 @@ public class BulletinBoardActivity extends BaseActivity implements BulletinBoard
         mPresenter.initializeViewComponent();
 
         mIsModerator = mPresenter.isModerator();
+
+        list1 = new ArrayList<>();
+        list1.add(new BulletinBoard("theme 1", "author", "date"));
+
+        list2 = new ArrayList<>();
+        list2.add(new BulletinBoard("theme 2", "author", "date"));
+
+        list3 = new ArrayList<>();
+        list3.add(new BulletinBoard("theme 3", "author", "date"));
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if(mIsModerator) {
+        if (mIsModerator) {
             getMenuInflater().inflate(R.menu.menu_bulletin_board_moderator, menu);
         } else {
             getMenuInflater().inflate(R.menu.menu_bulletin_board, menu);
@@ -83,20 +101,77 @@ public class BulletinBoardActivity extends BaseActivity implements BulletinBoard
     @Override
     public void setViewComponent() {
         setToolbar();
-        setViewPager();
+        //setViewPager();
         setTabLayout();
+        setRecyclerView();
     }
 
     private void setViewPager() {
         CharSequence[] tabNames = mPresenter.getTabsName();
         List<Fragment> fragments = mPresenter.getFragments();
         BulletinTabPagerAdapter adapter = new BulletinTabPagerAdapter(getSupportFragmentManager(), tabNames);
-        mViewPager.setAdapter(adapter);
+        //mViewPager.setAdapter(adapter);
+    }
+
+    private void setRecyclerView() {
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        mRecyclerView.setHasFixedSize(true);
+
+        mAdapter = new BulletinAdapter(new ArrayList<BulletinBoard>(), IS_MODERATOR_MODE);
+        mAdapter.setHasStableIds(true);
+
+        mRecyclerView.setSaveEnabled(true);
+
+        //mAdapter.setOnItemClickListener(onItemClickListener);
+        mRecyclerView.setAdapter(mAdapter);
+
+        List<BulletinBoard> data = new ArrayList<>();
+        data.add(new BulletinBoard("theme 0", "author", "date"));
+        mAdapter.setData(data);
+        // if all items was loaded we don't need Pagination
+        if (mAdapter.isAllItemsLoaded()) {
+            return;
+        }
     }
 
     private void setTabLayout() {
-        mTabLayout.setupWithViewPager(mViewPager);
-        setupTabIcon();
+        TypedArray tabIcon = mPresenter.getTabsIcon();
+        mTabLayout.addTab(mTabLayout.newTab().setIcon(tabIcon.getResourceId(0, -1)), true);
+        mTabLayout.addTab(mTabLayout.newTab().setIcon(tabIcon.getResourceId(1, -1)));
+        mTabLayout.addTab(mTabLayout.newTab().setIcon(tabIcon.getResourceId(2, -1)));
+        mTabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                setCurrentTabFragment(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                // N/A
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+                // N/A
+            }
+        });
+
+//        mTabLayout.setupWithViewPager(mViewPager);
+//        setupTabIcon();
+    }
+
+    private void setCurrentTabFragment(int tabPosition) {
+        switch (tabPosition) {
+            case 0:
+                mAdapter.setData(list1);
+                break;
+            case 1:
+                mAdapter.setData(list2);
+                break;
+            case 2:
+                mAdapter.setData(list3);
+                break;
+        }
     }
 
     private void setupTabIcon() {
