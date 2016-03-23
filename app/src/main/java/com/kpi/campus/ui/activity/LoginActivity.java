@@ -49,12 +49,6 @@ public class LoginActivity extends BaseActivity implements LoginPresenter.IView,
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        mPresenter.checkUserIsLogged();
-    }
-
-    @Override
     protected List<Object> getModules() {
         LinkedList<Object> modules = new LinkedList<>();
         modules.add(new UIModule());

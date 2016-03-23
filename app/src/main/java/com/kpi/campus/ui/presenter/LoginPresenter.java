@@ -21,7 +21,7 @@ public class LoginPresenter extends BasePresenter {
     private IView mView;
     private Navigator mNavigator;
     private Preference mPreference;
-    private boolean mIsUserLogged = false;
+
 
     @Inject
     public LoginPresenter(Navigator navigator, Preference preference) {
@@ -85,18 +85,6 @@ public class LoginPresenter extends BasePresenter {
     public void saveToken(String token) {
         saveTokenToUserModel(token);
         saveStateToPref(token);
-    }
-
-    /**
-     * Check if user logged or not.
-     * If user if logged, start directly MainActivity.
-     * If not, leave LoginActivity (do nothing).
-     */
-    public void checkUserIsLogged() {
-        mIsUserLogged = mPreference.getIsLogged();
-        if(mIsUserLogged){
-            mNavigator.startMainActivity();
-        }
     }
 
     /**

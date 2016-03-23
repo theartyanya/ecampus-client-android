@@ -6,12 +6,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.kpi.campus.R;
-import com.kpi.campus.model.Bulletin;
+import com.kpi.campus.model.BulletinBoard;
 import com.kpi.campus.ui.adapter.BulletinAdapter;
 import com.kpi.campus.ui.presenter.BbActualTabPresenter;
 import com.kpi.campus.ui.view.OnItemClickListener;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -53,15 +54,16 @@ public class BbActualTabFragment extends BaseFragment implements BbActualTabPres
 
     @Override
     protected int getFragmentLayout() {
-        return R.layout.fragment_bulletin_1;
+        return R.layout.fragment_bulletin_actual;
     }
+
 
     private void setRecyclerView(Bundle savedInstanceState) {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
         mRecyclerView.setHasFixedSize(true);
 
         if (savedInstanceState == null) {
-            mAdapter = new BulletinAdapter(new ArrayList<Bulletin>(), IS_MODERATOR_MODE);
+            mAdapter = new BulletinAdapter(new ArrayList<BulletinBoard>(), IS_MODERATOR_MODE);
             mAdapter.setHasStableIds(true);
         }
         mRecyclerView.setSaveEnabled(true);
@@ -69,6 +71,8 @@ public class BbActualTabFragment extends BaseFragment implements BbActualTabPres
         mAdapter.setOnItemClickListener(onItemClickListener);
         mRecyclerView.setAdapter(mAdapter);
 
+        List<BulletinBoard> data = mPresenter.getData();
+        mAdapter.setData(data);
         // if all items was loaded we don't need Pagination
         if (mAdapter.isAllItemsLoaded()) {
             return;

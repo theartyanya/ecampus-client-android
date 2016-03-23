@@ -26,6 +26,7 @@ public class MainPresenter extends BasePresenter {
     private Context mContext;
     private Navigator mNavigator;
     private Preference mPreference;
+    private boolean mIsUserLogged = false;
 
     @Inject
     public MainPresenter(Context context, Navigator navigator, Preference preference) {
@@ -83,6 +84,24 @@ public class MainPresenter extends BasePresenter {
 
     private Resources getResources() {
         return mContext.getResources();
+    }
+
+    /**
+     * Check if user logged or not.
+     * If user if logged, start directly MainActivity.
+     * If not, leave LoginActivity (do nothing).
+     */
+    public void checkUserIsLogged() {
+        mIsUserLogged = mPreference.getIsLogged();
+        if(!mIsUserLogged){
+            mNavigator.startLoginActivity();
+        } else {
+            setTokenValue();
+        }
+    }
+
+    private void setTokenValue() {
+        User.getInstance().token = mPreference.getToken();
     }
 
     public interface IView {

@@ -26,6 +26,5 @@ public class User {
     public List<String> descendantSubdivisions;
     public boolean isBulletinBoardModerator = false;
 
-    // may be error
     public String token;
 }

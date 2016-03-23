@@ -9,7 +9,7 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import com.kpi.campus.R;
-import com.kpi.campus.model.Bulletin;
+import com.kpi.campus.model.BulletinBoard;
 import com.kpi.campus.ui.view.OnItemClickListener;
 import com.kpi.campus.util.CollectionValidator;
 
@@ -20,13 +20,13 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * BulletinAdapter manages Bulletin data model and adapts it to RecyclerView, which is in BbActualTabFragment.
+ * BulletinAdapter manages BulletinBoard data model and adapts it to RecyclerView, which is in BbActualTabFragment.
  *
  * Created by Administrator on 02.02.2016.
  */
 public class BulletinAdapter extends RecyclerView.Adapter<BulletinAdapter.ViewHolder> {
 
-    private List<Bulletin> mList;
+    private List<BulletinBoard> mList;
     private OnItemClickListener mListener;
     private PopupMenu.OnMenuItemClickListener mMenuListener;
     private boolean mIsModerator = false;
@@ -35,12 +35,12 @@ public class BulletinAdapter extends RecyclerView.Adapter<BulletinAdapter.ViewHo
      * or one extra request will be sent after each reorientation*/
     private boolean mAllItemsLoaded;
 
-    public BulletinAdapter(List<Bulletin> list, boolean isModerator) {
+    public BulletinAdapter(List<BulletinBoard> list, boolean isModerator) {
         mList = list;
         mIsModerator = isModerator;
     }
 
-    public void setData(List<Bulletin> list) {
+    public void setData(List<BulletinBoard> list) {
         CollectionValidator.validateOnNull(list);
 
         if (list.size() == 0) {
@@ -51,7 +51,7 @@ public class BulletinAdapter extends RecyclerView.Adapter<BulletinAdapter.ViewHo
         notifyDataSetChanged();
     }
 
-    public List<Bulletin> getData() {
+    public List<BulletinBoard> getData() {
         return mList;
     }
 
@@ -63,7 +63,7 @@ public class BulletinAdapter extends RecyclerView.Adapter<BulletinAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(BulletinAdapter.ViewHolder holder, int position) {
-        Bulletin bul = mList.get(position);
+        BulletinBoard bul = mList.get(position);
         holder.date.setText(bul.getDateCreate());
         holder.theme.setText(bul.getSubject());
         holder.author.setText(bul.getCreatorName());

@@ -45,6 +45,12 @@ public class MainActivity extends BaseActivity implements MainPresenter.IView {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        mPresenter.checkUserIsLogged();
+    }
+
+    @Override
     protected List<Object> getModules() {
         LinkedList<Object> modules = new LinkedList<>();
         modules.add(new UIModule());

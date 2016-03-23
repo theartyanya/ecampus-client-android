@@ -24,7 +24,7 @@ import javax.inject.Inject;
 import butterknife.Bind;
 
 /**
- * Bulletin board activity.
+ * BulletinBoard board activity.
  */
 public class BulletinBoardActivity extends BaseActivity implements BulletinBoardPresenter.IView {
 
@@ -103,10 +103,10 @@ public class BulletinBoardActivity extends BaseActivity implements BulletinBoard
         TypedArray tabIcon = mPresenter.getTabsIcon();
         mTabLayout.getTabAt(BulletinTabPagerAdapter.BULLETIN_TAB_0)
                 .setIcon(tabIcon.getResourceId(BulletinTabPagerAdapter.BULLETIN_TAB_0, -1));
-        mTabLayout.getTabAt(BulletinTabPagerAdapter.BULLETIN_TAB_1)
-                .setIcon(tabIcon.getResourceId(BulletinTabPagerAdapter.BULLETIN_TAB_1, -1));
-        mTabLayout.getTabAt(BulletinTabPagerAdapter.BULLETIN_TAB_2)
-                .setIcon(tabIcon.getResourceId(BulletinTabPagerAdapter.BULLETIN_TAB_2, -1));
+//        mTabLayout.getTabAt(BulletinTabPagerAdapter.BULLETIN_TAB_1)
+//                .setIcon(tabIcon.getResourceId(BulletinTabPagerAdapter.BULLETIN_TAB_1, -1));
+//        mTabLayout.getTabAt(BulletinTabPagerAdapter.BULLETIN_TAB_2)
+//                .setIcon(tabIcon.getResourceId(BulletinTabPagerAdapter.BULLETIN_TAB_2, -1));
     }
 
     private void setToolbar() {

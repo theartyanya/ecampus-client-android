@@ -33,8 +33,8 @@
 
     <array name="bulletin_board_tab">
         <item>Актуальні</item>
-        <item>Профіль</item>
-        <item>Підрозділ</item>
+        <!--<item>Профіль</item>-->
+        <!--<item>Підрозділ</item>-->
     </array>
 
     <array name="bulletin_board_moderator_tab">
@@ -52,8 +52,8 @@
 
     <array name="bulletin_board_tab_icon">
         <item>@mipmap/ic_action_actual</item>
-        <item>@mipmap/ic_action_by_profile</item>
-        <item>@mipmap/ic_action_by_susdivision</item>
+        <!--<item>@mipmap/ic_action_by_profile</item>-->
+        <!--<item>@mipmap/ic_action_by_susdivision</item>-->
     </array>
 
     <array name="bulletin_board_moderator_tab_icon">

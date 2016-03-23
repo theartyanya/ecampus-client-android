@@ -1,6 +1,6 @@
 package com.kpi.campus.ui.presenter;
 
-import com.kpi.campus.model.Bulletin;
+import com.kpi.campus.model.BulletinBoard;
 import com.kpi.campus.model.dao.BulletinDao;
 import com.kpi.campus.model.dao.IDataAccessObject;
 import com.kpi.campus.rx.BaseRxLoader;
@@ -21,7 +21,7 @@ public class BbActualTabPresenter extends BasePresenter {
 
     private IView mView;
     private Navigator mNavigator;
-    private IDataAccessObject<Bulletin> mDataAccess;
+    private IDataAccessObject<BulletinBoard> mDataAccess;
 
     @Inject
     public BbActualTabPresenter(Navigator navigator) {
@@ -37,14 +37,17 @@ public class BbActualTabPresenter extends BasePresenter {
     public void initializeViewComponent() {
     }
 
-    public List<Bulletin> getData() {
-        List<Bulletin> data = new ArrayList<>();
-        data.add(new Bulletin("06.01.2016", "Увага модераторів", "Іваненко І.І."));
-        return data;
+    public List<BulletinBoard> getData() {
+        List<BulletinBoard> data = mDataAccess.getData();
+        if(data == null) {
+            loadData();
+        }
+        return (data != null) ? data : new ArrayList<>();
+        //data.add(new BulletinBoard("06.01.2016", "Увага модераторів", "Іваненко І.І."));
     }
 
     private void loadData() {
-        BaseRxLoader loader = new BulletinRxLoader();
+        BaseRxLoader loader = new BulletinRxLoader(mDataAccess);
         loader.apiCall();
     }
 

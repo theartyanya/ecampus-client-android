@@ -57,4 +57,8 @@ public class Preference {
         editor.putString(Config.TOKEN_SHARED_PREF, "");
         editor.commit();
     }
+
+    public String getToken() {
+        return mSharedPrefs.getString(Config.TOKEN_SHARED_PREF, "");
+    }
 }
