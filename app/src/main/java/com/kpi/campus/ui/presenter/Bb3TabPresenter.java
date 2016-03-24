@@ -1,6 +1,6 @@
 package com.kpi.campus.ui.presenter;
 
-import com.kpi.campus.model.BulletinBoard;
+import com.kpi.campus.model.Bulletin;
 import com.kpi.campus.ui.Navigator;
 
 import java.util.ArrayList;
@@ -31,15 +31,15 @@ public class Bb3TabPresenter extends BasePresenter {
         mView.setViewComponent();
     }
 
-    public List<BulletinBoard> getData() {
-        List<BulletinBoard> data = new ArrayList<>();
-//        data.add(new BulletinBoard("06.01.2016", "Увага модераторів", "Андрієнко А.А."));
-//        data.add(new BulletinBoard("06.01.2016", "Увага модераторів", "Андрієнко А.А."));
-//        data.add(new BulletinBoard("06.01.2016", "Увага модераторів", "Андрієнко А.А."));
-//        data.add(new BulletinBoard("06.01.2016", "Увага модераторів", "Андрієнко А.А."));
-//        data.add(new BulletinBoard("06.01.2016", "Увага модераторів", "Андрієнко А.А."));
-//        data.add(new BulletinBoard("06.01.2016", "Увага модераторів", "Андрієнко А.А."));
-//        data.add(new BulletinBoard("06.01.2016", "Увага модераторів", "Андрієнко А.А."));
+    public List<Bulletin> getData() {
+        List<Bulletin> data = new ArrayList<>();
+//        data.add(new Bulletin("06.01.2016", "Увага модераторів", "Андрієнко А.А."));
+//        data.add(new Bulletin("06.01.2016", "Увага модераторів", "Андрієнко А.А."));
+//        data.add(new Bulletin("06.01.2016", "Увага модераторів", "Андрієнко А.А."));
+//        data.add(new Bulletin("06.01.2016", "Увага модераторів", "Андрієнко А.А."));
+//        data.add(new Bulletin("06.01.2016", "Увага модераторів", "Андрієнко А.А."));
+//        data.add(new Bulletin("06.01.2016", "Увага модераторів", "Андрієнко А.А."));
+//        data.add(new Bulletin("06.01.2016", "Увага модераторів", "Андрієнко А.А."));
         return data;
     }
 

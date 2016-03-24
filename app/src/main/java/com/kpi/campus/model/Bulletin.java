@@ -3,11 +3,11 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * Represents BulletinBoard entity
+ * Represents Bulletin entity
  *
  * Created by Administrator on 02.02.2016.
  */
-public class BulletinBoard {
+public class Bulletin {
 
     @SerializedName("id")
     @Expose
@@ -37,7 +37,7 @@ public class BulletinBoard {
     @Expose
     private String dateEnd;
 
-    public BulletinBoard(String theme, String author, String dateCreate) {
+    public Bulletin(String theme, String author, String dateCreate) {
         this.subject = theme;
         this.creatorName = author;
         this.dateCreate = dateCreate;

@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.PopupMenu;
 
 import com.kpi.campus.R;
-import com.kpi.campus.model.BulletinBoard;
+import com.kpi.campus.model.Bulletin;
 import com.kpi.campus.ui.adapter.BulletinAdapter;
 import com.kpi.campus.ui.presenter.Bb3TabPresenter;
 import com.kpi.campus.ui.view.OnItemClickListener;
@@ -72,7 +72,7 @@ public class Bb3TabFragment extends BaseFragment implements Bb3TabPresenter.IVie
     private void setRecyclerView() {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
         mRecyclerView.setHasFixedSize(true);
-        mAdapter = new BulletinAdapter(new ArrayList<BulletinBoard>(), IS_MODERATOR);
+        mAdapter = new BulletinAdapter(new ArrayList<Bulletin>(), IS_MODERATOR);
         mAdapter.setData(mPresenter.getData());
         mAdapter.setOnItemClickListener(onItemClickListener);
         mAdapter.setOnMenuItemClickListener(onMenuItemClickListener);

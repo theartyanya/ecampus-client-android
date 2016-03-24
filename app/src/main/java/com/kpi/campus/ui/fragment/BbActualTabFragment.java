@@ -6,7 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.kpi.campus.R;
-import com.kpi.campus.model.BulletinBoard;
+import com.kpi.campus.model.Bulletin;
 import com.kpi.campus.ui.adapter.BulletinAdapter;
 import com.kpi.campus.ui.presenter.BbActualTabPresenter;
 import com.kpi.campus.ui.view.OnItemClickListener;
@@ -63,7 +63,7 @@ public class BbActualTabFragment extends BaseFragment implements BbActualTabPres
         mRecyclerView.setHasFixedSize(true);
 
         if (savedInstanceState == null) {
-            mAdapter = new BulletinAdapter(new ArrayList<BulletinBoard>(), IS_MODERATOR_MODE);
+            mAdapter = new BulletinAdapter(new ArrayList<Bulletin>(), IS_MODERATOR_MODE);
             mAdapter.setHasStableIds(true);
         }
         mRecyclerView.setSaveEnabled(true);
@@ -71,7 +71,7 @@ public class BbActualTabFragment extends BaseFragment implements BbActualTabPres
         mAdapter.setOnItemClickListener(onItemClickListener);
         mRecyclerView.setAdapter(mAdapter);
 
-        List<BulletinBoard> data = mPresenter.getData();
+        List<Bulletin> data = mPresenter.getData();
         mAdapter.setData(data);
         // if all items was loaded we don't need Pagination
         if (mAdapter.isAllItemsLoaded()) {

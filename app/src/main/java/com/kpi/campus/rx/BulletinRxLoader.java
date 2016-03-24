@@ -5,7 +5,7 @@ import android.util.Log;
 import com.kpi.campus.Config;
 import com.kpi.campus.api.service.BulletinService;
 import com.kpi.campus.api.service.ServiceCreator;
-import com.kpi.campus.model.BulletinBoard;
+import com.kpi.campus.model.Bulletin;
 import com.kpi.campus.model.User;
 import com.kpi.campus.model.dao.IDataAccessObject;
 
@@ -28,7 +28,7 @@ public class BulletinRxLoader extends BaseRxLoader {
     @Override
     public void apiCall() {
         BulletinService service = ServiceCreator.createService(BulletinService.class);
-        Observable<List<BulletinBoard>> observable = service.getBulletins("bearer " + User.getInstance().token);
+        Observable<List<Bulletin>> observable = service.getBulletins("bearer " + User.getInstance().token);
 
         observable
                 .subscribeOn(Schedulers.newThread())
@@ -36,10 +36,10 @@ public class BulletinRxLoader extends BaseRxLoader {
                 .subscribe(onNextAction, onErrorAction);
     }
 
-    Action1<List<BulletinBoard>> onNextAction = new Action1<List<BulletinBoard>>() {
+    Action1<List<Bulletin>> onNextAction = new Action1<List<Bulletin>>() {
 
         @Override
-        public void call(List<BulletinBoard> bulletins) {
+        public void call(List<Bulletin> bulletins) {
             //dataAccessObject.setData(bulletins);
 
             Log.d(Config.LOG, "Load successful");

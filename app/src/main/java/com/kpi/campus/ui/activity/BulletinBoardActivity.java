@@ -14,7 +14,9 @@ import android.view.MenuItem;
 
 import com.kpi.campus.R;
 import com.kpi.campus.di.UIModule;
-import com.kpi.campus.model.BulletinBoard;
+import com.kpi.campus.model.Bulletin;
+import com.kpi.campus.model.dao.BulletinDao;
+import com.kpi.campus.rx.BulletinRxLoader;
 import com.kpi.campus.ui.adapter.BulletinAdapter;
 import com.kpi.campus.ui.adapter.BulletinTabPagerAdapter;
 import com.kpi.campus.ui.presenter.BulletinBoardPresenter;
@@ -27,7 +29,7 @@ import javax.inject.Inject;
 import butterknife.Bind;
 
 /**
- * BulletinBoard board activity.
+ * Bulletin board activity.
  */
 public class BulletinBoardActivity extends BaseActivity implements BulletinBoardPresenter.IView {
 
@@ -44,9 +46,9 @@ public class BulletinBoardActivity extends BaseActivity implements BulletinBoard
     private boolean mIsModerator;
     private final boolean IS_MODERATOR_MODE = false;
 
-    List<BulletinBoard> list1;
-    List<BulletinBoard> list2;
-    List<BulletinBoard> list3;
+    List<Bulletin> list1;
+    List<Bulletin> list2;
+    List<Bulletin> list3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,13 +61,16 @@ public class BulletinBoardActivity extends BaseActivity implements BulletinBoard
         mIsModerator = mPresenter.isModerator();
 
         list1 = new ArrayList<>();
-        list1.add(new BulletinBoard("theme 1", "author", "date"));
+        list1.add(new Bulletin("theme 1", "author", "date"));
 
         list2 = new ArrayList<>();
-        list2.add(new BulletinBoard("theme 2", "author", "date"));
+        list2.add(new Bulletin("theme 2", "author", "date"));
 
         list3 = new ArrayList<>();
-        list3.add(new BulletinBoard("theme 3", "author", "date"));
+        list3.add(new Bulletin("theme 3", "author", "date"));
+
+        BulletinRxLoader load = new BulletinRxLoader(new BulletinDao());
+        load.apiCall();
     }
 
     @Override
@@ -117,7 +122,7 @@ public class BulletinBoardActivity extends BaseActivity implements BulletinBoard
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         mRecyclerView.setHasFixedSize(true);
 
-        mAdapter = new BulletinAdapter(new ArrayList<BulletinBoard>(), IS_MODERATOR_MODE);
+        mAdapter = new BulletinAdapter(new ArrayList<Bulletin>(), IS_MODERATOR_MODE);
         mAdapter.setHasStableIds(true);
 
         mRecyclerView.setSaveEnabled(true);
@@ -125,8 +130,8 @@ public class BulletinBoardActivity extends BaseActivity implements BulletinBoard
         //mAdapter.setOnItemClickListener(onItemClickListener);
         mRecyclerView.setAdapter(mAdapter);
 
-        List<BulletinBoard> data = new ArrayList<>();
-        data.add(new BulletinBoard("theme 0", "author", "date"));
+        List<Bulletin> data = new ArrayList<>();
+        data.add(new Bulletin("theme 0", "author", "date"));
         mAdapter.setData(data);
         // if all items was loaded we don't need Pagination
         if (mAdapter.isAllItemsLoaded()) {

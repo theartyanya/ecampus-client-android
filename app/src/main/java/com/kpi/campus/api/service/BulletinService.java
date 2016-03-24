@@ -1,6 +1,6 @@
 package com.kpi.campus.api.service;
 
-import com.kpi.campus.model.BulletinBoard;
+import com.kpi.campus.model.Bulletin;
 import com.kpi.campus.model.Contributor;
 
 import java.util.List;
@@ -20,7 +20,7 @@ public interface BulletinService {
             "Content-Type: application/json"
     })
     @GET("/account/info")
-    Observable<List<BulletinBoard>> getBulletins(@Header("Authorization") String authorization);
+    Observable<List<Bulletin>> getBulletins(@Header("Authorization") String authorization);
 
 
     @GET("/repos/kpi-ua/ecampus-client-android/contributors")
