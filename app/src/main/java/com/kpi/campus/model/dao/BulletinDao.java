@@ -2,6 +2,7 @@ package com.kpi.campus.model.dao;
 
 import com.kpi.campus.model.Bulletin;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -9,7 +10,7 @@ import java.util.List;
  */
 public class BulletinDao implements IDataAccessObject<Bulletin> {
 
-    private List<Bulletin> mBulletins;
+    private List<Bulletin> mBulletins = new ArrayList<>();
 
     @Override
     public List<Bulletin> getData() {
@@ -18,7 +19,7 @@ public class BulletinDao implements IDataAccessObject<Bulletin> {
 
     @Override
     public void setData(List<Bulletin> data) {
-        mBulletins = data;
+        mBulletins.addAll(data);
     }
 
     @Override

@@ -4,6 +4,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 
+import com.kpi.campus.ui.adapter.PagingRecyclerAdapter;
 import com.kpi.campus.util.BackgroundExecutor;
 
 import java.util.ArrayList;
@@ -55,7 +56,8 @@ public class PaginationTool<T> {
                         int position = getLastVisibleItemPosition(recyclerView);
                         int updatePosition = recyclerView.getAdapter().getItemCount() - 1 - (limit / 2);
                         if (position >= updatePosition) {
-                            int offset = emptyListCountPlusToOffset ? recyclerView.getAdapter().getItemCount() : recyclerView.getAdapter().getItemCount() - emptyListCount;
+                            //int offset = emptyListCountPlusToOffset ? recyclerView.getAdapter().getItemCount() : recyclerView.getAdapter().getItemCount() - emptyListCount;
+                            int offset = getLastId(recyclerView);
                             subscriber.onNext(offset);
                         }
                     }
@@ -64,10 +66,22 @@ public class PaginationTool<T> {
             recyclerView.addOnScrollListener(sl);
             subscriber.add(Subscriptions.create(() -> recyclerView.removeOnScrollListener(sl)));
             if (recyclerView.getAdapter().getItemCount() == emptyListCount) {
-                int offset = emptyListCountPlusToOffset ? recyclerView.getAdapter().getItemCount() : recyclerView.getAdapter().getItemCount() - emptyListCount;
+                //int offset = emptyListCountPlusToOffset ? recyclerView.getAdapter().getItemCount() : recyclerView.getAdapter().getItemCount() - emptyListCount;
+                int offset = getLastId(recyclerView);
                 subscriber.onNext(offset);
             }
         });
+    }
+
+    private int getLastId(RecyclerView recyclerView) {
+        PagingRecyclerAdapter adapter = (PagingRecyclerAdapter) recyclerView.getAdapter();
+        int offset;
+        if (adapter.getItemCount() == 0) {
+            offset = -1;
+        } else {
+            offset = Integer.valueOf(adapter.getLastItem().getId());
+        }
+        return offset;
     }
 
     private int getLastVisibleItemPosition(RecyclerView recyclerView) {

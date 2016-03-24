@@ -37,7 +37,8 @@ public class Bulletin {
     @Expose
     private String dateEnd;
 
-    public Bulletin(String theme, String author, String dateCreate) {
+    public Bulletin(String id, String theme, String author, String dateCreate) {
+        this.id = id;
         this.subject = theme;
         this.creatorName = author;
         this.dateCreate = dateCreate;

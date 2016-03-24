@@ -8,6 +8,7 @@ import com.kpi.campus.api.service.ServiceCreator;
 import com.kpi.campus.model.Bulletin;
 import com.kpi.campus.model.User;
 import com.kpi.campus.model.dao.IDataAccessObject;
+import com.kpi.campus.ui.presenter.BulletinBoardPresenter;
 
 import java.util.List;
 
@@ -40,7 +41,8 @@ public class BulletinRxLoader extends BaseRxLoader {
 
         @Override
         public void call(List<Bulletin> bulletins) {
-            //dataAccessObject.setData(bulletins);
+            dataAccessObject.setData(bulletins);
+            BulletinBoardPresenter.IS_LOADING = false;
 
             Log.d(Config.LOG, bulletins.size() + " loaded successful");
         }

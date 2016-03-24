@@ -11,8 +11,8 @@ import android.widget.TextView;
 import com.kpi.campus.R;
 import com.kpi.campus.model.Bulletin;
 import com.kpi.campus.ui.view.OnItemClickListener;
-import com.kpi.campus.util.CollectionValidator;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -20,52 +20,62 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * BulletinAdapter manages Bulletin data model and adapts it to RecyclerView, which is in BbActualTabFragment.
- *
- * Created by Administrator on 02.02.2016.
+ * Created by Administrator on 24.03.2016.
  */
-public class BulletinAdapter extends RecyclerView.Adapter<BulletinAdapter.ViewHolder> {
+public class PagingRecyclerAdapter extends RecyclerView.Adapter<PagingRecyclerAdapter.ViewHolder> {
 
-    private List<Bulletin> mList;
+    private List<Bulletin> mData = new ArrayList<>();
     private OnItemClickListener mListener;
     private PopupMenu.OnMenuItemClickListener mMenuListener;
     private boolean mIsModerator = false;
-
-    /** after reorientation test this member
-     * or one extra request will be sent after each reorientation*/
+    // after reorientation test this member
+    // or one extra request will be sent after each reorientation
     private boolean mAllItemsLoaded;
 
-
-    public BulletinAdapter(List<Bulletin> list, boolean isModerator) {
-        mList = list;
+    public PagingRecyclerAdapter(boolean isModerator) {
         mIsModerator = isModerator;
     }
 
-    public void addData(List<Bulletin> list) {
-        CollectionValidator.validateOnNull(list);
-
-        mList.addAll(list);
-        notifyDataSetChanged();
+    public void addNewItems(List<Bulletin> items) {
+        if (items.size() == 0) {
+            mAllItemsLoaded = true;
+            return;
+        }
+        mData.addAll(items);
+        notifyItemInserted(getItemCount() - items.size());
     }
 
-    public void setData(List<Bulletin> list) {
-        mList = list;
-        notifyDataSetChanged();
-    }
-
-    public List<Bulletin> getData() {
-        return mList;
+    public boolean isAllItemsLoaded() {
+        return mAllItemsLoaded;
     }
 
     @Override
-    public BulletinAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public long getItemId(int position) {
+        return Long.valueOf(getItem(position).getId());
+    }
+
+    public Bulletin getItem(int position) {
+        return mData.get(position);
+    }
+
+    public Bulletin getLastItem() {
+        return mData.get(getItemCount() - 1);
+    }
+
+    @Override
+    public int getItemCount() {
+        return mData.size();
+    }
+
+    @Override
+    public PagingRecyclerAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_item_bulletin, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(BulletinAdapter.ViewHolder holder, int position) {
-        Bulletin bul = mList.get(position);
+    public void onBindViewHolder(PagingRecyclerAdapter.ViewHolder holder, int position) {
+        Bulletin bul = mData.get(position);
         holder.date.setText(bul.getDateCreate());
         holder.theme.setText(bul.getSubject());
         holder.author.setText(bul.getCreatorName());
@@ -73,11 +83,6 @@ public class BulletinAdapter extends RecyclerView.Adapter<BulletinAdapter.ViewHo
         if(mIsModerator) {
             holder.btnOverflow.setVisibility(View.VISIBLE);
         }
-    }
-
-    @Override
-    public int getItemCount() {
-        return (mList != null) ? mList.size() : 0;
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {
@@ -88,9 +93,6 @@ public class BulletinAdapter extends RecyclerView.Adapter<BulletinAdapter.ViewHo
         mMenuListener = listener;
     }
 
-    public boolean isAllItemsLoaded() {
-        return mAllItemsLoaded;
-    }
 
     protected class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -123,6 +125,5 @@ public class BulletinAdapter extends RecyclerView.Adapter<BulletinAdapter.ViewHo
             menu.show();
             menu.setOnMenuItemClickListener(mMenuListener);
         }
-
     }
 }
