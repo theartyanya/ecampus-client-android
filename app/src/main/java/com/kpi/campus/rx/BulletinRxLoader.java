@@ -42,7 +42,7 @@ public class BulletinRxLoader extends BaseRxLoader {
         public void call(List<Bulletin> bulletins) {
             //dataAccessObject.setData(bulletins);
 
-            Log.d(Config.LOG, "Load successful");
+            Log.d(Config.LOG, bulletins.size() + " loaded successful");
         }
     };
 

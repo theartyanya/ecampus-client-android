@@ -19,7 +19,7 @@ public interface BulletinService {
             "Accept: application/json",
             "Content-Type: application/json"
     })
-    @GET("/account/info")
+    @GET("/board/all")
     Observable<List<Bulletin>> getBulletins(@Header("Authorization") String authorization);
 
 
