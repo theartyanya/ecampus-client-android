@@ -3,7 +3,7 @@ package com.kpi.campus.ui.presenter;
 import android.os.Bundle;
 
 import com.kpi.campus.Config;
-import com.kpi.campus.model.User;
+import com.kpi.campus.model.pojo.User;
 import com.kpi.campus.model.pojo.Token;
 import com.kpi.campus.rx.UserRxLoader;
 import com.kpi.campus.ui.Navigator;

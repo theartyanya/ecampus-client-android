@@ -6,7 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.kpi.campus.R;
-import com.kpi.campus.model.Bulletin;
+import com.kpi.campus.model.pojo.Bulletin;
 import com.kpi.campus.ui.adapter.BulletinAdapter;
 import com.kpi.campus.ui.presenter.BbActualTabPresenter;
 import com.kpi.campus.ui.view.OnItemClickListener;

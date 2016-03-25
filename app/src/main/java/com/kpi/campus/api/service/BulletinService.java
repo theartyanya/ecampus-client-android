@@ -1,7 +1,7 @@
 package com.kpi.campus.api.service;
 
-import com.kpi.campus.model.Bulletin;
-import com.kpi.campus.model.Contributor;
+import com.kpi.campus.model.pojo.Bulletin;
+import com.kpi.campus.model.pojo.Contributor;
 
 import java.util.List;
 

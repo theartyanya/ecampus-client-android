@@ -1,6 +1,6 @@
 package com.kpi.campus.api.service;
 
-import com.kpi.campus.model.User;
+import com.kpi.campus.model.pojo.User;
 
 import retrofit.http.GET;
 import retrofit.http.Header;

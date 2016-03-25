@@ -14,7 +14,7 @@ import android.view.View;
 
 import com.kpi.campus.R;
 import com.kpi.campus.di.UIModule;
-import com.kpi.campus.model.Bulletin;
+import com.kpi.campus.model.pojo.Bulletin;
 import com.kpi.campus.model.dao.IDataAccessObject;
 import com.kpi.campus.rx.BulletinResponseManager;
 import com.kpi.campus.ui.adapter.PagingRecyclerAdapter;

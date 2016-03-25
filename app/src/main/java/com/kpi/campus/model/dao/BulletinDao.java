@@ -1,6 +1,6 @@
 package com.kpi.campus.model.dao;
 
-import com.kpi.campus.model.Bulletin;
+import com.kpi.campus.model.pojo.Bulletin;
 
 import java.util.ArrayList;
 import java.util.List;

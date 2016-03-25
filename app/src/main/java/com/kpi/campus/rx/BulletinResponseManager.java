@@ -5,8 +5,8 @@ import android.util.Log;
 import com.kpi.campus.Config;
 import com.kpi.campus.api.service.BulletinService;
 import com.kpi.campus.api.service.ServiceCreator;
-import com.kpi.campus.model.Bulletin;
-import com.kpi.campus.model.User;
+import com.kpi.campus.model.pojo.Bulletin;
+import com.kpi.campus.model.pojo.User;
 import com.kpi.campus.ui.presenter.BulletinBoardPresenter;
 
 import java.util.List;

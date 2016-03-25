@@ -6,7 +6,7 @@ import android.content.res.TypedArray;
 
 import com.kpi.campus.R;
 import com.kpi.campus.model.Subsystem;
-import com.kpi.campus.model.User;
+import com.kpi.campus.model.pojo.User;
 import com.kpi.campus.ui.Navigator;
 import com.kpi.campus.ui.Preference;
 

@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.PopupMenu;
 
 import com.kpi.campus.R;
-import com.kpi.campus.model.Bulletin;
+import com.kpi.campus.model.pojo.Bulletin;
 import com.kpi.campus.ui.adapter.BulletinAdapter;
 import com.kpi.campus.ui.presenter.Bb3TabPresenter;
 import com.kpi.campus.ui.view.OnItemClickListener;

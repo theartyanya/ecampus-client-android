@@ -1,6 +1,6 @@
 package com.kpi.campus.ui.presenter;
 
-import com.kpi.campus.model.Bulletin;
+import com.kpi.campus.model.pojo.Bulletin;
 import com.kpi.campus.ui.Navigator;
 
 import java.util.ArrayList;

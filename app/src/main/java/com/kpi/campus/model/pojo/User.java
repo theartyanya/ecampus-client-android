@@ -1,4 +1,4 @@
-package com.kpi.campus.model;
+package com.kpi.campus.model.pojo;
 
 import java.util.List;
 

@@ -5,7 +5,7 @@ import android.util.Log;
 import com.kpi.campus.Config;
 import com.kpi.campus.api.service.ServiceCreator;
 import com.kpi.campus.api.service.UserService;
-import com.kpi.campus.model.User;
+import com.kpi.campus.model.pojo.User;
 
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;

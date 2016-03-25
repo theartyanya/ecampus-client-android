@@ -5,7 +5,7 @@ import android.content.res.Resources;
 import android.content.res.TypedArray;
 
 import com.kpi.campus.R;
-import com.kpi.campus.model.Bulletin;
+import com.kpi.campus.model.pojo.Bulletin;
 import com.kpi.campus.model.dao.BulletinDao;
 import com.kpi.campus.model.dao.IDataAccessObject;
 import com.kpi.campus.ui.Navigator;

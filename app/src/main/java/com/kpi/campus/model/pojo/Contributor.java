@@ -1,4 +1,4 @@
-package com.kpi.campus.model;
+package com.kpi.campus.model.pojo;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
