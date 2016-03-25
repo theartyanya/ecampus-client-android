@@ -84,6 +84,22 @@ public class BulletinBoardPresenter extends BasePresenter {
         return mDataAccess.getData();
     }
 
+    /**
+     * Get Bulletin data filtered by profile which matches User profile
+     * @return list of bulletins filtered by User profile
+     */
+    public List<Bulletin> getFilteredByProfile() {
+        return ((BulletinDao) mDataAccess).getFilteredByProfile();
+    }
+
+    /**
+     * Get Bulletin data filtered by subdivision which matches User subdivision
+     * @return list of bulletins filtered by User subdivision
+     */
+    public List<Bulletin> getFilteredBySubdivision() {
+        return ((BulletinDao) mDataAccess).getFilteredBySubdiv();
+    }
+
     public IDataAccessObject getDao() {
         return mDataAccess;
     }

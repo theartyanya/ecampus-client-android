@@ -97,7 +97,16 @@ public class MainPresenter extends BasePresenter {
             mNavigator.startLoginActivity();
         } else {
             setTokenValue();
+            setUserValues();
         }
+    }
+
+    private void setUserValues() {
+        User user = User.getInstance();
+        user.name = mPreference.getUserName();
+        user.position = mPreference.getUserPositions();
+        user.subdivision = mPreference.getUserSubdivision();
+        user.isBulletinBoardModerator = mPreference.getIsUserBbModerator();
     }
 
     private void setTokenValue() {

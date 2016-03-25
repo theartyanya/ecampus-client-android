@@ -6,6 +6,7 @@ import com.kpi.campus.Config;
 import com.kpi.campus.api.service.ServiceCreator;
 import com.kpi.campus.api.service.UserService;
 import com.kpi.campus.model.pojo.User;
+import com.kpi.campus.ui.Preference;
 
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
@@ -16,6 +17,12 @@ import rx.schedulers.Schedulers;
  * Created by Administrator on 21.03.2016.
  */
 public class UserRxLoader extends BaseRxLoader {
+
+    private Preference mPreference;
+
+    public  UserRxLoader(Preference preference) {
+        mPreference = preference;
+    }
 
     @Override
     public void apiCall() {
@@ -38,6 +45,8 @@ public class UserRxLoader extends BaseRxLoader {
             user.subdivision = userInfo.subdivision;
             user.descendantSubdivisions = userInfo.descendantSubdivisions;
             user.isBulletinBoardModerator = userInfo.isBulletinBoardModerator;
+
+            mPreference.saveUserInfo(user);
 
             Log.d(Config.LOG, "Successful download of information about the User ".concat(user.name));
         }

@@ -149,17 +149,21 @@ public class BulletinBoardActivity extends BaseActivity implements BulletinBoard
     }
 
     private void setCurrentTabFragment(int tabPosition) {
+        List<Bulletin> bulletins = new ArrayList<>();
         switch (tabPosition) {
             case TAB_ACTUAL:
-//                List<Bulletin> bulletins = mPresenter.getData();
-//                mAdapter.addData(bulletins);
+                bulletins = mPresenter.getData();
+
                 break;
             case TAB_PROFILE:
-                //mAdapter.setData(list2);
+                bulletins = mPresenter.getFilteredByProfile();
+
                 break;
             case TAB_SUBDIVISION:
-                //mAdapter.setData(list3);
+                bulletins = mPresenter.getFilteredBySubdivision();
                 break;
+            default:
+                mAdapter.setItems(bulletins);
         }
     }
 

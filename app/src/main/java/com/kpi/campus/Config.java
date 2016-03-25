@@ -21,4 +21,12 @@ public class Config {
 
     // Stores the boolean in SharedPreferences to track user is logged in or not
     public static final String IS_LOGGED_SHARED_PREF = "islogged";
+
+    public static final String USER_NAME = "user_name";
+
+    public static final String USER_POSITION = "user_name";
+
+    public static final String USER_SUBDIVISION = "user_subdivision";
+
+    public static final String USER_IS_BB_MODERATOR = "user_is_moderator";
 }

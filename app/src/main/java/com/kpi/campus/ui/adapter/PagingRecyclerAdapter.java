@@ -45,6 +45,11 @@ public class PagingRecyclerAdapter extends RecyclerView.Adapter<PagingRecyclerAd
         notifyItemInserted(getItemCount() - items.size());
     }
 
+    public void setItems(List<Bulletin> list) {
+        mData = list;
+        notifyDataSetChanged();
+    }
+
     public boolean isAllItemsLoaded() {
         return mAllItemsLoaded;
     }
