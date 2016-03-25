@@ -105,7 +105,7 @@ public class BulletinBoardActivity extends BaseActivity implements BulletinBoard
                 NavUtils.navigateUpFromSameTask(this);
                 return true;
             case R.id.action_moderator:
-                mPresenter.openBulletinModeratorActivity();
+                //mPresenter.openBulletinModeratorActivity();
                 return true;
         }
         return super.onOptionsItemSelected(item);
