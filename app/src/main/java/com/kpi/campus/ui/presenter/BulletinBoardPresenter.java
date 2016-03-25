@@ -73,8 +73,7 @@ public class BulletinBoardPresenter extends BasePresenter {
      * @param item
      */
     public void onItemClick(Object item) {
-
-        mNavigator.startBulletinContentActivity(0);
+        mNavigator.startBulletinContentActivity((Bulletin) item);
     }
 
     /**

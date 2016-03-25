@@ -48,8 +48,8 @@ public class BbActualTabPresenter extends BasePresenter {
 
     }
 
-    public void onItemClick(int position) {
-        mNavigator.startBulletinContentActivity(position);
+    public void onItemClick(Object item) {
+        mNavigator.startBulletinContentActivity((Bulletin)item);
     }
 
     public interface IView {

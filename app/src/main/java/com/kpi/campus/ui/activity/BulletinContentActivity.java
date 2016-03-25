@@ -3,9 +3,11 @@ package com.kpi.campus.ui.activity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.kpi.campus.R;
 import com.kpi.campus.di.UIModule;
+import com.kpi.campus.model.pojo.Bulletin;
 import com.kpi.campus.ui.presenter.BulletinContentPresenter;
 
 import java.util.ArrayList;
@@ -20,12 +22,15 @@ public class BulletinContentActivity extends BaseActivity implements BulletinCon
     Toolbar mToolbar;
     @Inject
     BulletinContentPresenter mPresenter;
+    Bulletin mBulletin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bulletin_content);
         bindViews();
+
+        mBulletin = getIntent().getParcelableExtra("KEY_BULLETIN");
         mPresenter.setView(this);
         mPresenter.initializeViewComponent();
     }
@@ -50,6 +55,7 @@ public class BulletinContentActivity extends BaseActivity implements BulletinCon
     @Override
     public void setViewComponent() {
         setToolbar();
+        setViewsValues();
     }
 
     private void setToolbar() {
@@ -58,5 +64,26 @@ public class BulletinContentActivity extends BaseActivity implements BulletinCon
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         mToolbar.setNavigationIcon(R.mipmap.ic_action_navigation_arrow_back);
         getSupportActionBar().setTitle(R.string.bulletin_text_content);
+    }
+
+    private void setViewsValues() {
+        if(mBulletin == null)
+            return;
+
+        TextView textView;
+        textView = (TextView) findViewById(R.id.text_view_bulletin_theme);
+        textView.setText(mBulletin.getSubject());
+
+        textView = (TextView) findViewById(R.id.text_view_bulletin_text);
+        textView.setText(mBulletin.getText());
+
+        textView = (TextView) findViewById(R.id.text_view_bulletin_start_date);
+        textView.setText(mBulletin.getDateStart());
+
+        textView = (TextView) findViewById(R.id.text_view_bulletin_end_date);
+        textView.setText(mBulletin.getDateEnd());
+
+        textView = (TextView) findViewById(R.id.text_view_bulletin_author);
+        textView.setText(mBulletin.getCreatorName());
     }
 }

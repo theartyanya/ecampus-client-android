@@ -43,8 +43,8 @@ public class Bb3TabPresenter extends BasePresenter {
         return data;
     }
 
-    public void onItemClick(int position) {
-        mNavigator.startBulletinContentActivity(position);
+    public void onItemClick(Object item) {
+        mNavigator.startBulletinContentActivity((Bulletin)item);
     }
 
     public void editBulletin(String title) {
