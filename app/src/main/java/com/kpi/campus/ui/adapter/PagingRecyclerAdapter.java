@@ -114,7 +114,8 @@ public class PagingRecyclerAdapter extends RecyclerView.Adapter<PagingRecyclerAd
         @OnClick(R.id.layout_bulletin)
         public void itemClick(View view) {
             if (mListener != null) {
-                mListener.onItemClicked(view, getAdapterPosition());
+                int pos = getAdapterPosition();
+                mListener.onItemClicked(view, pos, mData.get(pos));
             }
         }
 

@@ -112,7 +112,7 @@ public class BulletinAdapter extends RecyclerView.Adapter<BulletinAdapter.ViewHo
         @OnClick(R.id.layout_bulletin)
         public void itemClick(View view) {
             if (mListener != null) {
-                mListener.onItemClicked(view, getAdapterPosition());
+                mListener.onItemClicked(view, getAdapterPosition(), null);
             }
         }
 

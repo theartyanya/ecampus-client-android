@@ -83,8 +83,8 @@ public class BulletinBoardActivity extends BaseActivity implements BulletinBoard
     private OnItemClickListener onItemClickListener =
             new OnItemClickListener() {
                 @Override
-                public void onItemClicked(View view, int position) {
-                    mPresenter.onItemClick(position);
+                public void onItemClicked(View view, int position, Object item) {
+                    mPresenter.onItemClick(item);
                 }
             };
 
@@ -195,7 +195,7 @@ public class BulletinBoardActivity extends BaseActivity implements BulletinBoard
      * RecyclerView pagination
      */
     private void setRecyclerViewPagination() {
-        PaginationTool<List<Bulletin>> paginationTool = PaginationTool.buildPagingObservable(mRecyclerView, offset -> BulletinResponseManager.getInstance().getEmulateResponse(offset, LIMIT))
+        PaginationTool<List<Bulletin>> paginationTool = PaginationTool.buildPagingObservable(mRecyclerView, offset -> BulletinResponseManager.getInstance().getResponse(offset, LIMIT))
                 .setLimit(LIMIT)
                 .build();
 
@@ -217,7 +217,6 @@ public class BulletinBoardActivity extends BaseActivity implements BulletinBoard
                         dao.setData(items);
 
                         mAdapter.addNewItems(items);
-                        //mAdapter.notifyItemInserted(mAdapter.getItemCount() - items.size());
                     }
                 });
     }

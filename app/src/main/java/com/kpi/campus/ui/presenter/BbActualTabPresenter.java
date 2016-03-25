@@ -3,8 +3,6 @@ package com.kpi.campus.ui.presenter;
 import com.kpi.campus.model.Bulletin;
 import com.kpi.campus.model.dao.BulletinDao;
 import com.kpi.campus.model.dao.IDataAccessObject;
-import com.kpi.campus.rx.BaseRxLoader;
-import com.kpi.campus.rx.BulletinRxLoader;
 import com.kpi.campus.ui.Navigator;
 
 import java.util.ArrayList;
@@ -47,8 +45,7 @@ public class BbActualTabPresenter extends BasePresenter {
     }
 
     private void loadData() {
-        BaseRxLoader loader = new BulletinRxLoader(mDataAccess);
-        loader.apiCall();
+
     }
 
     public void onItemClick(int position) {

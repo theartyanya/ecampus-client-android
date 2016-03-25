@@ -35,7 +35,7 @@ public class Bb3TabFragment extends BaseFragment implements Bb3TabPresenter.IVie
     private OnItemClickListener onItemClickListener =
             new OnItemClickListener() {
                 @Override
-                public void onItemClicked(View view, int position) {
+                public void onItemClicked(View view, int position, Object item) {
                     mPresenter.onItemClick(position);
                 }
             };

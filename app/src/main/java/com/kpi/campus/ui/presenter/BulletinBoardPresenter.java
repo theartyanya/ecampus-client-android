@@ -8,7 +8,6 @@ import com.kpi.campus.R;
 import com.kpi.campus.model.Bulletin;
 import com.kpi.campus.model.dao.BulletinDao;
 import com.kpi.campus.model.dao.IDataAccessObject;
-import com.kpi.campus.rx.BulletinRxLoader;
 import com.kpi.campus.ui.Navigator;
 
 import java.util.List;
@@ -71,21 +70,11 @@ public class BulletinBoardPresenter extends BasePresenter {
 
     /**
      * Handles click on recyclerview item.
-     * @param position
+     * @param item
      */
-    public void onItemClick(int position) {
-        mNavigator.startBulletinContentActivity(position);
-    }
+    public void onItemClick(Object item) {
 
-    /**
-     * Load necessary data from REST API
-     */
-    public void loadData() {
-        if(!IS_LOADING){
-            IS_LOADING = true;
-            BulletinRxLoader load = new BulletinRxLoader(mDataAccess);
-            load.apiCall();
-        }
+        mNavigator.startBulletinContentActivity(0);
     }
 
     /**

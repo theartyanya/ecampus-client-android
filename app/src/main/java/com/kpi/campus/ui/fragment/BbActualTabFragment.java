@@ -37,7 +37,7 @@ public class BbActualTabFragment extends BaseFragment implements BbActualTabPres
     private OnItemClickListener onItemClickListener =
             new OnItemClickListener() {
                 @Override
-                public void onItemClicked(View view, int position) {
+                public void onItemClicked(View view, int position, Object item) {
                     mPresenter.onItemClick(position);
                 }
             };
