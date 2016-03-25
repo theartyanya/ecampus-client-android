@@ -9,7 +9,6 @@ import com.kpi.campus.model.Bulletin;
 import com.kpi.campus.model.User;
 import com.kpi.campus.ui.presenter.BulletinBoardPresenter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import rx.Observable;
@@ -22,16 +21,11 @@ import rx.schedulers.Schedulers;
  */
 public class BulletinResponseManager {
 
-    private final int SUP_ID = 500;
-
-    private final static int MAX_LIMIT = 1000;
-    private static final long FAKE_RESPONSE_TIME_IN_MS = 200;
-    private final static int MAX_FAKE_ERROR_COUNT = 2;
-    private final static int OFFSET_WHEN_FAKE_ERROR = 200;
+    private static final long RESPONSE_TIME_IN_MS = 200;
+    private final static int MAX_ERROR_COUNT = 2;
+    private final static int OFFSET_WHEN_ERROR = 200;
 
     private static volatile BulletinResponseManager client;
-
-    private int fakeErrorCount = 0;
 
     public static BulletinResponseManager getInstance() {
         if (client == null) {
@@ -44,9 +38,9 @@ public class BulletinResponseManager {
         return client;
     }
 
-    public Observable<List<Bulletin>> getEmulateResponse(int lastId, int limit) {
+    public Observable<List<Bulletin>> getResponse(int lastId, int limit) {
         BulletinService service = ServiceCreator.createService(BulletinService.class);
-        Observable<List<Bulletin>> observable = service.getBulletins("bearer " + User.getInstance().token);
+        Observable<List<Bulletin>> observable = service.getBulletins("bearer " + User.getInstance().token, limit, lastId);
 
         observable
                 .subscribeOn(Schedulers.newThread())
@@ -71,23 +65,4 @@ public class BulletinResponseManager {
                 });
         return observable;
     }
-
-    private List<Bulletin> getFakeItemList(int lastId, int limit) {
-        List<Bulletin> list = new ArrayList<>();
-
-        if(lastId == -1) {
-            // load all from start
-            lastId = 0;
-        }
-
-        int concreteValue = lastId + limit;
-        // Generate List of Items
-        for (int i = lastId; i < concreteValue; i++) {
-            int id = i + SUP_ID;
-            String itemStr = String.valueOf(id);
-            list.add(new Bulletin(itemStr, itemStr, "author", "24.03.2016"));
-        }
-        return list;
-    }
-
 }
