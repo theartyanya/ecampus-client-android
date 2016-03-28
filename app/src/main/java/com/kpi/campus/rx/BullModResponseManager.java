@@ -16,10 +16,9 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
- * Created by Administrator on 24.03.2016.
+ * Created by Administrator on 28.03.2016.
  */
-public class BulletinResponseManager {
-
+public class BullModResponseManager {
     private static final long RESPONSE_TIME_IN_MS = 200;
     private final static int MAX_ERROR_COUNT = 2;
     private final static int OFFSET_WHEN_ERROR = 200;
@@ -39,7 +38,7 @@ public class BulletinResponseManager {
 
     public Observable<List<Bulletin>> getResponse(int lastId, int limit) {
         BulletinService service = ServiceCreator.createService(BulletinService.class);
-        Observable<List<Bulletin>> observable = service.getBulletins("bearer " + User.getInstance().token, limit, lastId);
+        Observable<List<Bulletin>> observable = service.getModeratorBulletins("bearer " + User.getInstance().token, limit, lastId);
 
         observable
                 .subscribeOn(Schedulers.newThread())

@@ -45,7 +45,7 @@ public class BulletinBoardActivity extends BaseActivity implements BulletinBoard
     RecyclerView mRecyclerView;
     @Inject
     BulletinBoardPresenter mPresenter;
-    PagingRecyclerAdapter mAdapter;
+    private PagingRecyclerAdapter mAdapter;
     private Subscription mPagingSubscription;
 
     /**
@@ -199,7 +199,7 @@ public class BulletinBoardActivity extends BaseActivity implements BulletinBoard
      * RecyclerView pagination
      */
     private void setRecyclerViewPagination() {
-        PaginationTool<List<Bulletin>> paginationTool = PaginationTool.buildPagingObservable(mRecyclerView, offset -> BulletinResponseManager.getInstance().getResponse(offset, LIMIT))
+        PaginationTool<List<Bulletin>> paginationTool = PaginationTool.buildPagingObservable(mRecyclerView, lastId -> BulletinResponseManager.getInstance().getResponse(lastId, LIMIT))
                 .setLimit(LIMIT)
                 .build();
 

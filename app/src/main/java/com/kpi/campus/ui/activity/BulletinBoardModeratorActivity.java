@@ -4,7 +4,8 @@ import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.NavUtils;
-import android.support.v4.view.ViewPager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,10 +14,11 @@ import android.view.View;
 import com.kpi.campus.R;
 import com.kpi.campus.di.UIModule;
 import com.kpi.campus.model.pojo.Bulletin;
-import com.kpi.campus.ui.adapter.BulletinTabPagerAdapter;
+import com.kpi.campus.rx.BullModResponseManager;
 import com.kpi.campus.ui.adapter.PagingRecyclerAdapter;
 import com.kpi.campus.ui.presenter.BulletinBoardModeratorPresenter;
 import com.kpi.campus.ui.view.OnItemClickListener;
+import com.kpi.campus.util.pagination.PaginationTool;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +27,9 @@ import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import rx.Subscriber;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
 
 public class BulletinBoardModeratorActivity extends BaseActivity implements BulletinBoardModeratorPresenter.IView {
 
@@ -32,18 +37,29 @@ public class BulletinBoardModeratorActivity extends BaseActivity implements Bull
     Toolbar mToolbar;
     @Bind(R.id.tab_layout)
     TabLayout mTabLayout;
-    @Bind(R.id.view_pager)
-    ViewPager mViewPager;
+    @Bind(R.id.recycler_view_bulletin)
+    RecyclerView mRecyclerView;
     @Inject
     BulletinBoardModeratorPresenter mPresenter;
-    PagingRecyclerAdapter mAdapter;
-
+    private PagingRecyclerAdapter mAdapter;
+    private Subscription mPagingSubscription;
+    /**
+     * Is this activity is moderator activity.
+     * Always true. Affects on recycler item view (enable Edit button).
+     */
+    private final boolean IS_MODERATOR_MODE = true;
+    /**
+     * Tabs indices
+     */
     private final int TAB_ALL = 0;
     private final int TAB_ACTUAL = 1;
     private final int TAB_PROFILE = 2;
     private final int TAB_SUBDIVISION = 3;
     private final int TAB_DELETED = 4;
-
+    /**
+     * Limit for the number of loaded items
+     */
+    private final static int LIMIT = 100;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +69,14 @@ public class BulletinBoardModeratorActivity extends BaseActivity implements Bull
         mPresenter.setView(this);
         mPresenter.initializeViewComponent();
     }
+
+    private OnItemClickListener onItemClickListener =
+            new OnItemClickListener() {
+                @Override
+                public void onItemClicked(View view, int position, Object item) {
+                    mPresenter.onItemClick(item);
+                }
+            };
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -81,7 +105,7 @@ public class BulletinBoardModeratorActivity extends BaseActivity implements Bull
     public void setViewComponent() {
         setToolbar();
         setTabLayout();
-        //setRecyclerView();
+        setRecyclerView();
     }
 
     private void setToolbar() {
@@ -140,5 +164,65 @@ public class BulletinBoardModeratorActivity extends BaseActivity implements Bull
     @OnClick(R.id.fab_add)
     public void fabAddOnClick() {
         mPresenter.onButtonAddClick(getString(R.string.add_new_bulletin));
+    }
+
+    private void setRecyclerView() {
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        mRecyclerView.setHasFixedSize(true);
+
+        mAdapter = new PagingRecyclerAdapter(IS_MODERATOR_MODE);
+        mAdapter.setHasStableIds(true);
+
+        mRecyclerView.setSaveEnabled(true);
+
+        mAdapter.setOnItemClickListener(onItemClickListener);
+        mRecyclerView.setAdapter(mAdapter);
+
+        // if all items was loaded we don't need Pagination
+        if (mAdapter.isAllItemsLoaded()) {
+            return;
+        }
+
+        setRecyclerViewPagination();
+    }
+
+    /**
+     * RecyclerView pagination
+     */
+    private void setRecyclerViewPagination() {
+        PaginationTool<List<Bulletin>> paginationTool = PaginationTool.buildPagingObservable(mRecyclerView, lastId -> BullModResponseManager.getInstance().getResponse(lastId, LIMIT))
+                .setLimit(LIMIT)
+                .build();
+
+        mPagingSubscription = paginationTool
+                .getPagingObservable()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<List<Bulletin>>() {
+                    @Override
+                    public void onCompleted() {
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                    }
+
+                    @Override
+                    public void onNext(List<Bulletin> items) {
+
+                        mAdapter.addNewItems(items);
+                    }
+                });
+    }
+
+    @Override
+    public void onDestroy() {
+        if (mPagingSubscription != null && !mPagingSubscription.isUnsubscribed()) {
+            mPagingSubscription.unsubscribe();
+        }
+        // for memory leak prevention (RecycleView is not unsubscibed from adapter DataObserver)
+        if (mRecyclerView != null) {
+            mRecyclerView.setAdapter(null);
+        }
+        super.onDestroy();
     }
 }

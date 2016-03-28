@@ -21,8 +21,6 @@ import javax.inject.Inject;
  */
 public class BulletinBoardPresenter extends BasePresenter {
 
-    public static boolean IS_LOADING;
-
     private IView mView;
     private Context mContext;
     private Navigator mNavigator;
