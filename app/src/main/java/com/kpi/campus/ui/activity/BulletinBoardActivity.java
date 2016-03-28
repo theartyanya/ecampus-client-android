@@ -105,7 +105,7 @@ public class BulletinBoardActivity extends BaseActivity implements BulletinBoard
                 NavUtils.navigateUpFromSameTask(this);
                 return true;
             case R.id.action_moderator:
-                //mPresenter.openBulletinModeratorActivity();
+                mPresenter.openBulletinModeratorActivity();
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -199,7 +199,7 @@ public class BulletinBoardActivity extends BaseActivity implements BulletinBoard
      * RecyclerView pagination
      */
     private void setRecyclerViewPagination() {
-        PaginationTool<List<Bulletin>> paginationTool = PaginationTool.buildPagingObservable(mRecyclerView, lastId -> BulletinResponseManager.getInstance().getResponse(lastId, LIMIT))
+        PaginationTool<List<Bulletin>> paginationTool = PaginationTool.buildPagingObservable(mRecyclerView, lastId -> new BulletinResponseManager().getResponse(lastId, LIMIT))
                 .setLimit(LIMIT)
                 .build();
 

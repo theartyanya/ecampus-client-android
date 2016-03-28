@@ -20,26 +20,9 @@ import rx.schedulers.Schedulers;
  */
 public class BulletinResponseManager {
 
-    private static final long RESPONSE_TIME_IN_MS = 200;
-    private final static int MAX_ERROR_COUNT = 2;
-    private final static int OFFSET_WHEN_ERROR = 200;
-
-    private static volatile BulletinResponseManager client;
-
-    public static BulletinResponseManager getInstance() {
-        if (client == null) {
-            synchronized (BulletinResponseManager.class) {
-                if (client == null) {
-                    client = new BulletinResponseManager();
-                }
-            }
-        }
-        return client;
-    }
-
     public Observable<List<Bulletin>> getResponse(int lastId, int limit) {
         BulletinService service = ServiceCreator.createService(BulletinService.class);
-        Observable<List<Bulletin>> observable = service.getBulletins("bearer " + User.getInstance().token, limit, lastId);
+        Observable<List<Bulletin>> observable = getRequest(service, limit, lastId);
 
         observable
                 .subscribeOn(Schedulers.newThread())
@@ -61,5 +44,9 @@ public class BulletinResponseManager {
                     }
                 });
         return observable;
+    }
+
+    protected Observable<List<Bulletin>> getRequest(BulletinService service, int limit, int lastId) {
+        return service.getBulletins("bearer " + User.getInstance().token, limit, lastId);
     }
 }
