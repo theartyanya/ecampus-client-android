@@ -14,8 +14,6 @@ import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.action.ViewActions.swipeLeft;
-import static android.support.test.espresso.action.ViewActions.swipeRight;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.intent.Intents.intended;
 import static android.support.test.espresso.intent.matcher.ComponentNameMatchers.hasShortClassName;
@@ -50,17 +48,6 @@ public class BulletinBoardModeratorActivityTest {
     //@Ignore
     @Test
     public void testSwipeLeftRight() {
-        onView(withDrawable(R.mipmap.ic_action_all)).check(matches(isDisplayed()));
-        onView(withId(R.id.view_pager)).perform(swipeLeft());
-        onView(withDrawable(R.mipmap.ic_action_actual)).check(matches(isDisplayed()));
-        onView(withId(R.id.view_pager)).perform(swipeLeft());
-        onView(withDrawable(R.mipmap.ic_action_by_profile)).check(matches(isDisplayed()));
-        onView(withId(R.id.view_pager)).perform(swipeLeft());
-        onView(withDrawable(R.mipmap.ic_action_by_susdivision)).check(matches(isDisplayed()));
-        onView(withId(R.id.view_pager)).perform(swipeLeft());
-        onView(withDrawable(R.mipmap.ic_action_action_delete)).check(matches(isDisplayed()));
-        onView(withId(R.id.view_pager)).perform(swipeRight());
-        onView(withDrawable(R.mipmap.ic_action_by_susdivision)).check(matches(isDisplayed()));
     }
 
     /**
@@ -91,25 +78,25 @@ public class BulletinBoardModeratorActivityTest {
         onView(withDrawable(R.mipmap.ic_action_all)).check(matches(isDisplayed()));
         onView(isRoot()).perform(orientationLandscape());
         onView(isRoot()).perform(orientationPortrait());
-        onView(withId(R.id.view_pager)).perform(swipeLeft());
+        //onView(withId(R.id.view_pager)).perform(swipeLeft());
 
         // second tab
         onView(withDrawable(R.mipmap.ic_action_actual)).check(matches(isDisplayed()));
         onView(isRoot()).perform(orientationLandscape());
         onView(isRoot()).perform(orientationPortrait());
-        onView(withId(R.id.view_pager)).perform(swipeLeft());
+        //onView(withId(R.id.view_pager)).perform(swipeLeft());
 
         //third tab
         onView(withDrawable(R.mipmap.ic_action_by_profile)).check(matches(isDisplayed()));
         onView(isRoot()).perform(orientationLandscape());
         onView(isRoot()).perform(orientationPortrait());
-        onView(withId(R.id.view_pager)).perform(swipeLeft());
+        //onView(withId(R.id.view_pager)).perform(swipeLeft());
 
         //fourth tab
         onView(withDrawable(R.mipmap.ic_action_by_susdivision)).check(matches(isDisplayed()));
         onView(isRoot()).perform(orientationLandscape());
         onView(isRoot()).perform(orientationPortrait());
-        onView(withId(R.id.view_pager)).perform(swipeLeft());
+        //onView(withId(R.id.view_pager)).perform(swipeLeft());
 
         //fifth tab
         onView(withDrawable(R.mipmap.ic_action_action_delete)).check(matches(isDisplayed()));
