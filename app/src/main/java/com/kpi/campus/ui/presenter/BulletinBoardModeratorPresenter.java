@@ -3,15 +3,9 @@ package com.kpi.campus.ui.presenter;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
-import android.support.v4.app.Fragment;
 
 import com.kpi.campus.R;
 import com.kpi.campus.ui.Navigator;
-import com.kpi.campus.ui.fragment.Bb3TabFragment;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -38,23 +32,16 @@ public class BulletinBoardModeratorPresenter extends BasePresenter {
         mView.setViewComponent();
     }
 
-    public CharSequence[] getTabsName() {
-        Resources r = mContext.getResources();
-        return r.getStringArray(R.array.bulletin_board_moderator_tab);
-    }
-
     public TypedArray getTabsIcon() {
         Resources r = mContext.getResources();
         return r.obtainTypedArray(R.array.bulletin_board_moderator_tab_icon);
     }
 
-    public List<Fragment> getFragments() {
-        return new ArrayList<Fragment>(Arrays.asList(new Bb3TabFragment(), new Bb3TabFragment(), new Bb3TabFragment(), new Bb3TabFragment(), new Bb3TabFragment()));
-    }
-
     public void onButtonAddClick(String title) {
         mNavigator.startNewBulletinActivity(title);
     }
+
+
 
     public interface IView {
         void setViewComponent();

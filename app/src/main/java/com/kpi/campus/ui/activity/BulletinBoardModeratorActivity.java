@@ -8,11 +8,15 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.kpi.campus.R;
 import com.kpi.campus.di.UIModule;
+import com.kpi.campus.model.pojo.Bulletin;
 import com.kpi.campus.ui.adapter.BulletinTabPagerAdapter;
+import com.kpi.campus.ui.adapter.PagingRecyclerAdapter;
 import com.kpi.campus.ui.presenter.BulletinBoardModeratorPresenter;
+import com.kpi.campus.ui.view.OnItemClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +36,14 @@ public class BulletinBoardModeratorActivity extends BaseActivity implements Bull
     ViewPager mViewPager;
     @Inject
     BulletinBoardModeratorPresenter mPresenter;
+    PagingRecyclerAdapter mAdapter;
+
+    private final int TAB_ALL = 0;
+    private final int TAB_ACTUAL = 1;
+    private final int TAB_PROFILE = 2;
+    private final int TAB_SUBDIVISION = 3;
+    private final int TAB_DELETED = 4;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,8 +80,8 @@ public class BulletinBoardModeratorActivity extends BaseActivity implements Bull
     @Override
     public void setViewComponent() {
         setToolbar();
-        setViewPager();
         setTabLayout();
+        //setRecyclerView();
     }
 
     private void setToolbar() {
@@ -80,30 +92,49 @@ public class BulletinBoardModeratorActivity extends BaseActivity implements Bull
         getSupportActionBar().setTitle(R.string.activity_bulletin_moderator_mode_title);
     }
 
-    private void setViewPager() {
-//        CharSequence[] tabNames = mPresenter.getTabsName();
-//        List<Fragment> fragments = mPresenter.getFragments();
-//        BulletinTabPagerAdapter adapter = new BulletinTabPagerAdapter(getSupportFragmentManager(), tabNames,fragments);
-//        mViewPager.setAdapter(adapter);
-    }
-
     private void setTabLayout() {
-        mTabLayout.setupWithViewPager(mViewPager);
-        setupTabIcon();
+        TypedArray tabIcon = mPresenter.getTabsIcon();
+        mTabLayout.addTab(mTabLayout.newTab().setIcon(tabIcon.getResourceId(TAB_ALL, -1)), true);
+        mTabLayout.addTab(mTabLayout.newTab().setIcon(tabIcon.getResourceId(TAB_ACTUAL, -1)));
+        mTabLayout.addTab(mTabLayout.newTab().setIcon(tabIcon.getResourceId(TAB_PROFILE, -1)));
+        mTabLayout.addTab(mTabLayout.newTab().setIcon(tabIcon.getResourceId(TAB_SUBDIVISION, -1)));
+        mTabLayout.addTab(mTabLayout.newTab().setIcon(tabIcon.getResourceId(TAB_DELETED, -1)));
+        mTabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                setCurrentTabFragment(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                // N/A
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+                // N/A
+            }
+        });
     }
 
-    private void setupTabIcon() {
-        TypedArray tabIcon = mPresenter.getTabsIcon();
-        mTabLayout.getTabAt(BulletinTabPagerAdapter.BULLETIN_TAB_0)
-                .setIcon(tabIcon.getResourceId(BulletinTabPagerAdapter.BULLETIN_TAB_0, -1));
-        mTabLayout.getTabAt(BulletinTabPagerAdapter.BULLETIN_TAB_1)
-                .setIcon(tabIcon.getResourceId(BulletinTabPagerAdapter.BULLETIN_TAB_1, -1));
-        mTabLayout.getTabAt(BulletinTabPagerAdapter.BULLETIN_TAB_2)
-                .setIcon(tabIcon.getResourceId(BulletinTabPagerAdapter.BULLETIN_TAB_2, -1));
-        mTabLayout.getTabAt(BulletinTabPagerAdapter.BULLETIN_TAB_3)
-                .setIcon(tabIcon.getResourceId(BulletinTabPagerAdapter.BULLETIN_TAB_3, -1));
-        mTabLayout.getTabAt(BulletinTabPagerAdapter.BULLETIN_TAB_4)
-                .setIcon(tabIcon.getResourceId(BulletinTabPagerAdapter.BULLETIN_TAB_4, -1));
+    private void setCurrentTabFragment(int tabPosition) {
+        List<Bulletin> bulletins = new ArrayList<>();
+        switch (tabPosition) {
+            case TAB_ALL:
+                break;
+            case TAB_ACTUAL:
+
+                break;
+            case TAB_PROFILE:
+
+                break;
+            case TAB_SUBDIVISION:
+                break;
+            case TAB_DELETED:
+                break;
+            default:
+                mAdapter.setItems(bulletins);
+        }
     }
 
     @OnClick(R.id.fab_add)
