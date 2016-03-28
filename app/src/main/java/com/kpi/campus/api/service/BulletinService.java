@@ -1,7 +1,6 @@
 package com.kpi.campus.api.service;
 
 import com.kpi.campus.model.pojo.Bulletin;
-import com.kpi.campus.model.pojo.Contributor;
 
 import java.util.List;
 
@@ -22,9 +21,5 @@ public interface BulletinService {
     })
     @GET("/board/all")
     Observable<List<Bulletin>> getBulletins(@Header("Authorization") String authorization, @Query("limit") int limit, @Query("lastLoadedBulletinId") int lastId);
-
-
-    @GET("/repos/kpi-ua/ecampus-client-android/contributors")
-Observable<List<Contributor>> getCont();
 
 }
