@@ -5,6 +5,8 @@ import android.content.res.Resources;
 import android.content.res.TypedArray;
 
 import com.kpi.campus.R;
+import com.kpi.campus.model.dao.BulletinModeratorDao;
+import com.kpi.campus.model.dao.IDataAccessObject;
 import com.kpi.campus.model.pojo.Bulletin;
 import com.kpi.campus.ui.Navigator;
 
@@ -17,11 +19,13 @@ public class BulletinBoardModeratorPresenter extends BasePresenter {
     private IView mView;
     private Context mContext;
     private Navigator mNavigator;
+    private IDataAccessObject<Bulletin> mDataAccess;
 
     @Inject
     public BulletinBoardModeratorPresenter(Context context, Navigator navigator) {
         mContext = context;
         mNavigator = navigator;
+        mDataAccess = new BulletinModeratorDao();
     }
 
     public void setView(IView view) {
@@ -53,10 +57,18 @@ public class BulletinBoardModeratorPresenter extends BasePresenter {
 
     /**
      * Handles click on recyclerview item.
-     * @param item
+     * @param item an item that is clicked on
      */
     public void onItemClick(Object item) {
         mNavigator.startBulletinContentActivity((Bulletin) item);
+    }
+
+    /**
+     * Return access object to the list of Bulletins
+     * @return access object
+     */
+    public IDataAccessObject getDao() {
+        return mDataAccess;
     }
 
     public interface IView {

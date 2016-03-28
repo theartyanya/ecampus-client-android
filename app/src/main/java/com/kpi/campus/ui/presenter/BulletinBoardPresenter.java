@@ -68,7 +68,7 @@ public class BulletinBoardPresenter extends BasePresenter {
 
     /**
      * Handles click on recyclerview item.
-     * @param item
+     * @param item an item that is clicked on
      */
     public void onItemClick(Object item) {
         mNavigator.startBulletinContentActivity((Bulletin) item);
@@ -98,6 +98,10 @@ public class BulletinBoardPresenter extends BasePresenter {
         return ((BulletinDao) mDataAccess).getFilteredBySubdiv();
     }
 
+    /**
+     * Return access object to the list of Bulletins
+     * @return
+     */
     public IDataAccessObject getDao() {
         return mDataAccess;
     }

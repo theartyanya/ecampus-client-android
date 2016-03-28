@@ -13,6 +13,7 @@ import android.view.View;
 
 import com.kpi.campus.R;
 import com.kpi.campus.di.UIModule;
+import com.kpi.campus.model.dao.IDataAccessObject;
 import com.kpi.campus.model.pojo.Bulletin;
 import com.kpi.campus.rx.BulletinModeratorResponseManager;
 import com.kpi.campus.ui.adapter.PagingRecyclerAdapter;
@@ -208,6 +209,8 @@ public class BulletinBoardModeratorActivity extends BaseActivity implements Bull
 
                     @Override
                     public void onNext(List<Bulletin> items) {
+                        IDataAccessObject<Bulletin> dao = mPresenter.getDao();
+                        dao.setData(items);
 
                         mAdapter.addNewItems(items);
                     }
