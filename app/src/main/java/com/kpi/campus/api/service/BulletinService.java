@@ -22,4 +22,10 @@ public interface BulletinService {
     @GET("/board/all")
     Observable<List<Bulletin>> getBulletins(@Header("Authorization") String authorization, @Query("limit") int limit, @Query("lastLoadedBulletinId") int lastId);
 
+    @Headers({
+            "Accept: application/json",
+            "Content-Type: application/json"
+    })
+    @GET("/board/moderator/all")
+    Observable<List<Bulletin>> getModeratorBulletins(@Header("Authorization") String authorization, @Query("limit") int limit, @Query("lastLoadedBulletinId") int lastId);
 }
