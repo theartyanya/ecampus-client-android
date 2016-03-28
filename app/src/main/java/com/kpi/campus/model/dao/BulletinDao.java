@@ -32,7 +32,7 @@ public class BulletinDao implements IDataAccessObject<Bulletin> {
                 if (userProfile.contains(bul.getProfile())) {
                     mBulletinsByProfile.add(bul);
                 }
-                if (userSubdivision.equalsIgnoreCase(bul.getSubdivision())) {
+                if (userSubdivision.trim().equalsIgnoreCase(bul.getSubdivision().trim())) {
                     mBulletinsBySubdiv.add(bul);
                 }
             }

@@ -40,6 +40,9 @@ public class Bulletin implements Parcelable {
     @SerializedName("dateEnd")
     @Expose
     private String dateEnd;
+    @SerializedName("actuality")
+    @Expose
+    private boolean actuality;
 
     public Bulletin(String id, String theme, String author, String dateCreate) {
         this.id = id;
@@ -57,6 +60,7 @@ public class Bulletin implements Parcelable {
         dateCreate = in.readString();
         dateStart = in.readString();
         dateEnd = in.readString();
+        actuality = in.readByte() != 0;
     }
 
 
@@ -212,6 +216,7 @@ public class Bulletin implements Parcelable {
         dest.writeString(dateCreate);
         dest.writeString(dateStart);
         dest.writeString(dateEnd);
+        dest.writeByte((byte) (actuality ? 1 : 0));
     }
 
     /**
