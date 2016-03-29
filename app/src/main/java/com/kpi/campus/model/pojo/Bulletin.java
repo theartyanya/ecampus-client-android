@@ -63,7 +63,6 @@ public class Bulletin implements Parcelable {
         actuality = in.readByte() != 0;
     }
 
-
     /**
      * @return The id
      */
@@ -188,6 +187,20 @@ public class Bulletin implements Parcelable {
      */
     public void setDateEnd(String dateEnd) {
         this.dateEnd = dateEnd;
+    }
+
+    /**
+     * @return The actuality
+     */
+    public boolean getActuality() {
+        return actuality;
+    }
+
+    /**
+     * @param actuality The actuality
+     */
+    public void setActuality(boolean actuality) {
+        this.actuality = actuality;
     }
 
     /**
