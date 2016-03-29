@@ -153,18 +153,16 @@ public class BulletinBoardActivity extends BaseActivity implements BulletinBoard
         switch (tabPosition) {
             case TAB_ACTUAL:
                 bulletins = mPresenter.getData();
-
                 break;
             case TAB_PROFILE:
                 bulletins = mPresenter.getFilteredByProfile();
-
                 break;
             case TAB_SUBDIVISION:
                 bulletins = mPresenter.getFilteredBySubdivision();
                 break;
-            default:
-                mAdapter.setItems(bulletins);
         }
+            mAdapter.setItems(bulletins);
+
     }
 
     private void setToolbar() {

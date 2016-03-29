@@ -10,6 +10,8 @@ import com.kpi.campus.model.dao.IDataAccessObject;
 import com.kpi.campus.model.pojo.Bulletin;
 import com.kpi.campus.ui.Navigator;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 /**
@@ -73,6 +75,46 @@ public class BulletinBoardModeratorPresenter extends BasePresenter {
      */
     public IDataAccessObject getDao() {
         return mDataAccess;
+    }
+
+    /**
+     * Get Bulletin data from DataAccessObject
+     * @return list of bulletins
+     */
+    public List<Bulletin> getData() {
+        return mDataAccess.getData();
+    }
+
+    /**
+     * Get Bulletin data filtered by profile which matches User profile
+     * @return list of bulletins filtered by User profile
+     */
+    public List<Bulletin> getFilteredByProfile() {
+        return ((BulletinModeratorDao) mDataAccess).getFilteredByProfile();
+    }
+
+    /**
+     * Get Bulletin data filtered by subdivision which matches User subdivision
+     * @return list of bulletins filtered by User subdivision
+     */
+    public List<Bulletin> getFilteredBySubdivision() {
+        return ((BulletinModeratorDao) mDataAccess).getFilteredBySubdiv();
+    }
+
+    /**
+     * Get Bulletins which already started and not expired
+     * @return list of bulletins filtered by date
+     */
+    public List<Bulletin> getFilteredByDate() {
+        return ((BulletinModeratorDao) mDataAccess).getNotExpired();
+    }
+
+    /**
+     * Get deleted Bulletins
+     * @return list of deleted bulletins
+     */
+    public List<Bulletin> getDeletedBulletins() {
+        return ((BulletinModeratorDao) mDataAccess).getDeleted();
     }
 
     public interface IView {

@@ -159,19 +159,23 @@ public class BulletinBoardModeratorActivity extends BaseActivity implements Bull
         List<Bulletin> bulletins = new ArrayList<>();
         switch (tabPosition) {
             case TAB_ALL:
+                bulletins = mPresenter.getData();
                 break;
             case TAB_ACTUAL:
-
+                bulletins = mPresenter.getFilteredByDate();
                 break;
             case TAB_PROFILE:
-
+                bulletins = mPresenter.getFilteredByProfile();
                 break;
             case TAB_SUBDIVISION:
+                bulletins = mPresenter.getFilteredBySubdivision();
                 break;
             case TAB_DELETED:
+                bulletins = mPresenter.getDeletedBulletins();
                 break;
-            default:
-                mAdapter.setItems(bulletins);
+        }
+        if(!bulletins.isEmpty()) {
+            mAdapter.setItems(bulletins);
         }
     }
 
