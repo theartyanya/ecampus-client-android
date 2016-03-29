@@ -16,16 +16,20 @@ import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.kpi.campus.R;
 import com.kpi.campus.di.UIModule;
 import com.kpi.campus.model.Recipient;
+import com.kpi.campus.model.pojo.Bulletin;
+import com.kpi.campus.model.pojo.User;
 import com.kpi.campus.ui.adapter.BulletinsRecipientAdapter;
 import com.kpi.campus.ui.adapter.RecipientAutoCompleteAdapter;
 import com.kpi.campus.ui.adapter.SpinnerProfileAdapter;
 import com.kpi.campus.ui.fragment.DatePickerFragment;
 import com.kpi.campus.ui.presenter.NewBulletinPresenter;
 import com.kpi.campus.ui.view.DelayAutoCompleteTextView;
+import com.kpi.campus.util.DateUtil;
 import com.kpi.campus.util.ToastUtil;
 
 import java.util.ArrayList;
@@ -59,6 +63,7 @@ public class NewBulletinActivity extends BaseActivity implements NewBulletinPres
 
     private BulletinsRecipientAdapter mAdapter;
     private String mActivityTitle = "";
+    private Bulletin mCurrentBulletin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +72,7 @@ public class NewBulletinActivity extends BaseActivity implements NewBulletinPres
         bindViews();
         mPresenter.setView(this);
         mActivityTitle = getIntent().getStringExtra("KEY_TITLE");
+        mCurrentBulletin = getIntent().getParcelableExtra("KEY_BULLETIN");
         mPresenter.initializeViewComponent();
     }
 
@@ -108,6 +114,42 @@ public class NewBulletinActivity extends BaseActivity implements NewBulletinPres
         setProfileSpinner();
         setAutoCompleteRecipient();
         setRadioGroup();
+        setViewValues();
+    }
+
+    private void setViewValues() {
+        User user = User.getInstance();
+        TextView tv = (TextView) findViewById(R.id.text_view_author_name);
+        tv.setText(user.name);
+        // mCurrentBulletin == null means that activity is opened on mode ADD
+        // mCurrentBulletin != null means that this bulletin has to be edited
+        if(mCurrentBulletin == null) {
+            setValuesForAddMode();
+        } else {
+            setValuesForEditMode();
+        }
+    }
+
+    private void setValuesForAddMode() {
+        TextView tv = (TextView) findViewById(R.id.text_view_actuality_value);
+        tv.setText(R.string.yes);
+        String currentDate = DateUtil.getCurrentDate();
+        tv = (TextView) findViewById(R.id.text_view_creation_date_value);
+        tv.setText(currentDate);
+        tv = (TextView) findViewById(R.id.text_view_change_actuality_date_value);
+        tv.setText(currentDate);
+    }
+
+    private void setValuesForEditMode() {
+        TextView tv = (TextView) findViewById(R.id.text_view_actuality_value);
+        if(mCurrentBulletin.getActuality())
+            tv.setText(R.string.yes);
+        else
+            tv.setText(R.string.no);
+        tv = (TextView) findViewById(R.id.text_view_creation_date_value);
+        tv.setText(mCurrentBulletin.getDateCreate());
+        tv = (TextView) findViewById(R.id.text_view_change_actuality_date_value);
+        tv.setText(mCurrentBulletin.getDateCreate());
     }
 
     private void setRadioGroup() {
