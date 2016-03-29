@@ -74,6 +74,7 @@ dependencies {
     provided 'com.squareup.dagger:dagger-compiler:1.2.2'
     compile 'com.github.clans:fab:1.6.2'
     compile 'com.android.support:support-annotations:22.2.0'
+    compile 'com.annimon:stream:1.0.1'
 
     androidTestCompile 'com.android.support.test:runner:0.3'
     androidTestCompile 'com.android.support.test:rules:0.3'
