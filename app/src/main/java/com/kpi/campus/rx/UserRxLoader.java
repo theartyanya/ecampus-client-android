@@ -16,7 +16,7 @@ import rx.schedulers.Schedulers;
 /**
  * Created by Administrator on 21.03.2016.
  */
-public class UserRxLoader extends BaseRxLoader {
+public class UserRxLoader {
 
     private Preference mPreference;
 
@@ -24,7 +24,6 @@ public class UserRxLoader extends BaseRxLoader {
         mPreference = preference;
     }
 
-    @Override
     public void apiCall() {
         UserService service = ServiceCreator.createService(UserService.class);
         Observable<User> observable = service.getUser("bearer " + User.getInstance().token);

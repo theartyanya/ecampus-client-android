@@ -63,6 +63,10 @@ public class BulletinBoardModeratorPresenter extends BasePresenter {
         mNavigator.startBulletinContentActivity((Bulletin) item);
     }
 
+    public void editBulletin(String title) {
+        mNavigator.startNewBulletinActivity(title);
+    }
+
     /**
      * Return access object to the list of Bulletins
      * @return access object

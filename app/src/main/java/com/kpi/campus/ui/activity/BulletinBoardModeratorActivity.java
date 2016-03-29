@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.PopupMenu;
 
 import com.kpi.campus.R;
 import com.kpi.campus.di.UIModule;
@@ -78,6 +79,18 @@ public class BulletinBoardModeratorActivity extends BaseActivity implements Bull
                     mPresenter.onItemClick(item);
                 }
             };
+
+    private PopupMenu.OnMenuItemClickListener onMenuItemClickListener = new PopupMenu.OnMenuItemClickListener() {
+        @Override
+        public boolean onMenuItemClick(MenuItem menuItem) {
+            switch (menuItem.getItemId()) {
+                case R.id.edit:
+                    mPresenter.editBulletin(getString(R.string.edit_new_bulletin));
+                    break;
+            }
+            return true;
+        }
+    };
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
