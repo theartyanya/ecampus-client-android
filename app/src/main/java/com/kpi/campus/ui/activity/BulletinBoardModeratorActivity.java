@@ -194,6 +194,7 @@ public class BulletinBoardModeratorActivity extends BaseActivity implements Bull
         mRecyclerView.setSaveEnabled(true);
 
         mAdapter.setOnItemClickListener(onItemClickListener);
+        mAdapter.setOnMenuItemClickListener(onMenuItemClickListener);
         mRecyclerView.setAdapter(mAdapter);
 
         // if all items was loaded we don't need Pagination
