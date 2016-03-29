@@ -6,42 +6,51 @@ import com.kpi.campus.model.pojo.User;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.kpi.campus.util.BulletinPredicates.filterBulletins;
+import static com.kpi.campus.util.BulletinPredicates.isMatchesProfile;
+import static com.kpi.campus.util.BulletinPredicates.isMatchesSubdivision;
+
 /**
  * Created by Administrator on 21.03.2016.
  */
 public class BulletinDao implements IDataAccessObject<Bulletin> {
 
-    private List<Bulletin> mBulletins = new ArrayList<>();
-
-    private List<Bulletin> mBulletinsByProfile = new ArrayList<>();
-    private List<Bulletin> mBulletinsBySubdiv = new ArrayList<>();
+    /**
+     * All bulletins available for current user
+     */
+    private List<Bulletin> mAll = new ArrayList<>();
+    /**
+     * Bulletins filtered by user profile
+     */
+    private List<Bulletin> mByProfile = new ArrayList<>();
+    /**
+     * Bulletins filtered by user subdivision
+     */
+    private List<Bulletin> mBySubdivision = new ArrayList<>();
 
     @Override
     public List<Bulletin> getData() {
-        return mBulletins;
+        return mAll;
     }
 
     @Override
     public void setData(List<Bulletin> data) {
-        mBulletins.addAll(data);
+        if (data.isEmpty()) return;
+
+        mAll.addAll(data);
 
         List<String> userProfile = User.getInstance().position;
         String userSubdivision = User.getInstance().subdivision;
+
         if(userProfile != null && userSubdivision != null) {
-            for (Bulletin bul : data) {
-                if (userProfile.contains(bul.getProfile())) {
-                    mBulletinsByProfile.add(bul);
-                }
-                if (userSubdivision.trim().equalsIgnoreCase(bul.getSubdivision().trim())) {
-                    mBulletinsBySubdiv.add(bul);
-                }
-            }
+            mByProfile.addAll(filterBulletins(mAll, isMatchesProfile(userProfile)));
+            mBySubdivision.addAll(filterBulletins(mAll, isMatchesSubdivision(userSubdivision)));
         }
     }
 
     @Override
     public Bulletin get(int number) {
-        return mBulletins.get(number);
+        return mAll.get(number);
     }
 
     @Override
@@ -55,10 +64,10 @@ public class BulletinDao implements IDataAccessObject<Bulletin> {
     }
 
     public List<Bulletin> getFilteredByProfile() {
-        return mBulletinsByProfile;
+        return mByProfile;
     }
 
     public List<Bulletin> getFilteredBySubdiv() {
-        return mBulletinsBySubdiv;
+        return mBySubdivision;
     }
 }
