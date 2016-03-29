@@ -2,11 +2,9 @@ package com.kpi.campus.model.dao;
 
 import com.kpi.campus.model.pojo.Bulletin;
 import com.kpi.campus.model.pojo.User;
+import com.kpi.campus.util.DateUtil;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import static com.kpi.campus.util.BulletinPredicates.filterBulletins;
@@ -59,14 +57,8 @@ public class BulletinModeratorDao implements IDataAccessObject<Bulletin> {
             mByProfile.addAll(filterBulletins(mAll, isMatchesProfile(userProfile)));
             mBySubdiv.addAll(filterBulletins(mAll, isMatchesSubdivision(userSubdivision)));
         }
-        mNotExpired.addAll(filterBulletins(mAll, isNotExpired(getCurrentDate())));
+        mNotExpired.addAll(filterBulletins(mAll, isNotExpired(DateUtil.getCurrentDate())));
         mDeleted.addAll(filterBulletins(mAll, isDeleted()));
-    }
-
-    private String getCurrentDate() {
-        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        Date date = new Date();
-        return dateFormat.format(date);
     }
 
     @Override
