@@ -5,11 +5,8 @@ import com.annimon.stream.Stream;
 import com.annimon.stream.function.Predicate;
 import com.kpi.campus.model.pojo.Bulletin;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * Created by Administrator on 29.03.2016.
@@ -17,9 +14,9 @@ import java.util.Locale;
 public class BulletinPredicates {
 
     public static Predicate<Bulletin> isNotExpired(String date) {
-        Date currentDate = convertToDate(date);
-        return p -> currentDate.after(convertToDate(p.getDateStart())) &&
-                        currentDate.before(convertToDate(p.getDateEnd()));
+        Date currentDate = DateUtil.convert(date);
+        return p -> currentDate.after(DateUtil.convert(p.getDateStart())) &&
+                        currentDate.before(DateUtil.convert(p.getDateEnd()));
     }
 
     public static Predicate<Bulletin> isMatchesProfile(List<String> profiles) {
@@ -40,13 +37,5 @@ public class BulletinPredicates {
                 .collect(Collectors.<Bulletin>toList());
     }
 
-    private static Date convertToDate(String date) {
-        try {
-            Date thedate = new SimpleDateFormat("dd/MM/yyyy", Locale.GERMAN).parse(date);
-            return thedate;
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
+
 }
