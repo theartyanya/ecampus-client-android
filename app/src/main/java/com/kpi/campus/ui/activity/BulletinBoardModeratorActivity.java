@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.PopupMenu;
+import android.widget.ProgressBar;
 
 import com.kpi.campus.R;
 import com.kpi.campus.di.UIModule;
@@ -41,6 +42,8 @@ public class BulletinBoardModeratorActivity extends BaseActivity implements Bull
     TabLayout mTabLayout;
     @Bind(R.id.recycler_view_bulletin)
     RecyclerView mRecyclerView;
+    @Bind(R.id.progress_bar_bulletin)
+    ProgressBar mProgressLoader;
     @Inject
     BulletinBoardModeratorPresenter mPresenter;
     private PagingRecyclerAdapter mAdapter;
@@ -175,9 +178,7 @@ public class BulletinBoardModeratorActivity extends BaseActivity implements Bull
                 bulletins = mPresenter.getDeletedBulletins();
                 break;
         }
-        if(!bulletins.isEmpty()) {
-            mAdapter.setItems(bulletins);
-        }
+        mAdapter.setItems(bulletins);
     }
 
     @OnClick(R.id.fab_add)
@@ -185,7 +186,19 @@ public class BulletinBoardModeratorActivity extends BaseActivity implements Bull
         mPresenter.onButtonAddClick(getString(R.string.add_new_bulletin));
     }
 
+    private void setVisible(View... views) {
+        for(View v : views)
+            v.setVisibility(View.VISIBLE);
+    }
+
+    private void setInvisible(View... views) {
+        for(View v : views)
+            v.setVisibility(View.GONE);
+    }
+
     private void setRecyclerView() {
+        setInvisible(mRecyclerView);
+
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         mRecyclerView.setHasFixedSize(true);
 
@@ -230,6 +243,9 @@ public class BulletinBoardModeratorActivity extends BaseActivity implements Bull
                     public void onNext(List<Bulletin> items) {
                         IDataAccessObject<Bulletin> dao = mPresenter.getDao();
                         dao.setData(items);
+
+                        setInvisible(mProgressLoader);
+                        setVisible(mRecyclerView);
 
                         mAdapter.addNewItems(items);
                     }
