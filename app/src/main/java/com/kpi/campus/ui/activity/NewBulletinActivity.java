@@ -142,6 +142,15 @@ public class NewBulletinActivity extends BaseActivity implements NewBulletinPres
     }
 
     private void setValuesForEditMode() {
+        EditText et = (EditText) findViewById(R.id.edit_text_bulletin_name);
+        et.setText(mCurrentBulletin.getSubject());
+        et = (EditText) findViewById(R.id.edit_text_bulletin_text);
+        et.setText(mCurrentBulletin.getText());
+        et = (EditText) findViewById(R.id.edit_text_start_period);
+        et.setText(mCurrentBulletin.getDateStart());
+        et = (EditText) findViewById(R.id.edit_text_end_period);
+        et.setText(mCurrentBulletin.getDateEnd());
+
         TextView tv = (TextView) findViewById(R.id.text_view_actuality_value);
         if(mCurrentBulletin.getActuality())
             tv.setText(R.string.yes);
