@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
 
 import com.kpi.campus.R;
 import com.kpi.campus.di.UIModule;
@@ -43,6 +44,8 @@ public class BulletinBoardActivity extends BaseActivity implements BulletinBoard
     TabLayout mTabLayout;
     @Bind(R.id.recycler_view_bulletin)
     RecyclerView mRecyclerView;
+    @Bind(R.id.progress_bar_bulletin)
+    ProgressBar mProgressLoader;
     @Inject
     BulletinBoardPresenter mPresenter;
     private PagingRecyclerAdapter mAdapter;
@@ -162,7 +165,6 @@ public class BulletinBoardActivity extends BaseActivity implements BulletinBoard
                 break;
         }
             mAdapter.setItems(bulletins);
-
     }
 
     private void setToolbar() {
@@ -173,7 +175,19 @@ public class BulletinBoardActivity extends BaseActivity implements BulletinBoard
         getSupportActionBar().setTitle(R.string.activity_name_bulletin_board);
     }
 
+    private void setVisible(View... views) {
+        for(View v : views)
+            v.setVisibility(View.VISIBLE);
+    }
+
+    private void setInvisible(View... views) {
+        for(View v : views)
+            v.setVisibility(View.GONE);
+    }
+
     private void setRecyclerView() {
+        setInvisible(mRecyclerView);
+
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         mRecyclerView.setHasFixedSize(true);
 
@@ -217,6 +231,9 @@ public class BulletinBoardActivity extends BaseActivity implements BulletinBoard
                     public void onNext(List<Bulletin> items) {
                         IDataAccessObject<Bulletin> dao = mPresenter.getDao();
                         dao.setData(items);
+
+                        setInvisible(mProgressLoader);
+                        setVisible(mRecyclerView);
 
                         mAdapter.addNewItems(items);
                     }
