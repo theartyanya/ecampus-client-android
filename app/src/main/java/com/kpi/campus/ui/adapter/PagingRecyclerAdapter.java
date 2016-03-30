@@ -31,6 +31,7 @@ public class PagingRecyclerAdapter extends RecyclerView.Adapter<PagingRecyclerAd
     // after reorientation test this member
     // or one extra request will be sent after each reorientation
     private boolean mAllItemsLoaded;
+    private Bulletin mClickedItem;
 
     public PagingRecyclerAdapter(boolean isModerator) {
         mIsModerator = isModerator;
@@ -98,6 +99,9 @@ public class PagingRecyclerAdapter extends RecyclerView.Adapter<PagingRecyclerAd
         mMenuListener = listener;
     }
 
+    public Bulletin getClickedItem() {
+        return mClickedItem;
+    }
 
     protected class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -107,7 +111,6 @@ public class PagingRecyclerAdapter extends RecyclerView.Adapter<PagingRecyclerAd
         TextView theme;
         @Bind(R.id.text_view_bulletin_author)
         TextView author;
-
         @Bind(R.id.button_overflow)
         ImageButton btnOverflow;
 
@@ -126,6 +129,9 @@ public class PagingRecyclerAdapter extends RecyclerView.Adapter<PagingRecyclerAd
 
         @OnClick(R.id.button_overflow)
         public void btnOverflowClick(final View view) {
+            int pos = getAdapterPosition();
+            mClickedItem = mData.get(pos);
+
             PopupMenu menu = new PopupMenu(view.getContext(), view);
             menu.inflate(R.menu.menu_popup_bulletin);
             menu.show();

@@ -56,7 +56,7 @@ public class BulletinContentActivity extends BaseActivity implements BulletinCon
     @Override
     public void setViewComponent() {
         setToolbar();
-        setViewsValues();
+        setValuesInViews();
     }
 
     private void setToolbar() {
@@ -67,7 +67,7 @@ public class BulletinContentActivity extends BaseActivity implements BulletinCon
         getSupportActionBar().setTitle(R.string.bulletin_text_content);
     }
 
-    private void setViewsValues() {
+    private void setValuesInViews() {
         if(mBulletin == null)
             return;
 
