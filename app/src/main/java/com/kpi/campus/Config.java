@@ -35,7 +35,7 @@ public class Config {
 
     public static final String USER_NAME = "user_name";
 
-    public static final String USER_POSITION = "user_name";
+    public static final String USER_POSITION = "user_position";
 
     public static final String USER_SUBDIVISION = "user_subdivision";
 
