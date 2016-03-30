@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 
+import com.kpi.campus.Config;
 import com.kpi.campus.di.ActivityContext;
 import com.kpi.campus.model.pojo.Bulletin;
 import com.kpi.campus.ui.activity.BulletinBoardActivity;
@@ -48,13 +49,13 @@ public class Navigator {
 
     public void startBulletinContentActivity(Bulletin item) {
         Intent intent = getLaunchIntent(BulletinContentActivity.class);
-        intent.putExtra("KEY_BULLETIN", item);
+        intent.putExtra(Config.KEY_BULLETIN, item);
         mActivityContext.startActivity(intent);
     }
 
     public void startNewBulletinActivity(String title) {
         Intent intent = getLaunchIntent(NewBulletinActivity.class);
-        intent.putExtra("KEY_TITLE", title);
+        intent.putExtra(Config.KEY_TITLE, title);
         mActivityContext.startActivity(intent);
     }
 

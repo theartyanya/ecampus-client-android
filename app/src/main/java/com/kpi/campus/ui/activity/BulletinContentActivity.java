@@ -5,6 +5,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.kpi.campus.Config;
 import com.kpi.campus.R;
 import com.kpi.campus.di.UIModule;
 import com.kpi.campus.model.pojo.Bulletin;
@@ -30,7 +31,7 @@ public class BulletinContentActivity extends BaseActivity implements BulletinCon
         setContentView(R.layout.activity_bulletin_content);
         bindViews();
 
-        mBulletin = getIntent().getParcelableExtra("KEY_BULLETIN");
+        mBulletin = getIntent().getParcelableExtra(Config.KEY_BULLETIN);
         mPresenter.setView(this);
         mPresenter.initializeViewComponent();
     }

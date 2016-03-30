@@ -18,6 +18,7 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.kpi.campus.Config;
 import com.kpi.campus.R;
 import com.kpi.campus.di.UIModule;
 import com.kpi.campus.model.Recipient;
@@ -71,8 +72,8 @@ public class NewBulletinActivity extends BaseActivity implements NewBulletinPres
         setContentView(R.layout.activity_bulletin_markup);
         bindViews();
         mPresenter.setView(this);
-        mActivityTitle = getIntent().getStringExtra("KEY_TITLE");
-        mCurrentBulletin = getIntent().getParcelableExtra("KEY_BULLETIN");
+        mActivityTitle = getIntent().getStringExtra(Config.KEY_TITLE);
+        mCurrentBulletin = getIntent().getParcelableExtra(Config.KEY_BULLETIN);
         mPresenter.initializeViewComponent();
     }
 
