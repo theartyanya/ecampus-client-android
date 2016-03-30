@@ -15,6 +15,8 @@ import java.util.List;
 import javax.inject.Inject;
 
 /**
+ * BulletinBoardModeratorPresenter created to manage BulletinBoardModeratorActivity.
+ * <p>
  * Created by Administrator on 19.02.2016.
  */
 public class BulletinBoardModeratorPresenter extends BasePresenter {
@@ -41,6 +43,7 @@ public class BulletinBoardModeratorPresenter extends BasePresenter {
 
     /**
      * Get array of icons of BulletinBoardModerator tabs.
+     *
      * @return typed array of icons
      */
     public TypedArray getTabsIcon() {
@@ -51,26 +54,35 @@ public class BulletinBoardModeratorPresenter extends BasePresenter {
     /**
      * Handles click on Add button.
      * Open NewBulletinActivity class
+     *
      * @param title title of activity to be displayed on toolbar.
      */
     public void onButtonAddClick(String title) {
-        mNavigator.startNewBulletinActivity(title);
+        mNavigator.startNewBulletinActivity(title, null);
     }
 
     /**
      * Handles click on recyclerview item.
+     *
      * @param item an item that is clicked on
      */
     public void onItemClick(Object item) {
         mNavigator.startBulletinContentActivity((Bulletin) item);
     }
 
-    public void editBulletin(String title) {
-        mNavigator.startNewBulletinActivity(title);
+    /**
+     * Handles click on edit menu item.
+     *
+     * @param title    activity title to be opened (Edit)
+     * @param bulletin recyclerview item which has to be edited
+     */
+    public void onEditMenuClick(String title, Bulletin bulletin) {
+        mNavigator.startNewBulletinActivity(title, bulletin);
     }
 
     /**
      * Return access object to the list of Bulletins
+     *
      * @return access object
      */
     public IDataAccessObject getDao() {
@@ -79,6 +91,7 @@ public class BulletinBoardModeratorPresenter extends BasePresenter {
 
     /**
      * Get Bulletin data from DataAccessObject
+     *
      * @return list of bulletins
      */
     public List<Bulletin> getData() {
@@ -87,6 +100,7 @@ public class BulletinBoardModeratorPresenter extends BasePresenter {
 
     /**
      * Get Bulletin data filtered by profile which matches User profile
+     *
      * @return list of bulletins filtered by User profile
      */
     public List<Bulletin> getFilteredByProfile() {
@@ -95,6 +109,7 @@ public class BulletinBoardModeratorPresenter extends BasePresenter {
 
     /**
      * Get Bulletin data filtered by subdivision which matches User subdivision
+     *
      * @return list of bulletins filtered by User subdivision
      */
     public List<Bulletin> getFilteredBySubdivision() {
@@ -103,6 +118,7 @@ public class BulletinBoardModeratorPresenter extends BasePresenter {
 
     /**
      * Get Bulletins which already started and not expired
+     *
      * @return list of bulletins filtered by date
      */
     public List<Bulletin> getFilteredByDate() {
@@ -111,6 +127,7 @@ public class BulletinBoardModeratorPresenter extends BasePresenter {
 
     /**
      * Get deleted Bulletins
+     *
      * @return list of deleted bulletins
      */
     public List<Bulletin> getDeletedBulletins() {

@@ -53,9 +53,10 @@ public class Navigator {
         mActivityContext.startActivity(intent);
     }
 
-    public void startNewBulletinActivity(String title) {
+    public void startNewBulletinActivity(String title, Bulletin item) {
         Intent intent = getLaunchIntent(NewBulletinActivity.class);
         intent.putExtra(Config.KEY_TITLE, title);
+        intent.putExtra(Config.KEY_BULLETIN, item);
         mActivityContext.startActivity(intent);
     }
 

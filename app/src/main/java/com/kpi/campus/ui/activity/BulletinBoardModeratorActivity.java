@@ -85,7 +85,8 @@ public class BulletinBoardModeratorActivity extends BaseActivity implements Bull
         public boolean onMenuItemClick(MenuItem menuItem) {
             switch (menuItem.getItemId()) {
                 case R.id.edit:
-                    mPresenter.editBulletin(getString(R.string.edit_new_bulletin));
+                    Bulletin b = mAdapter.getClickedItem();
+                    mPresenter.onEditMenuClick(getString(R.string.edit_new_bulletin), b);
                     break;
             }
             return true;
