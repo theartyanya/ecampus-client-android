@@ -7,6 +7,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.ScaleAnimation;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
@@ -107,7 +109,23 @@ public class MainActivity extends BaseActivity implements MainPresenter.IView {
         mGridSubsystem.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                mPresenter.startActivityBasedOn(position);
+                ScaleAnimation sc = new ScaleAnimation(1.0f, 1.1f, 1.0f, 1.1f, 1, 0.5f, 1, 0.5f);
+                sc.setDuration(100);
+                sc.setRepeatCount(1);
+                sc.setRepeatMode(2);
+                sc.setAnimationListener(new Animation.AnimationListener() {
+                    public void onAnimationStart(Animation animation) {
+                    }
+
+                    public void onAnimationEnd(Animation animation) {
+                        mPresenter.startActivityBasedOn(position);
+                    }
+
+                    public void onAnimationRepeat(Animation animation) {
+                    }
+                });
+                view.startAnimation(sc);
+
             }
         });
     }
