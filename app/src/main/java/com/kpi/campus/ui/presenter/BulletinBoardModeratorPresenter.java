@@ -10,9 +10,13 @@ import com.kpi.campus.model.dao.IDataAccessObject;
 import com.kpi.campus.model.pojo.Bulletin;
 import com.kpi.campus.ui.Navigator;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
+
+import static com.kpi.campus.util.BulletinPredicates.filterBulletins;
+import static com.kpi.campus.util.BulletinPredicates.isMatchesQuerySubject;
 
 /**
  * BulletinBoardModeratorPresenter created to manage BulletinBoardModeratorActivity.
@@ -132,6 +136,27 @@ public class BulletinBoardModeratorPresenter extends BasePresenter {
      */
     public List<Bulletin> getDeletedBulletins() {
         return ((BulletinModeratorDao) mDataAccess).getDeleted();
+    }
+
+    /**
+     * Filter list by specified query
+     * @param list initial list
+     * @param query request that filters list
+     * @return filtered list
+     */
+    public List<Bulletin> filterData(List<Bulletin> list, String query) {
+        query = query.toLowerCase();
+        final List<Bulletin> filteredList = new ArrayList<>();
+
+        filteredList.addAll(filterBulletins(list, isMatchesQuerySubject(query)));
+
+//        for (Bulletin b : list) {
+//            final String text = b.getSubject().toLowerCase();
+//            if (text.contains(query)) {
+//                filteredList.add(b);
+//            }
+//        }
+        return filteredList;
     }
 
     public interface IView {

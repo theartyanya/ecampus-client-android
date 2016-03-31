@@ -51,6 +51,10 @@ public class PagingRecyclerAdapter extends RecyclerView.Adapter<PagingRecyclerAd
         notifyDataSetChanged();
     }
 
+    public List<Bulletin> getItems() {
+        return mData;
+    }
+
     public boolean isAllItemsLoaded() {
         return mAllItemsLoaded;
     }
@@ -101,6 +105,12 @@ public class PagingRecyclerAdapter extends RecyclerView.Adapter<PagingRecyclerAd
 
     public Bulletin getClickedItem() {
         return mClickedItem;
+    }
+
+    public void setFilter(List<Bulletin> bulletins) {
+        mData.clear();
+        mData.addAll(bulletins);
+        notifyDataSetChanged();
     }
 
     protected class ViewHolder extends RecyclerView.ViewHolder {

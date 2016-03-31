@@ -5,11 +5,12 @@ import android.content.res.Resources;
 import android.content.res.TypedArray;
 
 import com.kpi.campus.R;
-import com.kpi.campus.model.pojo.Bulletin;
 import com.kpi.campus.model.dao.BulletinDao;
 import com.kpi.campus.model.dao.IDataAccessObject;
+import com.kpi.campus.model.pojo.Bulletin;
 import com.kpi.campus.ui.Navigator;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -86,7 +87,7 @@ public class BulletinBoardPresenter extends BasePresenter {
      * Get Bulletin data filtered by profile which matches User profile
      * @return list of bulletins filtered by User profile
      */
-    public List<Bulletin> getFilteredByProfile() {
+    public List<Bulletin> getSelectedByProfile() {
         return ((BulletinDao) mDataAccess).getFilteredByProfile();
     }
 
@@ -94,7 +95,7 @@ public class BulletinBoardPresenter extends BasePresenter {
      * Get Bulletin data filtered by subdivision which matches User subdivision
      * @return list of bulletins filtered by User subdivision
      */
-    public List<Bulletin> getFilteredBySubdivision() {
+    public List<Bulletin> getSelectedBySubdivision() {
         return ((BulletinDao) mDataAccess).getFilteredBySubdiv();
     }
 
@@ -104,6 +105,25 @@ public class BulletinBoardPresenter extends BasePresenter {
      */
     public IDataAccessObject getDao() {
         return mDataAccess;
+    }
+
+    /**
+     * Filter list by specified query
+     * @param list initial list
+     * @param query request that filters list
+     * @return filtered list
+     */
+    public List<Bulletin> filterData(List<Bulletin> list, String query) {
+        query = query.toLowerCase();
+
+        final List<Bulletin> filteredList = new ArrayList<>();
+        for (Bulletin b : list) {
+            final String text = b.getSubject().toLowerCase();
+            if (text.contains(query)) {
+                filteredList.add(b);
+            }
+        }
+        return filteredList;
     }
 
     public interface IView {
