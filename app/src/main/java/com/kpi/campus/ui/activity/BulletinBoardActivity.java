@@ -5,22 +5,27 @@ import android.os.Bundle;
 import android.support.annotation.VisibleForTesting;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.NavUtils;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 
+import com.kpi.campus.Config;
 import com.kpi.campus.R;
 import com.kpi.campus.di.UIModule;
-import com.kpi.campus.model.pojo.Bulletin;
 import com.kpi.campus.model.dao.IDataAccessObject;
+import com.kpi.campus.model.pojo.Bulletin;
 import com.kpi.campus.rx.BulletinResponseManager;
 import com.kpi.campus.ui.adapter.PagingRecyclerAdapter;
 import com.kpi.campus.ui.presenter.BulletinBoardPresenter;
 import com.kpi.campus.ui.view.OnItemClickListener;
+import com.kpi.campus.util.ToastUtil;
 import com.kpi.campus.util.pagination.PaginationTool;
 
 import java.util.ArrayList;
@@ -51,6 +56,11 @@ public class BulletinBoardActivity extends BaseActivity implements BulletinBoard
     private PagingRecyclerAdapter mAdapter;
     private Subscription mPagingSubscription;
 
+    /**
+     * The list of bulletins which are currently in adapter.
+     * Designed for filtering purposes.
+     */
+    private List<Bulletin> mBulletins;
     /**
      * Whether the user is moderator.
      * Affects on toolbar menu view.
@@ -91,13 +101,30 @@ public class BulletinBoardActivity extends BaseActivity implements BulletinBoard
                 }
             };
 
+    private SearchView.OnQueryTextListener onQueryTextChangeListener = new SearchView.OnQueryTextListener() {
+        @Override
+        public boolean onQueryTextSubmit(String query) {
+            return false;
+        }
+
+        @Override
+        public boolean onQueryTextChange(String newText) {
+            final List<Bulletin> filteredList = mPresenter.filterData(mBulletins, newText);
+            mAdapter.setFilter(filteredList);
+            return false;
+        }
+    };
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         if (mIsModerator) {
-            getMenuInflater().inflate(R.menu.menu_bulletin_board_moderator, menu);
+            getMenuInflater().inflate(R.menu.menu_bulletin_board_with_m_icon, menu);
         } else {
             getMenuInflater().inflate(R.menu.menu_bulletin_board, menu);
         }
+        final MenuItem item = menu.findItem(R.id.action_search);
+        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(item);
+        searchView.setOnQueryTextListener(onQueryTextChangeListener);
         return true;
     }
 
@@ -152,19 +179,18 @@ public class BulletinBoardActivity extends BaseActivity implements BulletinBoard
     }
 
     private void setCurrentTabFragment(int tabPosition) {
-        List<Bulletin> bulletins = new ArrayList<>();
         switch (tabPosition) {
             case TAB_ACTUAL:
-                bulletins = mPresenter.getData();
+                mBulletins = mPresenter.getData();
                 break;
             case TAB_PROFILE:
-                bulletins = mPresenter.getFilteredByProfile();
+                mBulletins = mPresenter.getSelectedByProfile();
                 break;
             case TAB_SUBDIVISION:
-                bulletins = mPresenter.getFilteredBySubdivision();
+                mBulletins = mPresenter.getSelectedBySubdivision();
                 break;
         }
-            mAdapter.setItems(bulletins);
+        mAdapter.setItems(mBulletins);
     }
 
     private void setToolbar() {
@@ -176,12 +202,12 @@ public class BulletinBoardActivity extends BaseActivity implements BulletinBoard
     }
 
     private void setVisible(View... views) {
-        for(View v : views)
+        for (View v : views)
             v.setVisibility(View.VISIBLE);
     }
 
     private void setInvisible(View... views) {
-        for(View v : views)
+        for (View v : views)
             v.setVisibility(View.GONE);
     }
 
@@ -225,6 +251,11 @@ public class BulletinBoardActivity extends BaseActivity implements BulletinBoard
 
                     @Override
                     public void onError(Throwable e) {
+                        if (e != null)
+                            Log.e(Config.LOG, e.getMessage());
+                        ToastUtil.showError(getString(R.string.error_while_data_obtaining), getApplicationContext());
+
+                        setViewsVisibility();
                     }
 
                     @Override
@@ -232,12 +263,17 @@ public class BulletinBoardActivity extends BaseActivity implements BulletinBoard
                         IDataAccessObject<Bulletin> dao = mPresenter.getDao();
                         dao.setData(items);
 
-                        setInvisible(mProgressLoader);
-                        setVisible(mRecyclerView);
+                        mBulletins = new ArrayList<>(dao.getData());
+                        setViewsVisibility();
 
                         mAdapter.addNewItems(items);
                     }
                 });
+    }
+
+    private void setViewsVisibility() {
+        setInvisible(mProgressLoader);
+        setVisible(mRecyclerView);
     }
 
     @Override

@@ -35,7 +35,8 @@ public class BulletinResponseManager {
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.e(Config.LOG, e.getMessage());
+                        if(e != null)
+                            Log.e(Config.LOG, e.getMessage());
                     }
 
                     @Override

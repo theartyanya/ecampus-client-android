@@ -108,7 +108,7 @@ public class PaginationTool<T> {
                 int attemptToRetryInc = numberOfAttemptToRetry + 1;
                 return getPagingObservable(listener, listener.onNextPage(lastId), attemptToRetryInc, lastId, retryCount);
             } else {
-                return Observable.empty();
+                return Observable.error(new PagingException("Exception while downloading has occurred. Check the url is valid, internet connection is available etc."));
             }
         });
     }
