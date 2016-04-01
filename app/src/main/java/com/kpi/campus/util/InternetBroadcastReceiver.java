@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.widget.Toast;
 
 /**
  * Created by Nikita on 30.03.2016.
@@ -19,9 +18,9 @@ public class InternetBroadcastReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         int type = getConnectivityStatus(context);
         if (type == TYPE_NOT_CONNECTED) {
-            Toast.makeText(context, "No Internet Acces", Toast.LENGTH_SHORT).show();
+            ToastUtil.showError("No Internet Acces", context);
         } else {
-            Toast.makeText(context, "Internet Acces OK", Toast.LENGTH_SHORT).show();
+            ToastUtil.showError("Internet Acces OK", context);
         }
 
     }

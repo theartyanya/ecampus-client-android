@@ -1,73 +1,77 @@
 package com.kpi.campus.ui.activity;
 
-import android.content.Intent;
 import android.content.IntentFilter;
-import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.view.WindowManager;
 
 import com.kpi.campus.R;
+import com.kpi.campus.di.UIModule;
+import com.kpi.campus.ui.presenter.SplashScreenPresenter;
 import com.kpi.campus.util.InternetBroadcastReceiver;
 
-public class SplashScreenActivity extends AppCompatActivity {
+import java.util.LinkedList;
+import java.util.List;
+
+import javax.inject.Inject;
+
+public class SplashScreenActivity extends BaseActivity implements SplashScreenPresenter.IView {
 
     private IntentFilter ifInternetCheck;
     private InternetBroadcastReceiver ibrInternetCheck;
     private boolean noInternet;
+    @Inject
+    SplashScreenPresenter ssPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_splash_screen);
+        bindViews();
+        ssPresenter.setView(this);
+        ssPresenter.initializeViewComponent();
+        setCheckingInternet();
+        startCheckingInternet();
     }
 
     @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
+    protected List<Object> getModules() {
+        //hz che ono delaet, no bez etogo not work
+        LinkedList<Object> modules = new LinkedList<>();
+        modules.add(new UIModule());
+        return modules;
+    }
+
+    @Override
+    public void checkInternet() {
+        ssPresenter.checkInternet();
+    }
+
+    @Override
+    public void setCheckingInternet() {
+        ssPresenter.setCheckingInternet();
+    }
+
+    @Override
+    public void startCheckingInternet() {
+        ssPresenter.startCheckingInternet();
+    }
+
+    @Override
+    public void setViewComponent() {
+        //hide all bars
+        disableActionBar();
+    }
+
+
+    private void disableActionBar() {
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        setContentView(R.layout.activity_splash_screen);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.hide();
         }
-
-        setCheckingInternet();
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (noInternet){
-                    checkInternet();
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }).start();
-    }
-
-    private void checkInternet() {
-        if (InternetBroadcastReceiver.getConnectivityStatus(getApplicationContext())
-                == InternetBroadcastReceiver.TYPE_NOT_CONNECTED) {
-            noInternet = true;
-        } else {
-            noInternet = false;
-            SplashScreenActivity.this
-                    .startActivity(new Intent(SplashScreenActivity
-                            .this.getApplicationContext(), MainActivity.class));
-            SplashScreenActivity.this.finish();
-        }
-    }
-
-    private void setCheckingInternet() {
-        noInternet = true;
-        ibrInternetCheck = new InternetBroadcastReceiver();
-        ifInternetCheck = new IntentFilter();
-        ifInternetCheck.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
-        registerReceiver(ibrInternetCheck, ifInternetCheck);
     }
 
     @Override
