@@ -18,7 +18,11 @@ import javax.inject.Inject;
 
 import butterknife.Bind;
 
-public class BulletinContentActivity extends BaseActivity implements BulletinContentPresenter.IView {
+/**
+ * This activity represents content of a Bulletin.
+ */
+public class BulletinContentActivity extends BaseActivity implements
+        BulletinContentPresenter.IView {
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
     @Inject
@@ -68,7 +72,7 @@ public class BulletinContentActivity extends BaseActivity implements BulletinCon
     }
 
     private void setValuesInViews() {
-        if(mBulletin == null)
+        if (mBulletin == null)
             return;
 
         TextView textView;

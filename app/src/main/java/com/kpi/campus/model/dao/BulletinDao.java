@@ -11,6 +11,8 @@ import static com.kpi.campus.util.BulletinPredicates.isMatchesProfile;
 import static com.kpi.campus.util.BulletinPredicates.isMatchesSubdivision;
 
 /**
+ * Implementation of IDataAccessObject for the Bulletin data model.
+ * <p>
  * Created by Administrator on 21.03.2016.
  */
 public class BulletinDao implements IDataAccessObject<Bulletin> {
@@ -42,9 +44,11 @@ public class BulletinDao implements IDataAccessObject<Bulletin> {
         List<String> userProfile = User.getInstance().position;
         String userSubdivision = User.getInstance().subdivision;
 
-        if(userProfile != null && userSubdivision != null) {
-            mByProfile.addAll(filterBulletins(mAll, isMatchesProfile(userProfile)));
-            mBySubdivision.addAll(filterBulletins(mAll, isMatchesSubdivision(userSubdivision)));
+        if (userProfile != null && userSubdivision != null) {
+            mByProfile.addAll(filterBulletins(mAll, isMatchesProfile
+                    (userProfile)));
+            mBySubdivision.addAll(filterBulletins(mAll, isMatchesSubdivision
+                    (userSubdivision)));
         }
     }
 
@@ -55,18 +59,24 @@ public class BulletinDao implements IDataAccessObject<Bulletin> {
 
     @Override
     public void update(Bulletin object) {
-
     }
 
     @Override
     public void delete(Bulletin object) {
-
     }
 
+    /**
+     * Get Bulletins filtered by user's profile.
+     * @return list of bulletins.
+     */
     public List<Bulletin> getFilteredByProfile() {
         return mByProfile;
     }
 
+    /**
+     * Get Bulletins filtered by user's subdivision.
+     * @return list of bulletins.
+     */
     public List<Bulletin> getFilteredBySubdiv() {
         return mBySubdivision;
     }

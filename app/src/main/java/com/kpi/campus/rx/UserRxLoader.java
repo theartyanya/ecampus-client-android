@@ -14,6 +14,8 @@ import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 /**
+ * Perform requests of the UserService class.
+ *
  * Created by Administrator on 21.03.2016.
  */
 public class UserRxLoader {
@@ -24,6 +26,9 @@ public class UserRxLoader {
         mPreference = preference;
     }
 
+    /**
+     * Implements the request to the api function.
+     */
     public void apiCall() {
         UserService service = ServiceCreator.createService(UserService.class);
         Observable<User> observable = service.getUser("bearer " + User.getInstance().token);
@@ -51,11 +56,5 @@ public class UserRxLoader {
         }
     };
 
-    Action1<Throwable> onErrorAction = new Action1<Throwable>() {
-
-        @Override
-        public void call(Throwable e) {
-            Log.e(Config.LOG, e.getMessage());
-        }
-    };
+    Action1<Throwable> onErrorAction = e -> Log.e(Config.LOG, e.getMessage());
 }

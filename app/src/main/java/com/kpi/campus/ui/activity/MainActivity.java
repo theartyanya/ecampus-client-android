@@ -78,13 +78,15 @@ public class MainActivity extends BaseActivity implements MainPresenter.IView {
     private void showLogoutDialog() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setMessage(R.string.logout_confirmation);
-        alertDialogBuilder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+        alertDialogBuilder.setPositiveButton(R.string.yes, new
+                DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 mPresenter.logout();
             }
         });
-        alertDialogBuilder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+        alertDialogBuilder.setNegativeButton(R.string.no, new DialogInterface
+                .OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 // Do nothing
@@ -104,9 +106,11 @@ public class MainActivity extends BaseActivity implements MainPresenter.IView {
     private void setGridView() {
         List<Subsystem> data = mPresenter.getData();
         mGridSubsystem.setAdapter(new GridSubsystemAdapter(this, data));
-        mGridSubsystem.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        mGridSubsystem.setOnItemClickListener(new AdapterView
+                .OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+            public void onItemClick(AdapterView<?> adapterView, View view,
+                                    int position, long l) {
                 mPresenter.startActivityBasedOn(position);
             }
         });

@@ -2,14 +2,14 @@ package com.kpi.campus.api.service;
 
 import com.kpi.campus.model.pojo.User;
 
-import retrofit.http.GET;
-import retrofit.http.Header;
-import retrofit.http.Headers;
+import retrofit2.http.GET;
+import retrofit2.http.Header;
+import retrofit2.http.Headers;
 import rx.Observable;
 
 /**
  * Contains list of APIs related to User.
- *
+ * <p>
  * Created by Administrator on 17.03.2016.
  */
 public interface UserService {

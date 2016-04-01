@@ -8,12 +8,13 @@ import dagger.Provides;
 
 /**
  * Dagger module to provide some activity scope module dependencies.
- * This module is going to be added to the graph generated for every activity while the activity
+ * This module is going to be added to the graph generated for every activity
+ * while the activity
  * creation lifecycle.
- *
+ * <p>
  * Created by Administrator on 26.01.2016.
  */
-@Module (
+@Module(
         library = true
 )
 public final class ActivityModule {
@@ -24,7 +25,8 @@ public final class ActivityModule {
         this.activity = activity;
     }
 
-    @ActivityContext @Provides
+    @ActivityContext
+    @Provides
     Context provideActivityContext() {
         return activity;
     }

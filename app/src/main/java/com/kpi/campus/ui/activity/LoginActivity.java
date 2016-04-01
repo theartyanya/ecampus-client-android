@@ -27,7 +27,8 @@ import butterknife.OnClick;
 /**
  * Login activity.
  */
-public class LoginActivity extends BaseActivity implements LoginPresenter.IView, LoaderManager.LoaderCallbacks<BaseResponse> {
+public class LoginActivity extends BaseActivity implements LoginPresenter
+        .IView, LoaderManager.LoaderCallbacks<BaseResponse> {
 
     @Bind(R.id.edit_text_input_login)
     EditText mInputLogin;
@@ -57,7 +58,8 @@ public class LoginActivity extends BaseActivity implements LoginPresenter.IView,
 
     @Override
     public void showLoginProgressDialog() {
-        mProgressDialog = new ProgressDialog(LoginActivity.this, R.style.AppTheme_Dark_Dialog);
+        mProgressDialog = new ProgressDialog(LoginActivity.this, R.style
+                .AppTheme_Dark_Dialog);
         mProgressDialog.setIndeterminate(true);
         mProgressDialog.setMessage(getString(R.string.progress_authenticate));
         mProgressDialog.show();
@@ -75,7 +77,8 @@ public class LoginActivity extends BaseActivity implements LoginPresenter.IView,
 
     @Override
     public void onLoginFailed() {
-        ToastUtil.showShortMessage(getString(R.string.login_failed), getApplicationContext());
+        ToastUtil.showShortMessage(getString(R.string.login_failed),
+                getApplicationContext());
     }
 
     @Override
@@ -85,7 +88,8 @@ public class LoginActivity extends BaseActivity implements LoginPresenter.IView,
 
     @OnClick(R.id.button_login)
     public void login() {
-        mPresenter.login(mInputLogin.getText().toString(), mPassword.getText().toString());
+        mPresenter.login(mInputLogin.getText().toString(), mPassword.getText
+                ().toString());
     }
 
     @Override
@@ -101,7 +105,8 @@ public class LoginActivity extends BaseActivity implements LoginPresenter.IView,
     }
 
     @Override
-    public void onLoadFinished(Loader<BaseResponse> loader, BaseResponse baseResponse) {
+    public void onLoadFinished(Loader<BaseResponse> loader, BaseResponse
+            baseResponse) {
         int id = loader.getId();
         if (id == R.id.api_loader) {
             Token token = baseResponse.getTypedAnswer();

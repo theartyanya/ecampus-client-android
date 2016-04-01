@@ -2,7 +2,7 @@ package com.kpi.campus.model;
 
 /**
  * Represents Subsystem entity.
- *
+ * <p>
  * Created by Administrator on 28.01.2016.
  */
 public class Subsystem {

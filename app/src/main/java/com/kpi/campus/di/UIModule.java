@@ -12,12 +12,18 @@ import dagger.Module;
 
 /**
  * Dagger module created to provide UI dependencies like presenters.
- *
+ * <p>
  * Created by Administrator on 28.01.2016.
  */
 @Module(complete = false,
-injects = {
-        MainNotAuthActivity.class, LoginActivity.class, MainActivity.class, BulletinBoardActivity.class, BulletinContentActivity.class, NewBulletinActivity.class, BulletinBoardModeratorActivity.class
-})
+        injects = {
+                MainNotAuthActivity.class,
+                LoginActivity.class,
+                MainActivity.class,
+                BulletinBoardActivity.class,
+                BulletinContentActivity.class,
+                NewBulletinActivity.class,
+                BulletinBoardModeratorActivity.class
+        })
 public final class UIModule {
 }
