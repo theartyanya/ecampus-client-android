@@ -5,4 +5,6 @@
 <br />
 Campus application for Android powered by api.campus.kpi.ua service
 
-API v2.0 structure: http://api-campus-kpi-ua.azurewebsites.net/system/structure
+API v2.0 
+* endpoint: http://api-campus-kpi-ua.azurewebsites.net/
+* structure: http://api-campus-kpi-ua.azurewebsites.net/system/structure
