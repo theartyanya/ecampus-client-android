@@ -4,3 +4,5 @@
 [![License](http://img.shields.io/:license-apache-blue.svg)](https://github.com/kpi-ua/ecampus-client-android/blob/master/LICENSE.md)
 <br />
 Campus application for Android powered by api.campus.kpi.ua service
+
+API v2.0 structure: http://api-campus-kpi-ua.azurewebsites.net/system/structure
