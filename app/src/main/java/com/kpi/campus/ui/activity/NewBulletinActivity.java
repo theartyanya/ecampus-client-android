@@ -49,10 +49,10 @@ public class NewBulletinActivity extends BaseActivity implements
 
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
-    @Bind(R.id.edit_text_start_period)
-    EditText mStartDate;
-    @Bind(R.id.edit_text_end_period)
-    EditText mEndDate;
+    @Bind(R.id.text_view_start_period)
+    TextView mStartDate;
+    @Bind(R.id.text_view_end_period)
+    TextView mEndDate;
     @Bind(R.id.recycler_view_buffer_recipients)
     RecyclerView mRecyclerView;
     @Bind(R.id.spinner_profile)
@@ -151,12 +151,13 @@ public class NewBulletinActivity extends BaseActivity implements
         et.setText(mCurrentBulletin.getSubject());
         et = (EditText) findViewById(R.id.edit_text_bulletin_text);
         et.setText(mCurrentBulletin.getText());
-        et = (EditText) findViewById(R.id.edit_text_start_period);
-        et.setText(mCurrentBulletin.getDateStart());
-        et = (EditText) findViewById(R.id.edit_text_end_period);
-        et.setText(mCurrentBulletin.getDateEnd());
 
-        TextView tv = (TextView) findViewById(R.id.text_view_actuality_value);
+        TextView tv = (TextView) findViewById(R.id.text_view_start_period);
+        tv.setText(mCurrentBulletin.getDateStart());
+        tv = (TextView) findViewById(R.id.text_view_end_period);
+        tv.setText(mCurrentBulletin.getDateEnd());
+
+        tv = (TextView) findViewById(R.id.text_view_actuality_value);
         if (mCurrentBulletin.getActuality())
             tv.setText(R.string.yes);
         else
@@ -171,20 +172,16 @@ public class NewBulletinActivity extends BaseActivity implements
     private void setRadioGroup() {
         RadioGroup radioGroup = (RadioGroup) findViewById(R.id
                 .radio_group_recipient);
-        radioGroup.setOnCheckedChangeListener(new RadioGroup
-                .OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
-                switch (checkedId) {
-                    case R.id.rb_all:
-                        setVisibility(View.GONE, mSpinnerProfile);
-                        break;
-                    case R.id.rb_profile:
-                        setVisibility(View.VISIBLE, mSpinnerProfile);
-                        break;
-                    default:
-                        break;
-                }
+        radioGroup.setOnCheckedChangeListener((radioGroup1, checkedId) -> {
+            switch (checkedId) {
+                case R.id.rb_all:
+                    setVisibility(View.GONE, mSpinnerProfile);
+                    break;
+                case R.id.rb_profile:
+                    setVisibility(View.VISIBLE, mSpinnerProfile);
+                    break;
+                default:
+                    break;
             }
         });
     }
@@ -213,27 +210,13 @@ public class NewBulletinActivity extends BaseActivity implements
     }
 
     private void setDateListener() {
-        mStartDate.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean b) {
-                if (b) {
-                    setDateTo(mStartDate, "2");
-                }
-            }
-        });
-        mEndDate.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean b) {
-                if (b) {
-                    setDateTo(mEndDate, "1");
-                }
-            }
-        });
+        mStartDate.setOnClickListener(v -> setDateTo(mStartDate, "2"));
+        mEndDate.setOnClickListener(v -> setDateTo(mEndDate, "1"));
     }
 
-    private void setDateTo(EditText editText, String uniqueString) {
+    private void setDateTo(TextView textView, String uniqueString) {
         DatePickerFragment newFragment = new DatePickerFragment();
-        newFragment.setEditText(editText);
+        newFragment.setTextView(textView);
         newFragment.show(getFragmentManager(), uniqueString);
     }
 

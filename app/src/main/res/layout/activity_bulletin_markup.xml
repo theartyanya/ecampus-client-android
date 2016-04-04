@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    tools:context="com.kpi.campus.ui.activity.BulletinContentActivity">
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical"
+              tools:context="com.kpi.campus.ui.activity.BulletinContentActivity">
 
-    <include layout="@layout/toolbar" />
+    <include layout="@layout/toolbar"/>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -23,12 +23,12 @@
                 android:layout_height="wrap_content"
                 android:text="Оголошення"
                 android:textColor="@color/colorPrimaryText"
-                android:textSize="16sp" />
+                android:textSize="16sp"/>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/colorDivider" />
+                android:background="@color/colorDivider"/>
 
             <android.support.design.widget.TextInputLayout
                 style="@style/Margin"
@@ -44,7 +44,7 @@
                     android:background="@null"
                     android:hint="Тема"
                     android:inputType="text"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"/>
 
             </android.support.design.widget.TextInputLayout>
 
@@ -64,7 +64,7 @@
                     android:inputType="textMultiLine"
                     android:isScrollContainer="true"
                     android:minHeight="20dp"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"/>
 
             </android.support.design.widget.TextInputLayout>
 
@@ -81,35 +81,35 @@
                     android:layout_marginTop="8dp"
                     android:layout_weight="1.0">
 
-                    <EditText
-                        android:id="@+id/edit_text_start_period"
+                    <TextView
+                        android:id="@+id/text_view_start_period"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
                         android:layout_weight="1.0"
                         android:background="@null"
                         android:hint="Початок показу"
                         android:textColorHint="@color/colorSecondaryText"
-                        android:layout_marginBottom="4dp"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"/>
 
                     <TextView
                         android:id="@+id/text_view_author"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/edit_text_start_period"
+                        android:layout_below="@id/text_view_start_period"
                         android:text="@string/bulletin_author"
                         android:textColor="@color/colorSecondaryText"
-                        android:textSize="8sp" />
+                        android:textSize="8sp"/>
 
                     <TextView
                         android:id="@+id/text_view_author_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/edit_text_start_period"
+                        android:layout_below="@id/text_view_start_period"
                         android:layout_toEndOf="@id/text_view_author"
                         android:text="test"
                         android:textColor="@color/colorSecondaryText"
-                        android:textSize="8sp" />
+                        android:textSize="8sp"/>
 
                     <TextView
                         android:id="@+id/text_view_actuality"
@@ -120,18 +120,18 @@
                         android:layout_marginTop="4dp"
                         android:text="@string/bulletin_actuality"
                         android:textColor="@color/colorSecondaryText"
-                        android:textSize="8sp" />
+                        android:textSize="8sp"/>
 
                     <TextView
                         android:id="@+id/text_view_actuality_value"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="0"
+                        android:layout_below="@id/text_view_author_name"
                         android:layout_marginTop="4dp"
                         android:layout_toEndOf="@id/text_view_actuality"
+                        android:text="0"
                         android:textColor="@color/colorSecondaryText"
-                        android:layout_below="@id/text_view_author_name"
-                        android:textSize="8sp" />
+                        android:textSize="8sp"/>
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -140,35 +140,35 @@
                     android:layout_marginTop="8dp"
                     android:layout_weight="1.0">
 
-                    <EditText
-                        android:id="@+id/edit_text_end_period"
+                    <TextView
+                        android:id="@+id/text_view_end_period"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
                         android:layout_weight="1.0"
                         android:background="@null"
                         android:hint="Кінець показу"
-                        android:layout_marginBottom="4dp"
                         android:textColorHint="@color/colorSecondaryText"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"/>
 
                     <TextView
                         android:id="@+id/text_view_creation_date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/edit_text_end_period"
+                        android:layout_below="@id/text_view_end_period"
                         android:text="@string/bulletin_creation_date"
                         android:textColor="@color/colorSecondaryText"
-                        android:textSize="8sp" />
+                        android:textSize="8sp"/>
 
                     <TextView
                         android:id="@+id/text_view_creation_date_value"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_below="@id/text_view_end_period"
                         android:layout_toEndOf="@id/text_view_creation_date"
-                        android:layout_below="@id/edit_text_end_period"
                         android:text="20.01.2015"
                         android:textColor="@color/colorSecondaryText"
-                        android:textSize="8sp" />
+                        android:textSize="8sp"/>
 
                     <TextView
                         android:id="@+id/text_view_change_actuality_date"
@@ -178,18 +178,18 @@
                         android:layout_marginTop="4dp"
                         android:text="@string/bulletin_date_change_actuality"
                         android:textColor="@color/colorSecondaryText"
-                        android:textSize="8sp" />
+                        android:textSize="8sp"/>
 
                     <TextView
                         android:id="@+id/text_view_change_actuality_date_value"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="21.02.2014"
+                        android:layout_below="@id/text_view_creation_date_value"
                         android:layout_marginTop="4dp"
                         android:layout_toEndOf="@id/text_view_change_actuality_date"
+                        android:text="21.02.2014"
                         android:textColor="@color/colorSecondaryText"
-                        android:layout_below="@id/text_view_creation_date_value"
-                        android:textSize="8sp" />
+                        android:textSize="8sp"/>
                 </RelativeLayout>
 
             </LinearLayout>
@@ -200,12 +200,12 @@
                 android:layout_marginTop="16dp"
                 android:text="Одержувач"
                 android:textColor="@color/colorPrimaryText"
-                android:textSize="16sp" />
+                android:textSize="16sp"/>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/colorDivider" />
+                android:background="@color/colorDivider"/>
 
             <RadioGroup
                 android:id="@+id/radio_group_recipient"
@@ -220,14 +220,14 @@
                     android:layout_height="wrap_content"
                     android:checked="true"
                     android:text="Всім"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"/>
 
                 <RadioButton
                     android:id="@+id/rb_profile"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="За профілем"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"/>
             </RadioGroup>
 
             <Spinner
@@ -236,7 +236,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:visibility="gone" />
+                android:visibility="gone"/>
 
             <FrameLayout
                 style="@style/Margin"
@@ -252,7 +252,7 @@
                     android:imeOptions="flagNoExtractUi|actionSearch"
                     android:inputType="textCapSentences"
                     android:paddingRight="32dp"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"/>
 
                 <ProgressBar
                     android:id="@+id/progress_bar"
@@ -261,7 +261,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical|right"
                     android:layout_marginRight="16dp"
-                    android:visibility="gone" />
+                    android:visibility="gone"/>
 
             </FrameLayout>
 
@@ -274,7 +274,7 @@
                 android:background="@color/colorPrimary"
                 android:text="Додати"
                 android:textColor="@color/colorTextIcons"
-                android:textSize="12sp" />
+                android:textSize="12sp"/>
         </LinearLayout>
     </ScrollView>
 
@@ -283,5 +283,5 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="16dp"
-         />
+        />
 </LinearLayout>

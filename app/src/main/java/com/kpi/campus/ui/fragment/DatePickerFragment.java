@@ -5,22 +5,24 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.os.Bundle;
 import android.widget.DatePicker;
-import android.widget.EditText;
+import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
 /**
- * DatePickerFragment hosts each date picker which provides controls for the user to a date as ready-to-use dialogs.
- * <p/>
+ * DatePickerFragment hosts each date picker which provides controls for the
+ * user to a date as ready-to-use dialogs.
+ * <p>
  * Created by Admin on 12.02.2016.
  */
-public class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
-    EditText editText;
+public class DatePickerFragment extends DialogFragment implements
+        DatePickerDialog.OnDateSetListener {
+    TextView textView;
 
-    public void setEditText(EditText et) {
-        editText = et;
+    public void setTextView(TextView et) {
+        textView = et;
     }
 
     @Override
@@ -37,11 +39,12 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
 
     @Override
     public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-        SimpleDateFormat dateFormatter = new SimpleDateFormat("dd-MM-yyyy", Locale.GERMAN);
+        SimpleDateFormat dateFormatter = new SimpleDateFormat("dd-MM-yyyy",
+                Locale.GERMAN);
         Calendar newDate = Calendar.getInstance();
         newDate.set(year, month, day);
-        if (editText != null) {
-            editText.setText(dateFormatter.format(newDate.getTime()));
+        if (textView != null) {
+            textView.setText(dateFormatter.format(newDate.getTime()));
         }
     }
 
