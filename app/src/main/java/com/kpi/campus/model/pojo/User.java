@@ -23,8 +23,8 @@ public class User {
     }
 
     public String name;
-    public List<String> position;
-    public String subdivision;
+    public List<Item> position;
+    public List<Item> subdivision;
     public List<String> descendantSubdivisions;
     public boolean isBulletinBoardModerator = false;
 

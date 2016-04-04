@@ -105,7 +105,7 @@ public class MainPresenter extends BasePresenter {
         User user = User.getInstance();
         user.name = mPreference.getUserName();
         user.position = mPreference.getUserPositions();
-        user.subdivision = mPreference.getUserSubdivision();
+        user.subdivision = mPreference.getUserSubdivisions();
         user.isBulletinBoardModerator = mPreference.getIsUserBbModerator();
     }
 
