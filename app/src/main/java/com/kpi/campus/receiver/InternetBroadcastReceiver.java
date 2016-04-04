@@ -1,10 +1,12 @@
-package com.kpi.campus.util;
+package com.kpi.campus.receiver;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+
+import com.kpi.campus.util.ToastUtil;
 
 /**
  * Created by Nikita on 30.03.2016.

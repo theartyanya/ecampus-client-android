@@ -5,7 +5,7 @@ import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 
 import com.kpi.campus.ui.Navigator;
-import com.kpi.campus.util.InternetBroadcastReceiver;
+import com.kpi.campus.receiver.InternetBroadcastReceiver;
 
 import javax.inject.Inject;
 

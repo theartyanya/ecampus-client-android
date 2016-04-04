@@ -8,7 +8,7 @@ import android.view.WindowManager;
 import com.kpi.campus.R;
 import com.kpi.campus.di.UIModule;
 import com.kpi.campus.ui.presenter.SplashScreenPresenter;
-import com.kpi.campus.util.InternetBroadcastReceiver;
+import com.kpi.campus.receiver.InternetBroadcastReceiver;
 
 import java.util.LinkedList;
 import java.util.List;
