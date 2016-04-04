@@ -16,15 +16,16 @@ public class BulletinPredicates {
     public static Predicate<Bulletin> isNotExpired(String date) {
         Date currentDate = DateUtil.convert(date);
         return p -> currentDate.after(DateUtil.convert(p.getDateStart())) &&
-                        currentDate.before(DateUtil.convert(p.getDateEnd()));
+                currentDate.before(DateUtil.convert(p.getDateEnd()));
     }
 
-    public static Predicate<Bulletin> isMatchesProfile(List<String> profiles) {
-        return p -> profiles.contains(p.getProfile());
+    public static Predicate<Bulletin> isMatchesProfile(List<Integer> profiles) {
+        return p -> profiles.contains(p.getProfileId());
     }
 
-    public static Predicate<Bulletin> isMatchesSubdivision(String subdiv) {
-        return p -> p.getSubdivision().equalsIgnoreCase(subdiv);
+    public static Predicate<Bulletin> isMatchesSubdivision(List<Integer>
+                                                                   subdiv) {
+        return p -> subdiv.contains(p.getSubdivisionId());
     }
 
     public static Predicate<Bulletin> isDeleted() {
@@ -35,7 +36,9 @@ public class BulletinPredicates {
         return p -> p.getSubject().toLowerCase().contains(query);
     }
 
-    public static List<Bulletin> filterBulletins(List<Bulletin> bulletins, Predicate<Bulletin> predicate) {
+    public static List<Bulletin> filterBulletins(List<Bulletin> bulletins,
+                                                 Predicate<Bulletin>
+                                                         predicate) {
         return Stream.of(bulletins)
                 .filter(predicate)
                 .collect(Collectors.<Bulletin>toList());
