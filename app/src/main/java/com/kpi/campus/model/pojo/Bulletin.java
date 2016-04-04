@@ -25,12 +25,18 @@ public class Bulletin implements Parcelable {
     @SerializedName("creatorName")
     @Expose
     private String creatorName;
-    @SerializedName("profile")
+    @SerializedName("profileId")
     @Expose
-    private String profile;
-    @SerializedName("subdivision")
+    private String profileId;
+    @SerializedName("profileName")
     @Expose
-    private String subdivision;
+    private String profileName;
+    @SerializedName("subdivisionId")
+    @Expose
+    private String subdivisionId;
+    @SerializedName("subdivisionName")
+    @Expose
+    private String subdivisionName;
     @SerializedName("dateCreate")
     @Expose
     private String dateCreate;
@@ -56,7 +62,7 @@ public class Bulletin implements Parcelable {
         subject = in.readString();
         text = in.readString();
         creatorName = in.readString();
-        subdivision = in.readString();
+        subdivisionName = in.readString();
         dateCreate = in.readString();
         dateStart = in.readString();
         dateEnd = in.readString();
@@ -120,31 +126,31 @@ public class Bulletin implements Parcelable {
     }
 
     /**
-     * @return The profile
+     * @return The profileName
      */
-    public String getProfile() {
-        return profile;
+    public String getProfileName() {
+        return profileName;
     }
 
     /**
-     * @param profile The profile
+     * @param profileName The profileName
      */
-    public void setProfile(String profile) {
-        this.profile = profile;
+    public void setProfileName(String profileName) {
+        this.profileName = profileName;
     }
 
     /**
-     * @return The subdivision
+     * @return The subdivisionName
      */
-    public String getSubdivision() {
-        return subdivision;
+    public String getSubdivisionName() {
+        return subdivisionName;
     }
 
     /**
-     * @param subdivision The subdivision
+     * @param subdivisionName The subdivisionName
      */
-    public void setSubdivision(String subdivision) {
-        this.subdivision = subdivision;
+    public void setSubdivisionName(String subdivisionName) {
+        this.subdivisionName = subdivisionName;
     }
 
     /**
@@ -225,7 +231,7 @@ public class Bulletin implements Parcelable {
         dest.writeString(subject);
         dest.writeString(text);
         dest.writeString(creatorName);
-        dest.writeString(subdivision);
+        dest.writeString(subdivisionName);
         dest.writeString(dateCreate);
         dest.writeString(dateStart);
         dest.writeString(dateEnd);
@@ -246,4 +252,19 @@ public class Bulletin implements Parcelable {
         }
     };
 
+    public String getProfileId() {
+        return profileId;
+    }
+
+    public void setProfileId(String profileId) {
+        this.profileId = profileId;
+    }
+
+    public String getSubdivisionId() {
+        return subdivisionId;
+    }
+
+    public void setSubdivisionId(String subdivisionId) {
+        this.subdivisionId = subdivisionId;
+    }
 }

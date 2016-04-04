@@ -1,6 +1,7 @@
 package com.kpi.campus.model.dao;
 
 import com.kpi.campus.model.pojo.Bulletin;
+import com.kpi.campus.model.pojo.Item;
 import com.kpi.campus.model.pojo.User;
 
 import java.util.ArrayList;
@@ -41,14 +42,23 @@ public class BulletinDao implements IDataAccessObject<Bulletin> {
 
         mAll.addAll(data);
 
-        List<String> userProfile = User.getInstance().position;
-        String userSubdivision = User.getInstance().subdivision;
+        List<Item> userProfile = User.getInstance().position;
+        List<Item> userSubdivision = User.getInstance().subdivision;
 
         if (userProfile != null && userSubdivision != null) {
+            List<Integer> profileIds = new ArrayList<>(userProfile.size());
+            for (Item item : userProfile) {
+                profileIds.add(item.getId());
+            }
+            List<Integer> subdivIds = new ArrayList<>(userSubdivision.size());
+            for (Item item : userSubdivision) {
+                subdivIds.add(item.getId());
+            }
+
             mByProfile.addAll(filterBulletins(mAll, isMatchesProfile
-                    (userProfile)));
+                    (profileIds)));
             mBySubdivision.addAll(filterBulletins(mAll, isMatchesSubdivision
-                    (userSubdivision)));
+                    (subdivIds)));
         }
     }
 
@@ -67,6 +77,7 @@ public class BulletinDao implements IDataAccessObject<Bulletin> {
 
     /**
      * Get Bulletins filtered by user's profile.
+     *
      * @return list of bulletins.
      */
     public List<Bulletin> getFilteredByProfile() {
@@ -75,6 +86,7 @@ public class BulletinDao implements IDataAccessObject<Bulletin> {
 
     /**
      * Get Bulletins filtered by user's subdivision.
+     *
      * @return list of bulletins.
      */
     public List<Bulletin> getFilteredBySubdiv() {
