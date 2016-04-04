@@ -3,6 +3,7 @@
     package="com.kpi.campus" >
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:name=".CampusApplication"
@@ -25,7 +26,6 @@
             android:theme="@style/AppTheme.NoActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
 
         </activity>
@@ -56,6 +56,13 @@
         <activity android:name=".ui.activity.BulletinBoardModeratorActivity"
             android:parentActivityName=".ui.activity.BulletinBoardActivity"
             android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
+        <activity android:name=".ui.activity.SplashScreenActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 

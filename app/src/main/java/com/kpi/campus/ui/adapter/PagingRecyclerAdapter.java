@@ -4,6 +4,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
 import android.widget.TextView;
@@ -89,6 +91,11 @@ public class PagingRecyclerAdapter extends RecyclerView.Adapter<PagingRecyclerAd
         holder.date.setText(bul.getDateCreate());
         holder.theme.setText(bul.getSubject());
         holder.author.setText(bul.getCreatorName());
+
+
+        Animation animation = AnimationUtils.
+                loadAnimation(holder.itemView.getContext(), R.anim.slide_left_to_right);
+        holder.itemView.startAnimation(animation);
 
         if(mIsModerator) {
             holder.btnOverflow.setVisibility(View.VISIBLE);

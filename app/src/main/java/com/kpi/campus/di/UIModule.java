@@ -7,6 +7,7 @@ import com.kpi.campus.ui.activity.LoginActivity;
 import com.kpi.campus.ui.activity.MainActivity;
 import com.kpi.campus.ui.activity.MainNotAuthActivity;
 import com.kpi.campus.ui.activity.NewBulletinActivity;
+import com.kpi.campus.ui.activity.SplashScreenActivity;
 
 import dagger.Module;
 
@@ -17,6 +18,7 @@ import dagger.Module;
  */
 @Module(complete = false,
         injects = {
+                SplashScreenActivity.class,
                 MainNotAuthActivity.class,
                 LoginActivity.class,
                 MainActivity.class,
