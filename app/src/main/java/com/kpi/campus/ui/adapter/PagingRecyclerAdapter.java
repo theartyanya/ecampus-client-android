@@ -4,6 +4,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
 import android.widget.TextView;
@@ -51,6 +53,10 @@ public class PagingRecyclerAdapter extends RecyclerView.Adapter<PagingRecyclerAd
         notifyDataSetChanged();
     }
 
+    public List<Bulletin> getItems() {
+        return mData;
+    }
+
     public boolean isAllItemsLoaded() {
         return mAllItemsLoaded;
     }
@@ -86,6 +92,11 @@ public class PagingRecyclerAdapter extends RecyclerView.Adapter<PagingRecyclerAd
         holder.theme.setText(bul.getSubject());
         holder.author.setText(bul.getCreatorName());
 
+
+        Animation animation = AnimationUtils.
+                loadAnimation(holder.itemView.getContext(), R.anim.slide_left_to_right);
+        holder.itemView.startAnimation(animation);
+
         if(mIsModerator) {
             holder.btnOverflow.setVisibility(View.VISIBLE);
         }
@@ -101,6 +112,12 @@ public class PagingRecyclerAdapter extends RecyclerView.Adapter<PagingRecyclerAd
 
     public Bulletin getClickedItem() {
         return mClickedItem;
+    }
+
+    public void setFilter(List<Bulletin> bulletins) {
+        mData.clear();
+        mData.addAll(bulletins);
+        notifyDataSetChanged();
     }
 
     protected class ViewHolder extends RecyclerView.ViewHolder {

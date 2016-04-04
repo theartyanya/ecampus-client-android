@@ -13,8 +13,9 @@ import dagger.ObjectGraph;
 
 /**
  * Base activity created to be extended by every activity class.
- * This class provides dependency injection configuration, ButterKnife Android library configuration and some methods common to every activity.
- * <p/>
+ * This class provides dependency injection configuration, ButterKnife
+ * Android library configuration and some methods common to every activity.
+ * <p>
  * Created by Administrator on 26.01.2016.
  */
 public abstract class BaseActivity extends AppCompatActivity {
@@ -29,8 +30,10 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     /**
-     * Create a new Dagger ObjectGraph to add new dependencies using a plus operation and inject the declared one in the activity. This new graph will be destroyed once the activity lifecycle finish.
-     * <p/>
+     * Create a new Dagger ObjectGraph to add new dependencies using a plus
+     * operation and inject the declared one in the activity. This new graph
+     * will be destroyed once the activity lifecycle finish.
+     * <p>
      * This is the key of how to use Activity scope dependency injection.
      */
     private void injectDependencies() {
@@ -42,7 +45,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     /**
-     * Method used to resolve dependencies provided by Dagger modules. Inject an object to provide
+     * Method used to resolve dependencies provided by Dagger modules. Inject
+     * an object to provide
      * every @Inject annotation contained.
      *
      * @param object to inject.
@@ -59,7 +63,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected abstract List<Object> getModules();
 
     /**
-     * Replace every field annotated with ButterKnife annotations like @Bind with the proper
+     * Replace every field annotated with ButterKnife annotations like @Bind
+     * with the proper
      * value.
      */
     protected void bindViews() {

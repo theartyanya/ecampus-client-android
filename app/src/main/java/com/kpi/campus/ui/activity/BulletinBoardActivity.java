@@ -5,22 +5,27 @@ import android.os.Bundle;
 import android.support.annotation.VisibleForTesting;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.NavUtils;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 
+import com.kpi.campus.Config;
 import com.kpi.campus.R;
 import com.kpi.campus.di.UIModule;
-import com.kpi.campus.model.pojo.Bulletin;
 import com.kpi.campus.model.dao.IDataAccessObject;
+import com.kpi.campus.model.pojo.Bulletin;
 import com.kpi.campus.rx.BulletinResponseManager;
 import com.kpi.campus.ui.adapter.PagingRecyclerAdapter;
 import com.kpi.campus.ui.presenter.BulletinBoardPresenter;
 import com.kpi.campus.ui.view.OnItemClickListener;
+import com.kpi.campus.util.ToastUtil;
 import com.kpi.campus.util.pagination.PaginationTool;
 
 import java.util.ArrayList;
@@ -34,9 +39,10 @@ import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 
 /**
- * Bulletin board activity.
+ * Bulletin Board activity.
  */
-public class BulletinBoardActivity extends BaseActivity implements BulletinBoardPresenter.IView {
+public class BulletinBoardActivity extends BaseActivity implements
+        BulletinBoardPresenter.IView {
 
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
@@ -51,6 +57,11 @@ public class BulletinBoardActivity extends BaseActivity implements BulletinBoard
     private PagingRecyclerAdapter mAdapter;
     private Subscription mPagingSubscription;
 
+    /**
+     * The list of bulletins which are currently in adapter.
+     * Designed for filtering purposes.
+     */
+    private List<Bulletin> mBulletins;
     /**
      * Whether the user is moderator.
      * Affects on toolbar menu view.
@@ -86,18 +97,40 @@ public class BulletinBoardActivity extends BaseActivity implements BulletinBoard
     private OnItemClickListener onItemClickListener =
             new OnItemClickListener() {
                 @Override
-                public void onItemClicked(View view, int position, Object item) {
+                public void onItemClicked(View view, int position, Object
+                        item) {
                     mPresenter.onItemClick(item);
                 }
             };
 
+    private SearchView.OnQueryTextListener onQueryTextChangeListener = new
+            SearchView.OnQueryTextListener() {
+        @Override
+        public boolean onQueryTextSubmit(String query) {
+            return false;
+        }
+
+        @Override
+        public boolean onQueryTextChange(String newText) {
+            final List<Bulletin> filteredList = mPresenter.filterData
+                    (mBulletins, newText);
+            mAdapter.setFilter(filteredList);
+            return false;
+        }
+    };
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         if (mIsModerator) {
-            getMenuInflater().inflate(R.menu.menu_bulletin_board_moderator, menu);
+            getMenuInflater().inflate(R.menu.menu_bulletin_board_with_m_icon,
+                    menu);
         } else {
             getMenuInflater().inflate(R.menu.menu_bulletin_board, menu);
         }
+        final MenuItem item = menu.findItem(R.id.action_search);
+        final SearchView searchView = (SearchView) MenuItemCompat
+                .getActionView(item);
+        searchView.setOnQueryTextListener(onQueryTextChangeListener);
         return true;
     }
 
@@ -130,10 +163,14 @@ public class BulletinBoardActivity extends BaseActivity implements BulletinBoard
 
     private void setTabLayout() {
         TypedArray tabIcon = mPresenter.getTabsIcon();
-        mTabLayout.addTab(mTabLayout.newTab().setIcon(tabIcon.getResourceId(TAB_ACTUAL, -1)), true);
-        mTabLayout.addTab(mTabLayout.newTab().setIcon(tabIcon.getResourceId(TAB_PROFILE, -1)));
-        mTabLayout.addTab(mTabLayout.newTab().setIcon(tabIcon.getResourceId(TAB_SUBDIVISION, -1)));
-        mTabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+        mTabLayout.addTab(mTabLayout.newTab().setIcon(tabIcon.getResourceId
+                (TAB_ACTUAL, -1)), true);
+        mTabLayout.addTab(mTabLayout.newTab().setIcon(tabIcon.getResourceId
+                (TAB_PROFILE, -1)));
+        mTabLayout.addTab(mTabLayout.newTab().setIcon(tabIcon.getResourceId
+                (TAB_SUBDIVISION, -1)));
+        mTabLayout.setOnTabSelectedListener(new TabLayout
+                .OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 setCurrentTabFragment(tab.getPosition());
@@ -152,19 +189,18 @@ public class BulletinBoardActivity extends BaseActivity implements BulletinBoard
     }
 
     private void setCurrentTabFragment(int tabPosition) {
-        List<Bulletin> bulletins = new ArrayList<>();
         switch (tabPosition) {
             case TAB_ACTUAL:
-                bulletins = mPresenter.getData();
+                mBulletins = mPresenter.getData();
                 break;
             case TAB_PROFILE:
-                bulletins = mPresenter.getFilteredByProfile();
+                mBulletins = mPresenter.getSelectedByProfile();
                 break;
             case TAB_SUBDIVISION:
-                bulletins = mPresenter.getFilteredBySubdivision();
+                mBulletins = mPresenter.getSelectedBySubdivision();
                 break;
         }
-            mAdapter.setItems(bulletins);
+        mAdapter.setItems(mBulletins);
     }
 
     private void setToolbar() {
@@ -176,19 +212,20 @@ public class BulletinBoardActivity extends BaseActivity implements BulletinBoard
     }
 
     private void setVisible(View... views) {
-        for(View v : views)
+        for (View v : views)
             v.setVisibility(View.VISIBLE);
     }
 
     private void setInvisible(View... views) {
-        for(View v : views)
+        for (View v : views)
             v.setVisibility(View.GONE);
     }
 
     private void setRecyclerView() {
         setInvisible(mRecyclerView);
 
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        mRecyclerView.setLayoutManager(new LinearLayoutManager
+                (getApplicationContext()));
         mRecyclerView.setHasFixedSize(true);
 
         mAdapter = new PagingRecyclerAdapter(IS_MODERATOR_MODE);
@@ -211,7 +248,9 @@ public class BulletinBoardActivity extends BaseActivity implements BulletinBoard
      * RecyclerView pagination
      */
     private void setRecyclerViewPagination() {
-        PaginationTool<List<Bulletin>> paginationTool = PaginationTool.buildPagingObservable(mRecyclerView, lastId -> new BulletinResponseManager().getResponse(lastId, LIMIT))
+        PaginationTool<List<Bulletin>> paginationTool = PaginationTool
+                .buildPagingObservable(mRecyclerView, lastId -> new
+                        BulletinResponseManager().getResponse(lastId, LIMIT))
                 .setLimit(LIMIT)
                 .build();
 
@@ -225,6 +264,13 @@ public class BulletinBoardActivity extends BaseActivity implements BulletinBoard
 
                     @Override
                     public void onError(Throwable e) {
+                        if (e != null)
+                            Log.e(Config.LOG, e.getMessage());
+                        ToastUtil.showError(getString(R.string
+                                .error_while_data_obtaining),
+                                getApplicationContext());
+
+                        setViewsVisibility();
                     }
 
                     @Override
@@ -232,20 +278,27 @@ public class BulletinBoardActivity extends BaseActivity implements BulletinBoard
                         IDataAccessObject<Bulletin> dao = mPresenter.getDao();
                         dao.setData(items);
 
-                        setInvisible(mProgressLoader);
-                        setVisible(mRecyclerView);
+                        mBulletins = new ArrayList<>(dao.getData());
+                        setViewsVisibility();
 
                         mAdapter.addNewItems(items);
                     }
                 });
     }
 
+    private void setViewsVisibility() {
+        setInvisible(mProgressLoader);
+        setVisible(mRecyclerView);
+    }
+
     @Override
     public void onDestroy() {
-        if (mPagingSubscription != null && !mPagingSubscription.isUnsubscribed()) {
+        if (mPagingSubscription != null && !mPagingSubscription
+                .isUnsubscribed()) {
             mPagingSubscription.unsubscribe();
         }
-        // for memory leak prevention (RecycleView is not unsubscibed from adapter DataObserver)
+        // for memory leak prevention (RecycleView is not unsubscibed from
+        // adapter DataObserver)
         if (mRecyclerView != null) {
             mRecyclerView.setAdapter(null);
         }

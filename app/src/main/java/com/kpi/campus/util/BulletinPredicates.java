@@ -31,6 +31,10 @@ public class BulletinPredicates {
         return p -> p.getActuality() == false;
     }
 
+    public static Predicate<Bulletin> isMatchesQuerySubject(String query) {
+        return p -> p.getSubject().toLowerCase().contains(query);
+    }
+
     public static List<Bulletin> filterBulletins(List<Bulletin> bulletins, Predicate<Bulletin> predicate) {
         return Stream.of(bulletins)
                 .filter(predicate)

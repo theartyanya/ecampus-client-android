@@ -3,18 +3,20 @@ package com.kpi.campus.model.pojo;
 import java.util.List;
 
 /**
- * Represent the entity of current logged user.
- *
+ * Represents the entity of current logged user.
+ * POJO class for convenient GSON serialization.
+ * <p>
  * Created by Administrator on 16.03.2016.
  */
 public class User {
 
     private static User mInstance;
 
-    private User() {}
+    private User() {
+    }
 
     public static User getInstance() {
-        if(mInstance == null) {
+        if (mInstance == null) {
             mInstance = new User();
         }
         return mInstance;

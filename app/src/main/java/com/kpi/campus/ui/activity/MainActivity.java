@@ -6,8 +6,8 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
+import android.view.animation.Animation;
+import android.view.animation.ScaleAnimation;
 import android.widget.GridView;
 
 import com.kpi.campus.R;
@@ -78,13 +78,15 @@ public class MainActivity extends BaseActivity implements MainPresenter.IView {
     private void showLogoutDialog() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setMessage(R.string.logout_confirmation);
-        alertDialogBuilder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+        alertDialogBuilder.setPositiveButton(R.string.yes, new
+                DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 mPresenter.logout();
             }
         });
-        alertDialogBuilder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+        alertDialogBuilder.setNegativeButton(R.string.no, new DialogInterface
+                .OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 // Do nothing
@@ -104,11 +106,23 @@ public class MainActivity extends BaseActivity implements MainPresenter.IView {
     private void setGridView() {
         List<Subsystem> data = mPresenter.getData();
         mGridSubsystem.setAdapter(new GridSubsystemAdapter(this, data));
-        mGridSubsystem.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                mPresenter.startActivityBasedOn(position);
-            }
+        mGridSubsystem.setOnItemClickListener((adapterView, view, position, l) -> {
+            ScaleAnimation sc = new ScaleAnimation(1.0f, 1.1f, 1.0f, 1.1f, 1, 0.5f, 1, 0.5f);
+            sc.setDuration(100);
+            sc.setRepeatCount(1);
+            sc.setRepeatMode(2);
+            sc.setAnimationListener(new Animation.AnimationListener() {
+                public void onAnimationStart(Animation animation) {
+                }
+
+                public void onAnimationEnd(Animation animation) {
+                    mPresenter.startActivityBasedOn(position);
+                }
+
+                public void onAnimationRepeat(Animation animation) {
+                }
+            });
+            view.startAnimation(sc);
         });
     }
 

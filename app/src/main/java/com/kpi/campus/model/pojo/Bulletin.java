@@ -7,7 +7,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * Represents Bulletin entity
+ * Represents Bulletin entity.
  * <p>
  * Created by Administrator on 02.02.2016.
  */

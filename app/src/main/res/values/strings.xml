@@ -32,6 +32,7 @@
     <string name="bulletin_creation_date">Дата створення:\u0020</string>
     <string name="bulletin_actuality">Актуальність:\u0020</string>
     <string name="bulletin_date_change_actuality">Дата зміни: \u0020</string>
+    <string name="error_while_data_obtaining">Помилка при отриманні данних</string>
 
     <string name="bulletin">Оголошення</string>
     <string name="monitoring">Моніторінг</string>

@@ -1,6 +1,8 @@
 package com.kpi.campus.model;
 
 /**
+ * Represent Recipient of bulletin entity.
+ * <p>
  * Created by Administrator on 25.02.2016.
  */
 public class Recipient {

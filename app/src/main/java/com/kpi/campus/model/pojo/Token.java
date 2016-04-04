@@ -3,8 +3,9 @@ package com.kpi.campus.model.pojo;
 import com.google.gson.annotations.SerializedName;
 
 /**
+ * Represents Token entity.
  * POJO class for convenient GSON serialization.
- * <p/>
+ * <p>
  * Created by Administrator on 08.02.2016.
  */
 public class Token {
