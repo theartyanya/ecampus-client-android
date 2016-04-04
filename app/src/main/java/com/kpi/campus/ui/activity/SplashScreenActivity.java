@@ -1,14 +1,15 @@
 package com.kpi.campus.ui.activity;
 
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
+import android.util.Log;
 import android.view.WindowManager;
 
+import com.kpi.campus.Config;
 import com.kpi.campus.R;
 import com.kpi.campus.di.UIModule;
-import com.kpi.campus.ui.presenter.SplashScreenPresenter;
 import com.kpi.campus.receiver.InternetBroadcastReceiver;
+import com.kpi.campus.ui.presenter.SplashScreenPresenter;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -17,44 +18,35 @@ import javax.inject.Inject;
 
 public class SplashScreenActivity extends BaseActivity implements SplashScreenPresenter.IView {
 
-    private IntentFilter ifInternetCheck;
-    private InternetBroadcastReceiver ibrInternetCheck;
-    private boolean noInternet;
     @Inject
-    SplashScreenPresenter ssPresenter;
+    SplashScreenPresenter mPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
         bindViews();
-        ssPresenter.setView(this);
-        ssPresenter.initializeViewComponent();
+        mPresenter.setView(this);
+        mPresenter.initializeViewComponent();
         setCheckingInternet();
         startCheckingInternet();
     }
 
     @Override
     protected List<Object> getModules() {
-        //hz che ono delaet, no bez etogo not work
         LinkedList<Object> modules = new LinkedList<>();
         modules.add(new UIModule());
         return modules;
     }
 
     @Override
-    public void checkInternet() {
-        ssPresenter.checkInternet();
-    }
-
-    @Override
     public void setCheckingInternet() {
-        ssPresenter.setCheckingInternet();
+        mPresenter.setCheckingInternet();
     }
 
     @Override
     public void startCheckingInternet() {
-        ssPresenter.startCheckingInternet();
+        mPresenter.startCheckingInternet();
     }
 
     @Override
@@ -62,7 +54,6 @@ public class SplashScreenActivity extends BaseActivity implements SplashScreenPr
         //hide all bars
         disableActionBar();
     }
-
 
     private void disableActionBar() {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -76,7 +67,14 @@ public class SplashScreenActivity extends BaseActivity implements SplashScreenPr
 
     @Override
     protected void onDestroy() {
-        unregisterReceiver(ibrInternetCheck);
+        InternetBroadcastReceiver receiver = mPresenter.getBroadcastReceiver();
+        if(receiver != null) {
+            try {
+                unregisterReceiver(receiver);
+            } catch (IllegalArgumentException e) {
+                Log.d(Config.LOG, "Receiver is not registered.");
+            }
+        }
         super.onDestroy();
     }
 }

@@ -60,7 +60,7 @@ public class SplashScreenPresenter extends BasePresenter {
         } else {
             //Internet connection is ON
             noInternet = false;
-            mNavigator.startLoginActivity();
+            mNavigator.startMainActivity();
         }
     }
 
@@ -74,9 +74,12 @@ public class SplashScreenPresenter extends BasePresenter {
         mContext.registerReceiver(ibrInternetCheck, ifInternetCheck);
     }
 
+    public InternetBroadcastReceiver getBroadcastReceiver() {
+        return ibrInternetCheck;
+    }
+
 
     public interface IView {
-        void checkInternet();
         void setCheckingInternet();
         void startCheckingInternet();
         void setViewComponent();
