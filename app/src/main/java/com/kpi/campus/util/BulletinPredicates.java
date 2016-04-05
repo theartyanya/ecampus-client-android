@@ -4,6 +4,7 @@ import com.annimon.stream.Collectors;
 import com.annimon.stream.Stream;
 import com.annimon.stream.function.Predicate;
 import com.kpi.campus.model.pojo.Bulletin;
+import com.kpi.campus.model.pojo.Item;
 
 import java.util.Date;
 import java.util.List;
@@ -19,13 +20,17 @@ public class BulletinPredicates {
                 currentDate.before(DateUtil.convert(p.getDateEnd()));
     }
 
-    public static Predicate<Bulletin> isMatchesProfile(List<Integer> profiles) {
-        return p -> profiles.contains(p.getProfileId());
+    public static Predicate<Bulletin> isMatchesProfile(List<Integer>
+                                                               profileIds) {
+        return p -> Stream.of(profileIds).anyMatch(i -> i.equals(p
+                .getProfileId()));
     }
 
     public static Predicate<Bulletin> isMatchesSubdivision(List<Integer>
                                                                    subdiv) {
-        return p -> subdiv.contains(p.getSubdivisionId());
+        //return p -> subdiv.contains(p.getSubdivisionId());
+        return p -> Stream.of(subdiv).anyMatch(i -> i.equals(p
+                .getSubdivisionId()));
     }
 
     public static Predicate<Bulletin> isDeleted() {
@@ -36,6 +41,11 @@ public class BulletinPredicates {
         return p -> p.getSubject().toLowerCase().contains(query);
     }
 
+    public static List<Integer> getIdsCollection(List<Item> items) {
+        return Stream.of(items).map(Item::getId).collect
+                (Collectors.<Integer>toList());
+    }
+
     public static List<Bulletin> filterBulletins(List<Bulletin> bulletins,
                                                  Predicate<Bulletin>
                                                          predicate) {
@@ -43,6 +53,4 @@ public class BulletinPredicates {
                 .filter(predicate)
                 .collect(Collectors.<Bulletin>toList());
     }
-
-
 }

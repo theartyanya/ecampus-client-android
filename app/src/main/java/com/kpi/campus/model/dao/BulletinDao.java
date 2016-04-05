@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.kpi.campus.util.BulletinPredicates.filterBulletins;
+import static com.kpi.campus.util.BulletinPredicates.getIdsCollection;
 import static com.kpi.campus.util.BulletinPredicates.isMatchesProfile;
 import static com.kpi.campus.util.BulletinPredicates.isMatchesSubdivision;
 
@@ -46,19 +47,13 @@ public class BulletinDao implements IDataAccessObject<Bulletin> {
         List<Item> userSubdivision = User.getInstance().subdivision;
 
         if (userProfile != null && userSubdivision != null) {
-            List<Integer> profileIds = new ArrayList<>(userProfile.size());
-            for (Item item : userProfile) {
-                profileIds.add(item.getId());
-            }
-            List<Integer> subdivIds = new ArrayList<>(userSubdivision.size());
-            for (Item item : userSubdivision) {
-                subdivIds.add(item.getId());
-            }
-
+            List<Integer> ids = getIdsCollection(userProfile);
             mByProfile.addAll(filterBulletins(mAll, isMatchesProfile
-                    (profileIds)));
+                    (ids)));
+
+            ids = getIdsCollection(userSubdivision);
             mBySubdivision.addAll(filterBulletins(mAll, isMatchesSubdivision
-                    (subdivIds)));
+                    (ids)));
         }
     }
 

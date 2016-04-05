@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.kpi.campus.util.BulletinPredicates.filterBulletins;
+import static com.kpi.campus.util.BulletinPredicates.getIdsCollection;
 import static com.kpi.campus.util.BulletinPredicates.isDeleted;
 import static com.kpi.campus.util.BulletinPredicates.isMatchesProfile;
 import static com.kpi.campus.util.BulletinPredicates.isMatchesSubdivision;
@@ -55,17 +56,13 @@ public class BulletinModeratorDao implements IDataAccessObject<Bulletin> {
         List<Item> userSubdivision = User.getInstance().subdivision;
 
         if (userProfile != null && userSubdivision != null) {
-            List<Integer> profileIds = new ArrayList<>(userProfile.size());
-            for (Item item : userProfile) {
-                profileIds.add(item.getId());
-            }
-            List<Integer> subdivIds = new ArrayList<>(userSubdivision.size());
-            for (Item item : userSubdivision) {
-                subdivIds.add(item.getId());
-            }
+            List<Integer> ids = getIdsCollection(userProfile);
+            mByProfile.addAll(filterBulletins(mAll, isMatchesProfile
+                    (ids)));
 
-            mByProfile.addAll(filterBulletins(mAll, isMatchesProfile(profileIds)));
-            mBySubdiv.addAll(filterBulletins(mAll, isMatchesSubdivision(subdivIds)));
+            ids = getIdsCollection(userSubdivision);
+            mBySubdiv.addAll(filterBulletins(mAll, isMatchesSubdivision
+                    (ids)));
         }
         mNotExpired.addAll(filterBulletins(mAll, isNotExpired(DateUtil.getCurrentDate())));
         mDeleted.addAll(filterBulletins(mAll, isDeleted()));
