@@ -27,13 +27,13 @@ public class Bulletin implements Parcelable {
     private String creatorName;
     @SerializedName("profileId")
     @Expose
-    private String profileId;
+    private int profileId;
     @SerializedName("profileName")
     @Expose
     private String profileName;
     @SerializedName("subdivisionId")
     @Expose
-    private String subdivisionId;
+    private int subdivisionId;
     @SerializedName("subdivisionName")
     @Expose
     private String subdivisionName;
@@ -252,19 +252,19 @@ public class Bulletin implements Parcelable {
         }
     };
 
-    public String getProfileId() {
+    public int getProfileId() {
         return profileId;
     }
 
-    public void setProfileId(String profileId) {
+    public void setProfileId(int profileId) {
         this.profileId = profileId;
     }
 
-    public String getSubdivisionId() {
+    public int getSubdivisionId() {
         return subdivisionId;
     }
 
-    public void setSubdivisionId(String subdivisionId) {
+    public void setSubdivisionId(int subdivisionId) {
         this.subdivisionId = subdivisionId;
     }
 }
