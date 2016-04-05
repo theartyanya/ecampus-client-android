@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
+import com.kpi.campus.R;
 import com.kpi.campus.util.ToastUtil;
 
 /**
@@ -20,11 +21,9 @@ public class InternetBroadcastReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         int type = getConnectivityStatus(context);
         if (type == TYPE_NOT_CONNECTED) {
-            ToastUtil.showError("No Internet Acces", context);
-        } else {
-            ToastUtil.showError("Internet Acces OK", context);
+            ToastUtil.showError(context.getString(R.string
+                    .no_internet_access), context);
         }
-
     }
 
     public static int getConnectivityStatus(Context context) {
