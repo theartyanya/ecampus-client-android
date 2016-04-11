@@ -16,6 +16,7 @@
         <item>@string/rnp</item>
     </string-array>
 
+
     <array name="partial_subsystem_image">
         <item>@drawable/logo_campus</item>
         <item>@drawable/logo_campus</item>
@@ -71,5 +72,11 @@
         <item>Староста</item>
         <item>Профорг</item>
     </array>
+
+    <string-array name="spinner_group">
+        <item>ІК-21</item>
+        <item>ІК-22</item>
+        <item>ІК-23</item>
+    </string-array>
 
 </resources>

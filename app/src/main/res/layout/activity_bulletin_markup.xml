@@ -207,6 +207,43 @@
                 android:layout_height="1dp"
                 android:background="@color/colorDivider"/>
 
+            <TextView
+                android:id="@+id/button2"
+                style="@style/Margin"
+                android:layout_marginTop="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Всім"
+                android:textColor="@color/colorSecondaryText"
+                android:textSize="14sp"/>
+
+            <Spinner
+                android:id="@+id/spinner_profile"
+                style="@style/Margin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:layout_marginTop="8dp"
+                />
+
+            <Spinner
+                android:id="@+id/spinner_group"
+                style="@style/Margin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@null"
+                />
+
+            <Spinner
+                android:id="@+id/spinner_subdivision"
+                style="@style/Margin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                />
+
+<!--
             <RadioGroup
                 android:id="@+id/radio_group_recipient"
                 style="@style/Margin"
@@ -275,6 +312,7 @@
                 android:text="Додати"
                 android:textColor="@color/colorTextIcons"
                 android:textSize="12sp"/>
+            -->
         </LinearLayout>
     </ScrollView>
 
