@@ -216,37 +216,37 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:textColor="@color/colorTextDark"
+                    android:layout_toEndOf="@+id/image_view_all"
                     android:text="Всім"
-                    android:layout_toEndOf="@+id/image_view_all"/>
+                    android:textColor="@color/colorTextDark"/>
 
                 <Spinner
                     android:id="@+id/spinner_profile"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@null"
-                    android:layout_marginTop="8dp"
                     android:layout_alignStart="@+id/tv_all"
                     android:layout_below="@id/tv_all"
+                    android:layout_marginTop="8dp"
+                    android:background="@null"
                     />
 
                 <Spinner
                     android:id="@+id/spinner_group"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:background="@null"
                     android:layout_alignStart="@+id/spinner_profile"
                     android:layout_below="@id/spinner_profile"
+                    android:layout_marginTop="8dp"
+                    android:background="@null"
                     />
 
                 <Spinner
                     android:id="@+id/spinner_subdivision"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
                     android:layout_alignStart="@+id/spinner_group"
                     android:layout_below="@id/spinner_group"
+                    android:layout_marginTop="16dp"
                     />
 
                 <ImageView
@@ -254,9 +254,9 @@
                     style="@style/Margin"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
+                    android:layout_alignTop="@id/tv_all"
                     android:layout_marginRight="24dp"
                     android:background="@color/colorPrimary"
-                    android:layout_alignTop="@id/tv_all"
                     />
 
                 <ImageView
@@ -264,9 +264,9 @@
                     style="@style/Margin"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
+                    android:layout_alignTop="@id/spinner_profile"
                     android:layout_marginRight="24dp"
                     android:background="@color/colorPrimary"
-                    android:layout_alignTop="@id/spinner_profile"
                     />
 
                 <ImageView
@@ -274,9 +274,9 @@
                     style="@style/Margin"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
+                    android:layout_alignTop="@id/spinner_group"
                     android:layout_marginRight="24dp"
                     android:background="@color/colorPrimary"
-                    android:layout_alignTop="@id/spinner_group"
                     />
 
                 <ImageView
@@ -284,22 +284,55 @@
                     style="@style/Margin"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
+                    android:layout_alignTop="@id/spinner_subdivision"
                     android:layout_marginRight="24dp"
                     android:background="@color/colorPrimary"
-                    android:layout_alignTop="@id/spinner_subdivision"
                     />
             </RelativeLayout>
 
+            <LinearLayout
+                android:layout_marginLeft="48dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btn1"
+                    android:layout_width="80dp"
+                    android:layout_height="36dp"
+                    android:layout_marginRight="4dp"
+                    android:layout_weight="1.0"
+                    android:background="@color/colorPrimary"
+                    android:text="Очистити"
+                    android:elevation="2dp"
+                    android:textColor="@color/colorTextIcons"
+                    android:textSize="10sp"/>
+
+                <Button
+
+                    android:layout_width="80dp"
+                    android:layout_height="36dp"
+                    android:layout_weight="1.0"
+                    android:background="@color/colorAccent"
+                    android:text="Додати"
+                    android:elevation="2dp"
+                    android:textColor="@color/colorTextIcons"
+                    android:textSize="10sp"/>
+
+            </LinearLayout>
+
+
             <!--<Button-->
-                <!--android:id="@+id/button_add_recipient"-->
-                <!--style="@style/Margin"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_marginTop="8dp"-->
-                <!--android:background="@color/colorPrimary"-->
-                <!--android:text="Додати"-->
-                <!--android:textColor="@color/colorTextIcons"-->
-                <!--android:textSize="12sp"/>-->
+            <!--android:id="@+id/button_add_recipient"-->
+            <!--style="@style/Margin"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginTop="8dp"-->
+            <!--android:background="@color/colorPrimary"-->
+            <!--android:text="Додати"-->
+            <!--android:textColor="@color/colorTextIcons"-->
+            <!--android:textSize="12sp"/>-->
 
         </LinearLayout>
     </ScrollView>
