@@ -12,4 +12,7 @@
     <color name="colorStartGradient">#06ae17</color>
     <color name="colorCenterGradient">#75e454</color>
     <color name="colorEndGradient">#b4df7c</color>
+
+    <color name="colorTextDark">#666666</color>
+    <color name="colorTextLight">#c2c2c2</color>
 </resources>

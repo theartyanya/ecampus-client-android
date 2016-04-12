@@ -50,6 +50,8 @@ public class NewBulletinActivity extends BaseActivity implements
     Spinner mSpinnerProfile;
     @Bind(R.id.spinner_group)
     Spinner mSpinnerGroup;
+    @Bind(R.id.spinner_subdivision)
+    Spinner mSpinnerSubdivision;
 //    @Bind(R.id.text_view_auto_recipient)
 //    DelayAutoCompleteTextView mAutoCompleteRecipient;
 //    @Bind(R.id.rb_all)
@@ -111,6 +113,7 @@ public class NewBulletinActivity extends BaseActivity implements
         setRecyclerView();
         setProfileSpinner();
         setGroupSpinner();
+        setSubdivisionSpinner();
 //        setAutoCompleteRecipient();
 //        setRadioGroup();
         setViewValues();
@@ -236,7 +239,7 @@ public class NewBulletinActivity extends BaseActivity implements
         adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         mSpinnerProfile.setAdapter(new SpinnerProfileAdapter(
                 adapter,
-                R.layout.spinner_item_nothing_selected,
+                R.layout.spinner_item_nothing_selected_profile,
                 this));
     }
 
@@ -249,6 +252,15 @@ public class NewBulletinActivity extends BaseActivity implements
                 R.layout.spinner_item_nothing_selected_group,
                 this));
     }
+
+    private void setSubdivisionSpinner() {
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource
+                (this, R.array.spinner_subdiv, R.layout.spinner_item);
+        adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
+        mSpinnerSubdivision.setAdapter(adapter);
+    }
+
+
 
 //    private void setAutoCompleteRecipient() {
 //        mAutoCompleteRecipient.setThreshold(1);

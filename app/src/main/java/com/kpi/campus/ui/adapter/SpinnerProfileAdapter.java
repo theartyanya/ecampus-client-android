@@ -9,9 +9,10 @@ import android.widget.ListAdapter;
 import android.widget.SpinnerAdapter;
 
 /**
- * Decorator Adapter to allow a Spinner to show a 'Nothing Selected...' initially
+ * Decorator Adapter to allow a Spinner to show a 'Nothing Selected...'
+ * initially
  * displayed instead of the first choice in the Adapter.
- *
+ * <p>
  * Created by Administrator on 25.02.2016.
  */
 public class SpinnerProfileAdapter implements SpinnerAdapter, ListAdapter {
@@ -46,15 +47,20 @@ public class SpinnerProfileAdapter implements SpinnerAdapter, ListAdapter {
      * If you do this, you probably don't want a prompt on your spinner or it'll
      * have two 'Select' rows.
      *
-     * @param spinnerAdapter                wrapped Adapter. Should probably return false for isEnabled(0)
-     * @param nothingSelectedLayout         layout for nothing selected, perhaps you want
+     * @param spinnerAdapter                wrapped Adapter. Should probably
+     *                                      return false for isEnabled(0)
+     * @param nothingSelectedLayout         layout for nothing selected,
+     *                                      perhaps you want
      *                                      text grayed out like a prompt...
-     * @param nothingSelectedDropdownLayout layout for your 'Select an Item...' in
+     * @param nothingSelectedDropdownLayout layout for your 'Select an
+     *                                      Item...' in
      *                                      the dropdown.
      * @param context
      */
     public SpinnerProfileAdapter(SpinnerAdapter spinnerAdapter,
-                                 int nothingSelectedLayout, int nothingSelectedDropdownLayout, Context context) {
+                                 int nothingSelectedLayout, int
+                                         nothingSelectedDropdownLayout,
+                                 Context context) {
         this.adapter = spinnerAdapter;
         this.context = context;
         this.nothingSelectedLayout = nothingSelectedLayout;
@@ -63,7 +69,8 @@ public class SpinnerProfileAdapter implements SpinnerAdapter, ListAdapter {
     }
 
     @Override
-    public final View getView(int position, View convertView, ViewGroup parent) {
+    public final View getView(int position, View convertView, ViewGroup
+            parent) {
         // This provides the View for the Selected Item in the Spinner, not
         // the dropdown (unless dropdownView is not set).
         if (position == 0) {
@@ -85,8 +92,10 @@ public class SpinnerProfileAdapter implements SpinnerAdapter, ListAdapter {
     }
 
     @Override
-    public View getDropDownView(int position, View convertView, ViewGroup parent) {
-        // Android BUG! http://code.google.com/p/android/issues/detail?id=17128 -
+    public View getDropDownView(int position, View convertView, ViewGroup
+            parent) {
+        // Android BUG! http://code.google
+        // .com/p/android/issues/detail?id=17128 -
         // Spinner does not support multiple view types
 
         if (position == HINT_ITEM_POSITION) {
@@ -107,7 +116,8 @@ public class SpinnerProfileAdapter implements SpinnerAdapter, ListAdapter {
      * @return
      */
     protected View getNothingSelectedDropdownView(ViewGroup parent) {
-        return layoutInflater.inflate(nothingSelectedDropdownLayout, parent, false);
+        return layoutInflater.inflate(nothingSelectedDropdownLayout, parent,
+                false);
     }
 
     @Override
@@ -133,7 +143,8 @@ public class SpinnerProfileAdapter implements SpinnerAdapter, ListAdapter {
 
     @Override
     public long getItemId(int position) {
-        return position >= EXTRA ? adapter.getItemId(position - EXTRA) : position - EXTRA;
+        return position >= EXTRA ? adapter.getItemId(position - EXTRA) :
+                position - EXTRA;
     }
 
     @Override
@@ -163,7 +174,8 @@ public class SpinnerProfileAdapter implements SpinnerAdapter, ListAdapter {
 
     @Override
     public boolean isEnabled(int position) {
-        return position != HINT_ITEM_POSITION; // Don't allow the 'nothing selected'
+        return position != HINT_ITEM_POSITION; // Don't allow the 'nothing
+        // selected'
         // item to be picked.
     }
 }

@@ -207,112 +207,100 @@
                 android:layout_height="1dp"
                 android:background="@color/colorDivider"/>
 
-            <TextView
-                android:id="@+id/button2"
-                style="@style/Margin"
-                android:layout_marginTop="8dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Всім"
-                android:textColor="@color/colorSecondaryText"
-                android:textSize="14sp"/>
-
-            <Spinner
-                android:id="@+id/spinner_profile"
-                style="@style/Margin"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@null"
-                android:layout_marginTop="8dp"
-                />
+                android:layout_height="wrap_content">
 
-            <Spinner
-                android:id="@+id/spinner_group"
-                style="@style/Margin"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:background="@null"
-                />
-
-            <Spinner
-                android:id="@+id/spinner_subdivision"
-                style="@style/Margin"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                />
-
-<!--
-            <RadioGroup
-                android:id="@+id/radio_group_recipient"
-                style="@style/Margin"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp">
-
-                <RadioButton
-                    android:id="@+id/rb_all"
+                <TextView
+                    android:id="@+id/tv_all"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:checked="true"
+                    android:layout_marginTop="8dp"
+                    android:textColor="@color/colorTextDark"
                     android:text="Всім"
-                    android:textSize="12sp"/>
+                    android:layout_toEndOf="@+id/image_view_all"/>
 
-                <RadioButton
-                    android:id="@+id/rb_profile"
+                <Spinner
+                    android:id="@+id/spinner_profile"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="За профілем"
-                    android:textSize="12sp"/>
-            </RadioGroup>
+                    android:background="@null"
+                    android:layout_marginTop="8dp"
+                    android:layout_alignStart="@+id/tv_all"
+                    android:layout_below="@id/tv_all"
+                    />
 
-            <Spinner
-                android:id="@+id/spinner_profile"
-                style="@style/Margin"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:visibility="gone"/>
-
-            <FrameLayout
-                style="@style/Margin"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp">
-
-                <com.kpi.campus.ui.view.DelayAutoCompleteTextView
-                    android:id="@+id/text_view_auto_recipient"
+                <Spinner
+                    android:id="@+id/spinner_group"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Введіть підрозділ..."
-                    android:imeOptions="flagNoExtractUi|actionSearch"
-                    android:inputType="textCapSentences"
-                    android:paddingRight="32dp"
-                    android:textSize="12sp"/>
+                    android:layout_marginTop="8dp"
+                    android:background="@null"
+                    android:layout_alignStart="@+id/spinner_profile"
+                    android:layout_below="@id/spinner_profile"
+                    />
 
-                <ProgressBar
-                    android:id="@+id/progress_bar"
-                    style="?android:attr/progressBarStyleSmall"
+                <Spinner
+                    android:id="@+id/spinner_subdivision"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical|right"
-                    android:layout_marginRight="16dp"
-                    android:visibility="gone"/>
+                    android:layout_marginTop="16dp"
+                    android:layout_alignStart="@+id/spinner_group"
+                    android:layout_below="@id/spinner_group"
+                    />
 
-            </FrameLayout>
+                <ImageView
+                    android:id="@+id/image_view_all"
+                    style="@style/Margin"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginRight="24dp"
+                    android:background="@color/colorPrimary"
+                    android:layout_alignTop="@id/tv_all"
+                    />
 
-            <Button
-                android:id="@+id/button_add_recipient"
-                style="@style/Margin"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:background="@color/colorPrimary"
-                android:text="Додати"
-                android:textColor="@color/colorTextIcons"
-                android:textSize="12sp"/>
-            -->
+                <ImageView
+                    android:id="@+id/image_view_profile"
+                    style="@style/Margin"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginRight="24dp"
+                    android:background="@color/colorPrimary"
+                    android:layout_alignTop="@id/spinner_profile"
+                    />
+
+                <ImageView
+                    android:id="@+id/image_view_group"
+                    style="@style/Margin"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginRight="24dp"
+                    android:background="@color/colorPrimary"
+                    android:layout_alignTop="@id/spinner_group"
+                    />
+
+                <ImageView
+                    android:id="@+id/image_view_subdiv"
+                    style="@style/Margin"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginRight="24dp"
+                    android:background="@color/colorPrimary"
+                    android:layout_alignTop="@id/spinner_subdivision"
+                    />
+            </RelativeLayout>
+
+            <!--<Button-->
+                <!--android:id="@+id/button_add_recipient"-->
+                <!--style="@style/Margin"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginTop="8dp"-->
+                <!--android:background="@color/colorPrimary"-->
+                <!--android:text="Додати"-->
+                <!--android:textColor="@color/colorTextIcons"-->
+                <!--android:textSize="12sp"/>-->
+
         </LinearLayout>
     </ScrollView>
 

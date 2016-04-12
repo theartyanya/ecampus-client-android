@@ -5,6 +5,6 @@
           android:layout_height="wrap_content"
           android:ellipsize="marquee"
           android:singleLine="true"
-          android:textAlignment="inherit"
-          android:textColor="@color/colorTextDark"
+          android:text="Оберіть профіль..."
+          android:textColor="@color/colorSecondaryText"
           android:textSize="14sp"/>

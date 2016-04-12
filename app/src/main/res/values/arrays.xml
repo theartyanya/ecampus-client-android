@@ -79,4 +79,12 @@
         <item>ІК-23</item>
     </string-array>
 
+    <string-array name="spinner_subdiv">
+        <item>ФІОТ</item>
+        <item>ОТ ФІОТ</item>
+        <item>ТК ФІОТ</item>
+        <item>АУТС ФІОТ</item>
+        <item>АСОІУ ФІОТ</item>
+    </string-array>
+
 </resources>
