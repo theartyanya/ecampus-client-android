@@ -5,6 +5,10 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.kpi.campus.model.Recipient;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Represents Bulletin entity.
@@ -22,6 +26,9 @@ public class Bulletin implements Parcelable {
     @SerializedName("text")
     @Expose
     private String text;
+    @SerializedName("creatorId")
+    @Expose
+    private String creatorId;
     @SerializedName("creatorName")
     @Expose
     private String creatorName;
@@ -49,6 +56,20 @@ public class Bulletin implements Parcelable {
     @SerializedName("actuality")
     @Expose
     private boolean actuality;
+    private List<Recipient> recipientList = new ArrayList<>();
+
+    public Bulletin(String userId, String subject, String text, String
+            dateCreate, String dateStart, String dateStop, boolean actuality,
+                    List<Recipient> recipients) {
+        this.creatorId = userId;
+        this.subject = subject;
+        this.text = text;
+        this.dateCreate = dateCreate;
+        this.dateStart = dateStart;
+        this.dateEnd = dateStop;
+        this.actuality = actuality;
+        this.recipientList = recipients;
+    }
 
     public Bulletin(String id, String theme, String author, String dateCreate) {
         this.id = id;
@@ -210,7 +231,8 @@ public class Bulletin implements Parcelable {
     }
 
     /**
-     * Describe the kinds of special objects contained in this Parcelable's marshalled representation.
+     * Describe the kinds of special objects contained in this Parcelable's
+     * marshalled representation.
      *
      * @return
      */
@@ -239,7 +261,8 @@ public class Bulletin implements Parcelable {
     }
 
     /**
-     * Must have a non-null static field called CREATOR of a type that implements the Parcelable.Creator interface
+     * Must have a non-null static field called CREATOR of a type that
+     * implements the Parcelable.Creator interface
      */
     public static final Parcelable.Creator<Bulletin> CREATOR
             = new Parcelable.Creator<Bulletin>() {
@@ -266,5 +289,13 @@ public class Bulletin implements Parcelable {
 
     public void setSubdivisionId(int subdivisionId) {
         this.subdivisionId = subdivisionId;
+    }
+
+    public String getCreatorId() {
+        return creatorId;
+    }
+
+    public void setCreatorId(String creatorId) {
+        this.creatorId = creatorId;
     }
 }
