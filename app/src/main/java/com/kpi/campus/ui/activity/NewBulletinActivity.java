@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 import com.kpi.campus.Config;
 import com.kpi.campus.R;
 import com.kpi.campus.di.UIModule;
+import com.kpi.campus.model.Recipient;
 import com.kpi.campus.model.pojo.Bulletin;
 import com.kpi.campus.model.pojo.User;
 import com.kpi.campus.ui.adapter.BulletinsRecipientAdapter;
@@ -38,13 +40,17 @@ import butterknife.Bind;
 public class NewBulletinActivity extends BaseActivity implements
         NewBulletinPresenter.IView {
 
+    @Bind(R.id.edit_text_bulletin_theme)
+    EditText mSubject;
+    @Bind(R.id.edit_text_bulletin_text)
+    EditText mText;
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
     @Bind(R.id.text_view_start_period)
     TextView mStartDate;
     @Bind(R.id.text_view_end_period)
     TextView mEndDate;
-//    @Bind(R.id.recycler_view_buffer_recipients)
+    //    @Bind(R.id.recycler_view_buffer_recipients)
 //    RecyclerView mRecyclerView;
     @Bind(R.id.spinner_profile)
     Spinner mSpinnerProfile;
@@ -56,14 +62,14 @@ public class NewBulletinActivity extends BaseActivity implements
     RelativeLayout mLayoutProfile;
     @Bind(R.id.layout_group)
     RelativeLayout mLayoutGroup;
-//    @Bind(R.id.text_view_auto_recipient)
+    //    @Bind(R.id.text_view_auto_recipient)
 //    DelayAutoCompleteTextView mAutoCompleteRecipient;
-//    @Bind(R.id.rb_all)
-//    RadioButton mRbAll;
-//    @Bind(R.id.rb_profile)
-//    RadioButton mRbProfile;
-//    @Bind(R.id.rb_group)
-//    RadioButton mRbGroup;
+    @Bind(R.id.rb_all)
+    RadioButton mRbAll;
+    @Bind(R.id.rb_profile)
+    RadioButton mRbProfile;
+    @Bind(R.id.rb_group)
+    RadioButton mRbGroup;
     @Inject
     NewBulletinPresenter mPresenter;
 
@@ -125,17 +131,52 @@ public class NewBulletinActivity extends BaseActivity implements
         setViewValues();
     }
 
+    @Override
+    public Bulletin composeBulletin() {
+        String userId = null;
+        // userId = getUserId();
+        List<Recipient> r = new ArrayList<>();
+        r.add(composeRecipient());
+        Bulletin bulletin = new Bulletin(userId, mSubject.getText().toString
+                (), mText.getText().toString(), DateUtil.getCurrentDate(),
+                mStartDate.getText().toString(), mEndDate.getText().toString
+                (), true, r);
+
+        return bulletin;
+    }
+
+    private Recipient composeRecipient() {
+        Recipient recipient = null;
+//        if(mRbAll.isChecked()) {
+//            recipient = new Recipient(getSubdivisionId(), null, null);
+//        } else if(mRbProfile.isChecked()) {
+//            recipient = new Recipient(null, getProfileId(), null);
+//        } else if(mRbGroup.isChecked()) {
+//            recipient = new Recipient(null, null, getGroupId());
+//        }
+        return recipient;
+    }
+
     private void setViewValues() {
         User user = User.getInstance();
         TextView tv = (TextView) findViewById(R.id.text_view_author_name);
         tv.setText(user.name);
-        // mCurrentBulletin == null means that activity is opened on mode ADD
-        // mCurrentBulletin != null means that this bulletin has to be edited
-        if (mCurrentBulletin == null) {
+
+        if (isAddMode()) {
             setValuesForAddMode();
         } else {
             setValuesForEditMode();
         }
+    }
+
+    /**
+     * mCurrentBulletin == null means that activity is opened on mode ADD
+     * mCurrentBulletin != null means that this bulletin has to be edited
+     *
+     * @return
+     */
+    private boolean isAddMode() {
+        return (mCurrentBulletin == null);
     }
 
     private void setValuesForAddMode() {
@@ -150,17 +191,12 @@ public class NewBulletinActivity extends BaseActivity implements
     }
 
     private void setValuesForEditMode() {
-        EditText et = (EditText) findViewById(R.id.edit_text_bulletin_name);
-        et.setText(mCurrentBulletin.getSubject());
-        et = (EditText) findViewById(R.id.edit_text_bulletin_text);
-        et.setText(mCurrentBulletin.getText());
+        mSubject.setText(mCurrentBulletin.getSubject());
+        mText.setText(mCurrentBulletin.getText());
+        mStartDate.setText(mCurrentBulletin.getDateStart());
+        mEndDate.setText(mCurrentBulletin.getDateEnd());
 
-        TextView tv = (TextView) findViewById(R.id.text_view_start_period);
-        tv.setText(mCurrentBulletin.getDateStart());
-        tv = (TextView) findViewById(R.id.text_view_end_period);
-        tv.setText(mCurrentBulletin.getDateEnd());
-
-        tv = (TextView) findViewById(R.id.text_view_actuality_value);
+        TextView tv = (TextView) findViewById(R.id.text_view_actuality_value);
         if (mCurrentBulletin.getActuality())
             tv.setText(R.string.yes);
         else
@@ -211,7 +247,8 @@ public class NewBulletinActivity extends BaseActivity implements
 //                    autocompleteSubdivision != null &&
 //                    !autocompleteSubdivision.toString().isEmpty()) {
 //                recipient = mSpinnerProfile.getSelectedItem().toString()
-//                        .concat("-").concat(autocompleteSubdivision.toString());
+//                        .concat("-").concat(autocompleteSubdivision
+// .toString());
 //            }
 //        }
 //        mAdapter.addItem(recipient);
@@ -238,7 +275,8 @@ public class NewBulletinActivity extends BaseActivity implements
 
     private void setRecyclerView() {
 //        mAdapter = new BulletinsRecipientAdapter();
-//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager
+// (this);
 //        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 //        mRecyclerView.setLayoutManager(linearLayoutManager);
 //        mRecyclerView.setAdapter(mAdapter);
@@ -270,7 +308,6 @@ public class NewBulletinActivity extends BaseActivity implements
         adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         mSpinnerSubdivision.setAdapter(adapter);
     }
-
 
 
 //    private void setAutoCompleteRecipient() {
