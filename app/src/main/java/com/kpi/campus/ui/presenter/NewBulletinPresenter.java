@@ -1,5 +1,8 @@
 package com.kpi.campus.ui.presenter;
 
+import com.kpi.campus.model.pojo.Bulletin;
+import com.kpi.campus.rx.BulletinRxLoader;
+
 import javax.inject.Inject;
 
 /**
@@ -10,13 +13,20 @@ import javax.inject.Inject;
 public class NewBulletinPresenter extends BasePresenter {
 
     private IView mView;
+    private BulletinRxLoader mLoader;
 
     @Inject
     public NewBulletinPresenter() {
+        mLoader = new BulletinRxLoader();
     }
 
     public void setView(IView view) {
         mView = view;
+    }
+
+    public void addBulletin() {
+        Bulletin newBulletin = mView.composeBulletin();
+        mLoader.addBulletin(newBulletin);
     }
 
     @Override
@@ -26,5 +36,6 @@ public class NewBulletinPresenter extends BasePresenter {
 
     public interface IView {
         void setViewComponent();
+        Bulletin composeBulletin();
     }
 }
