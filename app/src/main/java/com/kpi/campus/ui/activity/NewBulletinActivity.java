@@ -2,14 +2,14 @@ package com.kpi.campus.ui.activity;
 
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -44,20 +44,26 @@ public class NewBulletinActivity extends BaseActivity implements
     TextView mStartDate;
     @Bind(R.id.text_view_end_period)
     TextView mEndDate;
-    @Bind(R.id.recycler_view_buffer_recipients)
-    RecyclerView mRecyclerView;
+//    @Bind(R.id.recycler_view_buffer_recipients)
+//    RecyclerView mRecyclerView;
     @Bind(R.id.spinner_profile)
     Spinner mSpinnerProfile;
     @Bind(R.id.spinner_group)
     Spinner mSpinnerGroup;
     @Bind(R.id.spinner_subdivision)
     Spinner mSpinnerSubdivision;
+    @Bind(R.id.layout_profile)
+    RelativeLayout mLayoutProfile;
+    @Bind(R.id.layout_group)
+    RelativeLayout mLayoutGroup;
 //    @Bind(R.id.text_view_auto_recipient)
 //    DelayAutoCompleteTextView mAutoCompleteRecipient;
 //    @Bind(R.id.rb_all)
 //    RadioButton mRbAll;
 //    @Bind(R.id.rb_profile)
 //    RadioButton mRbProfile;
+//    @Bind(R.id.rb_group)
+//    RadioButton mRbGroup;
     @Inject
     NewBulletinPresenter mPresenter;
 
@@ -115,7 +121,7 @@ public class NewBulletinActivity extends BaseActivity implements
         setGroupSpinner();
         setSubdivisionSpinner();
 //        setAutoCompleteRecipient();
-//        setRadioGroup();
+        setRadioGroup();
         setViewValues();
     }
 
@@ -166,22 +172,27 @@ public class NewBulletinActivity extends BaseActivity implements
         tv.setText(mCurrentBulletin.getDateCreate());
     }
 
-//    private void setRadioGroup() {
-//        RadioGroup radioGroup = (RadioGroup) findViewById(R.id
-//                .radio_group_recipient);
-//        radioGroup.setOnCheckedChangeListener((radioGroup1, checkedId) -> {
-//            switch (checkedId) {
-//                case R.id.rb_all:
-//                    setVisibility(View.GONE, mSpinnerProfile);
-//                    break;
-//                case R.id.rb_profile:
-//                    setVisibility(View.VISIBLE, mSpinnerProfile);
-//                    break;
-//                default:
-//                    break;
-//            }
-//        });
-//    }
+    private void setRadioGroup() {
+        RadioGroup radioGroup = (RadioGroup) findViewById(R.id
+                .radio_group_recipient);
+        radioGroup.setOnCheckedChangeListener((radioGroup1, checkedId) -> {
+            switch (checkedId) {
+                case R.id.rb_all:
+                    setVisibility(View.GONE, mLayoutProfile, mLayoutGroup);
+                    break;
+                case R.id.rb_profile:
+                    setVisibility(View.GONE, mLayoutGroup);
+                    setVisibility(View.VISIBLE, mLayoutProfile);
+                    break;
+                case R.id.rb_group:
+                    setVisibility(View.GONE, mLayoutProfile);
+                    setVisibility(View.VISIBLE, mLayoutGroup);
+                    break;
+                default:
+                    break;
+            }
+        });
+    }
 //
 //    @OnClick(R.id.button_add_recipient)
 //    public void onAddItem() {
@@ -226,11 +237,11 @@ public class NewBulletinActivity extends BaseActivity implements
     }
 
     private void setRecyclerView() {
-        mAdapter = new BulletinsRecipientAdapter();
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        mRecyclerView.setLayoutManager(linearLayoutManager);
-        mRecyclerView.setAdapter(mAdapter);
+//        mAdapter = new BulletinsRecipientAdapter();
+//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+//        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+//        mRecyclerView.setLayoutManager(linearLayoutManager);
+//        mRecyclerView.setAdapter(mAdapter);
     }
 
     private void setProfileSpinner() {
