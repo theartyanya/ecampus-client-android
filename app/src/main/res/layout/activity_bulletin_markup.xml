@@ -97,6 +97,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/text_view_start_period"
+                        android:layout_marginTop="8dp"
                         android:text="@string/bulletin_author"
                         android:textColor="@color/colorSecondaryText"
                         android:textSize="8sp"/>
@@ -106,6 +107,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/text_view_start_period"
+                        android:layout_marginTop="8dp"
                         android:layout_toEndOf="@id/text_view_author"
                         android:text="test"
                         android:textColor="@color/colorSecondaryText"
@@ -156,6 +158,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/text_view_end_period"
+                        android:layout_marginTop="8dp"
                         android:text="@string/bulletin_creation_date"
                         android:textColor="@color/colorSecondaryText"
                         android:textSize="8sp"/>
@@ -165,6 +168,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/text_view_end_period"
+                        android:layout_marginTop="8dp"
                         android:layout_toEndOf="@id/text_view_creation_date"
                         android:text="20.01.2015"
                         android:textColor="@color/colorSecondaryText"
@@ -231,10 +235,10 @@
                         android:id="@+id/rb_profile"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:checked="false"
                         android:paddingLeft="8dp"
                         android:text="За профілем"
-                        android:textSize="12sp"
-                        android:checked="false"/>
+                        android:textSize="12sp"/>
 
                     <RadioButton
                         android:id="@+id/rb_group"
@@ -249,20 +253,20 @@
                     android:id="@+id/image_view_subdiv"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:layout_marginTop="16dp"
                     android:layout_alignStart="@id/radio_group_recipient"
                     android:layout_below="@id/radio_group_recipient"
-                    android:src="@mipmap/subdivision_dark"
-                    android:layout_marginRight="16dp"
                     android:layout_marginLeft="4dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="16dp"
+                    android:src="@mipmap/subdivision_dark"
                     />
 
                 <Spinner
                     android:id="@+id/spinner_subdivision"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
                     android:layout_below="@id/radio_group_recipient"
+                    android:layout_marginTop="16dp"
                     android:layout_toRightOf="@id/image_view_subdiv"
                     />
 
@@ -271,22 +275,22 @@
 
             <FrameLayout
                 style="@style/Margin"
-                android:layout_marginTop="8dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp">
 
                 <RelativeLayout
                     android:id="@+id/layout_profile"
-                    android:visibility="gone"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:visibility="gone">
 
                     <ImageView
                         android:id="@+id/image_view_profile"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
-                        android:layout_marginRight="16dp"
                         android:layout_marginLeft="4dp"
+                        android:layout_marginRight="16dp"
                         android:src="@mipmap/profile_dark"/>
 
                     <Spinner
@@ -298,16 +302,16 @@
 
                 <RelativeLayout
                     android:id="@+id/layout_group"
-                    android:visibility="gone"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:visibility="gone">
 
                     <ImageView
                         android:id="@+id/image_view_group"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
-                        android:layout_marginRight="16dp"
                         android:layout_marginLeft="4dp"
+                        android:layout_marginRight="16dp"
                         android:src="@mipmap/index_dark"/>
 
                     <Spinner
