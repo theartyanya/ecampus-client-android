@@ -1,7 +1,11 @@
 package com.kpi.campus.ui.presenter;
 
 import com.kpi.campus.model.pojo.Bulletin;
+import com.kpi.campus.model.pojo.Item;
 import com.kpi.campus.rx.BulletinRxLoader;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -33,6 +37,14 @@ public class NewBulletinPresenter extends BasePresenter {
     public void onFinishRequest(int responseCode, String responseMsg) {
         mView.dismissProgressDialog();
         mView.showResponse(responseCode, responseMsg);
+    }
+
+    public List<Item> getSubdivisionsList() {
+        List<Item> items = new ArrayList<>();
+        items.add(new Item(10, "FIOT"));
+        items.add(new Item(11, "TK FIOT"));
+        items.add(new Item(12, "OT FIOT"));
+        return items;
     }
 
     private void addBulletin() {

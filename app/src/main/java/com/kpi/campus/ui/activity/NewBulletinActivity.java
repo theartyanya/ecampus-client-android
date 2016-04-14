@@ -20,8 +20,10 @@ import com.kpi.campus.R;
 import com.kpi.campus.di.UIModule;
 import com.kpi.campus.model.Recipient;
 import com.kpi.campus.model.pojo.Bulletin;
+import com.kpi.campus.model.pojo.Item;
 import com.kpi.campus.model.pojo.User;
 import com.kpi.campus.ui.adapter.BulletinsRecipientAdapter;
+import com.kpi.campus.ui.adapter.ItemSpinnerAdapter;
 import com.kpi.campus.ui.adapter.SpinnerProfileAdapter;
 import com.kpi.campus.ui.fragment.DatePickerFragment;
 import com.kpi.campus.ui.presenter.NewBulletinPresenter;
@@ -341,9 +343,9 @@ public class NewBulletinActivity extends BaseActivity implements
     }
 
     private void setSubdivisionSpinner() {
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource
-                (this, R.array.spinner_subdiv, R.layout.spinner_item);
-        adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
+        ArrayAdapter<Item> adapter = new ItemSpinnerAdapter(this, R.layout
+                .spinner_item, R.layout.spinner_dropdown_item, mPresenter
+                .getSubdivisionsList());
         mSpinnerSubdivision.setAdapter(adapter);
     }
 
