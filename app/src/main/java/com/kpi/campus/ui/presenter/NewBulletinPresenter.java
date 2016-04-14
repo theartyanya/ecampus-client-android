@@ -41,17 +41,17 @@ public class NewBulletinPresenter extends BasePresenter {
 
     public List<Item> getSubdivisionsList() {
         List<Item> items = new ArrayList<>();
-        items.add(new Item(10, "FIOT"));
-        items.add(new Item(11, "TK FIOT"));
-        items.add(new Item(12, "OT FIOT"));
+        items.add(new Item(10, "ФІОТ"));
+        items.add(new Item(11, "ТК ФІОТ"));
+        items.add(new Item(12, "ОТ ФІОТ"));
         return items;
     }
 
     public List<Item> getProfileList() {
         List<Item> items = new ArrayList<>();
-        items.add(new Item(1, "Teacher"));
-        items.add(new Item(2, "Student"));
-        items.add(new Item(3, "Leader"));
+        items.add(new Item(1, "Викладач"));
+        items.add(new Item(2, "Студент"));
+        items.add(new Item(3, "Староста"));
         return items;
     }
 

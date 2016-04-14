@@ -18,6 +18,11 @@ public class Item {
     @Expose
     private String name;
 
+    public Item(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
     /**
      * @return The id
      */

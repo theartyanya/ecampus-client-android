@@ -187,13 +187,18 @@ public class NewBulletinActivity extends BaseActivity implements
 
     private Recipient composeRecipient() {
         Recipient recipient = null;
-//        if(mRbAll.isChecked()) {
-//            recipient = new Recipient(getSubdivisionId(), null, null);
-//        } else if(mRbProfile.isChecked()) {
-//            recipient = new Recipient(null, getProfileId(), null);
-//        } else if(mRbGroup.isChecked()) {
-//            recipient = new Recipient(null, null, getGroupId());
-//        }
+        int subdivId = ((Item) mSpinnerSubdivision.getSelectedItem()).getId();
+        if (mRbAll.isChecked()) {
+            recipient = new Recipient(Integer.toString(subdivId), null, null);
+        } else if (mRbProfile.isChecked()) {
+            int profileId = ((Item) mSpinnerProfile.getSelectedItem()).getId();
+            recipient = new Recipient(Integer.toString(subdivId), Integer
+                    .toString(profileId), null);
+        } else if (mRbGroup.isChecked()) {
+            int groupId = ((Item) mSpinnerGroup.getSelectedItem()).getId();
+            recipient = new Recipient(Integer.toString(subdivId), null,
+                    Integer.toString(groupId));
+        }
         return recipient;
     }
 
@@ -213,7 +218,8 @@ public class NewBulletinActivity extends BaseActivity implements
      * mCurrentBulletin == null means that activity is opened on mode ADD
      * mCurrentBulletin != null means that this bulletin has to be edited
      *
-     * @return
+     * @return true if activity is opened in Add mode,
+     * false - if in Edit mode.
      */
     private boolean isAddMode() {
         return (mCurrentBulletin == null);
