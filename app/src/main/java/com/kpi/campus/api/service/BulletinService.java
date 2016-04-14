@@ -1,6 +1,7 @@
 package com.kpi.campus.api.service;
 
 import com.kpi.campus.model.pojo.Bulletin;
+import com.kpi.campus.model.pojo.Item;
 
 import java.util.List;
 
@@ -14,7 +15,7 @@ import rx.Observable;
 
 /**
  * Contains list of APIs related to BulletinBoard.
- *
+ * <p>
  * Created by Administrator on 21.03.2016.
  */
 public interface BulletinService {
@@ -47,4 +48,27 @@ public interface BulletinService {
     Observable<String> postNewBulletin(
             @Header("Authorization") String authorization,
             @Body Bulletin bulletin);
+
+    @Headers({
+            "Accept: application/json",
+            "Content-Type: application/json"
+    })
+    @GET("/board/subdivision/desc")
+    Observable<List<Item>> getDescedantSubdivisions(
+            @Query("subdivisionId") String subdivisionId);
+
+    @Headers({
+            "Accept: application/json",
+            "Content-Type: application/json"
+    })
+    @GET("/board/profile")
+    Observable<List<Item>> getProfiles();
+
+    @Headers({
+            "Accept: application/json",
+            "Content-Type: application/json"
+    })
+    @GET("/board/subdivision/group")
+    Observable<List<Item>> getGroupsOn(@Query("subdivisionId") String
+                                               subdivisionId);
 }
