@@ -47,6 +47,22 @@ public class NewBulletinPresenter extends BasePresenter {
         return items;
     }
 
+    public List<Item> getProfileList() {
+        List<Item> items = new ArrayList<>();
+        items.add(new Item(1, "Teacher"));
+        items.add(new Item(2, "Student"));
+        items.add(new Item(3, "Leader"));
+        return items;
+    }
+
+    public List<Item> getGroupList() {
+        List<Item> items = new ArrayList<>();
+        items.add(new Item(101, "IK-41"));
+        items.add(new Item(102, "IK-42"));
+        items.add(new Item(103, "IK-43"));
+        return items;
+    }
+
     private void addBulletin() {
         Bulletin newBulletin = mView.composeBulletin();
         mLoader.addBulletin(newBulletin);

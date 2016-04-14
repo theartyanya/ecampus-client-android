@@ -323,9 +323,9 @@ public class NewBulletinActivity extends BaseActivity implements
     }
 
     private void setProfileSpinner() {
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource
-                (this, R.array.spinner_profile, R.layout.spinner_item);
-        adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
+        ArrayAdapter<Item> adapter = new ItemSpinnerAdapter(this, R.layout
+                .spinner_item, R.layout.spinner_dropdown_item, mPresenter
+                .getProfileList());
         mSpinnerProfile.setAdapter(new NothingSelectedAdapter(
                 adapter,
                 R.layout.spinner_item_nothing_selected_profile,
@@ -333,9 +333,9 @@ public class NewBulletinActivity extends BaseActivity implements
     }
 
     private void setGroupSpinner() {
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource
-                (this, R.array.spinner_group, R.layout.spinner_item);
-        adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
+        ArrayAdapter<Item> adapter = new ItemSpinnerAdapter(this, R.layout
+                .spinner_item, R.layout.spinner_dropdown_item, mPresenter
+                .getGroupList());
         mSpinnerGroup.setAdapter(new NothingSelectedAdapter(
                 adapter,
                 R.layout.spinner_item_nothing_selected_group,
