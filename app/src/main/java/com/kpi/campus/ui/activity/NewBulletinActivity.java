@@ -24,7 +24,7 @@ import com.kpi.campus.model.pojo.Item;
 import com.kpi.campus.model.pojo.User;
 import com.kpi.campus.ui.adapter.BulletinsRecipientAdapter;
 import com.kpi.campus.ui.adapter.ItemSpinnerAdapter;
-import com.kpi.campus.ui.adapter.SpinnerProfileAdapter;
+import com.kpi.campus.ui.adapter.NothingSelectedAdapter;
 import com.kpi.campus.ui.fragment.DatePickerFragment;
 import com.kpi.campus.ui.presenter.NewBulletinPresenter;
 import com.kpi.campus.util.DateUtil;
@@ -326,7 +326,7 @@ public class NewBulletinActivity extends BaseActivity implements
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource
                 (this, R.array.spinner_profile, R.layout.spinner_item);
         adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
-        mSpinnerProfile.setAdapter(new SpinnerProfileAdapter(
+        mSpinnerProfile.setAdapter(new NothingSelectedAdapter(
                 adapter,
                 R.layout.spinner_item_nothing_selected_profile,
                 this));
@@ -336,7 +336,7 @@ public class NewBulletinActivity extends BaseActivity implements
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource
                 (this, R.array.spinner_group, R.layout.spinner_item);
         adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
-        mSpinnerGroup.setAdapter(new SpinnerProfileAdapter(
+        mSpinnerGroup.setAdapter(new NothingSelectedAdapter(
                 adapter,
                 R.layout.spinner_item_nothing_selected_group,
                 this));

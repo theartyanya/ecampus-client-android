@@ -14,7 +14,7 @@ import android.widget.SpinnerAdapter;
  * <p>
  * Created by Administrator on 25.02.2016.
  */
-public class SpinnerProfileAdapter implements SpinnerAdapter, ListAdapter {
+public class NothingSelectedAdapter implements SpinnerAdapter, ListAdapter {
 
     protected static final int EXTRA = 1;
     protected SpinnerAdapter adapter;
@@ -33,7 +33,7 @@ public class SpinnerProfileAdapter implements SpinnerAdapter, ListAdapter {
      *                              you want text grayed out like a prompt...
      * @param context
      */
-    public SpinnerProfileAdapter(
+    public NothingSelectedAdapter(
             SpinnerAdapter spinnerAdapter,
             int nothingSelectedLayout, Context context) {
 
@@ -56,10 +56,10 @@ public class SpinnerProfileAdapter implements SpinnerAdapter, ListAdapter {
      *                                      the dropdown.
      * @param context
      */
-    public SpinnerProfileAdapter(SpinnerAdapter spinnerAdapter,
-                                 int nothingSelectedLayout, int
-                                         nothingSelectedDropdownLayout,
-                                 Context context) {
+    public NothingSelectedAdapter(SpinnerAdapter spinnerAdapter,
+                                  int nothingSelectedLayout, int
+                                          nothingSelectedDropdownLayout,
+                                  Context context) {
         this.adapter = spinnerAdapter;
         this.context = context;
         this.nothingSelectedLayout = nothingSelectedLayout;
