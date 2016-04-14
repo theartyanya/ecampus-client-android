@@ -7,7 +7,7 @@ import javax.inject.Inject;
 
 /**
  * NewBulletinPresenter created to manage NewBulletinActivity.
- * <p/>
+ * <p>
  * Created by Admin on 12.02.2016.
  */
 public class NewBulletinPresenter extends BasePresenter {
@@ -17,14 +17,25 @@ public class NewBulletinPresenter extends BasePresenter {
 
     @Inject
     public NewBulletinPresenter() {
-        mLoader = new BulletinRxLoader();
+        mLoader = new BulletinRxLoader(this);
     }
 
     public void setView(IView view) {
         mView = view;
     }
 
-    public void addBulletin() {
+    public void onStartRequest() {
+        mView.showProgressDialog();
+
+        addBulletin();
+    }
+
+    public void onFinishRequest(int responseCode, String responseMsg) {
+        mView.dismissProgressDialog();
+        mView.showResponse(responseCode, responseMsg);
+    }
+
+    private void addBulletin() {
         Bulletin newBulletin = mView.composeBulletin();
         mLoader.addBulletin(newBulletin);
     }
@@ -36,6 +47,13 @@ public class NewBulletinPresenter extends BasePresenter {
 
     public interface IView {
         void setViewComponent();
+
+        void showProgressDialog();
+
+        void dismissProgressDialog();
+
+        void showResponse(int code, String msg);
+
         Bulletin composeBulletin();
     }
 }

@@ -9,6 +9,7 @@
 
     <string name="action_search">Пошук</string>
     <string name="progress_authenticate">Authenticating…</string>
+    <string name="progress_sending">Відправлення…</string>
     <string name="key_login">login</string>
     <string name="key_password">password</string>
     <string name="settings">Settings</string>
@@ -40,4 +41,9 @@
     <string name="rnp">РНП</string>
     <string name="no_internet_access">Немає Інтернет підключення</string>
     <string name="spinner_title">Prompt</string>
+
+    <string name="bulletin_is_sent">Оголошення відправлено</string>
+    <string name="unauthorized">Виконайте авторизацію</string>
+    <string name="server_error">Помилка сервера</string>
+    <string name="bad_recipient">Невірний формат отримувача</string>
 </resources>

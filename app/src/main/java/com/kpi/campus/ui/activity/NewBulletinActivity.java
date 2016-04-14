@@ -1,5 +1,6 @@
 package com.kpi.campus.ui.activity;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.widget.Toolbar;
@@ -76,6 +77,7 @@ public class NewBulletinActivity extends BaseActivity implements
     private BulletinsRecipientAdapter mAdapter;
     private String mActivityTitle = "";
     private Bulletin mCurrentBulletin;
+    private ProgressDialog mProgressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,8 +106,7 @@ public class NewBulletinActivity extends BaseActivity implements
                 ToastUtil.showShortMessage("Очищено", this);
                 break;
             case R.id.action_done:
-                ToastUtil.showShortMessage("Збережено", this);
-                finish();
+                mPresenter.onStartRequest();
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -132,6 +133,44 @@ public class NewBulletinActivity extends BaseActivity implements
     }
 
     @Override
+    public void showProgressDialog() {
+        mProgressDialog = new ProgressDialog(NewBulletinActivity.this, R.style
+                .AppTheme_Dark_Dialog);
+        mProgressDialog.setIndeterminate(true);
+        mProgressDialog.setMessage(getString(R.string.progress_sending));
+        mProgressDialog.show();
+    }
+
+    @Override
+    public void dismissProgressDialog() {
+        mProgressDialog.dismiss();
+    }
+
+    @Override
+    public void showResponse(int code, String msg) {
+        switch (code) {
+            case 200:
+                ToastUtil.showShortMessage(getString(R.string
+                        .bulletin_is_sent), this);
+                break;
+            case 400:
+                ToastUtil.showShortMessage(getString(R.string.bad_recipient),
+                        this);
+                break;
+            case 401:
+                ToastUtil.showShortMessage(getString(R.string.unauthorized),
+                        this);
+                break;
+            case 500:
+                ToastUtil.showShortMessage(getString(R.string.server_error),
+                        this);
+                break;
+            default:
+                break;
+        }
+    }
+
+    @Override
     public Bulletin composeBulletin() {
         String userId = null;
         // userId = getUserId();
@@ -141,7 +180,6 @@ public class NewBulletinActivity extends BaseActivity implements
                 (), mText.getText().toString(), DateUtil.getCurrentDate(),
                 mStartDate.getText().toString(), mEndDate.getText().toString
                 (), true, r);
-
         return bulletin;
     }
 
