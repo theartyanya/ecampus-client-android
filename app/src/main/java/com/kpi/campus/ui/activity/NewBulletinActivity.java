@@ -3,6 +3,8 @@ package com.kpi.campus.ui.activity;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -36,6 +38,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import butterknife.Bind;
+import butterknife.OnClick;
 
 /**
  * Activity for addition/edition of a Bulletin.
@@ -53,8 +56,8 @@ public class NewBulletinActivity extends BaseActivity implements
     TextView mStartDate;
     @Bind(R.id.text_view_end_period)
     TextView mEndDate;
-    //    @Bind(R.id.recycler_view_buffer_recipients)
-//    RecyclerView mRecyclerView;
+    @Bind(R.id.recycler_view_buffer_recipients)
+    RecyclerView mRecyclerView;
     @Bind(R.id.spinner_profile)
     Spinner mSpinnerProfile;
     @Bind(R.id.spinner_group)
@@ -65,8 +68,6 @@ public class NewBulletinActivity extends BaseActivity implements
     RelativeLayout mLayoutProfile;
     @Bind(R.id.layout_group)
     RelativeLayout mLayoutGroup;
-    //    @Bind(R.id.text_view_auto_recipient)
-//    DelayAutoCompleteTextView mAutoCompleteRecipient;
     @Bind(R.id.rb_all)
     RadioButton mRbAll;
     @Bind(R.id.rb_profile)
@@ -108,7 +109,7 @@ public class NewBulletinActivity extends BaseActivity implements
                 ToastUtil.showShortMessage("Очищено", this);
                 break;
             case R.id.action_done:
-                mPresenter.onStartRequest();
+                //mPresenter.onStartRequest();
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -129,7 +130,6 @@ public class NewBulletinActivity extends BaseActivity implements
         setProfileSpinner();
         setGroupSpinner();
         setSubdivisionSpinner();
-//        setAutoCompleteRecipient();
         setRadioGroup();
         setViewValues();
     }
@@ -176,8 +176,7 @@ public class NewBulletinActivity extends BaseActivity implements
     public Bulletin composeBulletin() {
         String userId = null;
         // userId = getUserId();
-        List<Recipient> r = new ArrayList<>();
-        r.add(composeRecipient());
+        List<Recipient> r = mAdapter.getData();
         Bulletin bulletin = new Bulletin(userId, mSubject.getText().toString
                 (), mText.getText().toString(), DateUtil.getCurrentDate(),
                 mStartDate.getText().toString(), mEndDate.getText().toString
@@ -186,20 +185,25 @@ public class NewBulletinActivity extends BaseActivity implements
     }
 
     private Recipient composeRecipient() {
-        Recipient recipient = null;
-        int subdivId = ((Item) mSpinnerSubdivision.getSelectedItem()).getId();
+        Recipient r = null;
+        Item subdiv = (Item) mSpinnerSubdivision.getSelectedItem();
+        String subdivId = Integer.toString(subdiv.getId());
+        String subdivName = subdiv.getName();
         if (mRbAll.isChecked()) {
-            recipient = new Recipient(Integer.toString(subdivId), null, null);
+            r = new Recipient(subdivId, subdivName,
+                    null, null, null, null);
         } else if (mRbProfile.isChecked()) {
-            int profileId = ((Item) mSpinnerProfile.getSelectedItem()).getId();
-            recipient = new Recipient(Integer.toString(subdivId), Integer
-                    .toString(profileId), null);
+            Item profile = (Item) mSpinnerProfile.getSelectedItem();
+            if (profile == null) return null;
+            r = new Recipient(subdivId, subdivName, Integer.toString(profile
+                    .getId()), profile.getName(), null, null);
         } else if (mRbGroup.isChecked()) {
-            int groupId = ((Item) mSpinnerGroup.getSelectedItem()).getId();
-            recipient = new Recipient(Integer.toString(subdivId), null,
-                    Integer.toString(groupId));
+            Item group = (Item) mSpinnerGroup.getSelectedItem();
+            if (group == null) return null;
+            r = new Recipient(subdivId, subdivName, null, null, Integer
+                    .toString(group.getId()), group.getName());
         }
-        return recipient;
+        return r;
     }
 
     private void setViewValues() {
@@ -275,30 +279,14 @@ public class NewBulletinActivity extends BaseActivity implements
             }
         });
     }
-//
-//    @OnClick(R.id.button_add_recipient)
-//    public void onAddItem() {
-//        /// TODO: rewrite!
-//
-//        String recipient = "";
-//        Editable autocompleteSubdivision = mAutoCompleteRecipient.getText();
-//
-//        if (mRbAll.isChecked()) {
-//            if (autocompleteSubdivision != null && !autocompleteSubdivision
-//                    .toString().isEmpty()) {
-//                recipient = autocompleteSubdivision.toString();
-//            }
-//        } else if (mRbProfile.isChecked()) {
-//            if (mSpinnerProfile.getSelectedItem() != null &&
-//                    autocompleteSubdivision != null &&
-//                    !autocompleteSubdivision.toString().isEmpty()) {
-//                recipient = mSpinnerProfile.getSelectedItem().toString()
-//                        .concat("-").concat(autocompleteSubdivision
-// .toString());
-//            }
-//        }
-//        mAdapter.addItem(recipient);
-//    }
+
+    @OnClick(R.id.btn_add_recipient)
+    public void onAddRecipient() {
+        Recipient recipient = composeRecipient();
+        if (recipient != null) {
+            mAdapter.addItem(recipient);
+        }
+    }
 
     private void setDateListener() {
         mStartDate.setOnClickListener(v -> setDateTo(mStartDate, "2"));
@@ -320,12 +308,12 @@ public class NewBulletinActivity extends BaseActivity implements
     }
 
     private void setRecyclerView() {
-//        mAdapter = new BulletinsRecipientAdapter();
-//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager
-// (this);
-//        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-//        mRecyclerView.setLayoutManager(linearLayoutManager);
-//        mRecyclerView.setAdapter(mAdapter);
+        mAdapter = new BulletinsRecipientAdapter();
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager
+                (this);
+        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        mRecyclerView.setLayoutManager(linearLayoutManager);
+        mRecyclerView.setAdapter(mAdapter);
     }
 
     private void setProfileSpinner() {
@@ -355,28 +343,10 @@ public class NewBulletinActivity extends BaseActivity implements
         mSpinnerSubdivision.setAdapter(adapter);
     }
 
-
-//    private void setAutoCompleteRecipient() {
-//        mAutoCompleteRecipient.setThreshold(1);
-//        mAutoCompleteRecipient.setAdapter(new RecipientAutoCompleteAdapter
-//                (getApplicationContext()));
-//        mAutoCompleteRecipient.setLoadingIndicator((ProgressBar) findViewById
-//                (R.id.progress_bar));
-//        mAutoCompleteRecipient.setOnItemClickListener(new AdapterView
-//                .OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view,
-//                                    int position, long id) {
-//                Recipient recipient = (Recipient) adapterView
-//                        .getItemAtPosition(position);
-//                mAutoCompleteRecipient.setText(recipient.getName());
-//            }
-//        });
-//    }
-
     private void setVisibility(int visibility, View... views) {
         for (View v : views) {
             v.setVisibility(visibility);
         }
     }
+
 }

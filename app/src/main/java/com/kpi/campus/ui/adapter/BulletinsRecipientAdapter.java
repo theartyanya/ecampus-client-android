@@ -9,40 +9,46 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.kpi.campus.R;
+import com.kpi.campus.model.Recipient;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
- * BulletinsRecipientAdapter manages recipient data (profile, subsystem, group) and adapts it to RecyclerView, which is in New/Edit BulletinActivity.
- * This recycler view contains buffer list of recipients which have not added to bulletin's recipient list yet.
- * <p/>
+ * BulletinsRecipientAdapter manages recipient data (profile, subsystem,
+ * group) and adapts it to RecyclerView, which is in New/Edit BulletinActivity.
+ * This recycler view contains buffer list of recipients which have not added
+ * to bulletin's recipient list yet.
+ * <p>
  * Created by Administrator on 17.02.2016.
  */
-public class BulletinsRecipientAdapter extends RecyclerView.Adapter<BulletinsRecipientAdapter.ViewHolder> {
+public class BulletinsRecipientAdapter extends RecyclerView
+        .Adapter<BulletinsRecipientAdapter.ViewHolder> {
 
     private final int NOTIFY_DELAY = 500;
 
-    private ArrayList<String> mDataList = new ArrayList<>();
+    private ArrayList<Recipient> mDataList = new ArrayList<>();
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_buffer_recipient_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout
+                .recyclerview_buffer_recipient_item, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
-        String data = mDataList.get(position);
-        holder.textView.setText(data);
-        holder.btnDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                removeItem(position);
-            }
-        });
+        Recipient item = mDataList.get(position);
+        holder.tvWhere.setText(item.getSubdivisionName());
+        if (item.getProfileName() != null) {
+            holder.tvWhom.setText(item.getProfileName());
+        } else if (item.getStudyGroupName() != null) {
+            holder.tvWhom.setText(item.getStudyGroupName());
+        }
+        holder.btnDelete.setOnClickListener(v -> removeItem(position));
     }
 
     @Override
@@ -50,33 +56,33 @@ public class BulletinsRecipientAdapter extends RecyclerView.Adapter<BulletinsRec
         return mDataList.size();
     }
 
-    public void addItem(final String item) {
+    public List<Recipient> getData() {
+        return mDataList;
+    }
+
+    public void addItem(final Recipient item) {
         Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mDataList.add(item);
-                notifyItemInserted(mDataList.size()-1);
-            }
+        handler.postDelayed(() -> {
+            mDataList.add(item);
+            notifyItemInserted(mDataList.size() - 1);
         }, NOTIFY_DELAY);
     }
 
     public void removeItem(final int position) {
         Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mDataList.remove(position);
-                notifyItemRemoved(position);
-                notifyItemRangeChanged(position, mDataList.size());
-            }
+        handler.postDelayed(() -> {
+            mDataList.remove(position);
+            notifyItemRemoved(position);
+            notifyItemRangeChanged(position, mDataList.size());
         }, NOTIFY_DELAY);
     }
 
     protected class ViewHolder extends RecyclerView.ViewHolder {
 
-        @Bind(R.id.text_view_buffer_recipient)
-        TextView textView;
+        @Bind(R.id.tv_where)
+        TextView tvWhere;
+        @Bind(R.id.tv_whom)
+        TextView tvWhom;
         @Bind(R.id.button_delete_buffer_recipient)
         ImageButton btnDelete;
 
