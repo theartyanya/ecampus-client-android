@@ -53,7 +53,7 @@ public interface BulletinService {
             "Accept: application/json",
             "Content-Type: application/json"
     })
-    @GET("/board/subdivision/desc")
+    @GET("/subdivision/desc")
     Observable<List<Item>> getDescedantSubdivisions(
             @Query("subdivisionId") String subdivisionId);
 
@@ -61,14 +61,14 @@ public interface BulletinService {
             "Accept: application/json",
             "Content-Type: application/json"
     })
-    @GET("/board/profile")
+    @GET("/profile")
     Observable<List<Item>> getProfiles();
 
     @Headers({
             "Accept: application/json",
             "Content-Type: application/json"
     })
-    @GET("/board/subdivision/group")
+    @GET("/subdivision/group")
     Observable<List<Item>> getGroupsOn(@Query("subdivisionId") String
                                                subdivisionId);
 }

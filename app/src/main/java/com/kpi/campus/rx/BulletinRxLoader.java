@@ -6,14 +6,16 @@ import com.kpi.campus.Config;
 import com.kpi.campus.api.service.BulletinService;
 import com.kpi.campus.api.service.ServiceCreator;
 import com.kpi.campus.model.pojo.Bulletin;
+import com.kpi.campus.model.pojo.Item;
 import com.kpi.campus.model.pojo.User;
 import com.kpi.campus.ui.presenter.BasePresenter;
 import com.kpi.campus.ui.presenter.NewBulletinPresenter;
 
+import java.util.List;
+
 import retrofit2.adapter.rxjava.HttpException;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -21,10 +23,10 @@ import rx.schedulers.Schedulers;
  */
 public class BulletinRxLoader {
 
-    private BasePresenter mPresenter;
+    private NewBulletinPresenter mPresenter;
 
     public BulletinRxLoader(BasePresenter presenter) {
-        mPresenter = presenter;
+        mPresenter = (NewBulletinPresenter) presenter;
     }
 
     public void addBulletin(Bulletin bulletin) {
@@ -36,16 +38,37 @@ public class BulletinRxLoader {
         observable
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(onNextAction, onErrorAction);
+                .subscribe(
+                        responseMsg -> mPresenter.onFinishRequest(200,
+                                responseMsg),
+                        e -> {
+                            Log.e(Config.LOG, e.getMessage());
+                            mPresenter.onFinishRequest(((HttpException) e).code
+                                    (), e.getMessage());
+                        }
+                );
     }
 
-    Action1<String> onNextAction = responseMsg -> ((NewBulletinPresenter)
-            mPresenter).onFinishRequest(200,
-            responseMsg);
+    public void loadDescSubdivisions(String subdivisionId) {
+        BulletinService service = ServiceCreator.createService
+                (BulletinService.class);
+        Observable<List<Item>> observable = service.getDescedantSubdivisions
+                (subdivisionId);
+        observable
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(list -> mPresenter.setDescSubdivisions(list),
+                        e -> Log.e(Config.LOG, e.getMessage()));
+    }
 
-    Action1<Throwable> onErrorAction = e -> {
-        Log.e(Config.LOG, e.getMessage());
-        ((NewBulletinPresenter) mPresenter).onFinishRequest(((HttpException)
-                e).code(), e.getMessage());
-    };
+    public void loadProfiles() {
+        BulletinService service = ServiceCreator.createService
+                (BulletinService.class);
+        Observable<List<Item>> observable = service.getProfiles();
+        observable
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(list -> mPresenter.setProfiles(list),
+                        e -> Log.e(Config.LOG, e.getMessage()));
+    }
 }
