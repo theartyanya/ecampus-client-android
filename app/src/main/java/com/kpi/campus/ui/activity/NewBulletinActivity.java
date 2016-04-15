@@ -106,6 +106,7 @@ public class NewBulletinActivity extends BaseActivity implements
                 NavUtils.navigateUpFromSameTask(this);
                 return true;
             case R.id.action_clear:
+                clearValues();
                 ToastUtil.showShortMessage("Очищено", this);
                 break;
             case R.id.action_done:
@@ -349,4 +350,13 @@ public class NewBulletinActivity extends BaseActivity implements
         }
     }
 
+    private void clearValues() {
+        String empty = "";
+        mSubject.setText(empty);
+        mText.setText(empty);
+        mStartDate.setText(empty);
+        mEndDate.setText(empty);
+        mRbAll.setChecked(true);
+        mAdapter.setItems(new ArrayList<>());
+    }
 }

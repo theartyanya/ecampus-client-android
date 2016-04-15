@@ -32,6 +32,11 @@ public class BulletinsRecipientAdapter extends RecyclerView
 
     private ArrayList<Recipient> mDataList = new ArrayList<>();
 
+    public void setItems(ArrayList<Recipient> list) {
+        mDataList = list;
+        notifyDataSetChanged();
+    }
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout
