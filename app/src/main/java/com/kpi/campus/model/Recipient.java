@@ -7,13 +7,17 @@ package com.kpi.campus.model;
  */
 public class Recipient {
 
-    private String mName;
-
     private String subdivisionId;
+
+    private String subdivisionName;
 
     private String profileId;
 
+    private String profileName;
+
     private String studyGroupId;
+
+    private String studyGroupName;
 
     public Recipient() {
     }
@@ -24,35 +28,25 @@ public class Recipient {
         this.studyGroupId = groupId;
     }
 
-    public void setName(String name) {
-        mName = name;
-    }
-
-    public String getName() {
-        return mName;
-    }
-
-    public String getSubdivisionId() {
-        return subdivisionId;
-    }
-
-    public void setSubdivisionId(String subdivisionId) {
-        this.subdivisionId = subdivisionId;
-    }
-
-    public String getProfileId() {
-        return profileId;
-    }
-
-    public void setProfileId(String profileId) {
+    public Recipient(String subdivId, String subdivName, String profileId,
+                     String profileName, String groupId, String groupName) {
+        this.subdivisionId = subdivId;
+        this.subdivisionName = subdivName;
         this.profileId = profileId;
+        this.profileName = profileName;
+        this.studyGroupId = groupId;
+        this.studyGroupName = groupName;
     }
 
-    public String getStudyGroupId() {
-        return studyGroupId;
+    public String getSubdivisionName() {
+        return subdivisionName;
     }
 
-    public void setStudyGroupId(String studyGroupId) {
-        this.studyGroupId = studyGroupId;
+    public String getProfileName() {
+        return profileName;
+    }
+
+    public String getStudyGroupName() {
+        return studyGroupName;
     }
 }
