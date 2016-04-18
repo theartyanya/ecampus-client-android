@@ -103,6 +103,7 @@ public class MainPresenter extends BasePresenter {
 
     private void setUserValues() {
         User user = User.getInstance();
+        user.id = mPreference.getUserId();
         user.name = mPreference.getUserName();
         user.position = mPreference.getUserPositions();
         user.subdivision = mPreference.getUserSubdivisions();

@@ -71,12 +71,22 @@ public class Preference {
      */
     public void saveUserInfo(User user) {
         SharedPreferences.Editor editor = mSharedPrefs.edit();
+        editor.putString(Config.USER_ID, user.id);
         editor.putString(Config.USER_NAME, user.name);
         Gson gson = new Gson();
         editor.putString(Config.USER_POSITION, gson.toJson(user.position));
         editor.putString(Config.USER_SUBDIVISION, gson.toJson(user.subdivision));
-        editor.putBoolean(Config.USER_IS_BB_MODERATOR, user.isBulletinBoardModerator);
+        editor.putBoolean(Config.USER_IS_BB_MODERATOR, user
+                .isBulletinBoardModerator);
         editor.commit();
+    }
+
+    /**
+     * Get user's id.
+     * @return id
+     */
+    public String getUserId() {
+        return mSharedPrefs.getString(Config.USER_ID, "");
     }
 
     /**

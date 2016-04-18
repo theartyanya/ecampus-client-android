@@ -44,6 +44,7 @@ public class UserRxLoader {
         @Override
         public void call(User userInfo) {
             User user = User.getInstance();
+            user.id = userInfo.id;
             user.name = userInfo.name;
             user.position = userInfo.position;
             user.subdivision = userInfo.subdivision;

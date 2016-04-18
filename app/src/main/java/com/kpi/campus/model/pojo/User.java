@@ -22,6 +22,7 @@ public class User {
         return mInstance;
     }
 
+    public String id;
     public String name;
     public List<Item> position;
     public List<Item> subdivision;
