@@ -71,4 +71,18 @@ public class BulletinRxLoader {
                 .subscribe(list -> mPresenter.setProfiles(list),
                         e -> Log.e(Config.LOG, e.getMessage()));
     }
+
+    public void loadGroupsIn(String subdivisionId) {
+        BulletinService service = ServiceCreator.createService
+                (BulletinService.class);
+        Observable<List<Item>> observable = service.getGroupsIn
+                (subdivisionId);
+        observable
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(list -> mPresenter.setGroups(list),
+                        e -> Log.e(Config.LOG, e.getMessage()));
+    }
+
+
 }
