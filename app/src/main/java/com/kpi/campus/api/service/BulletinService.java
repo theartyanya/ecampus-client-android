@@ -8,7 +8,6 @@ import java.util.List;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
-import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 import rx.Observable;
@@ -20,54 +19,30 @@ import rx.Observable;
  */
 public interface BulletinService {
 
-    @Headers({
-            "Accept: application/json",
-            "Content-Type: application/json"
-    })
     @GET("/board/all")
     Observable<List<Bulletin>> getBulletins(
             @Header("Authorization") String authorization,
             @Query("limit") int limit,
             @Query("lastLoadedBulletinId") int lastId);
 
-    @Headers({
-            "Accept: application/json",
-            "Content-Type: application/json"
-    })
     @GET("/board/moderator/all")
     Observable<List<Bulletin>> getModeratorBulletins(
             @Header("Authorization") String authorization,
             @Query("limit") int limit,
             @Query("lastLoadedBulletinId") int lastId);
 
-    @Headers({
-            "Accept: application/json",
-            "Content-Type: application/json"
-    })
     @POST("/board/new")
     Observable<String> postNewBulletin(
             @Header("Authorization") String authorization,
             @Body Bulletin bulletin);
 
-    @Headers({
-            "Accept: application/json",
-            "Content-Type: application/json"
-    })
     @GET("/subdivision/desc")
-    Observable<List<Item>> getDescedantSubdivisions(
+    Observable<List<Item>> getDescendantSubdivisions(
             @Query("subdivisionId") String subdivisionId);
 
-    @Headers({
-            "Accept: application/json",
-            "Content-Type: application/json"
-    })
     @GET("/profile")
     Observable<List<Item>> getProfiles();
 
-    @Headers({
-            "Accept: application/json",
-            "Content-Type: application/json"
-    })
     @GET("/subdivision/group")
     Observable<List<Item>> getGroupsOn(@Query("subdivisionId") String
                                                subdivisionId);

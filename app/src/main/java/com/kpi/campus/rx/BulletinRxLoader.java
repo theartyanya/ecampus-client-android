@@ -52,7 +52,7 @@ public class BulletinRxLoader {
     public void loadDescSubdivisions(String subdivisionId) {
         BulletinService service = ServiceCreator.createService
                 (BulletinService.class);
-        Observable<List<Item>> observable = service.getDescedantSubdivisions
+        Observable<List<Item>> observable = service.getDescendantSubdivisions
                 (subdivisionId);
         observable
                 .subscribeOn(Schedulers.newThread())
