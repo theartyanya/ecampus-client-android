@@ -4,8 +4,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
 import android.widget.TextView;
@@ -22,9 +20,13 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
+ * Manages Bulletin data model and adapts it to RecyclerView, which is in
+ * BulletinBoardActivity, BulletinBoardModeratorActivity..
+ * <p>
  * Created by Administrator on 24.03.2016.
  */
-public class PagingRecyclerAdapter extends RecyclerView.Adapter<PagingRecyclerAdapter.ViewHolder> {
+public class PagingRecyclerAdapter extends RecyclerView
+        .Adapter<PagingRecyclerAdapter.ViewHolder> {
 
     private List<Bulletin> mData = new ArrayList<>();
     private OnItemClickListener mListener;
@@ -53,10 +55,6 @@ public class PagingRecyclerAdapter extends RecyclerView.Adapter<PagingRecyclerAd
         notifyDataSetChanged();
     }
 
-    public List<Bulletin> getItems() {
-        return mData;
-    }
-
     public boolean isAllItemsLoaded() {
         return mAllItemsLoaded;
     }
@@ -81,23 +79,20 @@ public class PagingRecyclerAdapter extends RecyclerView.Adapter<PagingRecyclerAd
 
     @Override
     public PagingRecyclerAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_item_bulletin, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout
+                .recycler_item_bulletin, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(PagingRecyclerAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(PagingRecyclerAdapter.ViewHolder holder, int
+            position) {
         Bulletin bul = mData.get(position);
         holder.date.setText(bul.getDateCreate());
         holder.theme.setText(bul.getSubject());
         holder.author.setText(bul.getCreatorName());
 
-
-        Animation animation = AnimationUtils.
-                loadAnimation(holder.itemView.getContext(), R.anim.slide_left_to_right);
-        holder.itemView.startAnimation(animation);
-
-        if(mIsModerator) {
+        if (mIsModerator) {
             holder.btnOverflow.setVisibility(View.VISIBLE);
         }
     }
@@ -106,7 +101,8 @@ public class PagingRecyclerAdapter extends RecyclerView.Adapter<PagingRecyclerAd
         mListener = listener;
     }
 
-    public void setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener listener) {
+    public void setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener
+                                                   listener) {
         mMenuListener = listener;
     }
 

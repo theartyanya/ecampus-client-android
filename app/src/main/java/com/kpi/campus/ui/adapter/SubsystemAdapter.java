@@ -19,11 +19,13 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
- * SubsystemAdapter manages Subsystem data model and adapts it to RecyclerView, which is in MainNotAuthActivity.
- * <p/>
+ * SubsystemAdapter manages Subsystem data model and adapts it to
+ * RecyclerView, which is in MainNotAuthActivity.
+ * <p>
  * Created by Administrator on 28.01.2016.
  */
-public class SubsystemAdapter extends RecyclerView.Adapter<SubsystemAdapter.ViewHolder> {
+public class SubsystemAdapter extends RecyclerView.Adapter<SubsystemAdapter
+        .ViewHolder> {
 
     private Context mContext;
     private List<Subsystem> mSubsystems;
@@ -41,7 +43,8 @@ public class SubsystemAdapter extends RecyclerView.Adapter<SubsystemAdapter.View
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_item_subsystem, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout
+                .recycler_item_subsystem, parent, false);
         return new ViewHolder(view);
     }
 
@@ -49,7 +52,8 @@ public class SubsystemAdapter extends RecyclerView.Adapter<SubsystemAdapter.View
     public void onBindViewHolder(ViewHolder holder, int position) {
         Subsystem subsystem = mSubsystems.get(position);
         holder.name.setText(subsystem.getName());
-        holder.image.setImageDrawable(ContextCompat.getDrawable(mContext, subsystem.getIconId()));
+        holder.image.setImageDrawable(ContextCompat.getDrawable(mContext,
+                subsystem.getIconId()));
     }
 
     @Override
