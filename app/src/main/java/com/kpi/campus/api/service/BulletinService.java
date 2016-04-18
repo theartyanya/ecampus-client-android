@@ -43,7 +43,7 @@ public interface BulletinService {
     @GET("/profile")
     Observable<List<Item>> getProfiles();
 
-    @GET("/subdivision/group")
-    Observable<List<Item>> getGroupsOn(@Query("subdivisionId") String
+    @GET("/subdivision/groups")
+    Observable<List<Item>> getGroupsIn(@Query("subdivisionId") String
                                                subdivisionId);
 }

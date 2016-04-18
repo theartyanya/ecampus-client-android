@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -90,6 +91,7 @@ public class NewBulletinActivity extends BaseActivity implements
         mPresenter.setView(this);
         mActivityTitle = getIntent().getStringExtra(Config.KEY_TITLE);
         mCurrentBulletin = getIntent().getParcelableExtra(Config.KEY_BULLETIN);
+        mPresenter.loadViewData();
         mPresenter.initializeViewComponent();
     }
 
@@ -128,9 +130,6 @@ public class NewBulletinActivity extends BaseActivity implements
         setToolbar();
         setDateListener();
         setRecyclerView();
-        setProfileSpinner();
-        setGroupSpinner();
-        setSubdivisionSpinner();
         setRadioGroup();
         setViewValues();
     }
@@ -175,14 +174,29 @@ public class NewBulletinActivity extends BaseActivity implements
 
     @Override
     public Bulletin composeBulletin() {
-        String userId = null;
-        // userId = getUserId();
+        String userId;
+        userId = User.getInstance().id;
         List<Recipient> r = mAdapter.getData();
         Bulletin bulletin = new Bulletin(userId, mSubject.getText().toString
                 (), mText.getText().toString(), DateUtil.getCurrentDate(),
                 mStartDate.getText().toString(), mEndDate.getText().toString
                 (), true, r);
         return bulletin;
+    }
+
+    @Override
+    public void setSubdivisionAdapter(List<Item> list) {
+        setSubdivisionSpinner(list);
+    }
+
+    @Override
+    public void setProfileAdapter(List<Item> list) {
+        setProfileSpinner(list);
+    }
+
+    @Override
+    public void setGroupAdapter(List<Item> list) {
+        setGroupSpinner(list);
     }
 
     private Recipient composeRecipient() {
@@ -317,31 +331,41 @@ public class NewBulletinActivity extends BaseActivity implements
         mRecyclerView.setAdapter(mAdapter);
     }
 
-    private void setProfileSpinner() {
+    private void setProfileSpinner(List<Item> list) {
         ArrayAdapter<Item> adapter = new ItemSpinnerAdapter(this, R.layout
-                .spinner_item, R.layout.spinner_dropdown_item, mPresenter
-                .getProfileList());
+                .spinner_item, R.layout.spinner_dropdown_item, list);
         mSpinnerProfile.setAdapter(new NothingSelectedAdapter(
                 adapter,
                 R.layout.spinner_item_nothing_selected_profile,
                 this));
     }
 
-    private void setGroupSpinner() {
+    private void setGroupSpinner(List<Item> list) {
         ArrayAdapter<Item> adapter = new ItemSpinnerAdapter(this, R.layout
-                .spinner_item, R.layout.spinner_dropdown_item, mPresenter
-                .getGroupList());
+                .spinner_item, R.layout.spinner_dropdown_item, list);
         mSpinnerGroup.setAdapter(new NothingSelectedAdapter(
                 adapter,
                 R.layout.spinner_item_nothing_selected_group,
                 this));
     }
 
-    private void setSubdivisionSpinner() {
+    private void setSubdivisionSpinner(List<Item> list) {
         ArrayAdapter<Item> adapter = new ItemSpinnerAdapter(this, R.layout
-                .spinner_item, R.layout.spinner_dropdown_item, mPresenter
-                .getSubdivisionsList());
+                .spinner_item, R.layout.spinner_dropdown_item, list);
         mSpinnerSubdivision.setAdapter(adapter);
+        mSpinnerSubdivision.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int
+                    position, long id) {
+                Item item = (Item) parent.getItemAtPosition(position);
+                mPresenter.loadGroupsInSubdiv(item.getId().toString());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
     private void setVisibility(int visibility, View... views) {

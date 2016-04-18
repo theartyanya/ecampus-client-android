@@ -5,7 +5,6 @@ import com.kpi.campus.model.pojo.Item;
 import com.kpi.campus.model.pojo.User;
 import com.kpi.campus.rx.BulletinRxLoader;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -19,8 +18,6 @@ public class NewBulletinPresenter extends BasePresenter {
 
     private IView mView;
     private BulletinRxLoader mLoader;
-    private List<Item> mDescSubdivisions = new ArrayList<>();
-    private List<Item> mProfiles = new ArrayList<>();
 
     @Inject
     public NewBulletinPresenter() {
@@ -30,20 +27,24 @@ public class NewBulletinPresenter extends BasePresenter {
     @Override
     public void initializeViewComponent() {
         mView.setViewComponent();
-        loadViewValues();
     }
 
     public void setView(IView view) {
         mView = view;
     }
 
-    public void loadViewValues() {
+    public void loadViewData() {
         List<Item> subdivisions = User.getInstance().subdivision;
         if (subdivisions != null && !subdivisions.isEmpty()) {
             Item mainSubdiv = subdivisions.get(0);
             mLoader.loadDescSubdivisions(mainSubdiv.getId().toString());
+            mLoader.loadGroupsIn(mainSubdiv.getId().toString());
         }
         mLoader.loadProfiles();
+    }
+
+    public void loadGroupsInSubdiv(String subdivId) {
+        mLoader.loadGroupsIn(subdivId);
     }
 
     public void onStartRequest() {
@@ -58,35 +59,15 @@ public class NewBulletinPresenter extends BasePresenter {
     }
 
     public void setDescSubdivisions(List<Item> list) {
-        mDescSubdivisions = list;
+        mView.setSubdivisionAdapter(list);
     }
 
     public void setProfiles(List<Item> list) {
-        mProfiles = list;
+        mView.setProfileAdapter(list);
     }
 
-    public List<Item> getSubdivisionsList() {
-        List<Item> items = new ArrayList<>();
-        items.add(new Item(10193, "ТК ФІОТ"));
-        return items;
-    }
-
-    public List<Item> getProfileList() {
-        List<Item> items = new ArrayList<>();
-        items.add(new Item(3, "Викладач-науковець"));
-        items.add(new Item(5, "Студент навчальної групи"));
-        items.add(new Item(6, "Староста навчальної групи"));
-        items.add(new Item(7, "Профорг навчальної групи"));
-        items.add(new Item(8, "Куратор навчальної групи"));
-        return items;
-    }
-
-    public List<Item> getGroupList() {
-        List<Item> items = new ArrayList<>();
-        items.add(new Item(1, "IK-41"));
-        items.add(new Item(2, "IK-42"));
-        items.add(new Item(3, "IK-43"));
-        return items;
+    public void setGroups(List<Item> list) {
+        mView.setGroupAdapter(list);
     }
 
     private void addBulletin() {
@@ -104,5 +85,11 @@ public class NewBulletinPresenter extends BasePresenter {
         void showResponse(int code, String msg);
 
         Bulletin composeBulletin();
+
+        void setSubdivisionAdapter(List<Item> list);
+
+        void setProfileAdapter(List<Item> list);
+
+        void setGroupAdapter(List<Item> list);
     }
 }
