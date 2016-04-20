@@ -9,6 +9,7 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 import rx.Observable;
 
@@ -36,14 +37,14 @@ public interface BulletinService {
             @Header("Authorization") String authorization,
             @Body Bulletin bulletin);
 
-    @GET("/subdivision/desc")
+    @GET("/subdivision/{subdivisionId}/children")
     Observable<List<Item>> getDescendantSubdivisions(
-            @Query("subdivisionId") String subdivisionId);
+            @Path("subdivisionId") String subdivisionId);
 
-    @GET("/profile")
-    Observable<List<Item>> getProfiles();
+    @GET("/roles")
+    Observable<List<Item>> getRoles();
 
-    @GET("/subdivision/groups")
-    Observable<List<Item>> getGroupsIn(@Query("subdivisionId") String
+    @GET("/subdivision/{subdivisionId}/group")
+    Observable<List<Item>> getGroupsIn(@Path("subdivisionId") String
                                                subdivisionId);
 }

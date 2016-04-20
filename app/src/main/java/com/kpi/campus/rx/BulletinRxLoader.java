@@ -64,7 +64,7 @@ public class BulletinRxLoader {
     public void loadProfiles() {
         BulletinService service = ServiceCreator.createService
                 (BulletinService.class);
-        Observable<List<Item>> observable = service.getProfiles();
+        Observable<List<Item>> observable = service.getRoles();
         observable
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
