@@ -57,6 +57,8 @@ public class NewBulletinActivity extends BaseActivity implements
     TextView mStartDate;
     @Bind(R.id.text_view_end_period)
     TextView mEndDate;
+    @Bind(R.id.text_view_creation_date_value)
+    TextView mCreateDate;
     @Bind(R.id.recycler_view_buffer_recipients)
     RecyclerView mRecyclerView;
     @Bind(R.id.spinner_profile)
@@ -112,7 +114,7 @@ public class NewBulletinActivity extends BaseActivity implements
                 ToastUtil.showShortMessage("Очищено", this);
                 break;
             case R.id.action_done:
-                //mPresenter.onStartRequest();
+                mPresenter.onStartRequest();
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -153,7 +155,7 @@ public class NewBulletinActivity extends BaseActivity implements
         switch (code) {
             case 200:
                 ToastUtil.showShortMessage(getString(R.string
-                        .bulletin_is_sent), this);
+                        .bulletin_is_added), this);
                 break;
             case 400:
                 ToastUtil.showShortMessage(getString(R.string.bad_recipient),
@@ -178,7 +180,8 @@ public class NewBulletinActivity extends BaseActivity implements
         userId = User.getInstance().id;
         List<Recipient> r = mAdapter.getData();
         Bulletin bulletin = new Bulletin(userId, mSubject.getText().toString
-                (), mText.getText().toString(), DateUtil.getCurrentDate(),
+                (), mText.getText().toString(), mCreateDate.getText()
+                .toString(),
                 mStartDate.getText().toString(), mEndDate.getText().toString
                 (), true, r);
         return bulletin;
@@ -247,9 +250,8 @@ public class NewBulletinActivity extends BaseActivity implements
     private void setValuesForAddMode() {
         TextView tv = (TextView) findViewById(R.id.text_view_actuality_value);
         tv.setText(R.string.yes);
-        String currentDate = DateUtil.getCurrentDate();
-        tv = (TextView) findViewById(R.id.text_view_creation_date_value);
-        tv.setText(currentDate);
+        String currentDate = DateUtil.getCurrentDate(DateUtil.INVERSE_FORMAT);
+        mCreateDate.setText(currentDate);
         tv = (TextView) findViewById(R.id
                 .text_view_change_actuality_date_value);
         tv.setText(currentDate);
@@ -353,7 +355,8 @@ public class NewBulletinActivity extends BaseActivity implements
         ArrayAdapter<Item> adapter = new ItemSpinnerAdapter(this, R.layout
                 .spinner_item, R.layout.spinner_dropdown_item, list);
         mSpinnerSubdivision.setAdapter(adapter);
-        mSpinnerSubdivision.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        mSpinnerSubdivision.setOnItemSelectedListener(new AdapterView
+                .OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int
                     position, long id) {

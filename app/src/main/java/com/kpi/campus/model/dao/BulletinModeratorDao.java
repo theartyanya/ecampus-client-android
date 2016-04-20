@@ -64,7 +64,8 @@ public class BulletinModeratorDao implements IDataAccessObject<Bulletin> {
             mBySubdiv.addAll(filterBulletins(mAll, isMatchesSubdivision
                     (ids)));
         }
-        mNotExpired.addAll(filterBulletins(mAll, isNotExpired(DateUtil.getCurrentDate())));
+        mNotExpired.addAll(filterBulletins(mAll, isNotExpired(DateUtil
+                .getCurrentDate())));
         mDeleted.addAll(filterBulletins(mAll, isDeleted()));
     }
 

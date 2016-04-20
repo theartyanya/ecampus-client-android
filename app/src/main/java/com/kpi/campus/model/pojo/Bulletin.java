@@ -56,6 +56,8 @@ public class Bulletin implements Parcelable {
     @SerializedName("actuality")
     @Expose
     private boolean actuality;
+    @SerializedName("recipient")
+    @Expose
     private List<Recipient> recipientList = new ArrayList<>();
 
     public Bulletin(String userId, String subject, String text, String

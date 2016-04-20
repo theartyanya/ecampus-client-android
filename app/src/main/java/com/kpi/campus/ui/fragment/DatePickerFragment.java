@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.widget.DatePicker;
 import android.widget.TextView;
 
+import com.kpi.campus.util.DateUtil;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
@@ -39,7 +41,8 @@ public class DatePickerFragment extends DialogFragment implements
 
     @Override
     public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-        SimpleDateFormat dateFormatter = new SimpleDateFormat("dd-MM-yyyy",
+        SimpleDateFormat dateFormatter = new SimpleDateFormat(DateUtil
+                .INVERSE_FORMAT,
                 Locale.GERMAN);
         Calendar newDate = Calendar.getInstance();
         newDate.set(year, month, day);
