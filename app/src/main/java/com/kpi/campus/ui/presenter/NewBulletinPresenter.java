@@ -91,5 +91,7 @@ public class NewBulletinPresenter extends BasePresenter {
         void setProfileAdapter(List<Item> list);
 
         void setGroupAdapter(List<Item> list);
+
+        void updateBadgeCounter(int count);
     }
 }

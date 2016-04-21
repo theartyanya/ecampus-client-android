@@ -141,7 +141,7 @@ public class NewBulletinActivity extends BaseActivity implements
     public void setViewComponent() {
         setToolbar();
         setDateListener();
-        setRecyclerView();
+        setAdapter();
         setRadioGroup();
         //setViewValues();
     }
@@ -191,9 +191,9 @@ public class NewBulletinActivity extends BaseActivity implements
         List<Recipient> r = mAdapter.getItems();
         Bulletin bulletin = new Bulletin(userId, mSubject.getText().toString
                 (), mText.getText().toString(), mCreateDate.getText()
-                .toString(),
-                mStartDate.getText().toString(), mEndDate.getText().toString
-                (), true, r);
+                .toString(), mStartDate.getText().toString(), mEndDate
+                .getText().toString
+                        (), true, r);
         return bulletin;
     }
 
@@ -212,27 +212,12 @@ public class NewBulletinActivity extends BaseActivity implements
         setGroupSpinner(list);
     }
 
-    private Recipient composeRecipient() {
-        Recipient r = null;
-        Item subdiv = (Item) mSpinnerSubdivision.getSelectedItem();
-        String subdivId = Integer.toString(subdiv.getId());
-        String subdivName = subdiv.getName();
-        if (mRbAll.isChecked()) {
-            r = new Recipient(subdivId, subdivName,
-                    null, null, null, null);
-        } else if (mRbProfile.isChecked()) {
-            Item profile = (Item) mSpinnerProfile.getSelectedItem();
-            if (profile == null) return null;
-            r = new Recipient(subdivId, subdivName, Integer.toString(profile
-                    .getId()), profile.getName(), null, null);
-        } else if (mRbGroup.isChecked()) {
-            Item group = (Item) mSpinnerGroup.getSelectedItem();
-            if (group == null) return null;
-            r = new Recipient(subdivId, subdivName, null, null, Integer
-                    .toString(group.getId()), group.getName());
-        }
-        return r;
+    @Override
+    public void updateBadgeCounter(int count) {
+        TextView tvCounter = (TextView) findViewById(R.id.tv_badge_counter);
+        tvCounter.setText(Integer.toString(count));
     }
+
 
     private void setViewValues() {
         User user = User.getInstance();
@@ -291,6 +276,7 @@ public class NewBulletinActivity extends BaseActivity implements
         Recipient recipient = composeRecipient();
         if (recipient != null) {
             mAdapter.addItem(recipient);
+            updateBadgeCounter(mAdapter.getItemCount());
         }
     }
 
@@ -342,13 +328,8 @@ public class NewBulletinActivity extends BaseActivity implements
         getSupportActionBar().setTitle(mActivityTitle);
     }
 
-    private void setRecyclerView() {
-        mAdapter = new BulletinsRecipientAdapter();
-//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager
-//                (this);
-//        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-//        mRecyclerView.setLayoutManager(linearLayoutManager);
-//        mRecyclerView.setAdapter(mAdapter);
+    private void setAdapter() {
+        mAdapter = new BulletinsRecipientAdapter(this);
     }
 
     private void setProfileSpinner(List<Item> list) {
@@ -415,6 +396,28 @@ public class NewBulletinActivity extends BaseActivity implements
         for (View v : views) {
             v.setVisibility(visibility);
         }
+    }
+
+    private Recipient composeRecipient() {
+        Recipient r = null;
+        Item subdiv = (Item) mSpinnerSubdivision.getSelectedItem();
+        String subdivId = Integer.toString(subdiv.getId());
+        String subdivName = subdiv.getName();
+        if (mRbAll.isChecked()) {
+            r = new Recipient(subdivId, subdivName,
+                    null, null, null, null);
+        } else if (mRbProfile.isChecked()) {
+            Item profile = (Item) mSpinnerProfile.getSelectedItem();
+            if (profile == null) return null;
+            r = new Recipient(subdivId, subdivName, Integer.toString(profile
+                    .getId()), profile.getName(), null, null);
+        } else if (mRbGroup.isChecked()) {
+            Item group = (Item) mSpinnerGroup.getSelectedItem();
+            if (group == null) return null;
+            r = new Recipient(subdivId, subdivName, null, null, Integer
+                    .toString(group.getId()), group.getName());
+        }
+        return r;
     }
 
     private void clearValues() {
