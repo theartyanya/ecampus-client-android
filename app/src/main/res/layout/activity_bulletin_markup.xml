@@ -327,22 +327,45 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
+                <RelativeLayout
+                    android:layout_weight="1.0"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <FrameLayout
+                        android:id="@+id/layout_badge_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <Button
+                            android:id="@+id/btn_show_recipients"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:elevation="2dp"
+                            android:text="Переглянути"
+                            android:textColor="@color/colorTextIcons"
+                            android:textSize="12sp"
+                            android:theme="@style/Button"/>
+                    </FrameLayout>
+
+                    <TextView
+                        android:id="@+id/tv_badge_counter"
+                        android:layout_width="28dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignRight="@id/layout_badge_button"
+                        android:background="@drawable/badge_circle"
+                        android:text="0"
+                        android:gravity="center"
+                        android:textColor="@color/colorTextIcons"
+                        android:textStyle="bold"/>
+                </RelativeLayout>
+
                 <Button
+                    android:layout_weight="1.0"
                     android:id="@+id/btn_add_recipient"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:elevation="2dp"
                     android:text="Додати"
-                    android:textColor="@color/colorTextIcons"
-                    android:textSize="12sp"
-                    android:theme="@style/Button"/>
-
-                <Button
-                    android:id="@+id/btn_show_recipients"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:elevation="2dp"
-                    android:text="Одержувачі"
                     android:textColor="@color/colorTextIcons"
                     android:textSize="12sp"
                     android:theme="@style/Button"/>
