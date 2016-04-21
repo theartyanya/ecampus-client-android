@@ -61,7 +61,7 @@ public class BulletinsRecipientAdapter extends RecyclerView
         return mDataList.size();
     }
 
-    public List<Recipient> getData() {
+    public List<Recipient> getItems() {
         return mDataList;
     }
 
