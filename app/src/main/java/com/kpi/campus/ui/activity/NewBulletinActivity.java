@@ -1,17 +1,25 @@
 package com.kpi.campus.ui.activity;
 
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Display;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
@@ -59,8 +67,6 @@ public class NewBulletinActivity extends BaseActivity implements
     TextView mEndDate;
     @Bind(R.id.text_view_creation_date_value)
     TextView mCreateDate;
-    @Bind(R.id.recycler_view_buffer_recipients)
-    RecyclerView mRecyclerView;
     @Bind(R.id.spinner_profile)
     Spinner mSpinnerProfile;
     @Bind(R.id.spinner_group)
@@ -93,8 +99,12 @@ public class NewBulletinActivity extends BaseActivity implements
         mPresenter.setView(this);
         mActivityTitle = getIntent().getStringExtra(Config.KEY_TITLE);
         mCurrentBulletin = getIntent().getParcelableExtra(Config.KEY_BULLETIN);
-        mPresenter.loadViewData();
+        //mPresenter.loadViewData();
         mPresenter.initializeViewComponent();
+
+        List list = new ArrayList<>();
+        list.add(new Item(10193, "ТК ФІОТ"));
+        setSubdivisionAdapter(list);
     }
 
     @Override
@@ -133,7 +143,7 @@ public class NewBulletinActivity extends BaseActivity implements
         setDateListener();
         setRecyclerView();
         setRadioGroup();
-        setViewValues();
+        //setViewValues();
     }
 
     @Override
@@ -178,7 +188,7 @@ public class NewBulletinActivity extends BaseActivity implements
     public Bulletin composeBulletin() {
         String userId;
         userId = User.getInstance().id;
-        List<Recipient> r = mAdapter.getData();
+        List<Recipient> r = mAdapter.getItems();
         Bulletin bulletin = new Bulletin(userId, mSubject.getText().toString
                 (), mText.getText().toString(), mCreateDate.getText()
                 .toString(),
@@ -275,27 +285,6 @@ public class NewBulletinActivity extends BaseActivity implements
         tv.setText(mCurrentBulletin.getDateCreate());
     }
 
-    private void setRadioGroup() {
-        RadioGroup radioGroup = (RadioGroup) findViewById(R.id
-                .radio_group_recipient);
-        radioGroup.setOnCheckedChangeListener((radioGroup1, checkedId) -> {
-            switch (checkedId) {
-                case R.id.rb_all:
-                    setVisibility(View.GONE, mLayoutProfile, mLayoutGroup);
-                    break;
-                case R.id.rb_profile:
-                    setVisibility(View.GONE, mLayoutGroup);
-                    setVisibility(View.VISIBLE, mLayoutProfile);
-                    break;
-                case R.id.rb_group:
-                    setVisibility(View.GONE, mLayoutProfile);
-                    setVisibility(View.VISIBLE, mLayoutGroup);
-                    break;
-                default:
-                    break;
-            }
-        });
-    }
 
     @OnClick(R.id.btn_add_recipient)
     public void onAddRecipient() {
@@ -303,6 +292,35 @@ public class NewBulletinActivity extends BaseActivity implements
         if (recipient != null) {
             mAdapter.addItem(recipient);
         }
+    }
+
+    @OnClick(R.id.btn_show_recipients)
+    public void onShowRecipients() {
+        LayoutInflater layoutInflater = (LayoutInflater) getSystemService
+                (Context.LAYOUT_INFLATER_SERVICE);
+        final View inflatedView = layoutInflater.inflate(R.layout
+                .recipient_popup_layout, null, false);
+        RecyclerView recView = (RecyclerView) inflatedView.findViewById(R.id
+                .recycler_view_buffer_recipients);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        recView.setLayoutManager(linearLayoutManager);
+        recView.setAdapter(mAdapter);
+
+        // get device size
+        Display display = getWindowManager().getDefaultDisplay();
+        final Point size = new Point();
+        display.getSize(size);
+        PopupWindow popWindow = new PopupWindow(inflatedView, size.x - 50,
+                size.y - 600, true);
+        popWindow.setBackgroundDrawable(ContextCompat.getDrawable
+                (getApplicationContext(), R.drawable.popup_bg));
+        popWindow.setFocusable(true);
+        // make it outside touchable to dismiss the popup window
+        popWindow.setOutsideTouchable(true);
+        popWindow.setAnimationStyle(R.style.PopupAnimation);
+        popWindow.showAtLocation(new LinearLayout(this), Gravity.BOTTOM, 0,
+                100);
     }
 
     private void setDateListener() {
@@ -326,11 +344,11 @@ public class NewBulletinActivity extends BaseActivity implements
 
     private void setRecyclerView() {
         mAdapter = new BulletinsRecipientAdapter();
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager
-                (this);
-        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        mRecyclerView.setLayoutManager(linearLayoutManager);
-        mRecyclerView.setAdapter(mAdapter);
+//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager
+//                (this);
+//        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+//        mRecyclerView.setLayoutManager(linearLayoutManager);
+//        mRecyclerView.setAdapter(mAdapter);
     }
 
     private void setProfileSpinner(List<Item> list) {
@@ -367,6 +385,28 @@ public class NewBulletinActivity extends BaseActivity implements
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
+            }
+        });
+    }
+
+    private void setRadioGroup() {
+        RadioGroup radioGroup = (RadioGroup) findViewById(R.id
+                .radio_group_recipient);
+        radioGroup.setOnCheckedChangeListener((radioGroup1, checkedId) -> {
+            switch (checkedId) {
+                case R.id.rb_all:
+                    setVisibility(View.GONE, mLayoutProfile, mLayoutGroup);
+                    break;
+                case R.id.rb_profile:
+                    setVisibility(View.GONE, mLayoutGroup);
+                    setVisibility(View.VISIBLE, mLayoutProfile);
+                    break;
+                case R.id.rb_group:
+                    setVisibility(View.GONE, mLayoutProfile);
+                    setVisibility(View.VISIBLE, mLayoutGroup);
+                    break;
+                default:
+                    break;
             }
         });
     }

@@ -21,6 +21,7 @@ import java.util.Locale;
  */
 public class DatePickerFragment extends DialogFragment implements
         DatePickerDialog.OnDateSetListener {
+
     TextView textView;
 
     public void setTextView(TextView et) {
