@@ -10,17 +10,17 @@ import java.util.List;
 import javax.inject.Inject;
 
 /**
- * NewBulletinPresenter created to manage NewBulletinActivity.
+ * AddBulletinPresenter created to manage AddBulletinActivity.
  * <p>
  * Created by Admin on 12.02.2016.
  */
-public class NewBulletinPresenter extends BasePresenter {
+public class AddBulletinPresenter extends BasePresenter {
 
     private IView mView;
     private BulletinRxLoader mLoader;
 
     @Inject
-    public NewBulletinPresenter() {
+    public AddBulletinPresenter() {
         mLoader = new BulletinRxLoader(this);
     }
 

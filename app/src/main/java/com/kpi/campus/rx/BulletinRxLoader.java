@@ -9,7 +9,7 @@ import com.kpi.campus.model.pojo.Bulletin;
 import com.kpi.campus.model.pojo.Item;
 import com.kpi.campus.model.pojo.User;
 import com.kpi.campus.ui.presenter.BasePresenter;
-import com.kpi.campus.ui.presenter.NewBulletinPresenter;
+import com.kpi.campus.ui.presenter.AddBulletinPresenter;
 
 import java.util.List;
 
@@ -23,10 +23,10 @@ import rx.schedulers.Schedulers;
  */
 public class BulletinRxLoader {
 
-    private NewBulletinPresenter mPresenter;
+    private AddBulletinPresenter mPresenter;
 
     public BulletinRxLoader(BasePresenter presenter) {
-        mPresenter = (NewBulletinPresenter) presenter;
+        mPresenter = (AddBulletinPresenter) presenter;
     }
 
     public void addBulletin(Bulletin bulletin) {

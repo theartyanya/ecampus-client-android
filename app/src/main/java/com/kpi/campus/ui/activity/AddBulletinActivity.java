@@ -36,7 +36,7 @@ import com.kpi.campus.ui.adapter.BulletinsRecipientAdapter;
 import com.kpi.campus.ui.adapter.ItemSpinnerAdapter;
 import com.kpi.campus.ui.adapter.NothingSelectedAdapter;
 import com.kpi.campus.ui.fragment.DatePickerFragment;
-import com.kpi.campus.ui.presenter.NewBulletinPresenter;
+import com.kpi.campus.ui.presenter.AddBulletinPresenter;
 import com.kpi.campus.util.DateUtil;
 import com.kpi.campus.util.ToastUtil;
 
@@ -51,8 +51,8 @@ import butterknife.OnClick;
 /**
  * Activity for addition of a Bulletin.
  */
-public class NewBulletinActivity extends BaseActivity implements
-        NewBulletinPresenter.IView {
+public class AddBulletinActivity extends BaseActivity implements
+        AddBulletinPresenter.IView {
 
     @Bind(R.id.edit_text_bulletin_theme)
     EditText mSubject;
@@ -83,7 +83,7 @@ public class NewBulletinActivity extends BaseActivity implements
     @Bind(R.id.rb_group)
     RadioButton mRbGroup;
     @Inject
-    NewBulletinPresenter mPresenter;
+    AddBulletinPresenter mPresenter;
 
     private BulletinsRecipientAdapter mAdapter;
 
@@ -162,7 +162,7 @@ public class NewBulletinActivity extends BaseActivity implements
 
     @Override
     public void showProgressDialog() {
-        mProgressDialog = new ProgressDialog(NewBulletinActivity.this, R.style
+        mProgressDialog = new ProgressDialog(AddBulletinActivity.this, R.style
                 .AppTheme_Dark_Dialog);
         mProgressDialog.setIndeterminate(true);
         mProgressDialog.setMessage(getString(R.string.progress_sending));

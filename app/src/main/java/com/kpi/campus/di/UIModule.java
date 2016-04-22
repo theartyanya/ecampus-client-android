@@ -7,7 +7,7 @@ import com.kpi.campus.ui.activity.EditBulletinActivity;
 import com.kpi.campus.ui.activity.LoginActivity;
 import com.kpi.campus.ui.activity.MainActivity;
 import com.kpi.campus.ui.activity.MainNotAuthActivity;
-import com.kpi.campus.ui.activity.NewBulletinActivity;
+import com.kpi.campus.ui.activity.AddBulletinActivity;
 import com.kpi.campus.ui.activity.SplashScreenActivity;
 
 import dagger.Module;
@@ -25,7 +25,7 @@ import dagger.Module;
                 MainActivity.class,
                 BulletinBoardActivity.class,
                 BulletinContentActivity.class,
-                NewBulletinActivity.class,
+                AddBulletinActivity.class,
                 BulletinBoardModeratorActivity.class,
                 EditBulletinActivity.class
         })
