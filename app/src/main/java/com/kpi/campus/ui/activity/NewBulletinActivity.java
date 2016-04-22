@@ -50,7 +50,7 @@ import butterknife.Bind;
 import butterknife.OnClick;
 
 /**
- * Activity for addition/edition of a Bulletin.
+ * Activity for addition of a Bulletin.
  */
 public class NewBulletinActivity extends BaseActivity implements
         NewBulletinPresenter.IView {

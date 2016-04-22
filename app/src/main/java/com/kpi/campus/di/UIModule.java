@@ -3,6 +3,7 @@ package com.kpi.campus.di;
 import com.kpi.campus.ui.activity.BulletinBoardActivity;
 import com.kpi.campus.ui.activity.BulletinBoardModeratorActivity;
 import com.kpi.campus.ui.activity.BulletinContentActivity;
+import com.kpi.campus.ui.activity.EditBulletinActivity;
 import com.kpi.campus.ui.activity.LoginActivity;
 import com.kpi.campus.ui.activity.MainActivity;
 import com.kpi.campus.ui.activity.MainNotAuthActivity;
@@ -25,7 +26,8 @@ import dagger.Module;
                 BulletinBoardActivity.class,
                 BulletinContentActivity.class,
                 NewBulletinActivity.class,
-                BulletinBoardModeratorActivity.class
+                BulletinBoardModeratorActivity.class,
+                EditBulletinActivity.class
         })
 public final class UIModule {
 }
