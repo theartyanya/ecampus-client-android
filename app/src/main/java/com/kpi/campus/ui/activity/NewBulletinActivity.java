@@ -91,6 +91,9 @@ public class NewBulletinActivity extends BaseActivity implements
     private Bulletin mCurrentBulletin;
     private ProgressDialog mProgressDialog;
 
+    private final String START_DATE = "start_date";
+    private final String END_DATE = "end_date";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -105,6 +108,21 @@ public class NewBulletinActivity extends BaseActivity implements
         List list = new ArrayList<>();
         list.add(new Item(10193, "ТК ФІОТ"));
         setSubdivisionAdapter(list);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle savedInstanceState) {
+        savedInstanceState.putString(START_DATE, mStartDate.getText()
+                .toString());
+        savedInstanceState.putString(END_DATE, mEndDate.getText().toString());
+        super.onSaveInstanceState(savedInstanceState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        mStartDate.setText(savedInstanceState.getString(START_DATE));
+        mEndDate.setText(savedInstanceState.getString(END_DATE));
     }
 
     @Override
@@ -329,7 +347,8 @@ public class NewBulletinActivity extends BaseActivity implements
     }
 
     private void setAdapter() {
-        mAdapter = new BulletinsRecipientAdapter(this);
+        if (mAdapter == null)
+            mAdapter = new BulletinsRecipientAdapter(this);
     }
 
     private void setProfileSpinner(List<Item> list) {
