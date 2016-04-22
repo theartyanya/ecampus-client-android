@@ -210,8 +210,7 @@ public class NewBulletinActivity extends BaseActivity implements
         Bulletin bulletin = new Bulletin(userId, mSubject.getText().toString
                 (), mText.getText().toString(), mCreateDate.getText()
                 .toString(), mStartDate.getText().toString(), mEndDate
-                .getText().toString
-                        (), true, r);
+                .getText().toString(), true, r);
         return bulletin;
     }
 
@@ -300,16 +299,8 @@ public class NewBulletinActivity extends BaseActivity implements
 
     @OnClick(R.id.btn_show_recipients)
     public void onShowRecipients() {
-        LayoutInflater layoutInflater = (LayoutInflater) getSystemService
-                (Context.LAYOUT_INFLATER_SERVICE);
-        final View inflatedView = layoutInflater.inflate(R.layout
-                .recipient_popup_layout, null, false);
-        RecyclerView recView = (RecyclerView) inflatedView.findViewById(R.id
-                .recycler_view_buffer_recipients);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        recView.setLayoutManager(linearLayoutManager);
-        recView.setAdapter(mAdapter);
+        View inflatedView = inflateView(R.layout.recipient_popup_layout);
+        setRecyclerView(inflatedView);
 
         // get device size
         Display display = getWindowManager().getDefaultDisplay();
@@ -347,8 +338,7 @@ public class NewBulletinActivity extends BaseActivity implements
     }
 
     private void setAdapter() {
-        if (mAdapter == null)
-            mAdapter = new BulletinsRecipientAdapter(this);
+        mAdapter = new BulletinsRecipientAdapter(this);
     }
 
     private void setProfileSpinner(List<Item> list) {
@@ -447,5 +437,20 @@ public class NewBulletinActivity extends BaseActivity implements
         mEndDate.setText(empty);
         mRbAll.setChecked(true);
         mAdapter.setItems(new ArrayList<>());
+    }
+
+    private View inflateView(int resource) {
+        LayoutInflater layoutInflater = (LayoutInflater) getSystemService
+                (Context.LAYOUT_INFLATER_SERVICE);
+        return layoutInflater.inflate(resource, null, false);
+    }
+
+    private void setRecyclerView(View parentView) {
+        RecyclerView recView = (RecyclerView) parentView.findViewById(R.id
+                .recycler_view_buffer_recipients);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        recView.setLayoutManager(layoutManager);
+        recView.setAdapter(mAdapter);
     }
 }
