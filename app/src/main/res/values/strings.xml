@@ -21,8 +21,8 @@
     <string name="profileName">Профіль</string>
     <string name="subsection">Підрозділ</string>
     <string name="group">Група</string>
-    <string name="add_new_bulletin">Додати</string>
-    <string name="edit_new_bulletin">Редагувати</string>
+    <string name="add_bulletin">Додати</string>
+    <string name="edit_bulletin">Редагувати</string>
     <string name="action_moderator">M</string>
     <string name="login_failed">Логін або пароль невірні</string>
     <string name="bulletin_text_content">Текст оголошення</string>

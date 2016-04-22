@@ -157,7 +157,7 @@ public class AddBulletinActivity extends BaseActivity implements
         setDateListener();
         setAdapter();
         setRadioGroup();
-        //setViewValues();
+        setInitialViewValues();
     }
 
     @Override
@@ -231,42 +231,6 @@ public class AddBulletinActivity extends BaseActivity implements
         tvCounter.setText(Integer.toString(count));
     }
 
-
-    private void setViewValues() {
-        User user = User.getInstance();
-        TextView tv = (TextView) findViewById(R.id.text_view_author_name);
-        tv.setText(user.name);
-    }
-
-    private void setValuesForAddMode() {
-        TextView tv = (TextView) findViewById(R.id.text_view_actuality_value);
-        tv.setText(R.string.yes);
-        String currentDate = DateUtil.getCurrentDate(DateUtil.INVERSE_FORMAT);
-        mCreateDate.setText(currentDate);
-        tv = (TextView) findViewById(R.id
-                .text_view_change_actuality_date_value);
-        tv.setText(currentDate);
-    }
-
-//    private void setValuesForEditMode() {
-//        mSubject.setText(mCurrentBulletin.getSubject());
-//        mText.setText(mCurrentBulletin.getText());
-//        mStartDate.setText(mCurrentBulletin.getDateStart());
-//        mEndDate.setText(mCurrentBulletin.getDateEnd());
-//
-//        TextView tv = (TextView) findViewById(R.id.text_view_actuality_value);
-//        if (mCurrentBulletin.getActuality())
-//            tv.setText(R.string.yes);
-//        else
-//            tv.setText(R.string.no);
-//        tv = (TextView) findViewById(R.id.text_view_creation_date_value);
-//        tv.setText(mCurrentBulletin.getDateCreate());
-//        tv = (TextView) findViewById(R.id
-//                .text_view_change_actuality_date_value);
-//        tv.setText(mCurrentBulletin.getDateCreate());
-//    }
-
-
     @OnClick(R.id.btn_add_recipient)
     public void onAddRecipient() {
         Recipient recipient = composeRecipient();
@@ -313,7 +277,7 @@ public class AddBulletinActivity extends BaseActivity implements
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         mToolbar.setNavigationIcon(R.mipmap.ic_action_navigation_arrow_back);
-        getSupportActionBar().setTitle(R.string.add_new_bulletin);
+        getSupportActionBar().setTitle(R.string.add_bulletin);
     }
 
     private void setAdapter() {
@@ -378,6 +342,19 @@ public class AddBulletinActivity extends BaseActivity implements
                     break;
             }
         });
+    }
+
+    private void setInitialViewValues() {
+        User user = User.getInstance();
+        TextView tv = (TextView) findViewById(R.id.text_view_author_name);
+        tv.setText(user.name);
+        tv = (TextView) findViewById(R.id.text_view_actuality_value);
+        tv.setText(R.string.yes);
+        String currentDate = DateUtil.getCurrentDate(DateUtil.INVERSE_FORMAT);
+        mCreateDate.setText(currentDate);
+        tv = (TextView) findViewById(R.id
+                .text_view_change_actuality_date_value);
+        tv.setText(currentDate);
     }
 
     private void setVisibility(int visibility, View... views) {
