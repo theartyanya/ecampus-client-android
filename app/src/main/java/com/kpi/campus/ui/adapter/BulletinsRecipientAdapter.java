@@ -74,19 +74,21 @@ public class BulletinsRecipientAdapter extends RecyclerView
         Handler handler = new Handler();
         handler.postDelayed(() -> {
             mDataList.add(item);
+            mView.updateBadgeCounter(getItemCount());
             notifyItemInserted(mDataList.size() - 1);
         }, NOTIFY_DELAY);
-        mView.updateBadgeCounter(getItemCount());
+
     }
 
     public void removeItem(final int position) {
         Handler handler = new Handler();
         handler.postDelayed(() -> {
             mDataList.remove(position);
+            mView.updateBadgeCounter(getItemCount());
             notifyItemRemoved(position);
             notifyItemRangeChanged(position, mDataList.size());
         }, NOTIFY_DELAY);
-        mView.updateBadgeCounter(getItemCount());
+
     }
 
     protected class ViewHolder extends RecyclerView.ViewHolder {
