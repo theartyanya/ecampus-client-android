@@ -10,6 +10,7 @@ import com.kpi.campus.model.pojo.Bulletin;
 import com.kpi.campus.ui.activity.BulletinBoardActivity;
 import com.kpi.campus.ui.activity.BulletinBoardModeratorActivity;
 import com.kpi.campus.ui.activity.BulletinContentActivity;
+import com.kpi.campus.ui.activity.EditBulletinActivity;
 import com.kpi.campus.ui.activity.LoginActivity;
 import com.kpi.campus.ui.activity.MainActivity;
 import com.kpi.campus.ui.activity.NewBulletinActivity;
@@ -53,9 +54,13 @@ public class Navigator {
         mActivityContext.startActivity(intent);
     }
 
-    public void startNewBulletinActivity(String title, Bulletin item) {
+    public void startNewBulletinActivity() {
         Intent intent = getLaunchIntent(NewBulletinActivity.class);
-        intent.putExtra(Config.KEY_TITLE, title);
+        mActivityContext.startActivity(intent);
+    }
+
+    public void startEditBulletinActivity(Bulletin item) {
+        Intent intent = getLaunchIntent(EditBulletinActivity.class);
         intent.putExtra(Config.KEY_BULLETIN, item);
         mActivityContext.startActivity(intent);
     }

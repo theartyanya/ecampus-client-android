@@ -26,7 +26,6 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.kpi.campus.Config;
 import com.kpi.campus.R;
 import com.kpi.campus.di.UIModule;
 import com.kpi.campus.model.Recipient;
@@ -87,8 +86,7 @@ public class NewBulletinActivity extends BaseActivity implements
     NewBulletinPresenter mPresenter;
 
     private BulletinsRecipientAdapter mAdapter;
-    private String mActivityTitle = "";
-    private Bulletin mCurrentBulletin;
+
     private ProgressDialog mProgressDialog;
 
     private final String START_DATE = "start_date";
@@ -100,8 +98,6 @@ public class NewBulletinActivity extends BaseActivity implements
         setContentView(R.layout.activity_bulletin_markup);
         bindViews();
         mPresenter.setView(this);
-        mActivityTitle = getIntent().getStringExtra(Config.KEY_TITLE);
-        mCurrentBulletin = getIntent().getParcelableExtra(Config.KEY_BULLETIN);
         //mPresenter.loadViewData();
         mPresenter.initializeViewComponent();
 
@@ -240,23 +236,6 @@ public class NewBulletinActivity extends BaseActivity implements
         User user = User.getInstance();
         TextView tv = (TextView) findViewById(R.id.text_view_author_name);
         tv.setText(user.name);
-
-        if (isAddMode()) {
-            setValuesForAddMode();
-        } else {
-            setValuesForEditMode();
-        }
-    }
-
-    /**
-     * mCurrentBulletin == null means that activity is opened on mode ADD
-     * mCurrentBulletin != null means that this bulletin has to be edited
-     *
-     * @return true if activity is opened in Add mode,
-     * false - if in Edit mode.
-     */
-    private boolean isAddMode() {
-        return (mCurrentBulletin == null);
     }
 
     private void setValuesForAddMode() {
@@ -269,23 +248,23 @@ public class NewBulletinActivity extends BaseActivity implements
         tv.setText(currentDate);
     }
 
-    private void setValuesForEditMode() {
-        mSubject.setText(mCurrentBulletin.getSubject());
-        mText.setText(mCurrentBulletin.getText());
-        mStartDate.setText(mCurrentBulletin.getDateStart());
-        mEndDate.setText(mCurrentBulletin.getDateEnd());
-
-        TextView tv = (TextView) findViewById(R.id.text_view_actuality_value);
-        if (mCurrentBulletin.getActuality())
-            tv.setText(R.string.yes);
-        else
-            tv.setText(R.string.no);
-        tv = (TextView) findViewById(R.id.text_view_creation_date_value);
-        tv.setText(mCurrentBulletin.getDateCreate());
-        tv = (TextView) findViewById(R.id
-                .text_view_change_actuality_date_value);
-        tv.setText(mCurrentBulletin.getDateCreate());
-    }
+//    private void setValuesForEditMode() {
+//        mSubject.setText(mCurrentBulletin.getSubject());
+//        mText.setText(mCurrentBulletin.getText());
+//        mStartDate.setText(mCurrentBulletin.getDateStart());
+//        mEndDate.setText(mCurrentBulletin.getDateEnd());
+//
+//        TextView tv = (TextView) findViewById(R.id.text_view_actuality_value);
+//        if (mCurrentBulletin.getActuality())
+//            tv.setText(R.string.yes);
+//        else
+//            tv.setText(R.string.no);
+//        tv = (TextView) findViewById(R.id.text_view_creation_date_value);
+//        tv.setText(mCurrentBulletin.getDateCreate());
+//        tv = (TextView) findViewById(R.id
+//                .text_view_change_actuality_date_value);
+//        tv.setText(mCurrentBulletin.getDateCreate());
+//    }
 
 
     @OnClick(R.id.btn_add_recipient)
@@ -334,7 +313,7 @@ public class NewBulletinActivity extends BaseActivity implements
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         mToolbar.setNavigationIcon(R.mipmap.ic_action_navigation_arrow_back);
-        getSupportActionBar().setTitle(mActivityTitle);
+        getSupportActionBar().setTitle(R.string.add_new_bulletin);
     }
 
     private void setAdapter() {

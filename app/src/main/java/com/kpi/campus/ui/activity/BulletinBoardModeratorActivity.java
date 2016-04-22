@@ -106,8 +106,7 @@ public class BulletinBoardModeratorActivity extends BaseActivity implements
             switch (menuItem.getItemId()) {
                 case R.id.edit:
                     Bulletin b = mAdapter.getClickedItem();
-                    mPresenter.onEditMenuClick(getString(R.string
-                            .edit_new_bulletin), b);
+                    mPresenter.onEditMenuClick(b);
                     break;
             }
             return true;
@@ -227,7 +226,7 @@ public class BulletinBoardModeratorActivity extends BaseActivity implements
 
     @OnClick(R.id.fab_add)
     public void fabAddOnClick() {
-        mPresenter.onButtonAddClick(getString(R.string.add_new_bulletin));
+        mPresenter.onButtonAddClick();
     }
 
     private void setVisible(View... views) {

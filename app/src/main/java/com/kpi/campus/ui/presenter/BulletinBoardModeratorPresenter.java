@@ -57,12 +57,10 @@ public class BulletinBoardModeratorPresenter extends BasePresenter {
 
     /**
      * Handles click on Add button.
-     * Open NewBulletinActivity class
-     *
-     * @param title title of activity to be displayed on toolbar.
+     * Open NewBulletinActivity class.
      */
-    public void onButtonAddClick(String title) {
-        mNavigator.startNewBulletinActivity(title, null);
+    public void onButtonAddClick() {
+        mNavigator.startNewBulletinActivity();
     }
 
     /**
@@ -76,12 +74,12 @@ public class BulletinBoardModeratorPresenter extends BasePresenter {
 
     /**
      * Handles click on edit menu item.
+     * Open EditBulletinActivity class.
      *
-     * @param title    activity title to be opened (Edit)
      * @param bulletin recyclerview item which has to be edited
      */
-    public void onEditMenuClick(String title, Bulletin bulletin) {
-        mNavigator.startNewBulletinActivity(title, bulletin);
+    public void onEditMenuClick(Bulletin bulletin) {
+        mNavigator.startEditBulletinActivity(bulletin);
     }
 
     /**
