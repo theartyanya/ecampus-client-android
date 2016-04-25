@@ -1,5 +1,6 @@
 package com.kpi.campus.api.service;
 
+import com.kpi.campus.model.Recipient;
 import com.kpi.campus.model.pojo.Bulletin;
 import com.kpi.campus.model.pojo.Item;
 
@@ -47,6 +48,11 @@ public interface BulletinService {
 
     @DELETE("/board/{bulletinId}")
     Observable<String> deleteBulletin(
+            @Header("Authorization") String authorization,
+            @Path("bulletinId") String bulletinId);
+
+    @GET("/board/{bulletinId}/recipient")
+    Observable<List<Recipient>> getRecipientsBy(
             @Header("Authorization") String authorization,
             @Path("bulletinId") String bulletinId);
 
