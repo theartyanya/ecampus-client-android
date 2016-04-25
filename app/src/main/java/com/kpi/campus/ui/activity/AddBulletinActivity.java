@@ -390,7 +390,7 @@ public class AddBulletinActivity extends BaseActivity implements
         mStartDate.setText(empty);
         mEndDate.setText(empty);
         mRbAll.setChecked(true);
-        mAdapter.setItems(new ArrayList<>());
+        mAdapter.clear();
     }
 
     private View inflateView(int resource) {
