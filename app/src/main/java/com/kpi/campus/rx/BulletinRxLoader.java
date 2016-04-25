@@ -51,8 +51,28 @@ public class BulletinRxLoader {
     public void editBulletin(Bulletin bulletin) {
         BulletinService service = ServiceCreator.createService
                 (BulletinService.class);
-        Observable<String> observable = service.postEditBulletin("bearer " +
+        Observable<String> observable = service.putEditBulletin("bearer " +
                 User.getInstance().token, bulletin.getId(), bulletin);
+
+        observable
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        responseMsg -> mPresenter.onFinishRequest(200,
+                                responseMsg),
+                        e -> {
+                            Log.e(Config.LOG, e.getMessage());
+                            mPresenter.onFinishRequest(((HttpException) e).code
+                                    (), e.getMessage());
+                        }
+                );
+    }
+
+    public void deleteBulletin(String bulletinId) {
+        BulletinService service = ServiceCreator.createService
+                (BulletinService.class);
+        Observable<String> observable = service.deleteBulletin("bearer " +
+                User.getInstance().token, bulletinId);
 
         observable
                 .subscribeOn(Schedulers.newThread())

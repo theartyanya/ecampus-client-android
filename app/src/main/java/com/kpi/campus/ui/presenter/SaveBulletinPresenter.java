@@ -69,8 +69,8 @@ public class SaveBulletinPresenter extends BasePresenter {
     }
 
     public void deleteBulletin() {
-//        String id = mView.getBulletinId();
-//        mLoader.deleteBulletin(id);
+        String id = mView.getBulletinId();
+        mLoader.deleteBulletin(id);
     }
 
     private void loadSpinnerAdapterData() {

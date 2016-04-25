@@ -40,12 +40,15 @@ public interface BulletinService {
             @Body Bulletin bulletin);
 
     @PUT("/board/{bulletinId}")
-    Observable<String> postEditBulletin(
+    Observable<String> putEditBulletin(
             @Header("Authorization") String authorization,
             @Path("bulletinId") String bulletinId,
             @Body Bulletin bulletin);
 
-
+    @DELETE("/board/{bulletinId}")
+    Observable<String> deleteBulletin(
+            @Header("Authorization") String authorization,
+            @Path("bulletinId") String bulletinId);
 
     @GET("/subdivision/{subdivisionId}/children")
     Observable<List<Item>> getDescendantSubdivisions(
