@@ -5,6 +5,7 @@ import android.util.Log;
 import com.kpi.campus.Config;
 import com.kpi.campus.api.service.BulletinService;
 import com.kpi.campus.api.service.ServiceCreator;
+import com.kpi.campus.model.Recipient;
 import com.kpi.campus.model.pojo.Bulletin;
 import com.kpi.campus.model.pojo.Item;
 import com.kpi.campus.model.pojo.User;
@@ -120,6 +121,18 @@ public class BulletinRxLoader {
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(list -> mPresenter.setGroups(list),
+                        e -> Log.e(Config.LOG, e.getMessage()));
+    }
+
+    public void loadRecipients(String bulletinId) {
+        BulletinService service = ServiceCreator.createService
+                (BulletinService.class);
+        Observable<List<Recipient>> observable = service.getRecipientsBy
+                ("bearer " + User.getInstance().token, bulletinId);
+        observable
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(list -> mPresenter.setRecipients(list),
                         e -> Log.e(Config.LOG, e.getMessage()));
     }
 

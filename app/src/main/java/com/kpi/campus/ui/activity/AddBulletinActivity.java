@@ -229,6 +229,11 @@ public class AddBulletinActivity extends BaseActivity implements
     }
 
     @Override
+    public void setRecipientsList(List<Recipient> list) {
+        // N / A
+    }
+
+    @Override
     public void updateBadgeCounter(int count) {
         TextView tvCounter = (TextView) findViewById(R.id.tv_badge_counter);
         tvCounter.setText(Integer.toString(count));

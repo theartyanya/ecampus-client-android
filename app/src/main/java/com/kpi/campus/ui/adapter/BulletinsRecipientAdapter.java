@@ -31,19 +31,21 @@ public class BulletinsRecipientAdapter extends RecyclerView
 
     private final SaveBulletinPresenter.IView mView;
     private final int NOTIFY_DELAY = 500;
-    private ArrayList<Recipient> mDataList = new ArrayList<>();
+    private List<Recipient> mDataList = new ArrayList<>();
 
     public BulletinsRecipientAdapter(SaveBulletinPresenter.IView view) {
         mView = view;
     }
 
-    public void setItems(ArrayList<Recipient> list) {
+    public void setItems(List<Recipient> list) {
         mDataList = list;
+        mView.updateBadgeCounter(getItemCount());
         notifyDataSetChanged();
     }
 
     public void clear() {
         mDataList = new ArrayList<>();
+        mView.updateBadgeCounter(getItemCount());
         notifyDataSetChanged();
     }
 

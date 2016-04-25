@@ -1,5 +1,6 @@
 package com.kpi.campus.ui.presenter;
 
+import com.kpi.campus.model.Recipient;
 import com.kpi.campus.model.pojo.Bulletin;
 import com.kpi.campus.model.pojo.Item;
 import com.kpi.campus.model.pojo.User;
@@ -25,6 +26,7 @@ public class SaveBulletinPresenter extends BasePresenter {
     public void initializeViewComponent() {
         mView.setViewComponent();
         loadSpinnerAdapterData();
+        loadRecipients();
     }
 
     public void setView(IView view) {
@@ -58,6 +60,10 @@ public class SaveBulletinPresenter extends BasePresenter {
         mView.setGroupAdapter(list);
     }
 
+    public void setRecipients(List<Recipient> list) {
+        mView.setRecipientsList(list);
+    }
+
     public void addBulletin() {
         Bulletin bulletin = mView.formBulletin();
         mLoader.addBulletin(bulletin);
@@ -83,6 +89,12 @@ public class SaveBulletinPresenter extends BasePresenter {
         mLoader.loadProfiles();
     }
 
+    private void loadRecipients() {
+        String bulId = mView.getBulletinId();
+        mLoader.loadRecipients(bulId);
+    }
+
+
     public interface IView {
         void setViewComponent();
 
@@ -97,6 +109,8 @@ public class SaveBulletinPresenter extends BasePresenter {
         void setProfileAdapter(List<Item> list);
 
         void setGroupAdapter(List<Item> list);
+
+        void setRecipientsList(List<Recipient> list);
 
         void updateBadgeCounter(int count);
 
