@@ -17,6 +17,7 @@ import com.kpi.campus.Config;
 import com.kpi.campus.R;
 import com.kpi.campus.di.UIModule;
 import com.kpi.campus.model.pojo.Bulletin;
+import com.kpi.campus.ui.fragment.DatePickerFragment;
 import com.kpi.campus.ui.presenter.EditBulletinPresenter;
 
 import java.util.ArrayList;
@@ -109,6 +110,7 @@ public class EditBulletinActivity extends BaseActivity implements
     public void setViewComponent() {
         setToolbar();
         setRadioGroup();
+        setDateListener();
         setInitialViewValues();
     }
 
@@ -129,6 +131,17 @@ public class EditBulletinActivity extends BaseActivity implements
         tv = (TextView) findViewById(R.id
                 .text_view_change_actuality_date_value);
         tv.setText(mCurrentBulletin.getDateCreate());
+    }
+
+    private void setDateListener() {
+        mStartDate.setOnClickListener(v -> setDateTo(mStartDate, "2"));
+        mEndDate.setOnClickListener(v -> setDateTo(mEndDate, "1"));
+    }
+
+    private void setDateTo(TextView textView, String uniqueString) {
+        DatePickerFragment newFragment = new DatePickerFragment();
+        newFragment.setTextView(textView);
+        newFragment.show(getFragmentManager(), uniqueString);
     }
 
     private void setRadioGroup() {
