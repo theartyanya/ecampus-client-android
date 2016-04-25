@@ -86,7 +86,6 @@ public class AddBulletinActivity extends BaseActivity implements
     AddBulletinPresenter mPresenter;
 
     private BulletinsRecipientAdapter mAdapter;
-
     private ProgressDialog mProgressDialog;
 
     private final String START_DATE = "start_date";
@@ -98,7 +97,6 @@ public class AddBulletinActivity extends BaseActivity implements
         setContentView(R.layout.activity_bulletin_markup);
         bindViews();
         mPresenter.setView(this);
-        //mPresenter.loadViewData();
         mPresenter.initializeViewComponent();
 
         List list = new ArrayList<>();
@@ -135,7 +133,7 @@ public class AddBulletinActivity extends BaseActivity implements
                 return true;
             case R.id.action_clear:
                 clearValues();
-                ToastUtil.showShortMessage("Очищено", this);
+                ToastUtil.showShortMessage(getString(R.string.clear), this);
                 break;
             case R.id.action_done:
                 mPresenter.onStartRequest();
@@ -199,7 +197,7 @@ public class AddBulletinActivity extends BaseActivity implements
     }
 
     @Override
-    public Bulletin composeBulletin() {
+    public Bulletin createBulletin() {
         String userId;
         userId = User.getInstance().id;
         List<Recipient> r = mAdapter.getItems();
@@ -233,7 +231,7 @@ public class AddBulletinActivity extends BaseActivity implements
 
     @OnClick(R.id.btn_add_recipient)
     public void onAddRecipient() {
-        Recipient recipient = composeRecipient();
+        Recipient recipient = createRecipient();
         if (recipient != null) {
             mAdapter.addItem(recipient);
             updateBadgeCounter(mAdapter.getItemCount());
@@ -363,7 +361,7 @@ public class AddBulletinActivity extends BaseActivity implements
         }
     }
 
-    private Recipient composeRecipient() {
+    private Recipient createRecipient() {
         Recipient r = null;
         Item subdiv = (Item) mSpinnerSubdivision.getSelectedItem();
         String subdivId = Integer.toString(subdiv.getId());

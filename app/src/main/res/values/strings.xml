@@ -46,4 +46,5 @@
     <string name="unauthorized">Виконайте авторизацію</string>
     <string name="server_error">Помилка сервера</string>
     <string name="bad_recipient">Невірний формат отримувача</string>
+    <string name="clear">Очищено</string>
 </resources>

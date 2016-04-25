@@ -1,5 +1,7 @@
 package com.kpi.campus.ui.presenter;
 
+import com.kpi.campus.rx.BulletinRxLoader;
+
 import javax.inject.Inject;
 
 /**
@@ -10,6 +12,7 @@ import javax.inject.Inject;
 public class EditBulletinPresenter extends BasePresenter {
 
     private IView mView;
+    private BulletinRxLoader mLoader;
 
     @Inject
     public EditBulletinPresenter() {

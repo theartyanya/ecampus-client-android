@@ -27,20 +27,11 @@ public class AddBulletinPresenter extends BasePresenter {
     @Override
     public void initializeViewComponent() {
         mView.setViewComponent();
+        loadSpinnerAdapterData();
     }
 
     public void setView(IView view) {
         mView = view;
-    }
-
-    public void loadViewData() {
-        List<Item> subdivisions = User.getInstance().subdivision;
-        if (subdivisions != null && !subdivisions.isEmpty()) {
-            Item mainSubdiv = subdivisions.get(0);
-            mLoader.loadDescSubdivisions(mainSubdiv.getId().toString());
-            mLoader.loadGroupsIn(mainSubdiv.getId().toString());
-        }
-        mLoader.loadProfiles();
     }
 
     public void loadGroupsInSubdiv(String subdivId) {
@@ -70,8 +61,18 @@ public class AddBulletinPresenter extends BasePresenter {
         mView.setGroupAdapter(list);
     }
 
+    private void loadSpinnerAdapterData() {
+        List<Item> subdivisions = User.getInstance().subdivision;
+        if (subdivisions != null && !subdivisions.isEmpty()) {
+            Item mainSubdiv = subdivisions.get(0);
+            mLoader.loadDescSubdivisions(mainSubdiv.getId().toString());
+            mLoader.loadGroupsIn(mainSubdiv.getId().toString());
+        }
+        mLoader.loadProfiles();
+    }
+
     private void addBulletin() {
-        Bulletin newBulletin = mView.composeBulletin();
+        Bulletin newBulletin = mView.createBulletin();
         mLoader.addBulletin(newBulletin);
     }
 
@@ -84,7 +85,7 @@ public class AddBulletinPresenter extends BasePresenter {
 
         void showResponse(int code, String msg);
 
-        Bulletin composeBulletin();
+        Bulletin createBulletin();
 
         void setSubdivisionAdapter(List<Item> list);
 

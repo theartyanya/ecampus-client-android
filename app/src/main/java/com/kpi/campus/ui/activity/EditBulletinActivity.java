@@ -98,14 +98,13 @@ public class EditBulletinActivity extends BaseActivity implements
         mText.setText(mCurrentBulletin.getText());
         mStartDate.setText(mCurrentBulletin.getDateStart());
         mEndDate.setText(mCurrentBulletin.getDateEnd());
+        mCreateDate.setText(mCurrentBulletin.getDateCreate());
 
         TextView tv = (TextView) findViewById(R.id.text_view_actuality_value);
         if (mCurrentBulletin.getActuality())
             tv.setText(R.string.yes);
         else
             tv.setText(R.string.no);
-        tv = (TextView) findViewById(R.id.text_view_creation_date_value);
-        tv.setText(mCurrentBulletin.getDateCreate());
         tv = (TextView) findViewById(R.id
                 .text_view_change_actuality_date_value);
         tv.setText(mCurrentBulletin.getDateCreate());
