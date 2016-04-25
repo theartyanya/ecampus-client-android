@@ -17,8 +17,9 @@ import com.kpi.campus.Config;
 import com.kpi.campus.R;
 import com.kpi.campus.di.UIModule;
 import com.kpi.campus.model.pojo.Bulletin;
+import com.kpi.campus.model.pojo.Item;
 import com.kpi.campus.ui.fragment.DatePickerFragment;
-import com.kpi.campus.ui.presenter.EditBulletinPresenter;
+import com.kpi.campus.ui.presenter.SaveBulletinPresenter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +33,7 @@ import butterknife.Bind;
  * Created by Administrator on 22.04.2016.
  */
 public class EditBulletinActivity extends BaseActivity implements
-        EditBulletinPresenter.IView {
+        SaveBulletinPresenter.IView {
 
     @Bind(R.id.edit_text_bulletin_theme)
     EditText mSubject;
@@ -63,7 +64,7 @@ public class EditBulletinActivity extends BaseActivity implements
     @Bind(R.id.rb_group)
     RadioButton mRbGroup;
     @Inject
-    EditBulletinPresenter mPresenter;
+    SaveBulletinPresenter mPresenter;
 
     private Bulletin mCurrentBulletin;
 
@@ -90,10 +91,12 @@ public class EditBulletinActivity extends BaseActivity implements
                 NavUtils.navigateUpFromSameTask(this);
                 return true;
             case R.id.action_delete:
+                mPresenter.onStartRequest(() -> mPresenter.deleteBulletin());
                 break;
             case R.id.action_clear:
                 break;
             case R.id.action_done:
+                mPresenter.onStartRequest(() -> mPresenter.editBulletin());
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -112,6 +115,51 @@ public class EditBulletinActivity extends BaseActivity implements
         setRadioGroup();
         setDateListener();
         setInitialViewValues();
+    }
+
+    @Override
+    public void showProgressDialog() {
+
+    }
+
+    @Override
+    public void dismissProgressDialog() {
+
+    }
+
+    @Override
+    public void showResponse(int code, String msg) {
+
+    }
+
+    @Override
+    public void setSubdivisionAdapter(List<Item> list) {
+
+    }
+
+    @Override
+    public void setProfileAdapter(List<Item> list) {
+
+    }
+
+    @Override
+    public void setGroupAdapter(List<Item> list) {
+
+    }
+
+    @Override
+    public void updateBadgeCounter(int count) {
+
+    }
+
+    @Override
+    public Bulletin formBulletin() {
+        return null;
+    }
+
+    @Override
+    public String getBulletinId() {
+        return mCurrentBulletin.getId();
     }
 
     private void setInitialViewValues() {

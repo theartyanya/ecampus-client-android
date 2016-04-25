@@ -8,8 +8,7 @@ import com.kpi.campus.api.service.ServiceCreator;
 import com.kpi.campus.model.pojo.Bulletin;
 import com.kpi.campus.model.pojo.Item;
 import com.kpi.campus.model.pojo.User;
-import com.kpi.campus.ui.presenter.BasePresenter;
-import com.kpi.campus.ui.presenter.AddBulletinPresenter;
+import com.kpi.campus.ui.presenter.SaveBulletinPresenter;
 
 import java.util.List;
 
@@ -23,10 +22,10 @@ import rx.schedulers.Schedulers;
  */
 public class BulletinRxLoader {
 
-    private AddBulletinPresenter mPresenter;
+    private SaveBulletinPresenter mPresenter;
 
-    public BulletinRxLoader(BasePresenter presenter) {
-        mPresenter = (AddBulletinPresenter) presenter;
+    public BulletinRxLoader(SaveBulletinPresenter presenter) {
+        mPresenter = presenter;
     }
 
     public void addBulletin(Bulletin bulletin) {
@@ -72,7 +71,7 @@ public class BulletinRxLoader {
                         e -> Log.e(Config.LOG, e.getMessage()));
     }
 
-    public void loadGroupsIn(String subdivisionId) {
+    public void loadGroupsOf(String subdivisionId) {
         BulletinService service = ServiceCreator.createService
                 (BulletinService.class);
         Observable<List<Item>> observable = service.getGroupsIn

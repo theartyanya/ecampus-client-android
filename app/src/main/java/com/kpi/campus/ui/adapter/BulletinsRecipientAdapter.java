@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.kpi.campus.R;
 import com.kpi.campus.model.Recipient;
-import com.kpi.campus.ui.presenter.AddBulletinPresenter;
+import com.kpi.campus.ui.presenter.SaveBulletinPresenter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,11 +29,11 @@ import butterknife.ButterKnife;
 public class BulletinsRecipientAdapter extends RecyclerView
         .Adapter<BulletinsRecipientAdapter.ViewHolder> {
 
-    private final AddBulletinPresenter.IView mView;
+    private final SaveBulletinPresenter.IView mView;
     private final int NOTIFY_DELAY = 500;
     private ArrayList<Recipient> mDataList = new ArrayList<>();
 
-    public BulletinsRecipientAdapter(AddBulletinPresenter.IView view) {
+    public BulletinsRecipientAdapter(SaveBulletinPresenter.IView view) {
         mView = view;
     }
 

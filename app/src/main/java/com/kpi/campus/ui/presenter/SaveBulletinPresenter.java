@@ -10,17 +10,14 @@ import java.util.List;
 import javax.inject.Inject;
 
 /**
- * AddBulletinPresenter created to manage AddBulletinActivity.
- * <p>
- * Created by Admin on 12.02.2016.
+ * Created by Administrator on 25.04.2016.
  */
-public class AddBulletinPresenter extends BasePresenter {
-
+public class SaveBulletinPresenter extends BasePresenter {
     private IView mView;
-    private BulletinRxLoader mLoader;
+    protected BulletinRxLoader mLoader;
 
     @Inject
-    public AddBulletinPresenter() {
+    public SaveBulletinPresenter() {
         mLoader = new BulletinRxLoader(this);
     }
 
@@ -34,19 +31,19 @@ public class AddBulletinPresenter extends BasePresenter {
         mView = view;
     }
 
-    public void loadGroupsInSubdiv(String subdivId) {
-        mLoader.loadGroupsIn(subdivId);
-    }
-
-    public void onStartRequest() {
+    public void onStartRequest(CudAction action) {
         mView.showProgressDialog();
 
-        addBulletin();
+        action.execute();
     }
 
     public void onFinishRequest(int responseCode, String responseMsg) {
         mView.dismissProgressDialog();
         mView.showResponse(responseCode, responseMsg);
+    }
+
+    public void loadGroupsOfSubdivision(String subdivisionId) {
+        mLoader.loadGroupsOf(subdivisionId);
     }
 
     public void setDescSubdivisions(List<Item> list) {
@@ -61,19 +58,29 @@ public class AddBulletinPresenter extends BasePresenter {
         mView.setGroupAdapter(list);
     }
 
+    public void addBulletin() {
+        Bulletin bulletin = mView.formBulletin();
+        mLoader.addBulletin(bulletin);
+    }
+
+    public void deleteBulletin() {
+//        String id = mView.getBulletinId();
+//        mLoader.deleteBulletin(id);
+    }
+
+    public void editBulletin() {
+//        Bulletin bulletin = mView.formBulletin();
+//        mLoader.editBulletin(bulletin);
+    }
+
     private void loadSpinnerAdapterData() {
         List<Item> subdivisions = User.getInstance().subdivision;
         if (subdivisions != null && !subdivisions.isEmpty()) {
             Item mainSubdiv = subdivisions.get(0);
             mLoader.loadDescSubdivisions(mainSubdiv.getId().toString());
-            mLoader.loadGroupsIn(mainSubdiv.getId().toString());
+            mLoader.loadGroupsOf(mainSubdiv.getId().toString());
         }
         mLoader.loadProfiles();
-    }
-
-    private void addBulletin() {
-        Bulletin newBulletin = mView.createBulletin();
-        mLoader.addBulletin(newBulletin);
     }
 
     public interface IView {
@@ -85,8 +92,6 @@ public class AddBulletinPresenter extends BasePresenter {
 
         void showResponse(int code, String msg);
 
-        Bulletin createBulletin();
-
         void setSubdivisionAdapter(List<Item> list);
 
         void setProfileAdapter(List<Item> list);
@@ -94,5 +99,9 @@ public class AddBulletinPresenter extends BasePresenter {
         void setGroupAdapter(List<Item> list);
 
         void updateBadgeCounter(int count);
+
+        Bulletin formBulletin();
+
+        String getBulletinId();
     }
 }
