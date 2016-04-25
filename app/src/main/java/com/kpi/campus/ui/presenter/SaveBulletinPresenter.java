@@ -63,14 +63,14 @@ public class SaveBulletinPresenter extends BasePresenter {
         mLoader.addBulletin(bulletin);
     }
 
+    public void editBulletin() {
+        Bulletin bulletin = mView.formBulletin();
+        mLoader.editBulletin(bulletin);
+    }
+
     public void deleteBulletin() {
 //        String id = mView.getBulletinId();
 //        mLoader.deleteBulletin(id);
-    }
-
-    public void editBulletin() {
-//        Bulletin bulletin = mView.formBulletin();
-//        mLoader.editBulletin(bulletin);
     }
 
     private void loadSpinnerAdapterData() {
