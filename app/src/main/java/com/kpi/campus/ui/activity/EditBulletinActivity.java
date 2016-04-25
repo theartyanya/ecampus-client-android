@@ -1,12 +1,25 @@
 package com.kpi.campus.ui.activity;
 
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Display;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
@@ -16,10 +29,16 @@ import android.widget.TextView;
 import com.kpi.campus.Config;
 import com.kpi.campus.R;
 import com.kpi.campus.di.UIModule;
+import com.kpi.campus.model.Recipient;
 import com.kpi.campus.model.pojo.Bulletin;
 import com.kpi.campus.model.pojo.Item;
+import com.kpi.campus.model.pojo.User;
+import com.kpi.campus.ui.adapter.BulletinsRecipientAdapter;
+import com.kpi.campus.ui.adapter.ItemSpinnerAdapter;
+import com.kpi.campus.ui.adapter.NothingSelectedAdapter;
 import com.kpi.campus.ui.fragment.DatePickerFragment;
 import com.kpi.campus.ui.presenter.SaveBulletinPresenter;
+import com.kpi.campus.util.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +46,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import butterknife.Bind;
+import butterknife.OnClick;
 
 /**
  * Activity for edition of a Bulletin.
@@ -66,6 +86,8 @@ public class EditBulletinActivity extends BaseActivity implements
     @Inject
     SaveBulletinPresenter mPresenter;
 
+    private BulletinsRecipientAdapter mAdapter;
+    private ProgressDialog mProgressDialog;
     private Bulletin mCurrentBulletin;
 
     @Override
@@ -113,53 +135,141 @@ public class EditBulletinActivity extends BaseActivity implements
     public void setViewComponent() {
         setToolbar();
         setRadioGroup();
+        setAdapter();
         setDateListener();
         setInitialViewValues();
     }
 
     @Override
     public void showProgressDialog() {
-
+        mProgressDialog = new ProgressDialog(EditBulletinActivity.this, R.style
+                .AppTheme_Dark_Dialog);
+        mProgressDialog.setIndeterminate(true);
+        mProgressDialog.setMessage(getString(R.string.progress_sending));
+        mProgressDialog.show();
     }
 
     @Override
     public void dismissProgressDialog() {
-
+        mProgressDialog.dismiss();
     }
 
     @Override
     public void showResponse(int code, String msg) {
-
+        switch (code) {
+            case 200:
+                ToastUtil.showShortMessage(getString(R.string
+                        .bulletin_is_added), this);
+                break;
+            case 400:
+                ToastUtil.showShortMessage(getString(R.string.bad_recipient),
+                        this);
+                break;
+            case 401:
+                ToastUtil.showShortMessage(getString(R.string.unauthorized),
+                        this);
+                break;
+            case 500:
+                ToastUtil.showShortMessage(getString(R.string.server_error),
+                        this);
+                break;
+            default:
+                break;
+        }
     }
 
     @Override
     public void setSubdivisionAdapter(List<Item> list) {
-
+        setSubdivisionSpinner(list);
     }
 
     @Override
     public void setProfileAdapter(List<Item> list) {
-
+        setProfileSpinner(list);
     }
 
     @Override
     public void setGroupAdapter(List<Item> list) {
-
+        setGroupSpinner(list);
     }
 
     @Override
     public void updateBadgeCounter(int count) {
-
+        TextView tvCounter = (TextView) findViewById(R.id.tv_badge_counter);
+        tvCounter.setText(Integer.toString(count));
     }
 
     @Override
     public Bulletin formBulletin() {
-        return null;
+        String userId;
+        userId = User.getInstance().id;
+        List<Recipient> r = mAdapter.getItems();
+        Bulletin bulletin = new Bulletin(userId, mSubject.getText().toString
+                (), mText.getText().toString(), mCreateDate.getText()
+                .toString(), mStartDate.getText().toString(), mEndDate
+                .getText().toString(), true, r);
+        return bulletin;
     }
 
     @Override
     public String getBulletinId() {
         return mCurrentBulletin.getId();
+    }
+
+    @OnClick(R.id.btn_add_recipient)
+    public void onAddRecipient() {
+        Recipient recipient = createRecipient();
+        if (recipient != null) {
+            mAdapter.addItem(recipient);
+            updateBadgeCounter(mAdapter.getItemCount());
+        }
+    }
+
+    @OnClick(R.id.btn_show_recipients)
+    public void onShowRecipients() {
+        View inflatedView = inflateView(R.layout.recipient_popup_layout);
+        setRecyclerView(inflatedView);
+
+        // get device size
+        Display display = getWindowManager().getDefaultDisplay();
+        final Point size = new Point();
+        display.getSize(size);
+        PopupWindow popWindow = new PopupWindow(inflatedView, size.x - 50,
+                size.y - 600, true);
+        popWindow.setBackgroundDrawable(ContextCompat.getDrawable
+                (getApplicationContext(), R.drawable.popup_bg));
+        popWindow.setFocusable(true);
+        // make it outside touchable to dismiss the popup window
+        popWindow.setOutsideTouchable(true);
+        popWindow.setAnimationStyle(R.style.PopupAnimation);
+        popWindow.showAtLocation(new LinearLayout(this), Gravity.BOTTOM, 0,
+                100);
+    }
+
+    private Recipient createRecipient() {
+        Recipient r = null;
+        Item subdiv = (Item) mSpinnerSubdivision.getSelectedItem();
+        String subdivId = Integer.toString(subdiv.getId());
+        String subdivName = subdiv.getName();
+        if (mRbAll.isChecked()) {
+            r = new Recipient(subdivId, subdivName,
+                    null, null, null, null);
+        } else if (mRbProfile.isChecked()) {
+            Item profile = (Item) mSpinnerProfile.getSelectedItem();
+            if (profile == null) return null;
+            r = new Recipient(subdivId, subdivName, Integer.toString(profile
+                    .getId()), profile.getName(), null, null);
+        } else if (mRbGroup.isChecked()) {
+            Item group = (Item) mSpinnerGroup.getSelectedItem();
+            if (group == null) return null;
+            r = new Recipient(subdivId, subdivName, null, null, Integer
+                    .toString(group.getId()), group.getName());
+        }
+        return r;
+    }
+
+    private void setAdapter() {
+        mAdapter = new BulletinsRecipientAdapter(this);
     }
 
     private void setInitialViewValues() {
@@ -226,5 +336,58 @@ public class EditBulletinActivity extends BaseActivity implements
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         mToolbar.setNavigationIcon(R.mipmap.ic_action_navigation_arrow_back);
         getSupportActionBar().setTitle(R.string.edit_bulletin);
+    }
+
+    private View inflateView(int resource) {
+        LayoutInflater layoutInflater = (LayoutInflater) getSystemService
+                (Context.LAYOUT_INFLATER_SERVICE);
+        return layoutInflater.inflate(resource, null, false);
+    }
+
+    private void setRecyclerView(View parentView) {
+        RecyclerView recView = (RecyclerView) parentView.findViewById(R.id
+                .recycler_view_buffer_recipients);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        recView.setLayoutManager(layoutManager);
+        recView.setAdapter(mAdapter);
+    }
+
+    private void setSubdivisionSpinner(List<Item> list) {
+        ArrayAdapter<Item> adapter = new ItemSpinnerAdapter(this, R.layout
+                .spinner_item, R.layout.spinner_dropdown_item, list);
+        mSpinnerSubdivision.setAdapter(adapter);
+        mSpinnerSubdivision.setOnItemSelectedListener(new AdapterView
+                .OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int
+                    position, long id) {
+                Item item = (Item) parent.getItemAtPosition(position);
+                mPresenter.loadGroupsOfSubdivision(item.getId().toString());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+
+    private void setProfileSpinner(List<Item> list) {
+        ArrayAdapter<Item> adapter = new ItemSpinnerAdapter(this, R.layout
+                .spinner_item, R.layout.spinner_dropdown_item, list);
+        mSpinnerProfile.setAdapter(new NothingSelectedAdapter(
+                adapter,
+                R.layout.spinner_item_nothing_selected_profile,
+                this));
+    }
+
+    private void setGroupSpinner(List<Item> list) {
+        ArrayAdapter<Item> adapter = new ItemSpinnerAdapter(this, R.layout
+                .spinner_item, R.layout.spinner_dropdown_item, list);
+        mSpinnerGroup.setAdapter(new NothingSelectedAdapter(
+                adapter,
+                R.layout.spinner_item_nothing_selected_group,
+                this));
     }
 }
