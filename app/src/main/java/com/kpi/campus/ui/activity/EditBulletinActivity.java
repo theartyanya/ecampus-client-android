@@ -5,7 +5,12 @@ import android.support.v4.app.NavUtils;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.kpi.campus.Config;
@@ -40,7 +45,22 @@ public class EditBulletinActivity extends BaseActivity implements
     TextView mEndDate;
     @Bind(R.id.text_view_creation_date_value)
     TextView mCreateDate;
-
+    @Bind(R.id.spinner_profile)
+    Spinner mSpinnerProfile;
+    @Bind(R.id.spinner_group)
+    Spinner mSpinnerGroup;
+    @Bind(R.id.spinner_subdivision)
+    Spinner mSpinnerSubdivision;
+    @Bind(R.id.layout_profile)
+    RelativeLayout mLayoutProfile;
+    @Bind(R.id.layout_group)
+    RelativeLayout mLayoutGroup;
+    @Bind(R.id.rb_all)
+    RadioButton mRbAll;
+    @Bind(R.id.rb_profile)
+    RadioButton mRbProfile;
+    @Bind(R.id.rb_group)
+    RadioButton mRbGroup;
     @Inject
     EditBulletinPresenter mPresenter;
 
@@ -78,7 +98,6 @@ public class EditBulletinActivity extends BaseActivity implements
         return super.onOptionsItemSelected(item);
     }
 
-
     @Override
     protected List<Object> getModules() {
         List<Object> modules = new ArrayList<>();
@@ -89,11 +108,13 @@ public class EditBulletinActivity extends BaseActivity implements
     @Override
     public void setViewComponent() {
         setToolbar();
-
+        setRadioGroup();
         setInitialViewValues();
     }
 
     private void setInitialViewValues() {
+        if (mCurrentBulletin == null)
+            return;
         mSubject.setText(mCurrentBulletin.getSubject());
         mText.setText(mCurrentBulletin.getText());
         mStartDate.setText(mCurrentBulletin.getDateStart());
@@ -108,6 +129,34 @@ public class EditBulletinActivity extends BaseActivity implements
         tv = (TextView) findViewById(R.id
                 .text_view_change_actuality_date_value);
         tv.setText(mCurrentBulletin.getDateCreate());
+    }
+
+    private void setRadioGroup() {
+        RadioGroup radioGroup = (RadioGroup) findViewById(R.id
+                .radio_group_recipient);
+        radioGroup.setOnCheckedChangeListener((radioGroup1, checkedId) -> {
+            switch (checkedId) {
+                case R.id.rb_all:
+                    setVisibility(View.GONE, mLayoutProfile, mLayoutGroup);
+                    break;
+                case R.id.rb_profile:
+                    setVisibility(View.GONE, mLayoutGroup);
+                    setVisibility(View.VISIBLE, mLayoutProfile);
+                    break;
+                case R.id.rb_group:
+                    setVisibility(View.GONE, mLayoutProfile);
+                    setVisibility(View.VISIBLE, mLayoutGroup);
+                    break;
+                default:
+                    break;
+            }
+        });
+    }
+
+    private void setVisibility(int visibility, View... views) {
+        for (View v : views) {
+            v.setVisibility(visibility);
+        }
     }
 
     private void setToolbar() {
