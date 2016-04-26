@@ -10,9 +10,9 @@ import android.widget.EditText;
 import com.kpi.campus.Config;
 import com.kpi.campus.R;
 import com.kpi.campus.api.response.BaseResponse;
+import com.kpi.campus.api.response.RequestResult;
 import com.kpi.campus.di.UIModule;
 import com.kpi.campus.loader.TokenLoader;
-import com.kpi.campus.model.pojo.Token;
 import com.kpi.campus.ui.presenter.LoginPresenter;
 import com.kpi.campus.util.ToastUtil;
 
@@ -76,9 +76,18 @@ public class LoginActivity extends BaseActivity implements LoginPresenter
     }
 
     @Override
-    public void onLoginFailed() {
-        ToastUtil.showShortMessage(getString(R.string.login_failed),
-                getApplicationContext());
+    public void onLoginFailed(RequestResult result) {
+        switch (result) {
+            case OK:
+                ToastUtil.showShortMessage(getString(R.string
+                                .invalid_credentials),
+                        getApplicationContext());
+                break;
+            case ERROR:
+                ToastUtil.showShortMessage(getString(R.string.no_internet),
+                        getApplicationContext());
+                break;
+        }
     }
 
     @Override
@@ -109,8 +118,7 @@ public class LoginActivity extends BaseActivity implements LoginPresenter
             baseResponse) {
         int id = loader.getId();
         if (id == R.id.api_loader) {
-            Token token = baseResponse.getTypedAnswer();
-            mPresenter.setLoaderResult(token);
+            mPresenter.setLoaderResult(baseResponse);
         }
         getLoaderManager().destroyLoader(id);
     }
