@@ -26,7 +26,6 @@ public class SaveBulletinPresenter extends BasePresenter {
     public void initializeViewComponent() {
         mView.setViewComponent();
         loadSpinnerAdapterData();
-        loadRecipients();
     }
 
     public void setView(IView view) {
@@ -89,7 +88,7 @@ public class SaveBulletinPresenter extends BasePresenter {
         mLoader.loadProfiles();
     }
 
-    private void loadRecipients() {
+    public void loadRecipients() {
         String bulId = mView.getBulletinId();
         mLoader.loadRecipients(bulId);
     }

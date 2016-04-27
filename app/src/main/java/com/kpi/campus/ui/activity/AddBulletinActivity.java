@@ -98,10 +98,6 @@ public class AddBulletinActivity extends BaseActivity implements
         bindViews();
         mPresenter.setView(this);
         mPresenter.initializeViewComponent();
-
-        List list = new ArrayList<>();
-        list.add(new Item(10193, "ТК ФІОТ"));
-        setSubdivisionAdapter(list);
     }
 
     @Override

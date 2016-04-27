@@ -159,7 +159,7 @@ public class EditBulletinActivity extends BaseActivity implements
         switch (code) {
             case 200:
                 ToastUtil.showShortMessage(getString(R.string
-                        .bulletin_is_added), this);
+                        .bulletin_is_modified), this);
                 break;
             case 400:
                 ToastUtil.showShortMessage(getString(R.string.bad_recipient),
@@ -176,6 +176,7 @@ public class EditBulletinActivity extends BaseActivity implements
             default:
                 break;
         }
+        finish();
     }
 
     @Override
@@ -206,14 +207,13 @@ public class EditBulletinActivity extends BaseActivity implements
 
     @Override
     public Bulletin formBulletin() {
-        String userId;
-        userId = User.getInstance().id;
-        List<Recipient> r = mAdapter.getItems();
-        Bulletin bulletin = new Bulletin(userId, mSubject.getText().toString
-                (), mText.getText().toString(), mCreateDate.getText()
-                .toString(), mStartDate.getText().toString(), mEndDate
-                .getText().toString(), true, r);
-        return bulletin;
+        mCurrentBulletin.setCreatorId(User.getInstance().id);
+        mCurrentBulletin.setSubject(mSubject.getText().toString());
+        mCurrentBulletin.setText(mText.getText().toString());
+        mCurrentBulletin.setDateStart(mStartDate.getText().toString());
+        mCurrentBulletin.setDateEnd(mEndDate.getText().toString());
+        mCurrentBulletin.setRecipientList(mAdapter.getItems());
+        return mCurrentBulletin;
     }
 
     @Override
@@ -294,6 +294,8 @@ public class EditBulletinActivity extends BaseActivity implements
         tv = (TextView) findViewById(R.id
                 .text_view_change_actuality_date_value);
         tv.setText(mCurrentBulletin.getDateCreate());
+
+        mPresenter.loadRecipients();
     }
 
     private void setDateListener() {
