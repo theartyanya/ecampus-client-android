@@ -300,4 +300,12 @@ public class Bulletin implements Parcelable {
     public void setCreatorId(String creatorId) {
         this.creatorId = creatorId;
     }
+
+    public List<Recipient> getRecipientList() {
+        return recipientList;
+    }
+
+    public void setRecipientList(List<Recipient> recipientList) {
+        this.recipientList = recipientList;
+    }
 }

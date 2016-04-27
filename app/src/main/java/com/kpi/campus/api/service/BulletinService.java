@@ -36,12 +36,12 @@ public interface BulletinService {
             @Query("lastLoadedBulletinId") int lastId);
 
     @POST("/board")
-    Observable<String> postNewBulletin(
+    Observable<String> createBulletin(
             @Header("Authorization") String authorization,
             @Body Bulletin bulletin);
 
     @PUT("/board/{bulletinId}")
-    Observable<String> putEditBulletin(
+    Observable<String> updateBulletin(
             @Header("Authorization") String authorization,
             @Path("bulletinId") String bulletinId,
             @Body Bulletin bulletin);

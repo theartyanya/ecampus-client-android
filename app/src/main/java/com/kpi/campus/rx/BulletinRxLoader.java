@@ -32,7 +32,7 @@ public class BulletinRxLoader {
     public void addBulletin(Bulletin bulletin) {
         BulletinService service = ServiceCreator.createService
                 (BulletinService.class);
-        Observable<String> observable = service.postNewBulletin("bearer " +
+        Observable<String> observable = service.createBulletin("bearer " +
                 User.getInstance().token, bulletin);
 
         observable
@@ -52,7 +52,7 @@ public class BulletinRxLoader {
     public void editBulletin(Bulletin bulletin) {
         BulletinService service = ServiceCreator.createService
                 (BulletinService.class);
-        Observable<String> observable = service.putEditBulletin("bearer " +
+        Observable<String> observable = service.updateBulletin("bearer " +
                 User.getInstance().token, bulletin.getId(), bulletin);
 
         observable
