@@ -1,5 +1,8 @@
 package com.kpi.campus.model;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Represent Recipient of bulletin entity.
  * <p>
@@ -7,16 +10,28 @@ package com.kpi.campus.model;
  */
 public class Recipient {
 
+    @SerializedName("subdivisionId")
+    @Expose
     private String subdivisionId;
 
+    @SerializedName("subdivisionName")
+    @Expose
     private String subdivisionName;
 
+    @SerializedName("profileId")
+    @Expose
     private String profileId;
 
+    @SerializedName("profileName")
+    @Expose
     private String profileName;
 
+    @SerializedName("studyGroupId")
+    @Expose
     private String studyGroupId;
 
+    @SerializedName("studyGroupName")
+    @Expose
     private String studyGroupName;
 
     public Recipient() {
