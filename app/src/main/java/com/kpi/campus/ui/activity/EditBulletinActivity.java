@@ -211,7 +211,7 @@ public class EditBulletinActivity extends BaseActivity implements
         mCurrentBulletin.setSubject(mSubject.getText().toString());
         mCurrentBulletin.setText(mText.getText().toString());
         mCurrentBulletin.setDateStart(mStartDate.getText().toString());
-        mCurrentBulletin.setDateEnd(mEndDate.getText().toString());
+        mCurrentBulletin.setDateStop(mEndDate.getText().toString());
         mCurrentBulletin.setRecipientList(mAdapter.getItems());
         return mCurrentBulletin;
     }
@@ -283,7 +283,7 @@ public class EditBulletinActivity extends BaseActivity implements
         mSubject.setText(mCurrentBulletin.getSubject());
         mText.setText(mCurrentBulletin.getText());
         mStartDate.setText(mCurrentBulletin.getDateStart());
-        mEndDate.setText(mCurrentBulletin.getDateEnd());
+        mEndDate.setText(mCurrentBulletin.getDateStop());
         mCreateDate.setText(mCurrentBulletin.getDateCreate());
 
         TextView tv = (TextView) findViewById(R.id.text_view_actuality_value);
@@ -294,6 +294,8 @@ public class EditBulletinActivity extends BaseActivity implements
         tv = (TextView) findViewById(R.id
                 .text_view_change_actuality_date_value);
         tv.setText(mCurrentBulletin.getDateCreate());
+        tv = (TextView) findViewById(R.id.text_view_author_name);
+        tv.setText(User.getInstance().name);
 
         mPresenter.loadRecipients();
     }

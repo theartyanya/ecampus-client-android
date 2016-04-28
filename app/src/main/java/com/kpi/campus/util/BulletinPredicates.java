@@ -18,7 +18,7 @@ public class BulletinPredicates {
         Date currentDate = DateUtil.convert(date);
         return p -> (currentDate != null && currentDate.after(DateUtil.convert
                 (p.getDateStart()))) &&
-                currentDate.before(DateUtil.convert(p.getDateEnd()));
+                currentDate.before(DateUtil.convert(p.getDateStop()));
     }
 
     public static Predicate<Bulletin> isMatchesProfile(List<Integer>

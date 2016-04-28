@@ -86,7 +86,7 @@ public class BulletinContentActivity extends BaseActivity implements
         textView.setText(mBulletin.getDateStart());
 
         textView = (TextView) findViewById(R.id.text_view_bulletin_end_date);
-        textView.setText(mBulletin.getDateEnd());
+        textView.setText(mBulletin.getDateStop());
 
         textView = (TextView) findViewById(R.id.text_view_bulletin_author);
         textView.setText(mBulletin.getCreatorName());

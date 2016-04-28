@@ -135,6 +135,4 @@ public class BulletinRxLoader {
                 .subscribe(list -> mPresenter.setRecipients(list),
                         e -> Log.e(Config.LOG, e.getMessage()));
     }
-
-
 }

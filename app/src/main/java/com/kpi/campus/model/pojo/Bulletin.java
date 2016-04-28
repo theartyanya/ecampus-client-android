@@ -50,9 +50,9 @@ public class Bulletin implements Parcelable {
     @SerializedName("dateStart")
     @Expose
     private String dateStart;
-    @SerializedName("dateEnd")
+    @SerializedName("dateStop")
     @Expose
-    private String dateEnd;
+    private String dateStop;
     @SerializedName("actuality")
     @Expose
     private boolean actuality;
@@ -68,7 +68,7 @@ public class Bulletin implements Parcelable {
         this.text = text;
         this.dateCreate = dateCreate;
         this.dateStart = dateStart;
-        this.dateEnd = dateStop;
+        this.dateStop = dateStop;
         this.actuality = actuality;
         this.recipientList = recipients;
     }
@@ -88,7 +88,7 @@ public class Bulletin implements Parcelable {
         subdivisionName = in.readString();
         dateCreate = in.readString();
         dateStart = in.readString();
-        dateEnd = in.readString();
+        dateStop = in.readString();
         actuality = in.readByte() != 0;
     }
 
@@ -205,17 +205,17 @@ public class Bulletin implements Parcelable {
     }
 
     /**
-     * @return The dateEnd
+     * @return The dateStop
      */
-    public String getDateEnd() {
-        return dateEnd;
+    public String getDateStop() {
+        return dateStop;
     }
 
     /**
-     * @param dateEnd The dateEnd
+     * @param dateStop The dateStop
      */
-    public void setDateEnd(String dateEnd) {
-        this.dateEnd = dateEnd;
+    public void setDateStop(String dateStop) {
+        this.dateStop = dateStop;
     }
 
     /**
@@ -258,7 +258,7 @@ public class Bulletin implements Parcelable {
         dest.writeString(subdivisionName);
         dest.writeString(dateCreate);
         dest.writeString(dateStart);
-        dest.writeString(dateEnd);
+        dest.writeString(dateStop);
         dest.writeByte((byte) (actuality ? 1 : 0));
     }
 
