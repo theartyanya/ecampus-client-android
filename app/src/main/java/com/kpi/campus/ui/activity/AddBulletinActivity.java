@@ -238,7 +238,7 @@ public class AddBulletinActivity extends BaseActivity implements
     @OnClick(R.id.btn_add_recipient)
     public void onAddRecipient() {
         Recipient recipient = createRecipient();
-        if (recipient != null) {
+        if (recipient != null && !mAdapter.contains(recipient) ) {
             mAdapter.addItem(recipient);
             updateBadgeCounter(mAdapter.getItemCount());
         }

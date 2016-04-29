@@ -64,4 +64,36 @@ public class Recipient {
     public String getStudyGroupName() {
         return studyGroupName;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Recipient recipient = (Recipient) o;
+
+        if (subdivisionId != null ? !subdivisionId.equals(recipient.subdivisionId) : recipient.subdivisionId != null)
+            return false;
+        if (subdivisionName != null ? !subdivisionName.equals(recipient.subdivisionName) : recipient.subdivisionName != null)
+            return false;
+        if (profileId != null ? !profileId.equals(recipient.profileId) : recipient.profileId != null)
+            return false;
+        if (profileName != null ? !profileName.equals(recipient.profileName) : recipient.profileName != null)
+            return false;
+        if (studyGroupId != null ? !studyGroupId.equals(recipient.studyGroupId) : recipient.studyGroupId != null)
+            return false;
+        return !(studyGroupName != null ? !studyGroupName.equals(recipient.studyGroupName) : recipient.studyGroupName != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = subdivisionId != null ? subdivisionId.hashCode() : 0;
+        result = 31 * result + (subdivisionName != null ? subdivisionName.hashCode() : 0);
+        result = 31 * result + (profileId != null ? profileId.hashCode() : 0);
+        result = 31 * result + (profileName != null ? profileName.hashCode() : 0);
+        result = 31 * result + (studyGroupId != null ? studyGroupId.hashCode() : 0);
+        result = 31 * result + (studyGroupName != null ? studyGroupName.hashCode() : 0);
+        return result;
+    }
 }

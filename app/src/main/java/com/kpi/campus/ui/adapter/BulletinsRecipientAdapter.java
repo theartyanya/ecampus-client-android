@@ -49,6 +49,10 @@ public class BulletinsRecipientAdapter extends RecyclerView
         notifyDataSetChanged();
     }
 
+    public boolean contains(Recipient r) {
+        return mDataList.contains(r);
+    }
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout
