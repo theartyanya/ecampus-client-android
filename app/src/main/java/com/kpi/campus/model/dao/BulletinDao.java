@@ -40,7 +40,6 @@ public class BulletinDao implements IDataAccessObject<Bulletin> {
     @Override
     public void setData(List<Bulletin> data) {
         if (data.isEmpty()) return;
-
         mAll.addAll(data);
 
         List<Item> userProfile = User.getInstance().position;
