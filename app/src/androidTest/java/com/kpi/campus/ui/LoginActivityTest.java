@@ -78,7 +78,7 @@ public class LoginActivityTest {
      * @param password
      */
     private void inputCredentials(String login, String password) {
-        onView(withId(R.id.edit_text_input_login)).perform(typeText(login), closeSoftKeyboard());
-        onView(withId(R.id.edit_text_input_password)).perform(typeText(password), closeSoftKeyboard());
+        onView(withId(R.id.edit_text_login)).perform(typeText(login), closeSoftKeyboard());
+        onView(withId(R.id.edit_text_password)).perform(typeText(password), closeSoftKeyboard());
     }
 }

@@ -52,4 +52,6 @@
     <string name="empty_bulletins_list">Немає оголошень</string>
     <string name="recipient_already_exists"/>
     <string name="wrong_recipient"/>
+    <string name="login_is_required">Логін є обов\'язковим</string>
+    <string name="password_is_required">Пароль є обов\'язковим</string>
 </resources>
