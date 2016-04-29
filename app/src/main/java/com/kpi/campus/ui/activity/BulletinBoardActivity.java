@@ -106,19 +106,19 @@ public class BulletinBoardActivity extends BaseActivity implements
 
     private SearchView.OnQueryTextListener onQueryTextChangeListener = new
             SearchView.OnQueryTextListener() {
-        @Override
-        public boolean onQueryTextSubmit(String query) {
-            return false;
-        }
+                @Override
+                public boolean onQueryTextSubmit(String query) {
+                    return false;
+                }
 
-        @Override
-        public boolean onQueryTextChange(String newText) {
-            final List<Bulletin> filteredList = mPresenter.filterData
-                    (mBulletins, newText);
-            mAdapter.setFilter(filteredList);
-            return false;
-        }
-    };
+                @Override
+                public boolean onQueryTextChange(String newText) {
+                    final List<Bulletin> filteredList = mPresenter.filterData
+                            (mBulletins, newText);
+                    mAdapter.setFilter(filteredList);
+                    return false;
+                }
+            };
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -269,7 +269,7 @@ public class BulletinBoardActivity extends BaseActivity implements
                         if (e != null)
                             Log.e(Config.LOG, e.getMessage());
                         ToastUtil.showError(getString(R.string
-                                .error_while_data_obtaining),
+                                        .error_while_data_obtaining),
                                 getApplicationContext());
 
                         setViewsVisibility();
@@ -283,7 +283,10 @@ public class BulletinBoardActivity extends BaseActivity implements
                         mBulletins = new ArrayList<>(dao.getData());
                         setViewsVisibility();
 
-                        mAdapter.addNewItems(items);
+                        if (items.isEmpty())
+                            mAdapter.setItems(items);
+                        else
+                            mAdapter.addNewItems(items);
                     }
                 });
     }

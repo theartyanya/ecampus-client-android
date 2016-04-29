@@ -57,17 +57,9 @@
                 android:layout_height="wrap_content"
                 android:scrollbars="vertical"/>
 
-            <TextView
+            <include
                 android:id="@android:id/empty"
-                style="?android:attr/textAppearanceMedium"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:layout_marginBottom="80dp"
-                android:gravity="center"
-                android:text="@string/empty_bulletins_list"
-                android:textColor="@color/colorDivider"
-                android:visibility="gone"/>
+                layout="@layout/empty_bulletins"/>
         </LinearLayout>
     </RelativeLayout>
 
