@@ -36,7 +36,7 @@ import com.kpi.campus.ui.adapter.BulletinsRecipientAdapter;
 import com.kpi.campus.ui.adapter.ItemSpinnerAdapter;
 import com.kpi.campus.ui.adapter.NothingSelectedAdapter;
 import com.kpi.campus.ui.fragment.DatePickerFragment;
-import com.kpi.campus.ui.presenter.AddBulletinPresenter;
+import com.kpi.campus.ui.presenter.SaveBulletinPresenter;
 import com.kpi.campus.util.DateUtil;
 import com.kpi.campus.util.ToastUtil;
 
@@ -52,7 +52,7 @@ import butterknife.OnClick;
  * Activity for addition of a Bulletin.
  */
 public class AddBulletinActivity extends BaseActivity implements
-        AddBulletinPresenter.IView {
+        SaveBulletinPresenter.IView {
 
     @Bind(R.id.edit_text_bulletin_theme)
     EditText mSubject;
@@ -83,7 +83,7 @@ public class AddBulletinActivity extends BaseActivity implements
     @Bind(R.id.rb_group)
     RadioButton mRbGroup;
     @Inject
-    AddBulletinPresenter mPresenter;
+    SaveBulletinPresenter mPresenter;
 
     private BulletinsRecipientAdapter mAdapter;
     private ProgressDialog mProgressDialog;
@@ -98,10 +98,6 @@ public class AddBulletinActivity extends BaseActivity implements
         bindViews();
         mPresenter.setView(this);
         mPresenter.initializeViewComponent();
-
-        List list = new ArrayList<>();
-        list.add(new Item(10193, "ТК ФІОТ"));
-        setSubdivisionAdapter(list);
     }
 
     @Override
@@ -136,7 +132,7 @@ public class AddBulletinActivity extends BaseActivity implements
                 ToastUtil.showShortMessage(getString(R.string.clear), this);
                 break;
             case R.id.action_done:
-                mPresenter.onStartRequest();
+                mPresenter.onStartRequest(() -> mPresenter.addBulletin());
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -197,7 +193,7 @@ public class AddBulletinActivity extends BaseActivity implements
     }
 
     @Override
-    public Bulletin createBulletin() {
+    public Bulletin formBulletin() {
         String userId;
         userId = User.getInstance().id;
         List<Recipient> r = mAdapter.getItems();
@@ -206,6 +202,11 @@ public class AddBulletinActivity extends BaseActivity implements
                 .toString(), mStartDate.getText().toString(), mEndDate
                 .getText().toString(), true, r);
         return bulletin;
+    }
+
+    @Override
+    public String getBulletinId() {
+        return null;
     }
 
     @Override
@@ -224,6 +225,11 @@ public class AddBulletinActivity extends BaseActivity implements
     }
 
     @Override
+    public void setRecipientsList(List<Recipient> list) {
+        // N / A
+    }
+
+    @Override
     public void updateBadgeCounter(int count) {
         TextView tvCounter = (TextView) findViewById(R.id.tv_badge_counter);
         tvCounter.setText(Integer.toString(count));
@@ -233,8 +239,14 @@ public class AddBulletinActivity extends BaseActivity implements
     public void onAddRecipient() {
         Recipient recipient = createRecipient();
         if (recipient != null) {
-            mAdapter.addItem(recipient);
-            updateBadgeCounter(mAdapter.getItemCount());
+            if (!mAdapter.contains(recipient)) {
+                mAdapter.addItem(recipient);
+                updateBadgeCounter(mAdapter.getItemCount());
+            } else {
+                ToastUtil.showShortMessage(getString(R.string.recipient_already_exists), this);
+            }
+        } else {
+            ToastUtil.showError(getString(R.string.wrong_recipient), this);
         }
     }
 
@@ -310,7 +322,7 @@ public class AddBulletinActivity extends BaseActivity implements
             public void onItemSelected(AdapterView<?> parent, View view, int
                     position, long id) {
                 Item item = (Item) parent.getItemAtPosition(position);
-                mPresenter.loadGroupsInSubdiv(item.getId().toString());
+                mPresenter.loadGroupsOfSubdivision(item.getId().toString());
             }
 
             @Override
@@ -390,7 +402,7 @@ public class AddBulletinActivity extends BaseActivity implements
         mStartDate.setText(empty);
         mEndDate.setText(empty);
         mRbAll.setChecked(true);
-        mAdapter.setItems(new ArrayList<>());
+        mAdapter.clear();
     }
 
     private View inflateView(int resource) {

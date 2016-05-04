@@ -3,6 +3,8 @@ package com.kpi.campus.ui.presenter;
 import android.os.Bundle;
 
 import com.kpi.campus.Config;
+import com.kpi.campus.api.response.BaseResponse;
+import com.kpi.campus.api.response.RequestResult;
 import com.kpi.campus.model.pojo.Token;
 import com.kpi.campus.model.pojo.User;
 import com.kpi.campus.rx.UserRxLoader;
@@ -13,7 +15,7 @@ import javax.inject.Inject;
 
 /**
  * LoginPresenter created to manage LoginActivity.
- *
+ * <p>
  * Created by Administrator on 29.01.2016.
  */
 public class LoginPresenter extends BasePresenter {
@@ -39,7 +41,8 @@ public class LoginPresenter extends BasePresenter {
 
     /**
      * Set necessary View components to "login state"
-     * @param login login which is entered by the user
+     *
+     * @param login    login which is entered by the user
      * @param password password which is entered by the user
      */
     public void login(String login, String password) {
@@ -50,6 +53,7 @@ public class LoginPresenter extends BasePresenter {
 
     /**
      * Init loader to load data for the user authentication.
+     *
      * @param login
      * @param password
      */
@@ -64,15 +68,18 @@ public class LoginPresenter extends BasePresenter {
      * Set views to "initial (after login) state".
      * If server returns success, start MainActivity.
      * If not, launch login failed logic.
-     * @param token data for the user authentication
+     *
+     * @param baseResponse response from loader
      */
-    public void setLoaderResult(Token token) {
+    public void setLoaderResult(BaseResponse baseResponse) {
         mView.dismissProgressDialog();
         mView.showLoginButton(true);
-        if (token != null) {
-            onLoginSuccess(token.getAccessToken());
+
+        Token answer = baseResponse.getTypedAnswer();
+        if(answer != null) {
+            onLoginSuccess(answer.getAccessToken());
         } else {
-            mView.onLoginFailed();
+            mView.onLoginFailed(baseResponse.getRequestResult());
         }
     }
 
@@ -105,9 +112,13 @@ public class LoginPresenter extends BasePresenter {
 
     public interface IView {
         void showLoginProgressDialog();
+
         void dismissProgressDialog();
+
         void showLoginButton(boolean shouldShow);
-        void onLoginFailed();
+
+        void onLoginFailed(RequestResult result);
+
         void initLoader(Bundle args);
     }
 }

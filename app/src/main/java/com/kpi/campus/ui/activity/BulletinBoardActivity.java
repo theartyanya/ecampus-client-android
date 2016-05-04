@@ -24,6 +24,7 @@ import com.kpi.campus.model.pojo.Bulletin;
 import com.kpi.campus.rx.BulletinResponseManager;
 import com.kpi.campus.ui.adapter.PagingRecyclerAdapter;
 import com.kpi.campus.ui.presenter.BulletinBoardPresenter;
+import com.kpi.campus.ui.view.ExtendedRecyclerView;
 import com.kpi.campus.ui.view.OnItemClickListener;
 import com.kpi.campus.util.ToastUtil;
 import com.kpi.campus.util.pagination.PaginationTool;
@@ -48,8 +49,8 @@ public class BulletinBoardActivity extends BaseActivity implements
     Toolbar mToolbar;
     @Bind(R.id.tab_layout)
     TabLayout mTabLayout;
-    @Bind(R.id.recycler_view_bulletin)
-    RecyclerView mRecyclerView;
+    @Bind(android.R.id.list)
+    ExtendedRecyclerView mRecyclerView;
     @Bind(R.id.progress_bar_bulletin)
     ProgressBar mProgressLoader;
     @Inject
@@ -105,19 +106,19 @@ public class BulletinBoardActivity extends BaseActivity implements
 
     private SearchView.OnQueryTextListener onQueryTextChangeListener = new
             SearchView.OnQueryTextListener() {
-        @Override
-        public boolean onQueryTextSubmit(String query) {
-            return false;
-        }
+                @Override
+                public boolean onQueryTextSubmit(String query) {
+                    return false;
+                }
 
-        @Override
-        public boolean onQueryTextChange(String newText) {
-            final List<Bulletin> filteredList = mPresenter.filterData
-                    (mBulletins, newText);
-            mAdapter.setFilter(filteredList);
-            return false;
-        }
-    };
+                @Override
+                public boolean onQueryTextChange(String newText) {
+                    final List<Bulletin> filteredList = mPresenter.filterData
+                            (mBulletins, newText);
+                    mAdapter.setFilter(filteredList);
+                    return false;
+                }
+            };
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -227,6 +228,7 @@ public class BulletinBoardActivity extends BaseActivity implements
         mRecyclerView.setLayoutManager(new LinearLayoutManager
                 (getApplicationContext()));
         mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setEmptyView(findViewById(android.R.id.empty));
 
         mAdapter = new PagingRecyclerAdapter(IS_MODERATOR_MODE);
         mAdapter.setHasStableIds(true);
@@ -267,7 +269,7 @@ public class BulletinBoardActivity extends BaseActivity implements
                         if (e != null)
                             Log.e(Config.LOG, e.getMessage());
                         ToastUtil.showError(getString(R.string
-                                .error_while_data_obtaining),
+                                        .error_while_data_obtaining),
                                 getApplicationContext());
 
                         setViewsVisibility();
@@ -281,7 +283,10 @@ public class BulletinBoardActivity extends BaseActivity implements
                         mBulletins = new ArrayList<>(dao.getData());
                         setViewsVisibility();
 
-                        mAdapter.addNewItems(items);
+                        if (items.isEmpty())
+                            mAdapter.setItems(items);
+                        else
+                            mAdapter.addNewItems(items);
                     }
                 });
     }

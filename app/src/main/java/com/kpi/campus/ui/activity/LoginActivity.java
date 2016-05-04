@@ -4,15 +4,16 @@ import android.app.LoaderManager;
 import android.app.ProgressDialog;
 import android.content.Loader;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.widget.Button;
 import android.widget.EditText;
 
 import com.kpi.campus.Config;
 import com.kpi.campus.R;
 import com.kpi.campus.api.response.BaseResponse;
+import com.kpi.campus.api.response.RequestResult;
 import com.kpi.campus.di.UIModule;
 import com.kpi.campus.loader.TokenLoader;
-import com.kpi.campus.model.pojo.Token;
 import com.kpi.campus.ui.presenter.LoginPresenter;
 import com.kpi.campus.util.ToastUtil;
 
@@ -30,9 +31,9 @@ import butterknife.OnClick;
 public class LoginActivity extends BaseActivity implements LoginPresenter
         .IView, LoaderManager.LoaderCallbacks<BaseResponse> {
 
-    @Bind(R.id.edit_text_input_login)
-    EditText mInputLogin;
-    @Bind(R.id.edit_text_input_password)
+    @Bind(R.id.edit_text_login)
+    EditText mLogin;
+    @Bind(R.id.edit_text_password)
     EditText mPassword;
     @Bind(R.id.button_login)
     Button mBtnLogin;
@@ -76,9 +77,18 @@ public class LoginActivity extends BaseActivity implements LoginPresenter
     }
 
     @Override
-    public void onLoginFailed() {
-        ToastUtil.showShortMessage(getString(R.string.login_failed),
-                getApplicationContext());
+    public void onLoginFailed(RequestResult result) {
+        switch (result) {
+            case OK:
+                ToastUtil.showShortMessage(getString(R.string
+                                .invalid_credentials),
+                        getApplicationContext());
+                break;
+            case ERROR:
+                ToastUtil.showShortMessage(getString(R.string.no_internet),
+                        getApplicationContext());
+                break;
+        }
     }
 
     @Override
@@ -88,8 +98,11 @@ public class LoginActivity extends BaseActivity implements LoginPresenter
 
     @OnClick(R.id.button_login)
     public void login() {
-        mPresenter.login(mInputLogin.getText().toString(), mPassword.getText
-                ().toString());
+        String userLogin = mLogin.getText().toString();
+        String userPassword = mPassword.getText().toString();
+        boolean isValid = validateInput(userLogin, userPassword);
+        if(isValid)
+            mPresenter.login(userLogin, userPassword);
     }
 
     @Override
@@ -109,8 +122,7 @@ public class LoginActivity extends BaseActivity implements LoginPresenter
             baseResponse) {
         int id = loader.getId();
         if (id == R.id.api_loader) {
-            Token token = baseResponse.getTypedAnswer();
-            mPresenter.setLoaderResult(token);
+            mPresenter.setLoaderResult(baseResponse);
         }
         getLoaderManager().destroyLoader(id);
     }
@@ -124,5 +136,40 @@ public class LoginActivity extends BaseActivity implements LoginPresenter
     public void onBackPressed() {
         // Disable going back to the MainActivity
         moveTaskToBack(true);
+    }
+
+
+    /**
+     * Validate user input credentials.
+     * @param inputLogin
+     * @param inputPassword
+     * @return true if credentials are not empty, false otherwise.
+     */
+    private boolean validateInput(String inputLogin, String inputPassword) {
+        boolean isValid = true;
+        TextInputLayout inputLayout = (TextInputLayout) findViewById(R.id.input_login);
+        if (inputLogin.isEmpty()) {
+            setErrorInput(inputLayout, getString(R.string.login_is_required));
+            isValid = false;
+        } else {
+            setErrorInput(inputLayout, null);
+        }
+        inputLayout = (TextInputLayout) findViewById(R.id.input_password);
+        if (inputLogin.isEmpty()) {
+            setErrorInput(inputLayout, getString(R.string.password_is_required));
+            isValid = false;
+        } else {
+            setErrorInput(inputLayout, null);
+        }
+        return isValid;
+    }
+
+    /**
+     * Handle user input error.
+     * @param inputLayout TextInputLayout view
+     * @param errorMsg error message to show
+     */
+    private void setErrorInput(TextInputLayout inputLayout, String errorMsg) {
+        inputLayout.setError(errorMsg);
     }
 }

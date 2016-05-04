@@ -24,7 +24,8 @@
     <string name="add_bulletin">Додати</string>
     <string name="edit_bulletin">Редагувати</string>
     <string name="action_moderator">M</string>
-    <string name="login_failed">Логін або пароль невірні</string>
+    <string name="invalid_credentials">Логін або пароль невірні</string>
+    <string name="no_internet">Немає підключення до мережі Інтернет</string>
     <string name="bulletin_text_content">Текст оголошення</string>
     <string name="activity_bulletin_moderator_mode_title">Режим модератора</string>
     <string name="bulletin_author">Автор: \u0020</string>
@@ -47,4 +48,10 @@
     <string name="server_error">Помилка сервера</string>
     <string name="bad_recipient">Невірний формат отримувача</string>
     <string name="clear">Очищено</string>
+    <string name="bulletin_is_modified">Зміни виконані</string>
+    <string name="empty_bulletins_list">Немає оголошень</string>
+    <string name="recipient_already_exists"/>
+    <string name="wrong_recipient"/>
+    <string name="login_is_required">Логін є обов\'язковим</string>
+    <string name="password_is_required">Пароль є обов\'язковим</string>
 </resources>

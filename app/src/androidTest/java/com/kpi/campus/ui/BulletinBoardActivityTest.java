@@ -128,7 +128,7 @@ public class BulletinBoardActivityTest {
     @Ignore
     @Test
     public void testSendIntentContent() {
-        onData(allOf(withId(R.id.recycler_view_bulletin), isDisplayed())).inAdapterView(withId(R.id.recycler_view_bulletin)).atPosition(0).perform(click());
+        onData(allOf(withId(android.R.id.list), isDisplayed())).inAdapterView(withId(android.R.id.list)).atPosition(0).perform(click());
         intended(hasComponent(hasShortClassName(SHORT_CLASS_NAME_BULLETIN_CONTENT)));
     }
 

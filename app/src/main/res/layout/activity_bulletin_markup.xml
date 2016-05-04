@@ -304,7 +304,8 @@
                     android:id="@+id/layout_group"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="gone">
+                    android:visibility="gone"
+                    android:layout_marginBottom="8dp">
 
                     <ImageView
                         android:id="@+id/image_view_group"
