@@ -11,6 +11,7 @@ import com.kpi.campus.model.pojo.Bulletin;
 import com.kpi.campus.ui.Navigator;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -79,7 +80,7 @@ public class BulletinBoardPresenter extends BasePresenter {
      * Get Bulletin data from DataAccessObject
      * @return list of bulletins
      */
-    public List<Bulletin> getData() {
+    public Collection<Bulletin> getData() {
         return mDataAccess.getData();
     }
 
@@ -87,7 +88,7 @@ public class BulletinBoardPresenter extends BasePresenter {
      * Get Bulletin data filtered by profile which matches User profile
      * @return list of bulletins filtered by User profile
      */
-    public List<Bulletin> getSelectedByProfile() {
+    public Collection<Bulletin> getSelectedByProfile() {
         return ((BulletinDao) mDataAccess).getFilteredByProfile();
     }
 
@@ -95,7 +96,7 @@ public class BulletinBoardPresenter extends BasePresenter {
      * Get Bulletin data filtered by subdivision which matches User subdivision
      * @return list of bulletins filtered by User subdivision
      */
-    public List<Bulletin> getSelectedBySubdivision() {
+    public Collection<Bulletin> getSelectedBySubdivision() {
         return ((BulletinDao) mDataAccess).getFilteredBySubdiv();
     }
 
@@ -113,7 +114,7 @@ public class BulletinBoardPresenter extends BasePresenter {
      * @param query request that filters list
      * @return filtered list
      */
-    public List<Bulletin> filterData(List<Bulletin> list, String query) {
+    public List<Bulletin> filterData(Collection<Bulletin> list, String query) {
         query = query.toLowerCase();
 
         final List<Bulletin> filteredList = new ArrayList<>();

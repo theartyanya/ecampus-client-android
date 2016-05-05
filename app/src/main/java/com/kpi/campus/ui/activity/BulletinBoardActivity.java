@@ -7,7 +7,6 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.NavUtils;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -30,6 +29,7 @@ import com.kpi.campus.util.ToastUtil;
 import com.kpi.campus.util.pagination.PaginationTool;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -62,7 +62,7 @@ public class BulletinBoardActivity extends BaseActivity implements
      * The list of bulletins which are currently in adapter.
      * Designed for filtering purposes.
      */
-    private List<Bulletin> mBulletins;
+    private Collection<Bulletin> mBulletins;
     /**
      * Whether the user is moderator.
      * Affects on toolbar menu view.
@@ -201,7 +201,7 @@ public class BulletinBoardActivity extends BaseActivity implements
                 mBulletins = mPresenter.getSelectedBySubdivision();
                 break;
         }
-        mAdapter.setItems(mBulletins);
+        mAdapter.setItems(new ArrayList<>(mBulletins));
     }
 
     private void setToolbar() {
@@ -283,10 +283,7 @@ public class BulletinBoardActivity extends BaseActivity implements
                         mBulletins = new ArrayList<>(dao.getData());
                         setViewsVisibility();
 
-                        if (items.isEmpty())
-                            mAdapter.setItems(items);
-                        else
-                            mAdapter.addNewItems(items);
+                        mAdapter.setItems(new ArrayList<>(mBulletins));
                     }
                 });
     }

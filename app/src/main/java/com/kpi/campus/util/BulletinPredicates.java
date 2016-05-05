@@ -6,6 +6,7 @@ import com.annimon.stream.function.Predicate;
 import com.kpi.campus.model.pojo.Bulletin;
 import com.kpi.campus.model.pojo.Item;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -29,7 +30,6 @@ public class BulletinPredicates {
 
     public static Predicate<Bulletin> isMatchesSubdivision(List<Integer>
                                                                    subdiv) {
-        //return p -> subdiv.contains(p.getSubdivisionId());
         return p -> Stream.of(subdiv).anyMatch(i -> i.equals(p
                 .getSubdivisionId()));
     }
@@ -47,7 +47,7 @@ public class BulletinPredicates {
                 (Collectors.<Integer>toList());
     }
 
-    public static List<Bulletin> filterBulletins(List<Bulletin> bulletins,
+    public static List<Bulletin> filterBulletins(Collection<Bulletin> bulletins,
                                                  Predicate<Bulletin>
                                                          predicate) {
         return Stream.of(bulletins)
