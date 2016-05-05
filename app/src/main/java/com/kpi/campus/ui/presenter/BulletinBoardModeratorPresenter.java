@@ -11,6 +11,7 @@ import com.kpi.campus.model.pojo.Bulletin;
 import com.kpi.campus.ui.Navigator;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -96,7 +97,7 @@ public class BulletinBoardModeratorPresenter extends BasePresenter {
      *
      * @return list of bulletins
      */
-    public List<Bulletin> getData() {
+    public Collection<Bulletin> getData() {
         return mDataAccess.getData();
     }
 
@@ -105,7 +106,7 @@ public class BulletinBoardModeratorPresenter extends BasePresenter {
      *
      * @return list of bulletins filtered by User profile
      */
-    public List<Bulletin> getFilteredByProfile() {
+    public Collection<Bulletin> getFilteredByProfile() {
         return ((BulletinModeratorDao) mDataAccess).getFilteredByProfile();
     }
 
@@ -114,7 +115,7 @@ public class BulletinBoardModeratorPresenter extends BasePresenter {
      *
      * @return list of bulletins filtered by User subdivision
      */
-    public List<Bulletin> getFilteredBySubdivision() {
+    public Collection<Bulletin> getFilteredBySubdivision() {
         return ((BulletinModeratorDao) mDataAccess).getFilteredBySubdiv();
     }
 
@@ -123,7 +124,7 @@ public class BulletinBoardModeratorPresenter extends BasePresenter {
      *
      * @return list of bulletins filtered by date
      */
-    public List<Bulletin> getFilteredByDate() {
+    public Collection<Bulletin> getFilteredByDate() {
         return ((BulletinModeratorDao) mDataAccess).getNotExpired();
     }
 
@@ -132,7 +133,7 @@ public class BulletinBoardModeratorPresenter extends BasePresenter {
      *
      * @return list of deleted bulletins
      */
-    public List<Bulletin> getDeletedBulletins() {
+    public Collection<Bulletin> getDeletedBulletins() {
         return ((BulletinModeratorDao) mDataAccess).getDeleted();
     }
 
@@ -142,18 +143,11 @@ public class BulletinBoardModeratorPresenter extends BasePresenter {
      * @param query request that filters list
      * @return filtered list
      */
-    public List<Bulletin> filterData(List<Bulletin> list, String query) {
+    public List<Bulletin> filterData(Collection<Bulletin> list, String query) {
         query = query.toLowerCase();
         final List<Bulletin> filteredList = new ArrayList<>();
 
         filteredList.addAll(filterBulletins(list, isMatchesQuerySubject(query)));
-
-//        for (Bulletin b : list) {
-//            final String text = b.getSubject().toLowerCase();
-//            if (text.contains(query)) {
-//                filteredList.add(b);
-//            }
-//        }
         return filteredList;
     }
 

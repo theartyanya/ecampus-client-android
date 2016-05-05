@@ -35,7 +35,7 @@ public class BulletinDao implements IDataAccessObject<Bulletin> {
     private Set<Bulletin> mBySubdivision = new LinkedHashSet<>();
 
     @Override
-    public Set<Bulletin> getData() {
+    public Collection<Bulletin> getData() {
         return mAll;
     }
 
@@ -72,7 +72,7 @@ public class BulletinDao implements IDataAccessObject<Bulletin> {
      *
      * @return list of bulletins.
      */
-    public Set<Bulletin> getFilteredByProfile() {
+    public Collection<Bulletin> getFilteredByProfile() {
         return mByProfile;
     }
 
@@ -81,7 +81,7 @@ public class BulletinDao implements IDataAccessObject<Bulletin> {
      *
      * @return list of bulletins.
      */
-    public Set<Bulletin> getFilteredBySubdiv() {
+    public Collection<Bulletin> getFilteredBySubdiv() {
         return mBySubdivision;
     }
 }
