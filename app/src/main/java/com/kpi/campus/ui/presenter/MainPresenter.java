@@ -96,12 +96,12 @@ public class MainPresenter extends BasePresenter {
         if(!mIsUserLogged){
             mNavigator.startLoginActivity();
         } else {
-            setTokenValue();
-            setUserValues();
+            getTokenValue();
+            getUserValues();
         }
     }
 
-    private void setUserValues() {
+    private void getUserValues() {
         User user = User.getInstance();
         user.id = mPreference.getUserId();
         user.name = mPreference.getUserName();
@@ -110,7 +110,7 @@ public class MainPresenter extends BasePresenter {
         user.isBulletinBoardModerator = mPreference.getIsUserBbModerator();
     }
 
-    private void setTokenValue() {
+    private void getTokenValue() {
         User.getInstance().token = mPreference.getToken();
     }
 

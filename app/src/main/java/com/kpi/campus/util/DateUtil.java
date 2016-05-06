@@ -10,15 +10,10 @@ import java.util.Locale;
  * Created by Administrator on 29.03.2016.
  */
 public class DateUtil {
-
     /**
      * format of the date
      */
-    private static String FORMAT = "dd/MM/yyyy";
-    /**
-     * inverse format of the date
-     */
-    public static String INVERSE_FORMAT = "yyyy-MM-dd";
+    public static String FORMAT = "yyyy-MM-dd";
 
     /**
      * Get current date in specified format

@@ -1,6 +1,6 @@
 package com.kpi.campus.model.dao;
 
-import java.util.List;
+import java.util.Collection;
 
 /**
  * Provides general interface to the specific data access object of the model.
@@ -14,20 +14,13 @@ public interface IDataAccessObject<T> {
      * Get data.
      * @return list of data.
      */
-    List<T> getData();
+    Collection<T> getData();
 
     /**
      * Set data.
      * @param data has to be persisted.
      */
-    void setData(List<T> data);
-
-    /**
-     * Get specific object from list of data.
-     * @param number
-     * @return specific object.
-     */
-    T get(int number);
+    void setData(Collection<T> data);
 
     /**
      * Update specific object.

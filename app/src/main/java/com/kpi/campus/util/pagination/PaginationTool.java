@@ -21,7 +21,8 @@ import rx.subscriptions.Subscriptions;
  */
 public class PaginationTool<T> {
 
-    // for first start of items loading then on RecyclerView there are not items and no scrolling
+    // for first start of items loading then on RecyclerView there are not
+    // items and no scrolling
     private static final int EMPTY_LIST_ITEMS_COUNT = 0;
     // default limit for requests
     private static final int DEFAULT_LIMIT = 100;
@@ -43,20 +44,31 @@ public class PaginationTool<T> {
         return getScrollObservable(recyclerView, limit, emptyListCount)
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .distinctUntilChanged()
-                .observeOn(Schedulers.from(BackgroundExecutor.getSafeBackgroundExecutor()))
-                .switchMap(lastId -> getPagingObservable(pagingListener, pagingListener.onNextPage(lastId), startNumberOfRetryAttempt, lastId, retryCount));
+                .observeOn(Schedulers.from(BackgroundExecutor
+                        .getSafeBackgroundExecutor()))
+                .switchMap(lastId -> getPagingObservable(pagingListener,
+                        pagingListener.onNextPage(lastId),
+                        startNumberOfRetryAttempt, lastId, retryCount));
     }
 
-    private Observable<Integer> getScrollObservable(RecyclerView recyclerView, int limit, int emptyListCount) {
+    private Observable<Integer> getScrollObservable(RecyclerView
+                                                            recyclerView, int
+            limit, int emptyListCount) {
         return Observable.create(subscriber -> {
-            final RecyclerView.OnScrollListener sl = new RecyclerView.OnScrollListener() {
+            final RecyclerView.OnScrollListener sl = new RecyclerView
+                    .OnScrollListener() {
                 @Override
-                public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                public void onScrolled(RecyclerView recyclerView, int dx, int
+                        dy) {
                     if (!subscriber.isUnsubscribed()) {
                         int position = getLastVisibleItemPosition(recyclerView);
-                        int updatePosition = recyclerView.getAdapter().getItemCount() - 1 - (limit / 2);
+                        int updatePosition = recyclerView.getAdapter()
+                                .getItemCount() - 1 - (limit / 2);
                         if (position >= updatePosition) {
-                            //int offset = emptyListCountPlusToOffset ? recyclerView.getAdapter().getItemCount() : recyclerView.getAdapter().getItemCount() - emptyListCount;
+                            //int offset = emptyListCountPlusToOffset ?
+                            // recyclerView.getAdapter().getItemCount() :
+                            // recyclerView.getAdapter().getItemCount() -
+                            // emptyListCount;
                             int lastId = getLastId(recyclerView);
                             subscriber.onNext(lastId);
                         }
@@ -64,9 +76,12 @@ public class PaginationTool<T> {
                 }
             };
             recyclerView.addOnScrollListener(sl);
-            subscriber.add(Subscriptions.create(() -> recyclerView.removeOnScrollListener(sl)));
+            subscriber.add(Subscriptions.create(() -> recyclerView
+                    .removeOnScrollListener(sl)));
             if (recyclerView.getAdapter().getItemCount() == emptyListCount) {
-                //int offset = emptyListCountPlusToOffset ? recyclerView.getAdapter().getItemCount() : recyclerView.getAdapter().getItemCount() - emptyListCount;
+                //int offset = emptyListCountPlusToOffset ? recyclerView
+                // .getAdapter().getItemCount() : recyclerView.getAdapter()
+                // .getItemCount() - emptyListCount;
                 int lastId = getLastId(recyclerView);
                 subscriber.onNext(lastId);
             }
@@ -74,7 +89,8 @@ public class PaginationTool<T> {
     }
 
     private int getLastId(RecyclerView recyclerView) {
-        PagingRecyclerAdapter adapter = (PagingRecyclerAdapter) recyclerView.getAdapter();
+        PagingRecyclerAdapter adapter = (PagingRecyclerAdapter) recyclerView
+                .getAdapter();
         int lastId;
         if (adapter.getItemCount() == 0) {
             lastId = -1;
@@ -86,34 +102,52 @@ public class PaginationTool<T> {
 
     private int getLastVisibleItemPosition(RecyclerView recyclerView) {
         Class recyclerViewLMClass = recyclerView.getLayoutManager().getClass();
-        if (recyclerViewLMClass == LinearLayoutManager.class || LinearLayoutManager.class.isAssignableFrom(recyclerViewLMClass)) {
-            LinearLayoutManager linearLayoutManager = (LinearLayoutManager)recyclerView.getLayoutManager();
+        if (recyclerViewLMClass == LinearLayoutManager.class ||
+                LinearLayoutManager.class.isAssignableFrom
+                        (recyclerViewLMClass)) {
+            LinearLayoutManager linearLayoutManager = (LinearLayoutManager)
+                    recyclerView.getLayoutManager();
             return linearLayoutManager.findLastVisibleItemPosition();
-        } else if (recyclerViewLMClass == StaggeredGridLayoutManager.class || StaggeredGridLayoutManager.class.isAssignableFrom(recyclerViewLMClass)) {
-            StaggeredGridLayoutManager staggeredGridLayoutManager = (StaggeredGridLayoutManager)recyclerView.getLayoutManager();
-            int[] into = staggeredGridLayoutManager.findLastVisibleItemPositions(null);
+        } else if (recyclerViewLMClass == StaggeredGridLayoutManager.class ||
+                StaggeredGridLayoutManager.class.isAssignableFrom
+                        (recyclerViewLMClass)) {
+            StaggeredGridLayoutManager staggeredGridLayoutManager =
+                    (StaggeredGridLayoutManager) recyclerView
+                            .getLayoutManager();
+            int[] into = staggeredGridLayoutManager
+                    .findLastVisibleItemPositions(null);
             List<Integer> intoList = new ArrayList<>();
             for (int i : into) {
                 intoList.add(i);
             }
             return Collections.max(intoList);
         }
-        throw new PagingException("Unknown LayoutManager class: " + recyclerViewLMClass.toString());
+        throw new PagingException("Unknown LayoutManager class: " +
+                recyclerViewLMClass.toString());
     }
 
-    private Observable getPagingObservable(PagingListener<T> listener, Observable<T> observable, int numberOfAttemptToRetry, int lastId, int retryCount) {
+    private Observable getPagingObservable(PagingListener<T> listener,
+                                           Observable<T> observable, int
+                                                   numberOfAttemptToRetry,
+                                           int lastId, int retryCount) {
         return observable.onErrorResumeNext(throwable -> {
             // retry to load new data portion if error occurred
             if (numberOfAttemptToRetry < retryCount) {
                 int attemptToRetryInc = numberOfAttemptToRetry + 1;
-                return getPagingObservable(listener, listener.onNextPage(lastId), attemptToRetryInc, lastId, retryCount);
+                return getPagingObservable(listener, listener.onNextPage
+                        (lastId), attemptToRetryInc, lastId, retryCount);
             } else {
-                return Observable.error(new PagingException("Exception while downloading has occurred. Check the url is valid, internet connection is available etc."));
+                return Observable.error(new PagingException("Exception while " +
+                        "downloading has occurred. Check the url is valid, " +
+                        "internet connection is available etc."));
             }
         });
     }
 
-    public static <T> Builder<T> buildPagingObservable(RecyclerView recyclerView, PagingListener<T> pagingListener) {
+    public static <T> Builder<T> buildPagingObservable(RecyclerView
+                                                               recyclerView,
+                                                       PagingListener<T>
+                                                               pagingListener) {
         return new Builder<>(recyclerView, pagingListener);
     }
 
@@ -126,7 +160,8 @@ public class PaginationTool<T> {
         private int retryCount = MAX_ATTEMPTS_TO_RETRY_LOADING;
         private boolean emptyListCountPlusToOffset = false;
 
-        private Builder(RecyclerView recyclerView, PagingListener<T> pagingListener) {
+        private Builder(RecyclerView recyclerView, PagingListener<T>
+                pagingListener) {
             if (recyclerView == null) {
                 throw new PagingException("null recyclerView");
             }
@@ -150,7 +185,8 @@ public class PaginationTool<T> {
 
         public Builder<T> setEmptyListCount(int emptyListCount) {
             if (emptyListCount < 0) {
-                throw new PagingException("emptyListCount must be not less then 0");
+                throw new PagingException("emptyListCount must be not less " +
+                        "then 0");
             }
             this.emptyListCount = emptyListCount;
             return this;
@@ -176,7 +212,8 @@ public class PaginationTool<T> {
             paginationTool.limit = limit;
             paginationTool.emptyListCount = emptyListCount;
             paginationTool.retryCount = retryCount;
-            paginationTool.emptyListCountPlusToOffset = emptyListCountPlusToOffset;
+            paginationTool.emptyListCountPlusToOffset =
+                    emptyListCountPlusToOffset;
             return paginationTool;
         }
     }

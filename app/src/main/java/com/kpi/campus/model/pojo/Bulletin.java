@@ -308,4 +308,20 @@ public class Bulletin implements Parcelable {
     public void setRecipientList(List<Recipient> recipientList) {
         this.recipientList = recipientList;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Bulletin bulletin = (Bulletin) o;
+
+        return !(id != null ? !id.equals(bulletin.id) : bulletin.id != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
+    }
 }

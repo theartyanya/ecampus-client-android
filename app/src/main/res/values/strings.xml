@@ -17,7 +17,7 @@
     <string name="logout_confirmation">Ви дійсно бажаєте розлогінитись?</string>
     <string name="yes">Так</string>
     <string name="no">Ні</string>
-    
+
     <string name="profileName">Профіль</string>
     <string name="subsection">Підрозділ</string>
     <string name="group">Група</string>
@@ -46,7 +46,7 @@
     <string name="bulletin_is_added">Оголошення створено</string>
     <string name="unauthorized">Виконайте авторизацію</string>
     <string name="server_error">Помилка сервера</string>
-    <string name="bad_recipient">Невірний формат отримувача</string>
+    <string name="bad_bulletin">Невірний формат оголошення або одержувача</string>
     <string name="clear">Очищено</string>
     <string name="bulletin_is_modified">Зміни виконані</string>
     <string name="empty_bulletins_list">Немає оголошень</string>
