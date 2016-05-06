@@ -43,7 +43,7 @@ public class DatePickerFragment extends DialogFragment implements
     @Override
     public void onDateSet(DatePicker datePicker, int year, int month, int day) {
         SimpleDateFormat dateFormatter = new SimpleDateFormat(DateUtil
-                .INVERSE_FORMAT,
+                .FORMAT,
                 Locale.GERMAN);
         Calendar newDate = Calendar.getInstance();
         newDate.set(year, month, day);

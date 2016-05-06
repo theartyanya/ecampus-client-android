@@ -162,7 +162,7 @@ public class EditBulletinActivity extends BaseActivity implements
                         .bulletin_is_modified), this);
                 break;
             case 400:
-                ToastUtil.showShortMessage(getString(R.string.bad_recipient),
+                ToastUtil.showShortMessage(getString(R.string.bad_bulletin),
                         this);
                 break;
             case 401:
@@ -365,7 +365,10 @@ public class EditBulletinActivity extends BaseActivity implements
     private void setSubdivisionSpinner(List<Item> list) {
         ArrayAdapter<Item> adapter = new ItemSpinnerAdapter(this, R.layout
                 .spinner_item, R.layout.spinner_dropdown_item, list);
-        mSpinnerSubdivision.setAdapter(adapter);
+        mSpinnerSubdivision.setAdapter(new NothingSelectedAdapter(
+                adapter,
+                R.layout.spinner_item_nothing_selected_subdiv,
+                this));
         mSpinnerSubdivision.setOnItemSelectedListener(new AdapterView
                 .OnItemSelectedListener() {
             @Override

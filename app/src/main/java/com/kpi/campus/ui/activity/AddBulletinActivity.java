@@ -363,7 +363,7 @@ public class AddBulletinActivity extends BaseActivity implements
         tv.setText(user.name);
         tv = (TextView) findViewById(R.id.text_view_actuality_value);
         tv.setText(R.string.yes);
-        String currentDate = DateUtil.getCurrentDate(DateUtil.INVERSE_FORMAT);
+        String currentDate = DateUtil.getCurrentDate(DateUtil.FORMAT);
         mCreateDate.setText(currentDate);
         tv = (TextView) findViewById(R.id
                 .text_view_change_actuality_date_value);
