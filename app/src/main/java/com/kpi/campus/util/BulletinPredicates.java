@@ -17,9 +17,9 @@ public class BulletinPredicates {
 
     public static Predicate<Bulletin> isNotExpired(String date) {
         Date currentDate = DateUtil.convert(date);
-        return p -> (currentDate != null && currentDate.after(DateUtil.convert
+        return p -> (currentDate != null && !currentDate.before(DateUtil.convert
                 (p.getDateStart()))) &&
-                currentDate.before(DateUtil.convert(p.getDateStop()));
+                !currentDate.after(DateUtil.convert(p.getDateStop()));
     }
 
     public static Predicate<Bulletin> isMatchesProfile(List<Integer>
@@ -35,7 +35,7 @@ public class BulletinPredicates {
     }
 
     public static Predicate<Bulletin> isDeleted() {
-        return p -> !p.getActuality();
+        return p -> (p.getActuality()==false);
     }
 
     public static Predicate<Bulletin> isMatchesQuerySubject(String query) {

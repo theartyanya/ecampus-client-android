@@ -59,16 +59,16 @@ public class BulletinModeratorDao implements IDataAccessObject<Bulletin> {
 
         if (userProfile != null && userSubdivision != null) {
             List<Integer> ids = getIdsCollection(userProfile);
-            mByProfile.addAll(filterBulletins(mAll, isMatchesProfile
+            mByProfile.addAll(filterBulletins(data, isMatchesProfile
                     (ids)));
 
             ids = getIdsCollection(userSubdivision);
-            mBySubdiv.addAll(filterBulletins(mAll, isMatchesSubdivision
+            mBySubdiv.addAll(filterBulletins(data, isMatchesSubdivision
                     (ids)));
         }
-        mNotExpired.addAll(filterBulletins(mAll, isNotExpired(DateUtil
+        mNotExpired.addAll(filterBulletins(data, isNotExpired(DateUtil
                 .getCurrentDate())));
-        mDeleted.addAll(filterBulletins(mAll, isDeleted()));
+        mDeleted.addAll(filterBulletins(data, isDeleted()));
     }
 
     @Override
