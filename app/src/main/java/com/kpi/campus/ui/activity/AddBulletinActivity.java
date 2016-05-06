@@ -176,7 +176,7 @@ public class AddBulletinActivity extends BaseActivity implements
                         .bulletin_is_added), this);
                 break;
             case 400:
-                ToastUtil.showShortMessage(getString(R.string.bad_recipient),
+                ToastUtil.showShortMessage(getString(R.string.bad_bulletin),
                         this);
                 break;
             case 401:
@@ -243,7 +243,8 @@ public class AddBulletinActivity extends BaseActivity implements
                 mAdapter.addItem(recipient);
                 updateBadgeCounter(mAdapter.getItemCount());
             } else {
-                ToastUtil.showShortMessage(getString(R.string.recipient_already_exists), this);
+                ToastUtil.showShortMessage(getString(R.string
+                        .recipient_already_exists), this);
             }
         } else {
             ToastUtil.showError(getString(R.string.wrong_recipient), this);
@@ -347,6 +348,8 @@ public class AddBulletinActivity extends BaseActivity implements
                 case R.id.rb_group:
                     setVisibility(View.GONE, mLayoutProfile);
                     setVisibility(View.VISIBLE, mLayoutGroup);
+                    setVisibility(View.GONE, findViewById(R.id.image_view_subdiv));
+                    setVisibility(View.GONE, findViewById(R.id.spinner_subdivision));
                     break;
                 default:
                     break;
@@ -389,7 +392,7 @@ public class AddBulletinActivity extends BaseActivity implements
         } else if (mRbGroup.isChecked()) {
             Item group = (Item) mSpinnerGroup.getSelectedItem();
             if (group == null) return null;
-            r = new Recipient(subdivId, subdivName, null, null, Integer
+            r = new Recipient(null, null, null, null, Integer
                     .toString(group.getId()), group.getName());
         }
         return r;
