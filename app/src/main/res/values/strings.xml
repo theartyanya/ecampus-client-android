@@ -50,8 +50,9 @@
     <string name="clear">Очищено</string>
     <string name="bulletin_is_modified">Зміни виконані</string>
     <string name="empty_bulletins_list">Немає оголошень</string>
-    <string name="recipient_already_exists"/>
-    <string name="wrong_recipient"/>
+    <string name="recipient_already_exists">Такий одержувач вже існує</string>
+    <string name="wrong_recipient">Невірний формат одержувача</string>
     <string name="login_is_required">Логін є обов\'язковим</string>
     <string name="password_is_required">Пароль є обов\'язковим</string>
+    <string name="recipient_must_be_added"/>
 </resources>
