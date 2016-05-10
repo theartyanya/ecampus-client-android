@@ -72,7 +72,7 @@ public class LoginActivity extends BaseActivity implements LoginPresenter
     }
 
     @Override
-    public void showLoginButton(boolean shouldShow) {
+    public void activateLoginButton(boolean shouldShow) {
         mBtnLogin.setActivated(shouldShow);
     }
 

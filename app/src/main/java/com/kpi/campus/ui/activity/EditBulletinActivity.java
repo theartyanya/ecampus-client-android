@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Point;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.NavUtils;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
@@ -118,7 +119,8 @@ public class EditBulletinActivity extends BaseActivity implements
             case R.id.action_clear:
                 break;
             case R.id.action_done:
-                mPresenter.onStartRequest(() -> mPresenter.editBulletin());
+                if (validateInput())
+                    mPresenter.onStartRequest(() -> mPresenter.editBulletin());
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -401,5 +403,39 @@ public class EditBulletinActivity extends BaseActivity implements
                 adapter,
                 R.layout.spinner_item_nothing_selected_group,
                 this));
+    }
+
+    /**
+     * Validate user input
+     *
+     * @return
+     */
+    private boolean validateInput() {
+        boolean isValid = true;
+        if (mAdapter.getItemCount() <= 0) {
+            ToastUtil.showShortMessage(getString(R.string
+                    .recipient_must_be_added), this);
+            isValid = false;
+        }
+        return (isValid &&
+                validateField((TextInputLayout) findViewById(R.id
+                        .input_theme), mSubject.getText().toString()) &&
+                validateField((TextInputLayout) findViewById(R.id
+                        .input_text), mText.getText().toString()) &&
+                validateField((TextInputLayout) findViewById(R.id
+                        .input_start_period), mStartDate.getText().toString())
+                && validateField((TextInputLayout) findViewById(R.id
+                .input_end_period), mEndDate.getText().toString())
+        );
+    }
+
+    private boolean validateField(TextInputLayout inputLayout, String
+            inputField) {
+        if (inputField.isEmpty()) {
+            inputLayout.setError(getString(R.string.required_field));
+            return false;
+        } else
+            inputLayout.setError(null);
+        return true;
     }
 }

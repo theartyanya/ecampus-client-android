@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
@@ -31,11 +32,13 @@
                 android:background="@color/colorDivider"/>
 
             <android.support.design.widget.TextInputLayout
+                android:id="@+id/input_theme"
                 style="@style/Margin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                android:layout_marginTop="8dp">
+                android:layout_marginTop="8dp"
+                app:errorEnabled="true">
 
                 <EditText
                     android:id="@+id/edit_text_bulletin_theme"
@@ -49,11 +52,12 @@
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
+                android:id="@+id/input_text"
                 style="@style/Margin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:layout_marginTop="8dp">
+                android:layout_marginTop="8dp"
+                app:errorEnabled="true">
 
                 <EditText
                     android:id="@+id/edit_text_bulletin_text"
@@ -72,31 +76,36 @@
                 style="@style/Margin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:orientation="horizontal">
 
                 <RelativeLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
                     android:layout_weight="1.0">
 
-                    <TextView
-                        android:id="@+id/text_view_start_period"
-                        android:layout_width="wrap_content"
+                    <android.support.design.widget.TextInputLayout
+                        android:id="@+id/input_start_period"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="4dp"
-                        android:layout_weight="1.0"
-                        android:background="@null"
-                        android:hint="Початок показу"
-                        android:textColorHint="@color/colorSecondaryText"
-                        android:textSize="12sp"/>
+                        app:errorEnabled="true">
+
+                        <TextView
+                            android:id="@+id/text_view_start_period"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1.0"
+                            android:background="@null"
+                            android:hint="Початок показу"
+                            android:textColorHint="@color/colorSecondaryText"
+                            android:textSize="12sp"/>
+                    </android.support.design.widget.TextInputLayout>
 
                     <TextView
                         android:id="@+id/text_view_author"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/text_view_start_period"
+                        android:layout_below="@id/input_start_period"
                         android:layout_marginTop="8dp"
                         android:text="@string/bulletin_author"
                         android:textColor="@color/colorSecondaryText"
@@ -106,7 +115,7 @@
                         android:id="@+id/text_view_author_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/text_view_start_period"
+                        android:layout_below="@id/input_start_period"
                         android:layout_marginTop="8dp"
                         android:layout_toEndOf="@id/text_view_author"
                         android:text="test"
@@ -139,25 +148,31 @@
                 <RelativeLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
                     android:layout_weight="1.0">
 
-                    <TextView
-                        android:id="@+id/text_view_end_period"
-                        android:layout_width="wrap_content"
+                    <android.support.design.widget.TextInputLayout
+                        android:id="@+id/input_end_period"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="4dp"
-                        android:layout_weight="1.0"
-                        android:background="@null"
-                        android:hint="Кінець показу"
-                        android:textColorHint="@color/colorSecondaryText"
-                        android:textSize="12sp"/>
+                        app:errorEnabled="true">
+
+                        <TextView
+                            android:id="@+id/text_view_end_period"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1.0"
+                            android:background="@null"
+                            android:hint="Кінець показу"
+                            android:textColorHint="@color/colorSecondaryText"
+                            android:textSize="12sp"/>
+                    </android.support.design.widget.TextInputLayout>
 
                     <TextView
                         android:id="@+id/text_view_creation_date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/text_view_end_period"
+                        android:layout_below="@id/input_end_period"
                         android:layout_marginTop="8dp"
                         android:text="@string/bulletin_creation_date"
                         android:textColor="@color/colorSecondaryText"
@@ -167,7 +182,7 @@
                         android:id="@+id/text_view_creation_date_value"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/text_view_end_period"
+                        android:layout_below="@id/input_end_period"
                         android:layout_marginTop="8dp"
                         android:layout_toEndOf="@id/text_view_creation_date"
                         android:text="20.01.2015"
@@ -304,8 +319,8 @@
                     android:id="@+id/layout_group"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    android:layout_marginBottom="8dp">
+                    android:layout_marginBottom="8dp"
+                    android:visibility="gone">
 
                     <ImageView
                         android:id="@+id/image_view_group"

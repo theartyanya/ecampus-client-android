@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Point;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.NavUtils;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
@@ -132,11 +133,8 @@ public class AddBulletinActivity extends BaseActivity implements
                 ToastUtil.showShortMessage(getString(R.string.clear), this);
                 break;
             case R.id.action_done:
-                if (mAdapter.getItemCount() > 0)
+                if (validateInput())
                     mPresenter.onStartRequest(() -> mPresenter.addBulletin());
-                else
-                    ToastUtil.showShortMessage(getString(R.string
-                            .recipient_must_be_added), this);
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -427,5 +425,39 @@ public class AddBulletinActivity extends BaseActivity implements
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recView.setLayoutManager(layoutManager);
         recView.setAdapter(mAdapter);
+    }
+
+    /**
+     * Validate user input
+     *
+     * @return
+     */
+    private boolean validateInput() {
+        boolean isValid = true;
+        if (mAdapter.getItemCount() <= 0) {
+            ToastUtil.showShortMessage(getString(R.string
+                    .recipient_must_be_added), this);
+            isValid = false;
+        }
+        return (isValid &&
+                validateField((TextInputLayout) findViewById(R.id
+                        .input_theme), mSubject.getText().toString()) &&
+                validateField((TextInputLayout) findViewById(R.id
+                        .input_text), mText.getText().toString()) &&
+                validateField((TextInputLayout) findViewById(R.id
+                        .input_start_period), mStartDate.getText().toString())
+                && validateField((TextInputLayout) findViewById(R.id
+                .input_end_period), mEndDate.getText().toString())
+        );
+    }
+
+    private boolean validateField(TextInputLayout inputLayout, String
+            inputField) {
+        if (inputField.isEmpty()) {
+            inputLayout.setError(getString(R.string.required_field));
+            return false;
+        } else
+            inputLayout.setError(null);
+        return true;
     }
 }

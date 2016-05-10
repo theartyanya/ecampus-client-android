@@ -55,4 +55,5 @@
     <string name="login_is_required">Логін є обов\'язковим</string>
     <string name="password_is_required">Пароль є обов\'язковим</string>
     <string name="recipient_must_be_added">Додайте одержувача</string>
+    <string name="required_field">Обов\'язкове поле!</string>
 </resources>

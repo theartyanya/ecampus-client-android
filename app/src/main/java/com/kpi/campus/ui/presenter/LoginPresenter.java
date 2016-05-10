@@ -47,8 +47,38 @@ public class LoginPresenter extends BasePresenter {
      */
     public void login(String login, String password) {
         mView.showLoginProgressDialog();
-        mView.showLoginButton(false);
+        mView.activateLoginButton(false);
         validateUser(login, password);
+    }
+
+    /**
+     * Set views to "initial (after login) state".
+     * If server returns success, start MainActivity.
+     * If not, launch login failed logic.
+     *
+     * @param baseResponse response from loader
+     */
+    public void setLoaderResult(BaseResponse baseResponse) {
+        mView.dismissProgressDialog();
+        mView.activateLoginButton(true);
+
+        Token answer = baseResponse.getTypedAnswer();
+        if (answer != null) {
+            onLoginSuccess(answer.getAccessToken());
+        } else {
+            mView.onLoginFailed(baseResponse.getRequestResult());
+        }
+    }
+
+    /**
+     * Save token to User instance for short storing and to the preferences
+     * for long storing
+     *
+     * @param token
+     */
+    public void saveToken(String token) {
+        saveTokenToUserModel(token);
+        saveStateToPref(token);
     }
 
     /**
@@ -64,34 +94,11 @@ public class LoginPresenter extends BasePresenter {
         mView.initLoader(args);
     }
 
-    /**
-     * Set views to "initial (after login) state".
-     * If server returns success, start MainActivity.
-     * If not, launch login failed logic.
-     *
-     * @param baseResponse response from loader
-     */
-    public void setLoaderResult(BaseResponse baseResponse) {
-        mView.dismissProgressDialog();
-        mView.showLoginButton(true);
-
-        Token answer = baseResponse.getTypedAnswer();
-        if(answer != null) {
-            onLoginSuccess(answer.getAccessToken());
-        } else {
-            mView.onLoginFailed(baseResponse.getRequestResult());
-        }
-    }
 
     private void onLoginSuccess(String token) {
         saveToken(token);
         loadInfoAboutUser();
         mNavigator.startMainActivity();
-    }
-
-    public void saveToken(String token) {
-        saveTokenToUserModel(token);
-        saveStateToPref(token);
     }
 
     /**
@@ -115,7 +122,7 @@ public class LoginPresenter extends BasePresenter {
 
         void dismissProgressDialog();
 
-        void showLoginButton(boolean shouldShow);
+        void activateLoginButton(boolean shouldShow);
 
         void onLoginFailed(RequestResult result);
 
