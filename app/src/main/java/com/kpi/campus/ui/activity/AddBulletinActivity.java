@@ -132,7 +132,11 @@ public class AddBulletinActivity extends BaseActivity implements
                 ToastUtil.showShortMessage(getString(R.string.clear), this);
                 break;
             case R.id.action_done:
-                mPresenter.onStartRequest(() -> mPresenter.addBulletin());
+                if (mAdapter.getItemCount() > 0)
+                    mPresenter.onStartRequest(() -> mPresenter.addBulletin());
+                else
+                    ToastUtil.showShortMessage(getString(R.string
+                            .recipient_must_be_added), this);
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -261,7 +265,7 @@ public class AddBulletinActivity extends BaseActivity implements
         final Point size = new Point();
         display.getSize(size);
         PopupWindow popWindow = new PopupWindow(inflatedView, size.x - 50,
-                size.y - 600, true);
+                size.y - 900, true);
         popWindow.setBackgroundDrawable(ContextCompat.getDrawable
                 (getApplicationContext(), R.drawable.popup_bg));
         popWindow.setFocusable(true);
@@ -348,8 +352,10 @@ public class AddBulletinActivity extends BaseActivity implements
                 case R.id.rb_group:
                     setVisibility(View.GONE, mLayoutProfile);
                     setVisibility(View.VISIBLE, mLayoutGroup);
-                    setVisibility(View.GONE, findViewById(R.id.image_view_subdiv));
-                    setVisibility(View.GONE, findViewById(R.id.spinner_subdivision));
+                    setVisibility(View.GONE, findViewById(R.id
+                            .image_view_subdiv));
+                    setVisibility(View.GONE, findViewById(R.id
+                            .spinner_subdivision));
                     break;
                 default:
                     break;

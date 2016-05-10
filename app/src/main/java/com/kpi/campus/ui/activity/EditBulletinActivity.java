@@ -240,7 +240,7 @@ public class EditBulletinActivity extends BaseActivity implements
         final Point size = new Point();
         display.getSize(size);
         PopupWindow popWindow = new PopupWindow(inflatedView, size.x - 50,
-                size.y - 600, true);
+                size.y - 900, true);
         popWindow.setBackgroundDrawable(ContextCompat.getDrawable
                 (getApplicationContext(), R.drawable.popup_bg));
         popWindow.setFocusable(true);
