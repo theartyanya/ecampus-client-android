@@ -13,6 +13,9 @@ public class Token {
     @SerializedName("access_token")
     private String mAccessToken;
 
+    @SerializedName("expires_in")
+    private int expiresIn;
+
     public Token() {
     }
 
@@ -22,6 +25,10 @@ public class Token {
 
     public String getAccessToken() {
         return mAccessToken;
+    }
+
+    public int getExpiresIn() {
+        return expiresIn;
     }
 
     public void setAccessToken(String accessToken) {

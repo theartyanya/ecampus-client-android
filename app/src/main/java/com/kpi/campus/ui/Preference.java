@@ -8,10 +8,13 @@ import com.google.gson.Gson;
 import com.kpi.campus.Config;
 import com.kpi.campus.di.ActivityContext;
 import com.kpi.campus.model.pojo.Item;
+import com.kpi.campus.model.pojo.Token;
 import com.kpi.campus.model.pojo.User;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -29,18 +32,19 @@ public class Preference {
     @Inject
     public Preference(@ActivityContext Context context) {
         mActivityContext = (Activity) context;
-        mSharedPrefs = mActivityContext.getSharedPreferences(Config.SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        mSharedPrefs = mActivityContext.getSharedPreferences(Config
+                .SHARED_PREF_NAME, Context.MODE_PRIVATE);
     }
 
     /**
      * Save login values to the SharedPreferences.
      */
-    public void saveLoginInfo(String tokenValue) {
+    public void saveLoginInfo(Token token) {
         SharedPreferences.Editor editor = mSharedPrefs.edit();
-
         //Adding values to editor
         editor.putBoolean(Config.IS_LOGGED_SHARED_PREF, true);
-        editor.putString(Config.TOKEN_SHARED_PREF, tokenValue);
+        editor.putString(Config.TOKEN_SHARED_PREF, token.getAccessToken());
+        editor.putLong(Config.EXPIRES_IN_SHARED_PREF, expiresTime(token));
 
         //Saving values to editor
         editor.commit();
@@ -67,6 +71,7 @@ public class Preference {
 
     /**
      * Save information about user to the SharedPreferences.
+     *
      * @param user
      */
     public void saveUserInfo(User user) {
@@ -75,7 +80,8 @@ public class Preference {
         editor.putString(Config.USER_NAME, user.name);
         Gson gson = new Gson();
         editor.putString(Config.USER_POSITION, gson.toJson(user.position));
-        editor.putString(Config.USER_SUBDIVISION, gson.toJson(user.subdivision));
+        editor.putString(Config.USER_SUBDIVISION, gson.toJson(user
+                .subdivision));
         editor.putBoolean(Config.USER_IS_BB_MODERATOR, user
                 .isBulletinBoardModerator);
         editor.commit();
@@ -83,6 +89,7 @@ public class Preference {
 
     /**
      * Get user's id.
+     *
      * @return id
      */
     public String getUserId() {
@@ -91,6 +98,7 @@ public class Preference {
 
     /**
      * Get user's name.
+     *
      * @return name.
      */
     public String getUserName() {
@@ -99,28 +107,34 @@ public class Preference {
 
     /**
      * Get user positions.
+     *
      * @return list of user's positions.
      */
     public List<Item> getUserPositions() {
         String jsonPositions = mSharedPrefs.getString(Config.USER_POSITION, "");
         Gson gson = new Gson();
         Item[] positions = gson.fromJson(jsonPositions, Item[].class);
-        return (positions != null) ? new ArrayList(Arrays.asList(positions)) : new ArrayList<>();
+        return (positions != null) ? new ArrayList(Arrays.asList(positions))
+                : new ArrayList<>();
     }
 
     /**
      * Get user subdivisions.
+     *
      * @return list of user's subdivisions.
      */
     public List<Item> getUserSubdivisions() {
-        String jsonPositions = mSharedPrefs.getString(Config.USER_SUBDIVISION, "");
+        String jsonPositions = mSharedPrefs.getString(Config
+                .USER_SUBDIVISION, "");
         Gson gson = new Gson();
         Item[] subdiv = gson.fromJson(jsonPositions, Item[].class);
-        return (subdiv != null) ? new ArrayList(Arrays.asList(subdiv)) : new ArrayList<>();
+        return (subdiv != null) ? new ArrayList(Arrays.asList(subdiv)) : new
+                ArrayList<>();
     }
 
     /**
      * Get value whether user is moderator of Bulletin Board.
+     *
      * @return true - if user is moderator, false - otherwise.
      */
     public boolean getIsUserBbModerator() {
@@ -129,9 +143,33 @@ public class Preference {
 
     /**
      * Get authentication token.
+     *
      * @return token string.
      */
     public String getToken() {
         return mSharedPrefs.getString(Config.TOKEN_SHARED_PREF, "");
+    }
+
+    /**
+     * Get token expiration date in milliseconds from SharedPreferences.
+     *
+     * @return datetime in milliseconds
+     */
+    public Date getTokenExpirationDate() {
+        return new Date(mSharedPrefs.getLong(Config.EXPIRES_IN_SHARED_PREF, 0));
+    }
+
+    /**
+     * Compose token expiration time in milliseconds
+     *
+     * @param token
+     * @return expiration time in milliseconds
+     */
+    private long expiresTime(Token token) {
+        int seconds = token.getExpiresIn();
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.SECOND, seconds);
+        Date date = calendar.getTime();
+        return date.getTime();
     }
 }

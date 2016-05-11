@@ -64,7 +64,7 @@ public class LoginPresenter extends BasePresenter {
 
         Token answer = baseResponse.getTypedAnswer();
         if (answer != null) {
-            onLoginSuccess(answer.getAccessToken());
+            onLoginSuccess(answer);
         } else {
             mView.onLoginFailed(baseResponse.getRequestResult());
         }
@@ -76,8 +76,8 @@ public class LoginPresenter extends BasePresenter {
      *
      * @param token
      */
-    public void saveToken(String token) {
-        saveTokenToUserModel(token);
+    private void saveToken(Token token) {
+        User.getInstance().token = token.getAccessToken();
         saveStateToPref(token);
     }
 
@@ -95,7 +95,7 @@ public class LoginPresenter extends BasePresenter {
     }
 
 
-    private void onLoginSuccess(String token) {
+    private void onLoginSuccess(Token token) {
         saveToken(token);
         loadInfoAboutUser();
         mNavigator.startMainActivity();
@@ -104,12 +104,8 @@ public class LoginPresenter extends BasePresenter {
     /**
      * Save login values to SharedPreferences.
      */
-    private void saveStateToPref(String tokenValue) {
-        mPreference.saveLoginInfo(tokenValue);
-    }
-
-    private void saveTokenToUserModel(String token) {
-        User.getInstance().token = token;
+    private void saveStateToPref(Token token) {
+        mPreference.saveLoginInfo(token);
     }
 
     private void loadInfoAboutUser() {

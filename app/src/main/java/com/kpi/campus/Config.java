@@ -27,6 +27,10 @@ public class Config {
      * Used to store the token of current logged in user
      */
     public static final String TOKEN_SHARED_PREF = "token";
+    /**
+     * Used to store the token expiration time
+     */
+    public static final String EXPIRES_IN_SHARED_PREF = "token_expires_in";
 
     /**
      * Stores the boolean in SharedPreferences to track user is logged in or not

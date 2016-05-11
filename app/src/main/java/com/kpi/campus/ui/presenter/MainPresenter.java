@@ -11,13 +11,14 @@ import com.kpi.campus.ui.Navigator;
 import com.kpi.campus.ui.Preference;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
 
 /**
  * MainPresenter created to manage MainActivity.
- *
+ * <p>
  * Created by Administrator on 01.02.2016.
  */
 public class MainPresenter extends BasePresenter {
@@ -29,7 +30,8 @@ public class MainPresenter extends BasePresenter {
     private boolean mIsUserLogged = false;
 
     @Inject
-    public MainPresenter(Context context, Navigator navigator, Preference preference) {
+    public MainPresenter(Context context, Navigator navigator, Preference
+            preference) {
         mContext = context;
         mNavigator = navigator;
         mPreference = preference;
@@ -54,6 +56,9 @@ public class MainPresenter extends BasePresenter {
         }
     }
 
+    /**
+     * User logout
+     */
     public void logout() {
         mPreference.saveLogoutInfo();
 
@@ -61,9 +66,13 @@ public class MainPresenter extends BasePresenter {
         mNavigator.startLoginActivity();
     }
 
+    /**
+     * Get list of campus subsystems.
+     *
+     * @return subsystems
+     */
     public List<Subsystem> getData() {
         List<Subsystem> subsystems = new ArrayList<>();
-
         Resources res = getResources();
         String[] names = getSubsystemNames(res);
         TypedArray icons = getSubsystemIcon(res);
@@ -72,6 +81,21 @@ public class MainPresenter extends BasePresenter {
             subsystems.add(s);
         }
         return subsystems;
+    }
+
+    /**
+     * Check if user logged or not.
+     * If user if logged and auth token is not expired, start MainActivity.
+     * If not, redirect user to LoginActivity.
+     */
+    public void checkUserIsLogged() {
+        Date expDate = mPreference.getTokenExpirationDate();
+        Date currentDate = new Date();
+        mIsUserLogged = mPreference.getIsLogged();
+        if (mIsUserLogged && !currentDate.after(expDate))
+            getUserSesionValues();
+        else
+            mNavigator.startLoginActivity();
     }
 
     private String[] getSubsystemNames(Resources res) {
@@ -86,32 +110,14 @@ public class MainPresenter extends BasePresenter {
         return mContext.getResources();
     }
 
-    /**
-     * Check if user logged or not.
-     * If user if logged, start directly MainActivity.
-     * If not, leave LoginActivity (do nothing).
-     */
-    public void checkUserIsLogged() {
-        mIsUserLogged = mPreference.getIsLogged();
-        if(!mIsUserLogged){
-            mNavigator.startLoginActivity();
-        } else {
-            getTokenValue();
-            getUserValues();
-        }
-    }
-
-    private void getUserValues() {
+    private void getUserSesionValues() {
         User user = User.getInstance();
         user.id = mPreference.getUserId();
         user.name = mPreference.getUserName();
         user.position = mPreference.getUserPositions();
         user.subdivision = mPreference.getUserSubdivisions();
         user.isBulletinBoardModerator = mPreference.getIsUserBbModerator();
-    }
-
-    private void getTokenValue() {
-        User.getInstance().token = mPreference.getToken();
+        user.token = mPreference.getToken();
     }
 
     public interface IView {
