@@ -5,7 +5,7 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.os.Bundle;
 import android.widget.DatePicker;
-import android.widget.TextView;
+import android.widget.EditText;
 
 import com.kpi.campus.util.DateUtil;
 
@@ -22,10 +22,10 @@ import java.util.Locale;
 public class DatePickerFragment extends DialogFragment implements
         DatePickerDialog.OnDateSetListener {
 
-    TextView textView;
+    EditText view;
 
-    public void setTextView(TextView et) {
-        textView = et;
+    public void setView(EditText et) {
+        view = et;
     }
 
     @Override
@@ -47,8 +47,8 @@ public class DatePickerFragment extends DialogFragment implements
                 Locale.GERMAN);
         Calendar newDate = Calendar.getInstance();
         newDate.set(year, month, day);
-        if (textView != null) {
-            textView.setText(dateFormatter.format(newDate.getTime()));
+        if (view != null) {
+            view.setText(dateFormatter.format(newDate.getTime()));
         }
     }
 

@@ -38,7 +38,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:layout_marginTop="8dp"
-                app:errorEnabled="true">
+                app:errorEnabled="true"
+                app:errorTextAppearance="@style/ErrorInputText">
 
                 <EditText
                     android:id="@+id/edit_text_bulletin_theme"
@@ -56,8 +57,10 @@
                 style="@style/Margin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                app:errorEnabled="true">
+                android:layout_marginBottom="0dp"
+                android:layout_marginTop="0dp"
+                app:errorEnabled="true"
+                app:errorTextAppearance="@style/ErrorInputText">
 
                 <EditText
                     android:id="@+id/edit_text_bulletin_text"
@@ -87,17 +90,22 @@
                         android:id="@+id/input_start_period"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="4dp"
-                        app:errorEnabled="true">
+                        android:layout_marginBottom="0dp"
+                        android:layout_marginTop="0dp"
+                        app:errorEnabled="true"
+                        app:errorTextAppearance="@style/ErrorInputText">
 
-                        <TextView
+                        <EditText
                             android:id="@+id/text_view_start_period"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1.0"
                             android:background="@null"
+                            android:cursorVisible="false"
+                            android:focusable="false"
+                            android:focusableInTouchMode="false"
                             android:hint="Початок показу"
-                            android:textColorHint="@color/colorSecondaryText"
+                            android:paddingTop="2dp"
+                            android:textColorHint="@android:color/transparent"
                             android:textSize="12sp"/>
                     </android.support.design.widget.TextInputLayout>
 
@@ -154,17 +162,21 @@
                         android:id="@+id/input_end_period"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="4dp"
-                        app:errorEnabled="true">
+                        android:layout_marginBottom="0dp"
+                        android:layout_marginTop="0dp"
+                        app:errorEnabled="true"
+                        app:errorTextAppearance="@style/ErrorInputText">
 
-                        <TextView
+                        <EditText
                             android:id="@+id/text_view_end_period"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1.0"
                             android:background="@null"
+                            android:cursorVisible="false"
+                            android:focusable="false"
+                            android:focusableInTouchMode="false"
                             android:hint="Кінець показу"
-                            android:textColorHint="@color/colorSecondaryText"
+                            android:paddingTop="2dp"
                             android:textSize="12sp"/>
                     </android.support.design.widget.TextInputLayout>
 

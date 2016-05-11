@@ -63,9 +63,9 @@ public class EditBulletinActivity extends BaseActivity implements
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
     @Bind(R.id.text_view_start_period)
-    TextView mStartDate;
+    EditText mStartDate;
     @Bind(R.id.text_view_end_period)
-    TextView mEndDate;
+    EditText mEndDate;
     @Bind(R.id.text_view_creation_date_value)
     TextView mCreateDate;
     @Bind(R.id.spinner_profile)
@@ -307,9 +307,9 @@ public class EditBulletinActivity extends BaseActivity implements
         mEndDate.setOnClickListener(v -> setDateTo(mEndDate, "1"));
     }
 
-    private void setDateTo(TextView textView, String uniqueString) {
+    private void setDateTo(EditText view, String uniqueString) {
         DatePickerFragment newFragment = new DatePickerFragment();
-        newFragment.setTextView(textView);
+        newFragment.setView(view);
         newFragment.show(getFragmentManager(), uniqueString);
     }
 

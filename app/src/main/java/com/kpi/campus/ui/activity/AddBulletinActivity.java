@@ -62,9 +62,9 @@ public class AddBulletinActivity extends BaseActivity implements
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
     @Bind(R.id.text_view_start_period)
-    TextView mStartDate;
+    EditText mStartDate;
     @Bind(R.id.text_view_end_period)
-    TextView mEndDate;
+    EditText mEndDate;
     @Bind(R.id.text_view_creation_date_value)
     TextView mCreateDate;
     @Bind(R.id.spinner_profile)
@@ -279,9 +279,9 @@ public class AddBulletinActivity extends BaseActivity implements
         mEndDate.setOnClickListener(v -> setDateTo(mEndDate, "1"));
     }
 
-    private void setDateTo(TextView textView, String uniqueString) {
+    private void setDateTo(EditText view, String uniqueString) {
         DatePickerFragment newFragment = new DatePickerFragment();
-        newFragment.setTextView(textView);
+        newFragment.setView(view);
         newFragment.show(getFragmentManager(), uniqueString);
     }
 
@@ -439,14 +439,14 @@ public class AddBulletinActivity extends BaseActivity implements
                     .recipient_must_be_added), this);
             isValid = false;
         }
-        return (isValid &&
+        return (isValid &
                 validateField((TextInputLayout) findViewById(R.id
-                        .input_theme), mSubject.getText().toString()) &&
+                        .input_theme), mSubject.getText().toString()) &
                 validateField((TextInputLayout) findViewById(R.id
-                        .input_text), mText.getText().toString()) &&
+                        .input_text), mText.getText().toString()) &
                 validateField((TextInputLayout) findViewById(R.id
                         .input_start_period), mStartDate.getText().toString())
-                && validateField((TextInputLayout) findViewById(R.id
+                & validateField((TextInputLayout) findViewById(R.id
                 .input_end_period), mEndDate.getText().toString())
         );
     }
@@ -456,8 +456,9 @@ public class AddBulletinActivity extends BaseActivity implements
         if (inputField.isEmpty()) {
             inputLayout.setError(getString(R.string.required_field));
             return false;
-        } else
+        } else {
             inputLayout.setError(null);
+        }
         return true;
     }
 }

@@ -59,4 +59,9 @@
         <item name="android:windowExitAnimation">@anim/bottom_down</item>
     </style>
 
+    <style name="ErrorInputText">
+        <item name="android:textSize">8sp</item>
+        <item name="android:textColor">#ff4e4e</item>
+    </style>
+
 </resources>
