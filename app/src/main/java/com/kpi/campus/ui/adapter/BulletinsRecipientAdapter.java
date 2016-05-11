@@ -64,8 +64,9 @@ public class BulletinsRecipientAdapter extends RecyclerView
     public void onBindViewHolder(ViewHolder holder, final int position) {
         Recipient item = mDataList.get(position);
         holder.tvWhere.setText(item.getSubdivisionName());
-        if (item.getProfileName() != null) {
-            holder.tvWhom.setText(item.getProfileName());
+        String profileName = item.getProfileName();
+        if (profileName != null && !profileName.isEmpty()) {
+            holder.tvWhom.setText(profileName);
         } else if (item.getStudyGroupName() != null) {
             holder.tvWhom.setText(item.getStudyGroupName());
         }

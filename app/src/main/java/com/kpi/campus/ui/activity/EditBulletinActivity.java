@@ -367,10 +367,7 @@ public class EditBulletinActivity extends BaseActivity implements
     private void setSubdivisionSpinner(List<Item> list) {
         ArrayAdapter<Item> adapter = new ItemSpinnerAdapter(this, R.layout
                 .spinner_item, R.layout.spinner_dropdown_item, list);
-        mSpinnerSubdivision.setAdapter(new NothingSelectedAdapter(
-                adapter,
-                R.layout.spinner_item_nothing_selected_subdiv,
-                this));
+        mSpinnerSubdivision.setAdapter(adapter);
         mSpinnerSubdivision.setOnItemSelectedListener(new AdapterView
                 .OnItemSelectedListener() {
             @Override
