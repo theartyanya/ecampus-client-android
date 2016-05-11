@@ -63,7 +63,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
-        <activity android:name=".ui.activity.SplashScreenActivity"/>
         <activity
             android:name=".ui.activity.EditBulletinActivity"
             android:parentActivityName=".ui.activity.BulletinBoardModeratorActivity"

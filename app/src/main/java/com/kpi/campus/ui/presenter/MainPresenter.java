@@ -93,7 +93,7 @@ public class MainPresenter extends BasePresenter {
         Date currentDate = new Date();
         mIsUserLogged = mPreference.getIsLogged();
         if (mIsUserLogged && !currentDate.after(expDate))
-            getUserSesionValues();
+            getUserSessionValues();
         else
             mNavigator.startLoginActivity();
     }
@@ -110,7 +110,7 @@ public class MainPresenter extends BasePresenter {
         return mContext.getResources();
     }
 
-    private void getUserSesionValues() {
+    private void getUserSessionValues() {
         User user = User.getInstance();
         user.id = mPreference.getUserId();
         user.name = mPreference.getUserName();
