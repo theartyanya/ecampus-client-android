@@ -117,6 +117,7 @@ public class EditBulletinActivity extends BaseActivity implements
                 mPresenter.onStartRequest(() -> mPresenter.deleteBulletin());
                 break;
             case R.id.action_clear:
+                clearValues();
                 break;
             case R.id.action_done:
                 if (validateInput())
@@ -434,5 +435,15 @@ public class EditBulletinActivity extends BaseActivity implements
         } else
             inputLayout.setError(null);
         return true;
+    }
+
+    private void clearValues() {
+        String empty = "";
+        mSubject.setText(empty);
+        mText.setText(empty);
+        mStartDate.setText(empty);
+        mEndDate.setText(empty);
+        mRbAll.setChecked(true);
+        mAdapter.clear();
     }
 }
