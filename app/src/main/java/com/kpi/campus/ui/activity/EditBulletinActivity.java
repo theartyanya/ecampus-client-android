@@ -82,6 +82,9 @@ public class EditBulletinActivity extends SaveBulletinActivity implements
     @Override
     public void showResponse(int code, String msg) {
         switch (code) {
+            case 0:
+                ToastUtil.showShortMessage(msg, this);
+                break;
             case 200:
                 ToastUtil.showShortMessage(getString(R.string
                         .bulletin_is_modified), this);

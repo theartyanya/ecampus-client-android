@@ -43,8 +43,11 @@ public class BulletinRxLoader {
                                 responseMsg),
                         e -> {
                             Log.e(Config.LOG, e.getMessage());
-                            mPresenter.onFinishRequest(((HttpException) e).code
-                                    (), e.getMessage());
+                            if (e instanceof HttpException)
+                                mPresenter.onFinishRequest(((HttpException)
+                                        e).code(), e.getMessage());
+                            else
+                                mPresenter.onFinishRequest(0, e.getMessage());
                         }
                 );
     }
@@ -63,8 +66,11 @@ public class BulletinRxLoader {
                                 responseMsg),
                         e -> {
                             Log.e(Config.LOG, e.getMessage());
-                            mPresenter.onFinishRequest(((HttpException) e).code
-                                    (), e.getMessage());
+                            if (e instanceof HttpException)
+                                mPresenter.onFinishRequest(((HttpException)
+                                        e).code(), e.getMessage());
+                            else
+                                mPresenter.onFinishRequest(0, e.getMessage());
                         }
                 );
     }
@@ -83,8 +89,11 @@ public class BulletinRxLoader {
                                 responseMsg),
                         e -> {
                             Log.e(Config.LOG, e.getMessage());
-                            mPresenter.onFinishRequest(((HttpException) e).code
-                                    (), e.getMessage());
+                            if (e instanceof HttpException)
+                                mPresenter.onFinishRequest(((HttpException)
+                                        e).code(), e.getMessage());
+                            else
+                                mPresenter.onFinishRequest(0, e.getMessage());
                         }
                 );
     }
