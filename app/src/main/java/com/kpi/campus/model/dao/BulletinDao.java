@@ -53,6 +53,7 @@ public class BulletinDao implements IDataAccessObject<Bulletin> {
             mByProfile.addAll(filterBulletins(data, isMatchesProfile
                     (ids)));
 
+
             ids = getIdsCollection(userSubdivision);
             mBySubdivision.addAll(filterBulletins(data, isMatchesSubdivision
                     (ids)));
@@ -73,6 +74,7 @@ public class BulletinDao implements IDataAccessObject<Bulletin> {
      * @return list of bulletins.
      */
     public Collection<Bulletin> getFilteredByProfile() {
+
         return mByProfile;
     }
 

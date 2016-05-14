@@ -22,6 +22,7 @@ public interface IDataAccessObject<T> {
      */
     void setData(Collection<T> data);
 
+
     /**
      * Update specific object.
      * @param object has to be updated.

@@ -144,10 +144,12 @@ public class BulletinBoardModeratorPresenter extends BasePresenter {
      * @return filtered list
      */
     public List<Bulletin> filterData(Collection<Bulletin> list, String query) {
+
         query = query.toLowerCase();
         final List<Bulletin> filteredList = new ArrayList<>();
 
         filteredList.addAll(filterBulletins(list, isMatchesQuerySubject(query)));
+
         return filteredList;
     }
 

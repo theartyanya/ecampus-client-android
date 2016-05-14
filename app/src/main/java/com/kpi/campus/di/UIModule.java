@@ -26,6 +26,7 @@ import dagger.Module;
                 AddBulletinActivity.class,
                 BulletinBoardModeratorActivity.class,
                 EditBulletinActivity.class
+
         })
 public final class UIModule {
 }

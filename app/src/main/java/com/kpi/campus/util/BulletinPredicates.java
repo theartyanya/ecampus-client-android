@@ -50,6 +50,7 @@ public class BulletinPredicates {
     public static List<Bulletin> filterBulletins(Collection<Bulletin> bulletins,
                                                  Predicate<Bulletin>
                                                          predicate) {
+
         return Stream.of(bulletins)
                 .filter(predicate)
                 .collect(Collectors.<Bulletin>toList());
