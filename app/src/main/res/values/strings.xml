@@ -2,7 +2,7 @@
     <string name="app_name">Кампус КПІ</string>
     <string name="title_activity_main_not_auth">MainNotAuthActivity</string>
     <string name="action_settings">Settings</string>
-    <string name="action_logout">Розлогінитись</string>
+    <string name="action_logout">Вийти</string>
     <string name="activity_name_main">Головна</string>
     <string name="activity_name_bulletin_board">Оголошення</string>
     <string name="title_activity_bulletin_board">BulletinBoardActivity</string>
@@ -14,7 +14,7 @@
     <string name="key_password">password</string>
     <string name="settings">Settings</string>
     <string name="menu_edit">Редагувати</string>
-    <string name="logout_confirmation">Ви дійсно бажаєте розлогінитись?</string>
+    <string name="logout_confirmation">Ви дійсно бажаєте вийти з облікового запису?</string>
     <string name="yes">Так</string>
     <string name="no">Ні</string>
 

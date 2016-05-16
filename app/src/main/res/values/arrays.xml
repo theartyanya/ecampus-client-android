@@ -65,26 +65,4 @@
         <item>@mipmap/ic_action_action_delete</item>
     </array>
 
-    <array name="spinner_profile">
-        <item>Викладач</item>
-        <item>Студент</item>
-        <item>Куратор</item>
-        <item>Староста</item>
-        <item>Профорг</item>
-    </array>
-
-    <string-array name="spinner_group">
-        <item>ІК-21</item>
-        <item>ІК-22</item>
-        <item>ІК-23</item>
-    </string-array>
-
-    <string-array name="spinner_subdiv">
-        <item>ФІОТ</item>
-        <item>ОТ ФІОТ</item>
-        <item>ТК ФІОТ</item>
-        <item>АУТС ФІОТ</item>
-        <item>АСОІУ ФІОТ</item>
-    </string-array>
-
 </resources>
