@@ -89,6 +89,7 @@ public class LoginActivity extends BaseActivity implements LoginPresenter
                         getApplicationContext());
                 break;
         }
+
     }
 
     @Override
@@ -103,6 +104,7 @@ public class LoginActivity extends BaseActivity implements LoginPresenter
         boolean isValid = validateInput(userLogin, userPassword);
         if(isValid)
             mPresenter.login(userLogin, userPassword);
+
     }
 
     @Override

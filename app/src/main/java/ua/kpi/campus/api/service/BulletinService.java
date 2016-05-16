@@ -18,7 +18,7 @@ import rx.Observable;
 
 /**
  * Contains list of APIs related to BulletinBoard.
- * <p>
+ *
  * Created by Administrator on 21.03.2016.
  */
 public interface BulletinService {
