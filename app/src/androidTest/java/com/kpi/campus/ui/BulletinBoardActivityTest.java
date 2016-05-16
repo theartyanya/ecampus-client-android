@@ -5,14 +5,16 @@ import android.support.test.espresso.intent.rule.IntentsTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.LargeTest;
 
-import com.kpi.campus.R;
+import ua.kpi.campus.R;
 import com.kpi.campus.helper.Sleep;
-import com.kpi.campus.ui.activity.BulletinBoardActivity;
+import ua.kpi.campus.ui.activity.BulletinBoardActivity;
 
 import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import ua.kpi.campus.ui.activity.BulletinBoardModeratorActivity;
 
 import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
@@ -66,7 +68,7 @@ public class BulletinBoardActivityTest {
     }
 
     /**
-     * Tests that toolbar menu has moderator icon, if user can go to {@link com.kpi.campus.ui.activity.BulletinBoardModeratorActivity}
+     * Tests that toolbar menu has moderator icon, if user can go to {@link BulletinBoardModeratorActivity}
      * Tests that toolbar menu hasn't moderator icon, if user can't go to aforementioned activity.
      */
     @Test

@@ -4,7 +4,7 @@
                                                  xmlns:tools="http://schemas.android.com/tools"
                                                  android:layout_width="match_parent"
                                                  android:layout_height="match_parent"
-                                                 tools:context="com.kpi.campus.ui.activity.BulletinBoardActivity">
+                                                 tools:context="ua.kpi.campus.ui.activity.BulletinBoardActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -51,7 +51,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <com.kpi.campus.ui.view.ExtendedRecyclerView
+            <ua.kpi.campus.ui.view.ExtendedRecyclerView
                 android:id="@android:id/list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

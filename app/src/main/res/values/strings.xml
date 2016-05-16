@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Campus</string>
+    <string name="app_name">Кампус КПІ</string>
     <string name="title_activity_main_not_auth">MainNotAuthActivity</string>
     <string name="action_settings">Settings</string>
     <string name="action_logout">Розлогінитись</string>

@@ -27,7 +27,7 @@ android {
     buildToolsVersion "22.0.1"
 
     defaultConfig {
-        applicationId "com.kpi.campus"
+        applicationId "ua.kpi.campus"
         minSdkVersion 17
         targetSdkVersion 22
         versionCode 1

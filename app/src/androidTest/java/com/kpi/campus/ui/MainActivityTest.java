@@ -5,9 +5,9 @@ import android.support.test.espresso.intent.rule.IntentsTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.LargeTest;
 
-import com.kpi.campus.R;
-import com.kpi.campus.model.Subsystem;
-import com.kpi.campus.ui.activity.MainActivity;
+import ua.kpi.campus.R;
+import ua.kpi.campus.model.Subsystem;
+import ua.kpi.campus.ui.activity.MainActivity;
 
 import org.junit.Rule;
 import org.junit.Test;
