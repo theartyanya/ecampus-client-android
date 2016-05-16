@@ -1,17 +1,13 @@
 package ua.kpi.campus.rx;
 
-import android.util.Log;
-
-import ua.kpi.campus.Config;
-import ua.kpi.campus.api.service.ServiceCreator;
-import ua.kpi.campus.api.service.UserService;
-import ua.kpi.campus.model.pojo.User;
-import ua.kpi.campus.ui.Preference;
-
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
+import ua.kpi.campus.api.service.ServiceCreator;
+import ua.kpi.campus.api.service.UserService;
+import ua.kpi.campus.model.pojo.User;
+import ua.kpi.campus.ui.Preference;
 
 /**
  * Perform requests of the UserService class.
@@ -53,9 +49,11 @@ public class UserRxLoader {
 
             mPreference.saveUserInfo(user);
 
-            Log.d(Config.LOG, "Successful download of information about the User ".concat(user.name));
+            //Log.d(Config.LOG, "Successful download of information about the User ".concat(user.name));
         }
     };
 
-    Action1<Throwable> onErrorAction = e -> Log.e(Config.LOG, e.getMessage());
+    Action1<Throwable> onErrorAction = e -> {
+        //Log.e(Config.LOG, e.getMessage());
+    };
 }

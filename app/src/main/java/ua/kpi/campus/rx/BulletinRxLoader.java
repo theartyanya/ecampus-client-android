@@ -1,8 +1,11 @@
 package ua.kpi.campus.rx;
 
-import android.util.Log;
+import java.util.List;
 
-import ua.kpi.campus.Config;
+import retrofit2.adapter.rxjava.HttpException;
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 import ua.kpi.campus.api.service.BulletinService;
 import ua.kpi.campus.api.service.ServiceCreator;
 import ua.kpi.campus.model.Recipient;
@@ -10,13 +13,6 @@ import ua.kpi.campus.model.pojo.Bulletin;
 import ua.kpi.campus.model.pojo.Item;
 import ua.kpi.campus.model.pojo.User;
 import ua.kpi.campus.ui.presenter.SaveBulletinPresenter;
-
-import java.util.List;
-
-import retrofit2.adapter.rxjava.HttpException;
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 /**
  * Created by Administrator on 13.04.2016.
@@ -42,7 +38,7 @@ public class BulletinRxLoader {
                         responseMsg -> mPresenter.onFinishRequest(200,
                                 responseMsg),
                         e -> {
-                            Log.e(Config.LOG, e.getMessage());
+                            //Log.e(Config.LOG, e.getMessage());
                             if (e instanceof HttpException)
                                 mPresenter.onFinishRequest(((HttpException)
                                         e).code(), e.getMessage());
@@ -65,7 +61,7 @@ public class BulletinRxLoader {
                         responseMsg -> mPresenter.onFinishRequest(200,
                                 responseMsg),
                         e -> {
-                            Log.e(Config.LOG, e.getMessage());
+                            //Log.e(Config.LOG, e.getMessage());
                             if (e instanceof HttpException)
                                 mPresenter.onFinishRequest(((HttpException)
                                         e).code(), e.getMessage());
@@ -88,7 +84,7 @@ public class BulletinRxLoader {
                         responseMsg -> mPresenter.onFinishRequest(200,
                                 responseMsg),
                         e -> {
-                            Log.e(Config.LOG, e.getMessage());
+                            //Log.e(Config.LOG, e.getMessage());
                             if (e instanceof HttpException)
                                 mPresenter.onFinishRequest(((HttpException)
                                         e).code(), e.getMessage());
@@ -107,7 +103,9 @@ public class BulletinRxLoader {
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(list -> mPresenter.setDescSubdivisions(list),
-                        e -> Log.e(Config.LOG, e.getMessage()));
+                        e -> {
+                            //Log.e(Config.LOG, e.getMessage());
+                        });
     }
 
     public void loadProfiles() {
@@ -118,7 +116,9 @@ public class BulletinRxLoader {
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(list -> mPresenter.setProfiles(list),
-                        e -> Log.e(Config.LOG, e.getMessage()));
+                        e -> {
+                            //Log.e(Config.LOG, e.getMessage());
+                        });
     }
 
     public void loadGroupsOf(String subdivisionId) {
@@ -130,7 +130,9 @@ public class BulletinRxLoader {
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(list -> mPresenter.setGroups(list),
-                        e -> Log.e(Config.LOG, e.getMessage()));
+                        e -> {
+                            //Log.e(Config.LOG, e.getMessage());
+                        });
     }
 
     public void loadRecipients(String bulletinId) {
@@ -142,6 +144,8 @@ public class BulletinRxLoader {
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(list -> mPresenter.setRecipients(list),
-                        e -> Log.e(Config.LOG, e.getMessage()));
+                        e -> {
+                            //Log.e(Config.LOG, e.getMessage());
+                        });
     }
 }

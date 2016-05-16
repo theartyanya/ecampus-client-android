@@ -9,24 +9,10 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
-
-import ua.kpi.campus.Config;
-import ua.kpi.campus.R;
-import ua.kpi.campus.di.UIModule;
-import ua.kpi.campus.model.dao.IDataAccessObject;
-import ua.kpi.campus.model.pojo.Bulletin;
-import ua.kpi.campus.rx.BulletinResponseManager;
-import ua.kpi.campus.ui.adapter.PagingRecyclerAdapter;
-import ua.kpi.campus.ui.presenter.BulletinBoardPresenter;
-import ua.kpi.campus.ui.view.ExtendedRecyclerView;
-import ua.kpi.campus.ui.view.OnItemClickListener;
-import ua.kpi.campus.util.ToastUtil;
-import ua.kpi.campus.util.pagination.PaginationTool;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -38,6 +24,17 @@ import butterknife.Bind;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
+import ua.kpi.campus.R;
+import ua.kpi.campus.di.UIModule;
+import ua.kpi.campus.model.dao.IDataAccessObject;
+import ua.kpi.campus.model.pojo.Bulletin;
+import ua.kpi.campus.rx.BulletinResponseManager;
+import ua.kpi.campus.ui.adapter.PagingRecyclerAdapter;
+import ua.kpi.campus.ui.presenter.BulletinBoardPresenter;
+import ua.kpi.campus.ui.view.ExtendedRecyclerView;
+import ua.kpi.campus.ui.view.OnItemClickListener;
+import ua.kpi.campus.util.ToastUtil;
+import ua.kpi.campus.util.pagination.PaginationTool;
 
 /**
  * Bulletin Board activity.
@@ -267,10 +264,10 @@ public class BulletinBoardActivity extends BaseActivity implements
                     @Override
                     public void onError(Throwable e) {
                         if (e != null)
-                            Log.e(Config.LOG, e.getMessage());
-                        ToastUtil.showError(getString(R.string
-                                        .error_while_data_obtaining),
-                                getApplicationContext());
+                            //Log.e(Config.LOG, e.getMessage());
+                            ToastUtil.showError(getString(R.string
+                                            .error_while_data_obtaining),
+                                    getApplicationContext());
 
                         setViewsVisibility();
                     }

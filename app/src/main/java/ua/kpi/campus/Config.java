@@ -7,7 +7,7 @@ package ua.kpi.campus;
  */
 public class Config {
 
-    public static final String LOG = "kpi.ua.kpi.campus";
+    public static final String LOG = "campus.kpi.ua";
 
     /**
      * Keys for intent

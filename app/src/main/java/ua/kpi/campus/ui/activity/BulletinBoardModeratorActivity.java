@@ -8,24 +8,11 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.PopupMenu;
 import android.widget.ProgressBar;
-
-import ua.kpi.campus.Config;
-import ua.kpi.campus.di.UIModule;
-import ua.kpi.campus.model.dao.IDataAccessObject;
-import ua.kpi.campus.model.pojo.Bulletin;
-import ua.kpi.campus.rx.BulletinModeratorResponseManager;
-import ua.kpi.campus.ui.adapter.PagingRecyclerAdapter;
-import ua.kpi.campus.ui.presenter.BulletinBoardModeratorPresenter;
-import ua.kpi.campus.ui.view.ExtendedRecyclerView;
-import ua.kpi.campus.ui.view.OnItemClickListener;
-import ua.kpi.campus.util.ToastUtil;
-import ua.kpi.campus.util.pagination.PaginationTool;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -38,6 +25,16 @@ import butterknife.OnClick;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
+import ua.kpi.campus.di.UIModule;
+import ua.kpi.campus.model.dao.IDataAccessObject;
+import ua.kpi.campus.model.pojo.Bulletin;
+import ua.kpi.campus.rx.BulletinModeratorResponseManager;
+import ua.kpi.campus.ui.adapter.PagingRecyclerAdapter;
+import ua.kpi.campus.ui.presenter.BulletinBoardModeratorPresenter;
+import ua.kpi.campus.ui.view.ExtendedRecyclerView;
+import ua.kpi.campus.ui.view.OnItemClickListener;
+import ua.kpi.campus.util.ToastUtil;
+import ua.kpi.campus.util.pagination.PaginationTool;
 
 /**
  * Bulletin Board activity for Moderator of BulletinBoard.
@@ -84,7 +81,8 @@ public class BulletinBoardModeratorActivity extends BaseActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(ua.kpi.campus.R.layout.activity_bulletin_board_moderator);
+        setContentView(ua.kpi.campus.R.layout
+                .activity_bulletin_board_moderator);
         bindViews();
         mPresenter.setView(this);
         mPresenter.initializeViewComponent();
@@ -101,37 +99,38 @@ public class BulletinBoardModeratorActivity extends BaseActivity implements
 
     private PopupMenu.OnMenuItemClickListener onMenuItemClickListener = new
             PopupMenu.OnMenuItemClickListener() {
-        @Override
-        public boolean onMenuItemClick(MenuItem menuItem) {
-            switch (menuItem.getItemId()) {
-                case ua.kpi.campus.R.id.edit:
-                    Bulletin b = mAdapter.getClickedItem();
-                    mPresenter.onEditMenuClick(b);
-                    break;
-            }
-            return true;
-        }
-    };
+                @Override
+                public boolean onMenuItemClick(MenuItem menuItem) {
+                    switch (menuItem.getItemId()) {
+                        case ua.kpi.campus.R.id.edit:
+                            Bulletin b = mAdapter.getClickedItem();
+                            mPresenter.onEditMenuClick(b);
+                            break;
+                    }
+                    return true;
+                }
+            };
 
     private SearchView.OnQueryTextListener onQueryTextChangeListener = new
             SearchView.OnQueryTextListener() {
-        @Override
-        public boolean onQueryTextSubmit(String query) {
-            return false;
-        }
+                @Override
+                public boolean onQueryTextSubmit(String query) {
+                    return false;
+                }
 
-        @Override
-        public boolean onQueryTextChange(String newText) {
-            final List<Bulletin> filteredList = mPresenter.filterData
-                    (mBulletins, newText);
-            mAdapter.setFilter(filteredList);
-            return false;
-        }
-    };
+                @Override
+                public boolean onQueryTextChange(String newText) {
+                    final List<Bulletin> filteredList = mPresenter.filterData
+                            (mBulletins, newText);
+                    mAdapter.setFilter(filteredList);
+                    return false;
+                }
+            };
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(ua.kpi.campus.R.menu.menu_bulletin_board, menu);
+        getMenuInflater().inflate(ua.kpi.campus.R.menu.menu_bulletin_board,
+                menu);
         final MenuItem item = menu.findItem(ua.kpi.campus.R.id.action_search);
         final SearchView searchView = (SearchView) MenuItemCompat
                 .getActionView(item);
@@ -167,7 +166,8 @@ public class BulletinBoardModeratorActivity extends BaseActivity implements
         setSupportActionBar(mToolbar);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        mToolbar.setNavigationIcon(ua.kpi.campus.R.mipmap.ic_action_navigation_arrow_back);
+        mToolbar.setNavigationIcon(ua.kpi.campus.R.mipmap
+                .ic_action_navigation_arrow_back);
         getSupportActionBar().setTitle(ua.kpi.campus.R.string
                 .activity_bulletin_moderator_mode_title);
     }
@@ -286,10 +286,10 @@ public class BulletinBoardModeratorActivity extends BaseActivity implements
                     @Override
                     public void onError(Throwable e) {
                         if (e != null)
-                            Log.e(Config.LOG, e.getMessage());
-                        ToastUtil.showError(getString(ua.kpi.campus.R.string
-                                        .error_while_data_obtaining),
-                                getApplicationContext());
+                            //Log.e(Config.LOG, e.getMessage());
+                            ToastUtil.showError(getString(ua.kpi.campus.R.string
+                                            .error_while_data_obtaining),
+                                    getApplicationContext());
 
                         setViewsVisibility();
                     }

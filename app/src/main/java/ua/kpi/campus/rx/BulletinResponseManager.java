@@ -1,19 +1,15 @@
 package ua.kpi.campus.rx;
 
-import android.util.Log;
-
-import ua.kpi.campus.Config;
-import ua.kpi.campus.api.service.BulletinService;
-import ua.kpi.campus.api.service.ServiceCreator;
-import ua.kpi.campus.model.pojo.Bulletin;
-import ua.kpi.campus.model.pojo.User;
-
 import java.util.List;
 
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
+import ua.kpi.campus.api.service.BulletinService;
+import ua.kpi.campus.api.service.ServiceCreator;
+import ua.kpi.campus.model.pojo.Bulletin;
+import ua.kpi.campus.model.pojo.User;
 
 /**
  * This class responsible for producing responses for the BulletinBoard.
@@ -46,14 +42,14 @@ public class BulletinResponseManager {
 
                     @Override
                     public void onError(Throwable e) {
-                        if (e != null)
-                            Log.e(Config.LOG, e.getMessage());
+                        //if (e != null)
+                            //Log.e(Config.LOG, e.getMessage());
                     }
 
                     @Override
                     public void onNext(List<Bulletin> bulletins) {
-                        Log.d(Config.LOG, bulletins.size() + " loaded " +
-                                "successful");
+//                        Log.d(Config.LOG, bulletins.size() + " loaded " +
+//                                "successful");
                     }
                 });
         return observable;
