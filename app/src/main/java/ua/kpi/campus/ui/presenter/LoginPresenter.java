@@ -41,14 +41,11 @@ public class LoginPresenter extends BasePresenter {
 
     /**
      * Set necessary View components to "login state"
-     *
-     * @param login    login which is entered by the user
-     * @param password password which is entered by the user
      */
-    public void login(String login, String password) {
+    public void onStartLogin() {
         mView.showLoginProgressDialog();
         mView.activateLoginButton(false);
-        validateUser(login, password);
+        //initRequest(login, password);
     }
 
     /**
@@ -84,10 +81,10 @@ public class LoginPresenter extends BasePresenter {
     /**
      * Init loader to load data for the user authentication.
      *
-     * @param login
-     * @param password
+     * @param login login which is entered by the user
+     * @param password password which is entered by the user
      */
-    private void validateUser(String login, String password) {
+    public void initRequest(String login, String password) {
         Bundle args = new Bundle();
         args.putString(Config.KEY_LOGIN, login);
         args.putString(Config.KEY_PASSWORD, password);
