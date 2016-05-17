@@ -38,7 +38,7 @@ public class LoginPresenterTest {
     private UserRxLoader mLoader;
 
     @Before
-    public void setupPresenter() {
+    public void setUp() {
         MockitoAnnotations.initMocks(this);
         mPresenter = new LoginPresenter(mNavigator, mPreference);
         mView = mock(LoginActivity.class);
