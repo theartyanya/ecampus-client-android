@@ -5,9 +5,6 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.util.ArrayList;
-import java.util.Observable;
-
 import ua.kpi.campus.api.response.BaseResponse;
 import ua.kpi.campus.api.response.RequestResult;
 import ua.kpi.campus.model.pojo.Token;
@@ -17,9 +14,7 @@ import ua.kpi.campus.ui.Preference;
 import ua.kpi.campus.ui.activity.LoginActivity;
 import ua.kpi.campus.ui.presenter.LoginPresenter;
 
-import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.mock;
-import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.verify;
 
 /**
