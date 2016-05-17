@@ -60,6 +60,7 @@ public class BulletinBoardModeratorActivity extends BaseActivity implements
      * Designed for filtering purposes.
      */
     private Collection<Bulletin> mBulletins;
+
     /**
      * Is this activity is moderator activity.
      * Always true. Affects on recycler item view (enable Edit button).
@@ -222,6 +223,7 @@ public class BulletinBoardModeratorActivity extends BaseActivity implements
                 break;
         }
         mAdapter.setItems(new ArrayList<>(mBulletins));
+
     }
 
     @OnClick(ua.kpi.campus.R.id.fab_add)

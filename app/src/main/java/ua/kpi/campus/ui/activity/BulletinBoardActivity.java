@@ -60,6 +60,7 @@ public class BulletinBoardActivity extends BaseActivity implements
      * Designed for filtering purposes.
      */
     private Collection<Bulletin> mBulletins;
+
     /**
      * Whether the user is moderator.
      * Affects on toolbar menu view.
@@ -116,6 +117,7 @@ public class BulletinBoardActivity extends BaseActivity implements
                     return false;
                 }
             };
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

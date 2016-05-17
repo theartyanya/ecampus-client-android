@@ -140,6 +140,7 @@ public class PaginationTool<T> {
                 return Observable.error(new PagingException("Exception while " +
                         "downloading has occurred. Check the url is valid, " +
                         "internet connection is available etc."));
+
             }
         });
     }

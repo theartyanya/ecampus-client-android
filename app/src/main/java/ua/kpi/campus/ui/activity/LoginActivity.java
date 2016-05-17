@@ -89,6 +89,7 @@ public class LoginActivity extends BaseActivity implements LoginPresenter
                         getApplicationContext());
                 break;
         }
+
     }
 
     @Override
