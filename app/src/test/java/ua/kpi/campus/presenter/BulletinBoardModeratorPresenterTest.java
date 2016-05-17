@@ -11,11 +11,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import ua.kpi.campus.model.dao.BulletinDao;
+import ua.kpi.campus.model.dao.BulletinModeratorDao;
 import ua.kpi.campus.model.pojo.Bulletin;
 import ua.kpi.campus.ui.Navigator;
-import ua.kpi.campus.ui.activity.BulletinBoardActivity;
-import ua.kpi.campus.ui.presenter.BulletinBoardPresenter;
+import ua.kpi.campus.ui.activity.BulletinBoardModeratorActivity;
+import ua.kpi.campus.ui.presenter.BulletinBoardModeratorPresenter;
 
 import static junit.framework.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
@@ -24,23 +24,23 @@ import static org.mockito.Mockito.verify;
 /**
  * Created by Admin on 17.05.2016.
  */
-public class BulletinBoardPresenterTest {
+public class BulletinBoardModeratorPresenterTest {
 
-    private BulletinBoardPresenter mPresenter;
+    private BulletinBoardModeratorPresenter mPresenter;
     @Mock
-    private BulletinBoardPresenter.IView mView;
+    private BulletinBoardModeratorPresenter.IView mView;
     @Mock
     private Navigator mNavigator;
     @Mock
-    private BulletinDao mDataAccess;
+    private BulletinModeratorDao mDataAccess;
     @Mock
     private Context mContext;
 
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        mPresenter = new BulletinBoardPresenter(mContext, mNavigator);
-        mView = mock(BulletinBoardActivity.class);
+        mPresenter = new BulletinBoardModeratorPresenter(mContext, mNavigator);
+        mView = mock(BulletinBoardModeratorActivity.class);
         mPresenter.setView(mView);
         mPresenter.setDao(mDataAccess);
     }
@@ -52,16 +52,16 @@ public class BulletinBoardPresenterTest {
     }
 
     @Test
-    public void openBulletinModeratorActivity() {
-        mPresenter.openBulletinModeratorActivity();
-        verify(mNavigator).startBulletinBoardModeratorActivity();
+    public void onAddBulletin() {
+        mPresenter.onButtonAddClick();
+        verify(mNavigator).startNewBulletinActivity();
     }
 
     @Test
-    public void onItemClick() {
+    public void onEditBulletin() {
         Bulletin b = new Bulletin("1", "theme", "author", "2016");
-        mPresenter.onItemClick(b);
-        verify(mNavigator).startBulletinContentActivity(b);
+        mPresenter.onEditMenuClick(b);
+        verify(mNavigator).startEditBulletinActivity(b);
     }
 
     @Test
@@ -72,14 +72,26 @@ public class BulletinBoardPresenterTest {
 
     @Test
     public void getSelectedByProfile() {
-        mPresenter.getSelectedByProfile();
+        mPresenter.getFilteredByProfile();
         verify(mDataAccess).getFilteredByProfile();
     }
 
     @Test
     public void getSelectedBySubdivision() {
-        mPresenter.getSelectedBySubdivision();
+        mPresenter.getFilteredBySubdivision();
         verify(mDataAccess).getFilteredBySubdiv();
+    }
+
+    @Test
+    public void getFilteredByDate() {
+        mPresenter.getFilteredByDate();
+        verify(mDataAccess).getNotExpired();
+    }
+
+    @Test
+    public void getDeletedBulletins() {
+        mPresenter.getDeletedBulletins();
+        verify(mDataAccess).getDeleted();
     }
 
     @Test
