@@ -23,16 +23,22 @@ public class LoginPresenter extends BasePresenter {
     private IView mView;
     private Navigator mNavigator;
     private Preference mPreference;
+    private UserRxLoader mLoader;
 
 
     @Inject
     public LoginPresenter(Navigator navigator, Preference preference) {
         mNavigator = navigator;
         mPreference = preference;
+        mLoader = new UserRxLoader(preference);
     }
 
     public void setView(IView view) {
         mView = view;
+    }
+
+    public void setLoader(UserRxLoader loader) {
+        mLoader = loader;
     }
 
     @Override
@@ -45,20 +51,23 @@ public class LoginPresenter extends BasePresenter {
     public void onStartLogin() {
         mView.showLoginProgressDialog();
         mView.activateLoginButton(false);
-        //initRequest(login, password);
     }
 
     /**
      * Set views to "initial (after login) state".
+     */
+    public void onFinishLogin() {
+        mView.dismissProgressDialog();
+        mView.activateLoginButton(true);
+    }
+
+    /**
      * If server returns success, start MainActivity.
      * If not, launch login failed logic.
      *
      * @param baseResponse response from loader
      */
     public void setLoaderResult(BaseResponse baseResponse) {
-        mView.dismissProgressDialog();
-        mView.activateLoginButton(true);
-
         Token answer = baseResponse.getTypedAnswer();
         if (answer != null) {
             onLoginSuccess(answer);
@@ -91,7 +100,6 @@ public class LoginPresenter extends BasePresenter {
         mView.initLoader(args);
     }
 
-
     private void onLoginSuccess(Token token) {
         saveToken(token);
         loadInfoAboutUser();
@@ -106,8 +114,7 @@ public class LoginPresenter extends BasePresenter {
     }
 
     private void loadInfoAboutUser() {
-        UserRxLoader loader = new UserRxLoader(mPreference);
-        loader.apiCall();
+        mLoader.apiCall();
     }
 
     public interface IView {

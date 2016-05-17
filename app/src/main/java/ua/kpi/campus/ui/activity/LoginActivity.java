@@ -124,6 +124,7 @@ public class LoginActivity extends BaseActivity implements LoginPresenter
             baseResponse) {
         int id = loader.getId();
         if (id == R.id.api_loader) {
+            mPresenter.onFinishLogin();
             mPresenter.setLoaderResult(baseResponse);
         }
         getLoaderManager().destroyLoader(id);
