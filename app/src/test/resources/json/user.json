@@ -1,0 +1,21 @@
+{
+  "id": "1001",
+  "name": "Test account",
+  "position": [
+    {
+      "id": 300,
+      "name": "Teacher"
+    }
+  ],
+  "subdivision": [
+    {
+      "id": 400,
+      "name": "KPI"
+    },
+    {
+      "id": 401,
+      "name": "FIOT"
+    }
+  ],
+  "isBulletinBoardModerator": true
+}
