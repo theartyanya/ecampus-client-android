@@ -20,7 +20,7 @@ import static org.junit.Assert.fail;
 /**
  * Created by Admin on 18.05.2016.
  */
-public class UserServiceTest extends BaseTest {
+public class UserServiceTest extends BaseServiceTest {
 
     private MockWebServer server;
     private UserService service;
