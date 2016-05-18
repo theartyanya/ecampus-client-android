@@ -1,4 +1,4 @@
-package ua.kpi.campus.presenter;
+package ua.kpi.campus.ui.presenter;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -12,7 +12,6 @@ import ua.kpi.campus.rx.UserRxLoader;
 import ua.kpi.campus.ui.Navigator;
 import ua.kpi.campus.ui.Preference;
 import ua.kpi.campus.ui.activity.LoginActivity;
-import ua.kpi.campus.ui.presenter.LoginPresenter;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;

@@ -1,4 +1,4 @@
-package ua.kpi.campus.presenter;
+package ua.kpi.campus.ui.presenter;
 
 import org.junit.Before;
 import org.junit.Ignore;
@@ -17,8 +17,6 @@ import ua.kpi.campus.model.pojo.Item;
 import ua.kpi.campus.model.pojo.User;
 import ua.kpi.campus.rx.BulletinRxLoader;
 import ua.kpi.campus.ui.activity.SaveBulletinActivity;
-import ua.kpi.campus.ui.presenter.CudAction;
-import ua.kpi.campus.ui.presenter.SaveBulletinPresenter;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;

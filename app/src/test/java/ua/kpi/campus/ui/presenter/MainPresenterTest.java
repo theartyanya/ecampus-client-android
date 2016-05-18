@@ -1,4 +1,4 @@
-package ua.kpi.campus.presenter;
+package ua.kpi.campus.ui.presenter;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -18,7 +18,6 @@ import ua.kpi.campus.model.Subsystem;
 import ua.kpi.campus.ui.Navigator;
 import ua.kpi.campus.ui.Preference;
 import ua.kpi.campus.ui.activity.MainActivity;
-import ua.kpi.campus.ui.presenter.MainPresenter;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
