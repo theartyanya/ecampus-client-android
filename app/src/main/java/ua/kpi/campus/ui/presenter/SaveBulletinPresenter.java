@@ -5,6 +5,7 @@ import ua.kpi.campus.model.pojo.Bulletin;
 import ua.kpi.campus.model.pojo.Item;
 import ua.kpi.campus.model.pojo.User;
 import ua.kpi.campus.rx.BulletinRxLoader;
+import ua.kpi.campus.rx.UserRxLoader;
 
 import java.util.List;
 
@@ -30,6 +31,10 @@ public class SaveBulletinPresenter extends BasePresenter {
 
     public void setView(IView view) {
         mView = view;
+    }
+
+    public void setLoader(BulletinRxLoader loader) {
+        mLoader = loader;
     }
 
     public void onStartRequest(CudAction action) {
@@ -79,7 +84,8 @@ public class SaveBulletinPresenter extends BasePresenter {
     }
 
     private void loadSpinnerAdapterData() {
-        List<Item> subdivisions = User.getInstance().subdivision;
+        User u = User.getInstance();
+        List<Item> subdivisions = u.getSubdivision();
         if (subdivisions != null && !subdivisions.isEmpty()) {
             Item mainSubdiv = subdivisions.get(0);
             mLoader.loadDescSubdivisions(mainSubdiv.getId().toString());

@@ -30,4 +30,8 @@ public class User {
     public boolean isBulletinBoardModerator = false;
 
     public String token;
+
+    public List<Item> getSubdivision() {
+        return subdivision;
+    }
 }
