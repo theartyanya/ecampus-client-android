@@ -17,6 +17,6 @@ public interface AuthService {
 
     @FormUrlEncoded
     @POST("/oauth/token")
-    Call<Token> auth(@Field("username") String email, @Field("password")
+    Call<Token> auth(@Field("username") String login, @Field("password")
     String password, @Field("grant_type") String type);
 }

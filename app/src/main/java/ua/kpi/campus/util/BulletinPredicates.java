@@ -3,12 +3,13 @@ package ua.kpi.campus.util;
 import com.annimon.stream.Collectors;
 import com.annimon.stream.Stream;
 import com.annimon.stream.function.Predicate;
-import ua.kpi.campus.model.pojo.Bulletin;
-import ua.kpi.campus.model.pojo.Item;
 
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+
+import ua.kpi.campus.model.pojo.Bulletin;
+import ua.kpi.campus.model.pojo.Item;
 
 /**
  * Created by Administrator on 29.03.2016.
@@ -35,7 +36,7 @@ public class BulletinPredicates {
     }
 
     public static Predicate<Bulletin> isDeleted() {
-        return p -> (p.getActuality()==false);
+        return p -> (p.getActuality() == false);
     }
 
     public static Predicate<Bulletin> isMatchesQuerySubject(String query) {
@@ -50,7 +51,6 @@ public class BulletinPredicates {
     public static List<Bulletin> filterBulletins(Collection<Bulletin> bulletins,
                                                  Predicate<Bulletin>
                                                          predicate) {
-
         return Stream.of(bulletins)
                 .filter(predicate)
                 .collect(Collectors.<Bulletin>toList());

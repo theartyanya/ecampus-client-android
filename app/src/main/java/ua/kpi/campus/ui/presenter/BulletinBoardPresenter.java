@@ -7,6 +7,7 @@ import android.content.res.TypedArray;
 import ua.kpi.campus.model.dao.BulletinDao;
 import ua.kpi.campus.model.dao.IDataAccessObject;
 import ua.kpi.campus.model.pojo.Bulletin;
+import ua.kpi.campus.model.pojo.User;
 import ua.kpi.campus.ui.Navigator;
 
 import java.util.ArrayList;
@@ -38,6 +39,10 @@ public class BulletinBoardPresenter extends BasePresenter {
         mView = view;
     }
 
+    public void setDao(IDataAccessObject dao) {
+        mDataAccess = dao;
+    }
+
     @Override
     public void initializeViewComponent() {
         mView.setViewComponent();
@@ -54,10 +59,10 @@ public class BulletinBoardPresenter extends BasePresenter {
 
     /**
      * Return whether current user is Moderator of BulletinBoard
-     * @return true if user is moderator, else otherwise
+     * @return true if user is moderator, false otherwise
      */
     public boolean isModerator() {
-        return true;
+        return User.getInstance().isBulletinBoardModerator;
     }
 
     /**

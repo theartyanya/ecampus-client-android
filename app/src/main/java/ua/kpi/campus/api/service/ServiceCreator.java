@@ -66,4 +66,22 @@ public class ServiceCreator {
         return retrofit.create(serviceClass);
     }
 
+    /**
+     * Creates test service. For unit testing purposes.
+     *
+     * @param url endpoint
+     * @param serviceClass Java interface of the retrofit service
+     * @param <S>
+     * @return test service
+     */
+    public static <S> S createTestService(String url, Class<S> serviceClass) {
+        OkHttpClient httpClient = new OkHttpClient();
+        Retrofit.Builder builder = new Retrofit.Builder().
+                baseUrl(url)
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create());
+        builder.client(httpClient);
+        S apiInterface = builder.build().create(serviceClass);
+        return apiInterface;
+    }
 }

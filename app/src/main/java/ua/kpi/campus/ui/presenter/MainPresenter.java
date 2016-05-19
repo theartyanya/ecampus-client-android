@@ -75,7 +75,7 @@ public class MainPresenter extends BasePresenter {
         Resources res = getResources();
         String[] names = getSubsystemNames(res);
         TypedArray icons = getSubsystemIcon(res);
-        for (int i = 0; i < names.length && i < icons.length(); i++) {
+        for (int i = 0; i < names.length; i++) {
             Subsystem s = new Subsystem(names[i], icons.getResourceId(i, -1));
             subsystems.add(s);
         }

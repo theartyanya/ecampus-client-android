@@ -23,16 +23,22 @@ public class LoginPresenter extends BasePresenter {
     private IView mView;
     private Navigator mNavigator;
     private Preference mPreference;
+    private UserRxLoader mLoader;
 
 
     @Inject
     public LoginPresenter(Navigator navigator, Preference preference) {
         mNavigator = navigator;
         mPreference = preference;
+        mLoader = new UserRxLoader(preference);
     }
 
     public void setView(IView view) {
         mView = view;
+    }
+
+    public void setLoader(UserRxLoader loader) {
+        mLoader = loader;
     }
 
     @Override
@@ -41,27 +47,27 @@ public class LoginPresenter extends BasePresenter {
 
     /**
      * Set necessary View components to "login state"
-     *
-     * @param login    login which is entered by the user
-     * @param password password which is entered by the user
      */
-    public void login(String login, String password) {
+    public void onStartLogin() {
         mView.showLoginProgressDialog();
         mView.activateLoginButton(false);
-        validateUser(login, password);
     }
 
     /**
      * Set views to "initial (after login) state".
+     */
+    public void onFinishLogin() {
+        mView.dismissProgressDialog();
+        mView.activateLoginButton(true);
+    }
+
+    /**
      * If server returns success, start MainActivity.
      * If not, launch login failed logic.
      *
      * @param baseResponse response from loader
      */
     public void setLoaderResult(BaseResponse baseResponse) {
-        mView.dismissProgressDialog();
-        mView.activateLoginButton(true);
-
         Token answer = baseResponse.getTypedAnswer();
         if (answer != null) {
             onLoginSuccess(answer);
@@ -84,16 +90,15 @@ public class LoginPresenter extends BasePresenter {
     /**
      * Init loader to load data for the user authentication.
      *
-     * @param login
-     * @param password
+     * @param login login which is entered by the user
+     * @param password password which is entered by the user
      */
-    private void validateUser(String login, String password) {
+    public void initRequest(String login, String password) {
         Bundle args = new Bundle();
         args.putString(Config.KEY_LOGIN, login);
         args.putString(Config.KEY_PASSWORD, password);
         mView.initLoader(args);
     }
-
 
     private void onLoginSuccess(Token token) {
         saveToken(token);
@@ -109,8 +114,7 @@ public class LoginPresenter extends BasePresenter {
     }
 
     private void loadInfoAboutUser() {
-        UserRxLoader loader = new UserRxLoader(mPreference);
-        loader.apiCall();
+        mLoader.apiCall();
     }
 
     public interface IView {

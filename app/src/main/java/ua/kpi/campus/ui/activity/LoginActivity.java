@@ -102,9 +102,10 @@ public class LoginActivity extends BaseActivity implements LoginPresenter
         String userLogin = mLogin.getText().toString();
         String userPassword = mPassword.getText().toString();
         boolean isValid = validateInput(userLogin, userPassword);
-        if(isValid)
-            mPresenter.login(userLogin, userPassword);
-
+        if(isValid) {
+            mPresenter.onStartLogin();
+            mPresenter.initRequest(userLogin, userPassword);
+        }
     }
 
     @Override
@@ -124,6 +125,7 @@ public class LoginActivity extends BaseActivity implements LoginPresenter
             baseResponse) {
         int id = loader.getId();
         if (id == R.id.api_loader) {
+            mPresenter.onFinishLogin();
             mPresenter.setLoaderResult(baseResponse);
         }
         getLoaderManager().destroyLoader(id);

@@ -39,6 +39,10 @@ public class BulletinBoardModeratorPresenter extends BasePresenter {
         mView = view;
     }
 
+    public void setDao(IDataAccessObject dao) {
+        mDataAccess = dao;
+    }
+
     @Override
     public void initializeViewComponent() {
         mView.setViewComponent();
