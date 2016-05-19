@@ -1,14 +1,13 @@
 package ua.kpi.campus.model.dao;
 
-import ua.kpi.campus.model.pojo.Bulletin;
-import ua.kpi.campus.model.pojo.Item;
-import ua.kpi.campus.model.pojo.User;
-
 import java.util.Collection;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
+import ua.kpi.campus.model.pojo.Bulletin;
+import ua.kpi.campus.model.pojo.Item;
+import ua.kpi.campus.model.pojo.User;
 import ua.kpi.campus.util.BulletinPredicates;
 
 /**
@@ -46,10 +45,10 @@ public class BulletinDao implements IDataAccessObject<Bulletin> {
         List<Item> userSubdivision = User.getInstance().subdivision;
 
         if (userProfile != null && userSubdivision != null) {
-            List<Integer> ids = BulletinPredicates.getIdsCollection(userProfile);
+            List<Integer> ids = BulletinPredicates.getIdsCollection
+                    (userProfile);
             mByProfile.addAll(BulletinPredicates.filterBulletins(data,
-                    BulletinPredicates.isMatchesProfile
-                    (ids)));
+                    BulletinPredicates.isMatchesProfile(ids)));
             ids = BulletinPredicates.getIdsCollection(userSubdivision);
             mBySubdivision.addAll(BulletinPredicates.filterBulletins(data,
                     BulletinPredicates.isMatchesSubdivision(ids)));
