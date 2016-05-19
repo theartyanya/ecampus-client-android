@@ -119,7 +119,7 @@ public class BulletinServiceTest extends BaseServiceTest {
         assertEquals("202", b.getId());
         assertEquals("Attention", b.getSubject());
     }
-    
+
     @Test
     public void addBulletin() throws Exception {
         TestSubscriber<String> testSubscriber = new TestSubscriber<>();
@@ -195,6 +195,16 @@ public class BulletinServiceTest extends BaseServiceTest {
         assertEquals(1, actual.size());
         assertEquals(Integer.valueOf(3), actual.get(0).getId());
         assertEquals("AB", actual.get(0).getName());
+    }
+
+    @Test
+    public void getRecipients_Incorrect() {
+        try {
+            service.getRecipientsBy(getToken(),("IncorrectRequest")).subscribe();
+            fail();
+        } catch (Exception expected) {
+            assertEquals("HTTP 404 OK", expected.getMessage());
+        }
     }
 
     @After
