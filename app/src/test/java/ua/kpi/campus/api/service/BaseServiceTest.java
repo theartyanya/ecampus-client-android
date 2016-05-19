@@ -14,4 +14,8 @@ public class BaseServiceTest {
     public void setUp() throws Exception {
         jsonReader = new JsonReader();
     }
+
+    public String getToken() {
+        return "bearer token";
+    }
 }

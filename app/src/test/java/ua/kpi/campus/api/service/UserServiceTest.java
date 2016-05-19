@@ -1,21 +1,19 @@
 package ua.kpi.campus.api.service;
 
+import com.squareup.okhttp.HttpUrl;
+import com.squareup.okhttp.mockwebserver.Dispatcher;
+import com.squareup.okhttp.mockwebserver.MockResponse;
 import com.squareup.okhttp.mockwebserver.MockWebServer;
+import com.squareup.okhttp.mockwebserver.RecordedRequest;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.squareup.okhttp.HttpUrl;
-import com.squareup.okhttp.mockwebserver.Dispatcher;
-import com.squareup.okhttp.mockwebserver.MockResponse;
-import com.squareup.okhttp.mockwebserver.RecordedRequest;
-
 import rx.observers.TestSubscriber;
 import ua.kpi.campus.model.pojo.User;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 
 /**
  * Created by Admin on 18.05.2016.
@@ -32,7 +30,8 @@ public class UserServiceTest extends BaseServiceTest {
         server.start();
         final Dispatcher dispatcher = new Dispatcher() {
             @Override
-            public MockResponse dispatch(RecordedRequest request) throws InterruptedException {
+            public MockResponse dispatch(RecordedRequest request) throws
+                    InterruptedException {
                 if (request.getPath().equals("/account/info")) {
                     return new MockResponse().setResponseCode(200)
                             .setBody(jsonReader.readString("json/user.json"));
@@ -42,7 +41,8 @@ public class UserServiceTest extends BaseServiceTest {
         };
         server.setDispatcher(dispatcher);
         HttpUrl baseUrl = server.url("/");
-        service = ServiceCreator.createTestService(baseUrl.toString(), UserService.class);
+        service = ServiceCreator.createTestService(baseUrl.toString(),
+                UserService.class);
     }
 
     @Test
@@ -63,9 +63,5 @@ public class UserServiceTest extends BaseServiceTest {
     @After
     public void tearDown() throws Exception {
         server.shutdown();
-    }
-
-    private String getToken() {
-        return "bearer token";
     }
 }
