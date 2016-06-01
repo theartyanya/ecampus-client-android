@@ -12,6 +12,8 @@ import javax.inject.Inject;
 import butterknife.Bind;
 import ua.kpi.campus.R;
 import ua.kpi.campus.di.UIModule;
+import ua.kpi.campus.model.pojo.VoteTeacher;
+import ua.kpi.campus.ui.adapter.VotingAdapter;
 import ua.kpi.campus.ui.presenter.VotingStudentPresenter;
 import ua.kpi.campus.ui.view.ExtendedRecyclerView;
 
@@ -26,6 +28,7 @@ public class VotingStudentActivity extends BaseActivity implements VotingStudent
     ExtendedRecyclerView mRecyclerView;
     @Inject
     VotingStudentPresenter mPresenter;
+    private VotingAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +52,16 @@ public class VotingStudentActivity extends BaseActivity implements VotingStudent
         setRecyclerView();
     }
 
+    @Override
+    public void setVoteInProgressAdapter(List<VoteTeacher> teachers) {
+        setVotingAdapter(teachers);
+    }
+
+    @Override
+    public void setVoteEndedAdapter(List<VoteTeacher> teachers) {
+
+    }
+
     private void setToolbar() {
         setSupportActionBar(mToolbar);
         getSupportActionBar().setHomeButtonEnabled(true);
@@ -62,5 +75,13 @@ public class VotingStudentActivity extends BaseActivity implements VotingStudent
                 (getApplicationContext()));
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setSaveEnabled(true);
+    }
+
+    private void setVotingAdapter(List<VoteTeacher> teachers) {
+        mAdapter = new VotingAdapter();
+        mAdapter.setItems(teachers);
+        mAdapter.setHasStableIds(true);
+        //mAdapter.setOnItemClickListener(onItemClickListener);
+        mRecyclerView.setAdapter(mAdapter);
     }
 }
