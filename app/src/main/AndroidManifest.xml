@@ -77,5 +77,11 @@
 
 
         </activity>
+        <activity
+            android:name="ua.kpi.campus.ui.activity.VotingStudentActivity"
+            android:parentActivityName="ua.kpi.campus.ui.activity.MainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
     </application>
 </manifest>

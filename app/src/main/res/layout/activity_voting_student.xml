@@ -14,6 +14,7 @@
         android:layout_height="wrap_content"
         android:paddingLeft="16dp"
         android:paddingTop="16dp"
+        android:textStyle="bold"
         android:text="Опитування"/>
 
     <Spinner
@@ -22,8 +23,16 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"/>
 
-    <ua.kpi.campus.ui.view.ExtendedRecyclerView
-        android:id="@android:id/list"
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="16dp"
+        android:textStyle="bold"
+        android:paddingBottom="16dp"
+        android:text="Викладачі"/>
+
+    <RecyclerView
+        android:id="@+id/recycler_teachers"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="16dp"
