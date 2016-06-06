@@ -4,16 +4,17 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 
-import ua.kpi.campus.model.Subsystem;
-import ua.kpi.campus.model.pojo.User;
-import ua.kpi.campus.ui.Navigator;
-import ua.kpi.campus.ui.Preference;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
+
+import ua.kpi.campus.model.Subsystem;
+import ua.kpi.campus.model.pojo.User;
+import ua.kpi.campus.ui.Navigator;
+import ua.kpi.campus.ui.Preference;
+import ua.kpi.campus.util.BulletinPredicates;
 
 /**
  * MainPresenter created to manage MainActivity.
@@ -52,7 +53,25 @@ public class MainPresenter extends BasePresenter {
                 break;
             case 1:
                 break;
+            case 2:
+                break;
+            case 3:
+                if(userIsStudent())
+                    mNavigator.startVotingStudentActivity();
+                break;
         }
+    }
+
+    /**
+     * True if user's position is student
+     * False means user is teacher
+     * @return
+     */
+    private boolean userIsStudent() {
+        final Integer studentId = 5;
+        List<Integer> ids = BulletinPredicates.getIdsCollection
+                (User.getInstance().position);
+        return ids.contains(studentId);
     }
 
     /**
