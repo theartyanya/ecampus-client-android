@@ -2,6 +2,7 @@ package ua.kpi.campus.ui.activity;
 
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
@@ -20,7 +21,6 @@ import ua.kpi.campus.ui.adapter.ItemSpinnerAdapter;
 import ua.kpi.campus.ui.adapter.NothingSelectedAdapter;
 import ua.kpi.campus.ui.adapter.VotingAdapter;
 import ua.kpi.campus.ui.presenter.VotingStudentPresenter;
-import ua.kpi.campus.ui.view.ExtendedRecyclerView;
 
 /**
  * Created by Administrator on 31.05.2016.
@@ -29,8 +29,8 @@ public class VotingStudentActivity extends BaseActivity implements VotingStudent
 
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
-    @Bind(R.id.recycler_teachers)
-    ExtendedRecyclerView mRecyclerView;
+    @Bind(R.id.recyclerview_teachers)
+    RecyclerView mRecyclerView;
     @Bind(R.id.spinner_terms)
     Spinner mSpinnerTerms;
     @Inject
@@ -44,6 +44,8 @@ public class VotingStudentActivity extends BaseActivity implements VotingStudent
         bindViews();
         mPresenter.setView(this);
         mPresenter.initializeViewComponent();
+
+        mPresenter.loadVoting();
     }
 
     @Override
@@ -66,10 +68,6 @@ public class VotingStudentActivity extends BaseActivity implements VotingStudent
 
     @Override
     public void setVoteEndedAdapter(List<VoteTeacher> teachers) {
-
-    }
-
-    public void setSpinner() {
 
     }
 

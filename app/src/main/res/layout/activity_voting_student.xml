@@ -31,8 +31,8 @@
         android:paddingBottom="16dp"
         android:text="Викладачі"/>
 
-    <RecyclerView
-        android:id="@+id/recycler_teachers"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerview_teachers"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="16dp"
