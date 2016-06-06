@@ -42,7 +42,10 @@ public class VotingAdapter extends RecyclerView
     @Override
     public void onBindViewHolder(VotingAdapter.ViewHolder holder,
                                  int position) {
-        holder.tvTeacherName.setText(mData.get(position).getTeacherName());
+        VoteTeacher teacher = mData.get(position);
+        holder.tvTeacherName.setText(teacher.getTeacherName());
+        if (!teacher.isVoted())
+            holder.imageVoted.setVisibility(View.INVISIBLE);
     }
 
     @Override
@@ -54,8 +57,8 @@ public class VotingAdapter extends RecyclerView
 
         @Bind(R.id.tv_teacher_name)
         TextView tvTeacherName;
-        @Bind(R.id.tv_feedback)
-        TextView tvFeedback;
+        @Bind(R.id.image_voted)
+        TextView imageVoted;
 
         public ViewHolder(View itemView) {
             super(itemView);

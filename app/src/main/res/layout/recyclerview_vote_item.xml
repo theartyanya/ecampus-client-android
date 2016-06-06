@@ -29,17 +29,17 @@
         android:layout_height="wrap_content">
 
         <ImageView
+            android:id="@+id/image_not_voted"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:background="@mipmap/ic_star_not_voted"/>
 
         <ImageView
+            android:id="@+id/image_voted"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:background="@mipmap/ic_star_voted"/>
 
     </FrameLayout>
-
-
 
 </LinearLayout>
