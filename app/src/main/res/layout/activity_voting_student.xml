@@ -15,10 +15,12 @@
         android:paddingLeft="16dp"
         android:paddingTop="16dp"
         android:textStyle="bold"
-        android:text="Опитування"/>
+        android:text="Опитування за "/>
 
     <Spinner
         android:id="@+id/spinner_terms"
+        style="@style/Margin"
+        android:paddingRight="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"/>

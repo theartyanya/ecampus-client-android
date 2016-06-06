@@ -1,27 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
-              android:layout_height="match_parent"
+              android:layout_height="48dp"
               android:orientation="horizontal">
 
     <TextView
         android:id="@+id/tv_teacher_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
         android:layout_weight="5.0"
-        android:text="Іваненко Іван Іванович"/>
+        android:text="Іваненко Іван Іванович"
+        android:textSize="14sp"/>
 
     <TextView
         android:id="@+id/tv_feedback"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1.0"
-        android:text="ОЦІНИТИ"/>
+        android:layout_gravity="center_vertical"
+        android:clickable="true"
+        android:text="ОЦІНИТИ"
+        android:paddingRight="8dp"
+        android:textSize="12sp"/>
 
-    <ImageView
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_weight="1.0"
-        android:background="@color/colorDivider"/>
+    <FrameLayout
+        android:layout_gravity="center_vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:background="@mipmap/ic_star_not_voted"/>
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:background="@mipmap/ic_star_voted"/>
+
+    </FrameLayout>
+
+
 
 </LinearLayout>
