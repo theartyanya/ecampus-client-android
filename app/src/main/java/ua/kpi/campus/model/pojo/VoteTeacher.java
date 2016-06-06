@@ -23,12 +23,20 @@ public class VoteTeacher {
     @SerializedName("isVoted")
     @Expose
     private boolean isVoted;
-    @SerializedName("criterions")
+    @SerializedName("criteria")
     @Expose
-    private List<Item> criterions = new ArrayList<>();
+    private List<Item> criteria = new ArrayList<>();
     @SerializedName("avgResult")
     @Expose
     private String avgResult;
+
+    public VoteTeacher(String voteId, String teacherId, String name, boolean isVoted, String result ) {
+        this.voteId = voteId;
+        this.teacherId = teacherId;
+        this.teacherName = name;
+        this.isVoted = isVoted;
+        this.avgResult = result;
+    }
 
     public String getVoteId() {
         return voteId;
@@ -62,12 +70,12 @@ public class VoteTeacher {
         this.isVoted = isVoted;
     }
 
-    public List<Item> getCriterions() {
-        return criterions;
+    public List<Item> getCriteria() {
+        return criteria;
     }
 
-    public void setCriterions(List<Item> criterions) {
-        this.criterions = criterions;
+    public void setCriteria(List<Item> criteria) {
+        this.criteria = criteria;
     }
 
     public String getAvgResult() {

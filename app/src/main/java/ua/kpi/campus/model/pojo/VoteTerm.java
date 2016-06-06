@@ -21,6 +21,13 @@ public class VoteTerm {
     @Expose
     private String dateStop;
 
+    public VoteTerm(String id, String name, String dateStart, String dateStop) {
+        voteId = id;
+        voteName = name;
+        this.dateStart = dateStart;
+        this.dateStop = dateStop;
+    }
+
     public String getVoteId() {
         return voteId;
     }

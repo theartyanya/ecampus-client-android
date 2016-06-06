@@ -3,6 +3,8 @@ package ua.kpi.campus.ui.activity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +14,10 @@ import javax.inject.Inject;
 import butterknife.Bind;
 import ua.kpi.campus.R;
 import ua.kpi.campus.di.UIModule;
+import ua.kpi.campus.model.pojo.Item;
 import ua.kpi.campus.model.pojo.VoteTeacher;
+import ua.kpi.campus.ui.adapter.ItemSpinnerAdapter;
+import ua.kpi.campus.ui.adapter.NothingSelectedAdapter;
 import ua.kpi.campus.ui.adapter.VotingAdapter;
 import ua.kpi.campus.ui.presenter.VotingStudentPresenter;
 import ua.kpi.campus.ui.view.ExtendedRecyclerView;
@@ -26,6 +31,8 @@ public class VotingStudentActivity extends BaseActivity implements VotingStudent
     Toolbar mToolbar;
     @Bind(R.id.recycler_teachers)
     ExtendedRecyclerView mRecyclerView;
+    @Bind(R.id.spinner_terms)
+    Spinner mSpinnerTerms;
     @Inject
     VotingStudentPresenter mPresenter;
     private VotingAdapter mAdapter;
@@ -60,6 +67,19 @@ public class VotingStudentActivity extends BaseActivity implements VotingStudent
     @Override
     public void setVoteEndedAdapter(List<VoteTeacher> teachers) {
 
+    }
+
+    public void setSpinner() {
+
+    }
+
+    public void setTermsSpinner(List<Item> list) {
+        ArrayAdapter<Item> adapter = new ItemSpinnerAdapter(this, R.layout
+                .spinner_item, R.layout.spinner_dropdown_item, list);
+        mSpinnerTerms.setAdapter(new NothingSelectedAdapter(
+                adapter,
+                R.layout.spinner_nothing_selected_terms,
+                this));
     }
 
     private void setToolbar() {
