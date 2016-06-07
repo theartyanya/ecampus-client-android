@@ -10,7 +10,7 @@ public class VoteTerm {
 
     @SerializedName("voteId")
     @Expose
-    private String voteId;
+    private Integer voteId;
     @SerializedName("voteName")
     @Expose
     private String voteName;
@@ -21,18 +21,18 @@ public class VoteTerm {
     @Expose
     private String dateStop;
 
-    public VoteTerm(String id, String name, String dateStart, String dateStop) {
+    public VoteTerm(Integer id, String name, String dateStart, String dateStop) {
         voteId = id;
         voteName = name;
         this.dateStart = dateStart;
         this.dateStop = dateStop;
     }
 
-    public String getVoteId() {
+    public Integer getVoteId() {
         return voteId;
     }
 
-    public void setVoteId(String voteId) {
+    public void setVoteId(Integer voteId) {
         this.voteId = voteId;
     }
 

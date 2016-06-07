@@ -13,10 +13,10 @@ public class VoteTeacher {
 
     @SerializedName("voteId")
     @Expose
-    private String voteId;
+    private Integer voteId;
     @SerializedName("teacherId")
     @Expose
-    private String teacherId;
+    private Integer teacherId;
     @SerializedName("teacherName")
     @Expose
     private String teacherName;
@@ -30,7 +30,7 @@ public class VoteTeacher {
     @Expose
     private String avgResult;
 
-    public VoteTeacher(String voteId, String teacherId, String name, boolean isVoted, String result ) {
+    public VoteTeacher(Integer voteId, Integer teacherId, String name, boolean isVoted, String result ) {
         this.voteId = voteId;
         this.teacherId = teacherId;
         this.teacherName = name;
@@ -38,19 +38,19 @@ public class VoteTeacher {
         this.avgResult = result;
     }
 
-    public String getVoteId() {
+    public Integer getVoteId() {
         return voteId;
     }
 
-    public void setVoteId(String voteId) {
+    public void setVoteId(Integer voteId) {
         this.voteId = voteId;
     }
 
-    public String getTeacherId() {
+    public Integer getTeacherId() {
         return teacherId;
     }
 
-    public void setTeacherId(String teacherId) {
+    public void setTeacherId(Integer teacherId) {
         this.teacherId = teacherId;
     }
 

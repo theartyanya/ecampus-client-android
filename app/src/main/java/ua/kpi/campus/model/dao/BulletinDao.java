@@ -8,7 +8,11 @@ import java.util.Set;
 import ua.kpi.campus.model.pojo.Bulletin;
 import ua.kpi.campus.model.pojo.Item;
 import ua.kpi.campus.model.pojo.User;
-import ua.kpi.campus.util.BulletinPredicates;
+
+import static ua.kpi.campus.util.BulletinPredicates.filterBulletins;
+import static ua.kpi.campus.util.BulletinPredicates.getIdsCollection;
+import static ua.kpi.campus.util.BulletinPredicates.isMatchesProfile;
+import static ua.kpi.campus.util.BulletinPredicates.isMatchesSubdivision;
 
 /**
  * Implementation of IDataAccessObject for the Bulletin data model.
@@ -45,13 +49,11 @@ public class BulletinDao implements IDataAccessObject<Bulletin> {
         List<Item> userSubdivision = User.getInstance().subdivision;
 
         if (userProfile != null && userSubdivision != null) {
-            List<Integer> ids = BulletinPredicates.getIdsCollection
-                    (userProfile);
-            mByProfile.addAll(BulletinPredicates.filterBulletins(data,
-                    BulletinPredicates.isMatchesProfile(ids)));
-            ids = BulletinPredicates.getIdsCollection(userSubdivision);
-            mBySubdivision.addAll(BulletinPredicates.filterBulletins(data,
-                    BulletinPredicates.isMatchesSubdivision(ids)));
+            List<Integer> ids = getIdsCollection(userProfile);
+            mByProfile.addAll(filterBulletins(data, isMatchesProfile(ids)));
+            ids = getIdsCollection(userSubdivision);
+            mBySubdivision.addAll(filterBulletins(data, isMatchesSubdivision
+                    (ids)));
         }
     }
 

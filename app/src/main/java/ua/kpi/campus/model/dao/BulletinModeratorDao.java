@@ -1,16 +1,21 @@
 package ua.kpi.campus.model.dao;
 
-import ua.kpi.campus.model.pojo.Bulletin;
-import ua.kpi.campus.model.pojo.Item;
-import ua.kpi.campus.model.pojo.User;
-import ua.kpi.campus.util.DateUtil;
-
 import java.util.Collection;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
-import ua.kpi.campus.util.BulletinPredicates;
+import ua.kpi.campus.model.pojo.Bulletin;
+import ua.kpi.campus.model.pojo.Item;
+import ua.kpi.campus.model.pojo.User;
+import ua.kpi.campus.util.DateUtil;
+
+import static ua.kpi.campus.util.BulletinPredicates.filterBulletins;
+import static ua.kpi.campus.util.BulletinPredicates.getIdsCollection;
+import static ua.kpi.campus.util.BulletinPredicates.isDeleted;
+import static ua.kpi.campus.util.BulletinPredicates.isMatchesProfile;
+import static ua.kpi.campus.util.BulletinPredicates.isMatchesSubdivision;
+import static ua.kpi.campus.util.BulletinPredicates.isNotExpired;
 
 /**
  * Created by Administrator on 28.03.2016.
@@ -53,20 +58,15 @@ public class BulletinModeratorDao implements IDataAccessObject<Bulletin> {
         List<Item> userSubdivision = User.getInstance().subdivision;
 
         if (userProfile != null && userSubdivision != null) {
-            List<Integer> ids = BulletinPredicates.getIdsCollection(userProfile);
-            mByProfile.addAll(BulletinPredicates.filterBulletins(data,
-                    BulletinPredicates.isMatchesProfile
-                    (ids)));
+            List<Integer> ids = getIdsCollection(userProfile);
+            mByProfile.addAll(filterBulletins(data, isMatchesProfile(ids)));
 
-            ids = BulletinPredicates.getIdsCollection(userSubdivision);
-            mBySubdiv.addAll(BulletinPredicates.filterBulletins(data,
-                    BulletinPredicates.isMatchesSubdivision
-                    (ids)));
+            ids = getIdsCollection(userSubdivision);
+            mBySubdiv.addAll(filterBulletins(data, isMatchesSubdivision(ids)));
         }
-        mNotExpired.addAll(BulletinPredicates.filterBulletins(data,
-                BulletinPredicates.isNotExpired(DateUtil
+        mNotExpired.addAll(filterBulletins(data, isNotExpired(DateUtil
                 .getCurrentDate())));
-        mDeleted.addAll(BulletinPredicates.filterBulletins(data, BulletinPredicates.isDeleted()));
+        mDeleted.addAll(filterBulletins(data, isDeleted()));
     }
 
     @Override
