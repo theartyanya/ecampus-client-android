@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -9,13 +10,19 @@
 
     <include layout="@layout/toolbar"/>
 
-    <TextView
+    <ua.kpi.campus.ui.view.TextViewDrawableSize
         style="@style/Margin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:drawableLeft="@drawable/icon_calendar"
         android:text="Опитування"
-        android:textStyle="bold"/>
+        android:gravity="center"
+        android:drawablePadding="16dp"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        app:compoundDrawableHeight="28dp"
+        app:compoundDrawableWidth="28dp"/>
 
     <Spinner
         android:id="@+id/spinner_terms"
@@ -23,14 +30,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="8dp"
-        android:layout_marginRight="16dp"/>
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="8dp"/>
 
-    <TextView
+    <ua.kpi.campus.ui.view.TextViewDrawableSize
         style="@style/Margin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:drawablePadding="16dp"
+        android:drawableLeft="@drawable/icon_grad_hat"
+        android:textSize="16sp"
+        app:compoundDrawableHeight="28dp"
+        app:compoundDrawableWidth="28dp"
         android:text="Викладачі"
         android:textStyle="bold"/>
 
@@ -38,7 +51,6 @@
         android:id="@+id/recyclerview_teachers"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="16dp"
         android:paddingRight="16dp"
         android:scrollbars="vertical"/>
 

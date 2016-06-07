@@ -23,7 +23,7 @@
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:layout_marginTop="24dp"
-            android:drawableLeft="@drawable/icon_bulletin"
+            android:drawableLeft="@drawable/icon_calendar"
             android:drawablePadding="24dp"
             android:gravity="center"
             android:text="Методичні ресурси"

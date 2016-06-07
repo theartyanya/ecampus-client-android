@@ -4,12 +4,22 @@
               android:layout_height="48dp"
               android:orientation="horizontal">
 
+    <View
+        android:id="@android:id/icon1"
+        android:layout_width="2dp"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/colorPrimary"/>
+
     <TextView
         android:id="@+id/tv_teacher_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:layout_weight="5.0"
+        android:layout_marginLeft="16dp"
+        android:text="test"
         android:textSize="14sp"/>
 
     <TextView
@@ -19,6 +29,8 @@
         android:layout_gravity="center_vertical"
         android:clickable="true"
         android:text="ОЦІНИТИ"
+
+        android:background="?attr/selectableItemBackgroundBorderless"
         android:paddingRight="8dp"
         android:textSize="12sp"/>
 
