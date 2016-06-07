@@ -47,8 +47,8 @@ public class VotingStudentPresenter extends BasePresenter {
         VoteSet vs = new VoteSet();
 
         List<VoteTerm> terms = new ArrayList<>();
-        terms.add(new VoteTerm("1", "2015-2016", "2015-09-01", "2016-09-01"));
-        terms.add(new VoteTerm("2", "2014-2015", "2014-09-01", "2015-09-01"));
+        terms.add(new VoteTerm(1, "2015-2016", "2015-09-01", "2016-09-01"));
+        terms.add(new VoteTerm(2, "2014-2015", "2014-09-01", "2015-09-01"));
 
         List<Item> criteria = new ArrayList<>();
         criteria.add(new Item(1, "3.97"));
@@ -59,14 +59,17 @@ public class VotingStudentPresenter extends BasePresenter {
         criteria.add(new Item(6, "4.21"));
 
         List<VoteTeacher> teachers = new ArrayList<>();
-        VoteTeacher t = new VoteTeacher("1", "1", "Крилов Євген " +
+        VoteTeacher t = new VoteTeacher(1, 1, "Крилов Євген " +
                 "Володимирович", true, "4.0");
         t.setCriteria(criteria);
         teachers.add(t);
-        t = new VoteTeacher("1", "2", "Лісовиченко Олег Іванович", true, "4.3");
+        t = new VoteTeacher(1, 2, "Лісовиченко Олег Іванович", true, "4.3");
         t.setCriteria(criteria);
         teachers.add(t);
-        t = new VoteTeacher("1", "2", "Мелкумян Катерина Юріївна", false, "4.3");
+        t = new VoteTeacher(1, 3, "Мелкумян Катерина Юріївна", false, "4.3");
+        t.setCriteria(criteria);
+        teachers.add(t);
+        t = new VoteTeacher(2, 4, "Олійник Волдимир Валентинович", false, "4.3");
         t.setCriteria(criteria);
         teachers.add(t);
 
@@ -80,16 +83,18 @@ public class VotingStudentPresenter extends BasePresenter {
     }
 
     public void setResult() {
-        VoteSet voting = getVoting();
-        List<VoteTerm> terms = voting.getTerms();
+        List<VoteTerm> terms = getVoting().getTerms();
 
         List<Item> termNames = new ArrayList<>();
         for (VoteTerm t : terms) {
-            Item i = new Item(Integer.parseInt(t.getVoteId()), t.getVoteName());
+            Item i = new Item(t.getVoteId(), t.getVoteName());
             termNames.add(i);
         }
         mView.setTermsSpinner(termNames);
+    }
 
+    public void setSpecificAdapter() {
+        VoteSet voting = getVoting();
         VoteTerm latestTerm = voting.getTerms().get(0);
         if (isVotePeriod(latestTerm.getDateStop())) {
             // voting adapter

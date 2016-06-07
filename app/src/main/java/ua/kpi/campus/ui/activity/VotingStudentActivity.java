@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
@@ -25,7 +27,8 @@ import ua.kpi.campus.ui.presenter.VotingStudentPresenter;
 /**
  * Created by Administrator on 31.05.2016.
  */
-public class VotingStudentActivity extends BaseActivity implements VotingStudentPresenter.IView{
+public class VotingStudentActivity extends BaseActivity implements
+        VotingStudentPresenter.IView {
 
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
@@ -71,6 +74,7 @@ public class VotingStudentActivity extends BaseActivity implements VotingStudent
 
     }
 
+    @Override
     public void setTermsSpinner(List<Item> list) {
         ArrayAdapter<Item> adapter = new ItemSpinnerAdapter(this, R.layout
                 .spinner_item, R.layout.spinner_dropdown_item, list);
@@ -78,6 +82,25 @@ public class VotingStudentActivity extends BaseActivity implements VotingStudent
                 adapter,
                 R.layout.spinner_nothing_selected_terms,
                 this));
+        mSpinnerTerms.setOnItemSelectedListener(new AdapterView
+                .OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int
+                    position, long id) {
+                Item item = (Item) parent.getItemAtPosition(position);
+                if (item != null) {
+                    if (mAdapter == null)
+                        mPresenter.setSpecificAdapter();
+                    mAdapter.filterByTerm(item.getId());
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // N/A
+            }
+        });
     }
 
     private void setToolbar() {
@@ -97,7 +120,7 @@ public class VotingStudentActivity extends BaseActivity implements VotingStudent
 
     private void setVotingAdapter(List<VoteTeacher> teachers) {
         mAdapter = new VotingAdapter();
-        mAdapter.setItems(teachers);
+        mAdapter.setAllItems(teachers);
         mAdapter.setHasStableIds(true);
         //mAdapter.setOnItemClickListener(onItemClickListener);
         mRecyclerView.setAdapter(mAdapter);

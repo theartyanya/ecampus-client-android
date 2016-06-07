@@ -15,21 +15,31 @@ import butterknife.ButterKnife;
 import ua.kpi.campus.R;
 import ua.kpi.campus.model.pojo.VoteTeacher;
 
+import static ua.kpi.campus.util.TermPredicates.filter;
+import static ua.kpi.campus.util.TermPredicates.isMatchesId;
+
 /**
  * Created by Administrator on 01.06.2016.
  */
 public class VotingAdapter extends RecyclerView
         .Adapter<VotingAdapter.ViewHolder> {
 
-    private List<VoteTeacher> mData = new ArrayList<>();
+    private List<VoteTeacher> mAllData = new ArrayList<>();
+    private List<VoteTeacher> mCurrentData = new ArrayList<>();
 
-    public void setItems(List<VoteTeacher> list) {
-        mData = list;
+    public void setAllItems(List<VoteTeacher> list) {
+        mAllData = list;
         notifyDataSetChanged();
     }
 
-    public List<VoteTeacher> getItems() {
-        return mData;
+    public List<VoteTeacher> getAllItems() {
+        return mAllData;
+    }
+
+    public void filterByTerm(Integer termId) {
+        mCurrentData.clear();
+        mCurrentData.addAll(filter(mAllData, isMatchesId(termId)));
+        notifyDataSetChanged();
     }
 
     @Override
@@ -43,7 +53,7 @@ public class VotingAdapter extends RecyclerView
     @Override
     public void onBindViewHolder(VotingAdapter.ViewHolder holder,
                                  int position) {
-        VoteTeacher teacher = mData.get(position);
+        VoteTeacher teacher = mCurrentData.get(position);
         holder.tvTeacherName.setText(teacher.getTeacherName());
         if (!teacher.isVoted())
             holder.imageVoted.setVisibility(View.INVISIBLE);
@@ -51,7 +61,7 @@ public class VotingAdapter extends RecyclerView
 
     @Override
     public int getItemCount() {
-        return mData.size();
+        return mCurrentData.size();
     }
 
     protected class ViewHolder extends RecyclerView.ViewHolder {
