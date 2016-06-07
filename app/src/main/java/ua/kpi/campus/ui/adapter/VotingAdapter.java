@@ -12,8 +12,10 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import ua.kpi.campus.R;
 import ua.kpi.campus.model.pojo.VoteTeacher;
+import ua.kpi.campus.ui.view.OnItemClickListener;
 
 import static ua.kpi.campus.util.TermPredicates.filter;
 import static ua.kpi.campus.util.TermPredicates.isMatchesId;
@@ -24,6 +26,7 @@ import static ua.kpi.campus.util.TermPredicates.isMatchesId;
 public class VotingAdapter extends RecyclerView
         .Adapter<VotingAdapter.ViewHolder> {
 
+    private OnItemClickListener mListener;
     private List<VoteTeacher> mAllData = new ArrayList<>();
     private List<VoteTeacher> mCurrentData = new ArrayList<>();
 
@@ -57,11 +60,17 @@ public class VotingAdapter extends RecyclerView
         holder.tvTeacherName.setText(teacher.getTeacherName());
         if (!teacher.isVoted())
             holder.imageVoted.setVisibility(View.INVISIBLE);
+        else
+            holder.imageVoted.setVisibility(View.VISIBLE);
     }
 
     @Override
     public int getItemCount() {
         return mCurrentData.size();
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        mListener = listener;
     }
 
     protected class ViewHolder extends RecyclerView.ViewHolder {
@@ -74,6 +83,14 @@ public class VotingAdapter extends RecyclerView
         public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+        }
+
+        @OnClick(R.id.tv_feedback)
+        public void itemClick(View view) {
+            if (mListener != null) {
+                int pos = getAdapterPosition();
+                mListener.onItemClicked(view, pos, mCurrentData.get(pos));
+            }
         }
     }
 }

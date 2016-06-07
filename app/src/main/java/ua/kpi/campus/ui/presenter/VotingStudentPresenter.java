@@ -109,6 +109,10 @@ public class VotingStudentPresenter extends BasePresenter {
         return mDataAccess.getData().iterator().next();
     }
 
+    public void onItemClick(Object item) {
+
+    }
+
     private boolean isVotePeriod(String endDate) {
         Date currentDate = DateUtil.convert(DateUtil.getCurrentDate());
         return !currentDate.after(DateUtil.convert(endDate));
