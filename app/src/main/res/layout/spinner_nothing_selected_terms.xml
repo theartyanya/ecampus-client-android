@@ -5,6 +5,6 @@
           android:layout_height="wrap_content"
           android:ellipsize="marquee"
           android:singleLine="true"
-          android:text="навчальний рік"
-          android:textColor="@color/colorTextDark"
+          android:text="Навчальний рік"
+          android:textColor="@color/colorDivider"
           android:textSize="12sp"/>

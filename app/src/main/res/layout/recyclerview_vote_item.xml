@@ -10,7 +10,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:layout_weight="5.0"
-        android:text="Іваненко Іван Іванович"
         android:textSize="14sp"/>
 
     <TextView
