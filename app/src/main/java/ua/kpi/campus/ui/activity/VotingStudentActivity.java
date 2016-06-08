@@ -23,6 +23,7 @@ import ua.kpi.campus.ui.adapter.ItemSpinnerAdapter;
 import ua.kpi.campus.ui.adapter.NothingSelectedAdapter;
 import ua.kpi.campus.ui.adapter.VotingAdapter;
 import ua.kpi.campus.ui.presenter.VotingStudentPresenter;
+import ua.kpi.campus.ui.view.DividerItemDecoration;
 import ua.kpi.campus.ui.view.OnItemClickListener;
 import ua.kpi.campus.util.ToastUtil;
 
@@ -126,6 +127,7 @@ public class VotingStudentActivity extends BaseActivity implements
     private void setRecyclerView() {
         mRecyclerView.setLayoutManager(new LinearLayoutManager
                 (getApplicationContext()));
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(this));
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setSaveEnabled(true);
     }
