@@ -32,25 +32,6 @@
         <item>@drawable/logo_rnp</item>
     </array>
 
-    <array name="bulletin_board_tab">
-        <item>Актуальні</item>
-        <item>Профіль</item>
-        <item>Підрозділ</item>
-    </array>
-
-    <array name="bulletin_board_moderator_tab">
-        <item>Всі</item>
-        <item>Актуальні</item>
-        <item>Профіль</item>
-        <item>Підрозділ</item>
-        <item>Видалені</item>
-    </array>
-
-    <array name="bulletin_board_tab_icon0">
-        <item>@android:drawable/ic_dialog_email</item>
-        <item>@android:drawable/ic_dialog_dialer</item>
-    </array>
-
     <array name="bulletin_board_tab_icon">
         <item>@mipmap/ic_action_actual</item>
         <item>@mipmap/ic_action_by_profile</item>
@@ -64,5 +45,15 @@
         <item>@mipmap/ic_action_by_susdivision</item>
         <item>@mipmap/ic_action_action_delete</item>
     </array>
+
+    <string-array name="voting_criteria">
+        <item>@string/criterionCompetence</item>
+        <item>@string/criterionExactingness</item>
+        <item>@string/criterionTeaching</item>
+        <item>@string/criterionRelationship</item>
+        <item>@string/criterionTact</item>
+        <item>@string/criterionModernity</item>
+    </string-array>
+
 
 </resources>

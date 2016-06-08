@@ -21,6 +21,9 @@ import static ua.kpi.campus.util.TermPredicates.filter;
 import static ua.kpi.campus.util.TermPredicates.isMatchesId;
 
 /**
+ * VotingAdapter manages VoteTeacher data model and adapts it to
+ * RecyclerView, which is in VotingStudentActivity.
+ * <p>
  * Created by Administrator on 01.06.2016.
  */
 public class VotingAdapter extends RecyclerView

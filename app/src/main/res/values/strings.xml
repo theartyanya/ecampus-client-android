@@ -57,4 +57,12 @@
     <string name="recipient_must_be_added">Додайте одержувача</string>
     <string name="required_field">Обов\'язкове поле!</string>
     <string name="activity_name_voting">Голосування</string>
+
+    <string name="criterionCompetence">Компетентність в дисципліні, яку викладає</string>
+    <string name="criterionExactingness">Вимогливість викладача</string>
+    <string name="criterionTeaching">Вміння донести матеріал до студентів</string>
+    <string name="criterionRelationship">Вміння налагодити партнерські стосунки зі студентами</string>
+    <string name="criterionTact">Загальна культура та тактовність по відношенню до студентів</string>
+    <string name="criterionModernity">Використання засобів дистанційного спілкування (електронна пошта, Skype, соц.мережі)</string>
+    <string name="activity_name_rate_teacher">Оцінка</string>
 </resources>
