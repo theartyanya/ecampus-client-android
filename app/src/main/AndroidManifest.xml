@@ -25,8 +25,7 @@
             android:name="ua.kpi.campus.ui.activity.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Dark"
-            android:windowSoftInputMode="stateHidden">
-        </activity>
+            android:windowSoftInputMode="stateHidden"/>
         <activity
             android:name="ua.kpi.campus.ui.activity.MainActivity"
             android:screenOrientation="portrait"
@@ -37,8 +36,7 @@
             android:name="ua.kpi.campus.ui.activity.BulletinBoardActivity"
             android:parentActivityName="ua.kpi.campus.ui.activity.MainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name="ua.kpi.campus.ui.activity.BulletinContentActivity"
             android:parentActivityName="ua.kpi.campus.ui.activity.BulletinBoardActivity"
@@ -55,25 +53,18 @@
             android:parentActivityName="ua.kpi.campus.ui.activity.BulletinBoardModeratorActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="stateHidden">
-
-        </activity>
+            android:windowSoftInputMode="stateHidden"/>
         <activity
             android:name="ua.kpi.campus.ui.activity.BulletinBoardModeratorActivity"
             android:parentActivityName="ua.kpi.campus.ui.activity.BulletinBoardActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
-
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name="ua.kpi.campus.ui.activity.EditBulletinActivity"
             android:parentActivityName="ua.kpi.campus.ui.activity.BulletinBoardModeratorActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="stateHidden">
-
-
-        </activity>
+            android:windowSoftInputMode="stateHidden"/>
         <activity
             android:name="ua.kpi.campus.ui.activity.VotingStudentActivity"
             android:parentActivityName="ua.kpi.campus.ui.activity.MainActivity"
@@ -84,5 +75,11 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
+        <activity
+            android:name="ua.kpi.campus.ui.activity.RateTeacherActivity"
+            android:parentActivityName="ua.kpi.campus.ui.activity.VotingStudentActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 </manifest>

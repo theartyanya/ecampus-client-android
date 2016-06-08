@@ -10,6 +10,7 @@ import ua.kpi.campus.ui.activity.MainActivity;
 import ua.kpi.campus.ui.activity.MainNotAuthActivity;
 
 import dagger.Module;
+import ua.kpi.campus.ui.activity.RateTeacherActivity;
 import ua.kpi.campus.ui.activity.VotingStudentActivity;
 
 /**
@@ -27,7 +28,8 @@ import ua.kpi.campus.ui.activity.VotingStudentActivity;
                 AddBulletinActivity.class,
                 BulletinBoardModeratorActivity.class,
                 EditBulletinActivity.class,
-                VotingStudentActivity.class
+                VotingStudentActivity.class,
+                RateTeacherActivity.class
 
         })
 public final class UIModule {
