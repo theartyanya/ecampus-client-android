@@ -1,9 +1,8 @@
 package ua.kpi.campus.ui.activity;
 
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,18 +12,16 @@ import ua.kpi.campus.R;
 import ua.kpi.campus.di.UIModule;
 import ua.kpi.campus.model.Rating;
 import ua.kpi.campus.ui.adapter.RateAdapter;
-import ua.kpi.campus.ui.view.DividerItemDecoration;
-import ua.kpi.campus.ui.view.OnRatingEventListener;
 
 /**
  * Created by Administrator on 08.06.2016.
  */
-public class RateTeacherActivity extends BaseActivity implements OnRatingEventListener {
+public class RateTeacherActivity extends BaseActivity {
 
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
-    @Bind(R.id.recyclerview_rate)
-    RecyclerView mRecyclerView;
+    @Bind(R.id.listview_rate)
+    ListView mList;
     private RateAdapter mAdapter;
 
     @Override
@@ -33,7 +30,7 @@ public class RateTeacherActivity extends BaseActivity implements OnRatingEventLi
         setContentView(R.layout.activity_rate_teacher);
         bindViews();
         setToolbar();
-        setRecyclerView();
+        setListView();
     }
 
     @Override
@@ -60,18 +57,8 @@ public class RateTeacherActivity extends BaseActivity implements OnRatingEventLi
         getSupportActionBar().setTitle(R.string.activity_name_rate_teacher);
     }
 
-    private void setRecyclerView() {
-        mAdapter = new RateAdapter(setRatingList(), this);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager
-                (getApplicationContext()));
-        mRecyclerView.addItemDecoration(new DividerItemDecoration(this));
-        mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.setSaveEnabled(true);
-        mRecyclerView.setAdapter(mAdapter);
-    }
-
-    @Override
-    public void onRatingBarChange(Rating item, float value) {
-        item.setRatingStar(value);
+    private void setListView() {
+        mAdapter = new RateAdapter(this, R.layout.list_rating_item, setRatingList());
+        mList.setAdapter(mAdapter);
     }
 }

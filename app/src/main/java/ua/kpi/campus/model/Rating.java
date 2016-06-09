@@ -25,8 +25,4 @@ public class Rating {
     public String getCriterion() {
         return criterion;
     }
-
-    public void setCriterion(String criterion) {
-        this.criterion = criterion;
-    }
 }

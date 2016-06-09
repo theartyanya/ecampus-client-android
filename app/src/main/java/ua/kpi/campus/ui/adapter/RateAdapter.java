@@ -1,9 +1,11 @@
 package ua.kpi.campus.ui.adapter;
 
-import android.support.v7.widget.RecyclerView;
+import android.app.Activity;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -14,66 +16,71 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import ua.kpi.campus.R;
 import ua.kpi.campus.model.Rating;
-import ua.kpi.campus.ui.view.OnRatingEventListener;
 
 /**
  * RateAdapter manages Rating data model and adapts it to
- * RecyclerView, which is in RateTeacherActivity.
+ * list, which is in RateTeacherActivity.
  * <p>
  * Created by Administrator on 08.06.2016.
  * //
  */
-public class RateAdapter extends RecyclerView.Adapter<RateAdapter
-        .ViewHolder> {
+public class RateAdapter extends ArrayAdapter<Rating> {
 
     private List<Rating> mData = new ArrayList<>();
-    private OnRatingEventListener mListener;
+    private Context mContext;
+    private int mResourceId;
 
-    public RateAdapter(List<Rating> data, OnRatingEventListener l) {
-mListener = l;
-        mData = data;
+    private RatingBar.OnRatingBarChangeListener listener(
+            final ViewHolder holder, final int position) {
+        return (ratingBar, v, b) -> {
+            Rating item = getItem(position);
+            item.setRatingStar(v);
+        };
+    }
+
+    public RateAdapter(Context context, int resource, List<Rating> objects) {
+        super(context, resource, objects);
+        mContext = context;
+        mResourceId = resource;
+        mData = objects;
     }
 
     @Override
-    public RateAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int
-            viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout
-                .list_rating_item, parent, false);
-        return new ViewHolder(view, mListener);
+    public Rating getItem(int position) {
+        return mData.get(position);
     }
 
     @Override
-    public void onBindViewHolder(RateAdapter.ViewHolder holder,
-                                 int position) {
-        Rating item = mData.get(position);
-        holder.tvCriteria.setText(item.getCriterion());
-        holder.ratingBar.setRating(item.getRatingStar());
+    public View getView(int position, View convertView, ViewGroup parent) {
+        ViewHolder holder;
+        LayoutInflater inflater = (LayoutInflater) mContext.getSystemService
+                (Activity.LAYOUT_INFLATER_SERVICE);
+
+        if (convertView == null) {
+            convertView = inflater.inflate(mResourceId, parent, false);
+            holder = new ViewHolder(convertView);
+            convertView.setTag(holder);
+        } else {
+            holder = (ViewHolder) convertView.getTag();
+        }
+
+        holder.ratingBar.setOnRatingBarChangeListener(listener
+                (holder, position));
+        holder.ratingBar.setTag(position);
+        holder.ratingBar.setRating(getItem(position).getRatingStar());
+        holder.tvCriterion.setText(getItem(position).getCriterion());
+        return convertView;
     }
 
-    @Override
-    public int getItemCount() {
-        return mData.size();
-    }
-
-    protected class ViewHolder extends RecyclerView.ViewHolder {
+    protected class ViewHolder {
 
         @Bind(R.id.tv_criterion)
-        TextView tvCriteria;
+        TextView tvCriterion;
         @Bind(R.id.rating_bar)
         RatingBar ratingBar;
 
-        public ViewHolder(View itemView, OnRatingEventListener l) {
-            super(itemView);
+        public ViewHolder(View itemView) {
             ButterKnife.bind(this, itemView);
-            ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
-
-                @Override
-                public void onRatingChanged(RatingBar ratingBar, float
-                        rating, boolean fromUser) {
-                    if(fromUser)
-                        l.onRatingBarChange(mData.get(getLayoutPosition()), rating);
-                }
-            });
         }
     }
 }
