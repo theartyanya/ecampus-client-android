@@ -72,6 +72,18 @@ public class RateAdapter extends ArrayAdapter<Rating> {
         return convertView;
     }
 
+    /**
+     * Check whether teacher is rated by all criteria.
+     *
+     * @return true if rated completely, false otherwise
+     */
+    public boolean teacherIsRated() {
+        for (Rating r : mData)
+            if (Float.compare(r.getRatingStar(), 1) < 0)
+                return false;
+        return true;
+    }
+
     protected class ViewHolder {
 
         @Bind(R.id.tv_criterion)

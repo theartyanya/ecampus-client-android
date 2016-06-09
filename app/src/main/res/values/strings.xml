@@ -65,4 +65,5 @@
     <string name="criterionTact">Загальна культура та тактовність по відношенню до студентів</string>
     <string name="criterionModernity">Використання засобів дистанційного спілкування (електронна пошта, Skype, соц.мережі)</string>
     <string name="activity_name_rate_teacher">Оцінка</string>
+    <string name="rate_by_all_criteria">Будь-ласка, оцініть за всіма критеріями</string>
 </resources>
