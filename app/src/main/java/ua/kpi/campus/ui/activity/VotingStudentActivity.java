@@ -25,7 +25,6 @@ import ua.kpi.campus.ui.adapter.VotingAdapter;
 import ua.kpi.campus.ui.presenter.VotingStudentPresenter;
 import ua.kpi.campus.ui.view.DividerItemDecoration;
 import ua.kpi.campus.ui.view.OnItemClickListener;
-import ua.kpi.campus.util.ToastUtil;
 
 /**
  * Created by Administrator on 31.05.2016.
@@ -48,7 +47,6 @@ public class VotingStudentActivity extends BaseActivity implements
                 @Override
                 public void onItemClicked(View view, int position, Object
                         item) {
-                    ToastUtil.showError("click", getApplicationContext());
                     mPresenter.onItemClick(item);
                 }
             };

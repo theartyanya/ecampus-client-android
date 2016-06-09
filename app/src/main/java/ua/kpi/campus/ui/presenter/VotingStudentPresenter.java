@@ -6,12 +6,14 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import ua.kpi.campus.model.Rating;
 import ua.kpi.campus.model.dao.IDataAccessObject;
 import ua.kpi.campus.model.dao.VotingDao;
 import ua.kpi.campus.model.pojo.Item;
 import ua.kpi.campus.model.pojo.VoteSet;
 import ua.kpi.campus.model.pojo.VoteTeacher;
 import ua.kpi.campus.model.pojo.VoteTerm;
+import ua.kpi.campus.ui.Navigator;
 import ua.kpi.campus.util.DateUtil;
 
 /**
@@ -21,10 +23,12 @@ public class VotingStudentPresenter extends BasePresenter {
 
     private IView mView;
     private IDataAccessObject<VoteSet> mDataAccess;
+    private Navigator mNavigator;
 
     @Inject
-    public VotingStudentPresenter() {
+    public VotingStudentPresenter(Navigator navigator) {
         mDataAccess = new VotingDao();
+        mNavigator = navigator;
     }
 
     public void setView(IView view) {
@@ -50,13 +54,13 @@ public class VotingStudentPresenter extends BasePresenter {
         terms.add(new VoteTerm(1, "2015-2016", "2015-09-01", "2016-09-01"));
         terms.add(new VoteTerm(2, "2014-2015", "2014-09-01", "2015-09-01"));
 
-        List<Item> criteria = new ArrayList<>();
-        criteria.add(new Item(1, "3.97"));
-        criteria.add(new Item(2, "4.21"));
-        criteria.add(new Item(3, "3.97"));
-        criteria.add(new Item(4, "4.21"));
-        criteria.add(new Item(5, "3.97"));
-        criteria.add(new Item(6, "4.21"));
+        List<Rating> criteria = new ArrayList<>();
+        criteria.add(new Rating(3.97F, "1"));
+        criteria.add(new Rating(4.21F, "2"));
+        criteria.add(new Rating(3.97F, "3"));
+        criteria.add(new Rating(4.21F, "4"));
+        criteria.add(new Rating(3.97F, "5"));
+        criteria.add(new Rating(4.21F, "6"));
 
         List<VoteTeacher> teachers = new ArrayList<>();
         VoteTeacher t = new VoteTeacher(1, 1, "Крилов Євген " +
@@ -69,7 +73,8 @@ public class VotingStudentPresenter extends BasePresenter {
         t = new VoteTeacher(1, 3, "Мелкумян Катерина Юріївна", false, "4.3");
         t.setCriteria(criteria);
         teachers.add(t);
-        t = new VoteTeacher(2, 4, "Олійник Волдимир Валентинович", false, "4.3");
+        t = new VoteTeacher(2, 4, "Олійник Волдимир Валентинович", false, "4" +
+                ".3");
         t.setCriteria(criteria);
         teachers.add(t);
 
@@ -110,7 +115,7 @@ public class VotingStudentPresenter extends BasePresenter {
     }
 
     public void onItemClick(Object item) {
-
+        mNavigator.startRatingActivity((VoteTeacher)item);
     }
 
     private boolean isVotePeriod(String endDate) {

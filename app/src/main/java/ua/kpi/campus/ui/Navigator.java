@@ -9,6 +9,7 @@ import javax.inject.Inject;
 import ua.kpi.campus.Config;
 import ua.kpi.campus.di.ActivityContext;
 import ua.kpi.campus.model.pojo.Bulletin;
+import ua.kpi.campus.model.pojo.VoteTeacher;
 import ua.kpi.campus.ui.activity.AddBulletinActivity;
 import ua.kpi.campus.ui.activity.BulletinBoardActivity;
 import ua.kpi.campus.ui.activity.BulletinBoardModeratorActivity;
@@ -69,6 +70,12 @@ public class Navigator {
     public void startVotingStudentActivity() {
         Intent intent = getLaunchIntent(VotingStudentActivity.class);
         mActivityContext.startActivity(intent);
+    }
+
+    public void startRatingActivity(VoteTeacher item) {
+        Intent intent = getLaunchIntent(EditBulletinActivity.class);
+        intent.putExtra(Config.KEY_TEACHER, item);
+        mActivityContext.startActivityForResult(intent, Config.REQUEST_CODE);
     }
 
     /**
