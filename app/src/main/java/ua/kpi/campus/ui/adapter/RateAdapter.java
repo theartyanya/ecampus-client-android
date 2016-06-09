@@ -84,6 +84,10 @@ public class RateAdapter extends ArrayAdapter<Rating> {
         return true;
     }
 
+    public List<Rating> getData() {
+        return mData;
+    }
+
     protected class ViewHolder {
 
         @Bind(R.id.tv_criterion)

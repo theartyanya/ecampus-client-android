@@ -35,6 +35,8 @@
 
     <ua.kpi.campus.ui.view.TextViewDrawableSize
         style="@style/Margin"
+        android:id="@+id/tv_title_teachers"
+        android:visibility="invisible"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"

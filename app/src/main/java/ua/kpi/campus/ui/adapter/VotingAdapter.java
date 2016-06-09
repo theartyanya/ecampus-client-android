@@ -42,6 +42,12 @@ public class VotingAdapter extends RecyclerView
         return mAllData;
     }
 
+    public void updateItem(VoteTeacher teacher) {
+        for (VoteTeacher t : mCurrentData)
+            if (t.getTeacherId().equals(teacher.getTeacherId()))
+                t = teacher;
+    }
+
     public void filterByTerm(Integer termId) {
         mCurrentData.clear();
         mCurrentData.addAll(filter(mAllData, isMatchesId(termId)));

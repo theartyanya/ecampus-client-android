@@ -55,19 +55,19 @@ public class VotingStudentPresenter extends BasePresenter {
         terms.add(new VoteTerm(2, "2014-2015", "2014-09-01", "2015-09-01"));
 
         List<Rating> criteria = new ArrayList<>();
-        criteria.add(new Rating(3.97F, "1"));
-        criteria.add(new Rating(4.21F, "2"));
-        criteria.add(new Rating(3.97F, "3"));
-        criteria.add(new Rating(4.21F, "4"));
-        criteria.add(new Rating(3.97F, "5"));
-        criteria.add(new Rating(4.21F, "6"));
+        criteria.add(new Rating(3F, "1"));
+        criteria.add(new Rating(4F, "2"));
+        criteria.add(new Rating(3F, "3"));
+        criteria.add(new Rating(4F, "4"));
+        criteria.add(new Rating(3F, "5"));
+        criteria.add(new Rating(4F, "6"));
 
         List<VoteTeacher> teachers = new ArrayList<>();
         VoteTeacher t = new VoteTeacher(1, 1, "Крилов Євген " +
                 "Володимирович", true, "4.0");
         t.setCriteria(criteria);
         teachers.add(t);
-        t = new VoteTeacher(1, 2, "Лісовиченко Олег Іванович", true, "4.3");
+        t = new VoteTeacher(1, 2, "Лісовиченко Олег Іванович", false, "4.3");
         t.setCriteria(criteria);
         teachers.add(t);
         t = new VoteTeacher(1, 3, "Мелкумян Катерина Юріївна", false, "4.3");

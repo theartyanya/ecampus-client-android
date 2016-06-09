@@ -17,6 +17,7 @@ import ua.kpi.campus.ui.activity.BulletinContentActivity;
 import ua.kpi.campus.ui.activity.EditBulletinActivity;
 import ua.kpi.campus.ui.activity.LoginActivity;
 import ua.kpi.campus.ui.activity.MainActivity;
+import ua.kpi.campus.ui.activity.RateTeacherActivity;
 import ua.kpi.campus.ui.activity.VotingStudentActivity;
 
 /**
@@ -73,7 +74,7 @@ public class Navigator {
     }
 
     public void startRatingActivity(VoteTeacher item) {
-        Intent intent = getLaunchIntent(EditBulletinActivity.class);
+        Intent intent = getLaunchIntent(RateTeacherActivity.class);
         intent.putExtra(Config.KEY_TEACHER, item);
         mActivityContext.startActivityForResult(intent, Config.REQUEST_CODE);
     }

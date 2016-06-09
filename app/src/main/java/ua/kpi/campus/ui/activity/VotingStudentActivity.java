@@ -1,5 +1,6 @@
 package ua.kpi.campus.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,6 +16,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import butterknife.Bind;
+import ua.kpi.campus.Config;
 import ua.kpi.campus.R;
 import ua.kpi.campus.di.UIModule;
 import ua.kpi.campus.model.pojo.Item;
@@ -101,8 +103,11 @@ public class VotingStudentActivity extends BaseActivity implements
                     position, long id) {
                 Item item = (Item) parent.getItemAtPosition(position);
                 if (item != null) {
-                    if (mAdapter == null)
+                    if (mAdapter == null) {
+                        (findViewById(R.id.tv_title_teachers)).setVisibility
+                                (View.VISIBLE);
                         mPresenter.setSpecificAdapter();
+                    }
                     mAdapter.filterByTerm(item.getId());
                 }
             }
@@ -112,6 +117,14 @@ public class VotingStudentActivity extends BaseActivity implements
                 // N/A
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK && requestCode == Config.REQUEST_CODE) {
+            VoteTeacher teacher = data.getParcelableExtra(Config.KEY_TEACHER);
+            mAdapter.updateItem(teacher);
+        }
     }
 
     private void setToolbar() {
