@@ -1,10 +1,13 @@
 package ua.kpi.campus.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Represents teacher's Rating entity for voting.
  * Created by Administrator on 08.06.2016.
  */
-public class Rating {
+public class Rating implements Parcelable {
 
     private float ratingStar;
     private String criterion;
@@ -13,6 +16,22 @@ public class Rating {
         this.ratingStar = ratingStar;
         this.criterion = criterion;
     }
+
+    private Rating(Parcel in) {
+        ratingStar = in.readFloat();
+        criterion = in.readString();
+    }
+
+    public static final Parcelable.Creator<Rating> CREATOR
+            = new Parcelable.Creator<Rating>() {
+        public Rating createFromParcel(Parcel in) {
+            return new Rating(in);
+        }
+
+        public Rating[] newArray(int size) {
+            return new Rating[size];
+        }
+    };
 
     public float getRatingStar() {
         return ratingStar;
@@ -24,5 +43,16 @@ public class Rating {
 
     public String getCriterion() {
         return criterion;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeFloat(ratingStar);
+        dest.writeString(criterion);
     }
 }
