@@ -64,7 +64,7 @@ public class VotingStudentPresenter extends BasePresenter {
 
         List<VoteTeacher> teachers = new ArrayList<>();
         VoteTeacher t = new VoteTeacher(1, 1, "Крилов Євген " +
-                "Володимирович", true, "4.0");
+                "Володимирович", false, "4.0");
         t.setCriteria(criteria);
         teachers.add(t);
         t = new VoteTeacher(1, 2, "Лісовиченко Олег Іванович", false, "4.3");

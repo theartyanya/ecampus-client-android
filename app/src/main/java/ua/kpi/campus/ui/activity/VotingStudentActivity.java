@@ -44,14 +44,12 @@ public class VotingStudentActivity extends BaseActivity implements
     VotingStudentPresenter mPresenter;
     private VotingAdapter mAdapter;
 
-    private OnItemClickListener onItemClickListener =
-            new OnItemClickListener() {
-                @Override
-                public void onItemClicked(View view, int position, Object
-                        item) {
-                    mPresenter.onItemClick(item);
-                }
-            };
+    private OnItemClickListener onItemClickListener = new OnItemClickListener() {
+        @Override
+        public void onItemClicked(View view, int position, Object item) {
+            mPresenter.onItemClick(item);
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +72,6 @@ public class VotingStudentActivity extends BaseActivity implements
     @Override
     public void setViewComponent() {
         setToolbar();
-        setRecyclerView();
     }
 
     @Override
@@ -89,23 +86,21 @@ public class VotingStudentActivity extends BaseActivity implements
 
     @Override
     public void setTermsSpinner(List<Item> list) {
-        ArrayAdapter<Item> adapter = new ItemSpinnerAdapter(this, R.layout
-                .spinner_item, R.layout.spinner_dropdown_item, list);
+        ArrayAdapter<Item> adapter = new ItemSpinnerAdapter(this, R.layout.spinner_item, R.layout
+                .spinner_dropdown_item, list);
         mSpinnerTerms.setAdapter(new NothingSelectedAdapter(
                 adapter,
                 R.layout.spinner_nothing_selected_terms,
                 this));
-        mSpinnerTerms.setOnItemSelectedListener(new AdapterView
-                .OnItemSelectedListener() {
+        mSpinnerTerms.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int
-                    position, long id) {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Item item = (Item) parent.getItemAtPosition(position);
                 if (item != null) {
                     if (mAdapter == null) {
-                        (findViewById(R.id.tv_title_teachers)).setVisibility
-                                (View.VISIBLE);
+                        (findViewById(R.id.tv_title_teachers)).setVisibility(View.VISIBLE);
+                        setRecyclerView();
                         mPresenter.setSpecificAdapter();
                     }
                     mAdapter.filterByTerm(item.getId());
@@ -136,8 +131,8 @@ public class VotingStudentActivity extends BaseActivity implements
     }
 
     private void setRecyclerView() {
-        mRecyclerView.setLayoutManager(new LinearLayoutManager
-                (getApplicationContext()));
+        mRecyclerView.setVisibility(View.VISIBLE);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         mRecyclerView.addItemDecoration(new DividerItemDecoration(this));
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setSaveEnabled(true);
