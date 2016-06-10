@@ -53,8 +53,7 @@ public class RateAdapter extends ArrayAdapter<Rating> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
-        LayoutInflater inflater = (LayoutInflater) mContext.getSystemService
-                (Activity.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 
         if (convertView == null) {
             convertView = inflater.inflate(mResourceId, parent, false);

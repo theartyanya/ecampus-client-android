@@ -6,6 +6,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,8 +38,7 @@ public class RateTeacherActivity extends BaseActivity {
         setContentView(R.layout.activity_rate_teacher);
         mTeacher = getIntent().getParcelableExtra(Config.KEY_TEACHER);
         bindViews();
-        setToolbar();
-        setListView();
+        setViews();
     }
 
     @Override
@@ -51,7 +51,7 @@ public class RateTeacherActivity extends BaseActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_rate_teacher, menu);
-        if(mTeacher.isVoted()) {
+        if (mTeacher.isVoted()) {
             final MenuItem item = menu.findItem(R.id.action_done);
             item.setVisible(false);
         }
@@ -68,19 +68,30 @@ public class RateTeacherActivity extends BaseActivity {
                 if (mAdapter.teacherIsRated()) {
                     saveRating();
                 } else
-                    SnackbarUtil.show(getString(R.string.rate_by_all_criteria),
-                            findViewById(R.id.root_layout));
+                    SnackbarUtil.show(getString(R.string.rate_by_all_criteria), findViewById(R.id.root_layout));
                 return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
+    private void setViews() {
+        setToolbar();
+        setListView();
+        TextView tv = (TextView) findViewById(R.id.tv_teacher_name);
+        tv.setText(mTeacher.getTeacherName());
+    }
+
     private List<Rating> setRatingList() {
         List<Rating> list = new ArrayList<>();
-        String[] criterion = getResources().getStringArray(R.array
-                .voting_criteria);
-        for (int i = 0; i < criterion.length; i++)
-            list.add(new Rating(0, criterion[i]));
+        String[] criterion = getResources().getStringArray(R.array.voting_criteria);
+        if(!mTeacher.isVoted())
+            for (int i = 0; i < criterion.length; i++)
+                list.add(new Rating(0, criterion[i]));
+        else {
+            List<Rating> values = mTeacher.getCriteria();
+            for (int i = 0; i < criterion.length; i++)
+                list.add(new Rating(values.get(i).getRatingStar(), criterion[i]));
+        }
         return list;
     }
 
@@ -93,8 +104,7 @@ public class RateTeacherActivity extends BaseActivity {
     }
 
     private void setListView() {
-        mAdapter = new RateAdapter(this, R.layout.list_rating_item,
-                setRatingList());
+        mAdapter = new RateAdapter(this, R.layout.list_rating_item, setRatingList());
         mList.setAdapter(mAdapter);
     }
 
@@ -103,6 +113,10 @@ public class RateTeacherActivity extends BaseActivity {
         List<Rating> rating = mAdapter.getData();
         mTeacher.setCriteria(rating);
         mTeacher.setIsVoted(true);
+
+        float ratingSum = 0;
+        for (Rating r : rating) ratingSum += r.getRatingStar();
+        mTeacher.setAvgResult(String.valueOf(ratingSum / (double) rating.size()));
 
         Intent intent = new Intent();
         intent.putExtra(Config.KEY_TEACHER, mTeacher);
