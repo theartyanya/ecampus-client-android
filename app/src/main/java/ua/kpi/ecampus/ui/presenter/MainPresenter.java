@@ -66,7 +66,7 @@ public class MainPresenter extends BasePresenter {
     }
 
     /**
-     * Get list of ua.kpi.campus subsystems.
+     * Get list of ua.kpi.ecampus subsystems.
      *
      * @return subsystems
      */

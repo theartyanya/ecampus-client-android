@@ -90,7 +90,7 @@ public class MainNotAuthActivity extends BaseActivity implements
     private void setToolbar() {
         setSupportActionBar(mToolbar);
         //getSupportActionBar().setDisplayShowHomeEnabled(true);
-        //getSupportActionBar().setIcon(R.mipmap.ua.kpi.campus);
+        //getSupportActionBar().setIcon(R.mipmap.ua.kpi.ecampus);
         getSupportActionBar().setTitle(ua.kpi.ecampus.R.string.activity_name_main);
     }
 }
