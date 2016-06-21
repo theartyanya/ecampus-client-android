@@ -4,8 +4,8 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.LargeTest;
 
-import ua.kpi.campus.R;
-import ua.kpi.campus.ui.activity.BulletinContentActivity;
+import ua.kpi.ecampus.R;
+import ua.kpi.ecampus.ui.activity.BulletinContentActivity;
 
 import org.junit.Rule;
 import org.junit.Test;

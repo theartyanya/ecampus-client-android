@@ -1,0 +1,79 @@
+package ua.kpi.ecampus.ui;
+
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+
+import ua.kpi.ecampus.Config;
+import ua.kpi.ecampus.di.ActivityContext;
+import ua.kpi.ecampus.model.pojo.Bulletin;
+import ua.kpi.ecampus.ui.activity.BulletinBoardActivity;
+import ua.kpi.ecampus.ui.activity.BulletinBoardModeratorActivity;
+import ua.kpi.ecampus.ui.activity.BulletinContentActivity;
+import ua.kpi.ecampus.ui.activity.EditBulletinActivity;
+import ua.kpi.ecampus.ui.activity.LoginActivity;
+import ua.kpi.ecampus.ui.activity.MainActivity;
+import ua.kpi.ecampus.ui.activity.AddBulletinActivity;
+
+import javax.inject.Inject;
+
+/**
+ * Class created to handle all the navigation between activities. This class knows how to open
+ * every activity in the application and provides to the client code different methods to start
+ * activities with the information needed.
+ * <p/>
+ * Created by Administrator on 29.01.2016.
+ */
+public class Navigator {
+
+    private Activity mActivityContext;
+
+    @Inject
+    public Navigator(@ActivityContext Context context) {
+        mActivityContext = (Activity) context;
+    }
+
+    public void startLoginActivity() {
+        Intent intent = getLaunchIntent(LoginActivity.class);
+        mActivityContext.startActivity(intent);
+    }
+
+    public void startMainActivity() {
+        Intent intent = getLaunchIntent(MainActivity.class);
+        mActivityContext.startActivity(intent);
+    }
+
+    public void startBulletinBoardActivity() {
+        Intent intent = getLaunchIntent(BulletinBoardActivity.class);
+        mActivityContext.startActivity(intent);
+    }
+
+    public void startBulletinContentActivity(Bulletin item) {
+        Intent intent = getLaunchIntent(BulletinContentActivity.class);
+        intent.putExtra(Config.KEY_BULLETIN, item);
+        mActivityContext.startActivity(intent);
+    }
+
+    public void startNewBulletinActivity() {
+        Intent intent = getLaunchIntent(AddBulletinActivity.class);
+        mActivityContext.startActivity(intent);
+    }
+
+    public void startEditBulletinActivity(Bulletin item) {
+        Intent intent = getLaunchIntent(EditBulletinActivity.class);
+        intent.putExtra(Config.KEY_BULLETIN, item);
+        mActivityContext.startActivity(intent);
+    }
+
+    /**
+     * Generates the intent needed by the client code to launch this activity.
+     */
+    private Intent getLaunchIntent(Class activityClass) {
+        return new Intent(mActivityContext, activityClass);
+    }
+
+    public void startBulletinBoardModeratorActivity() {
+        Intent intent = getLaunchIntent(BulletinBoardModeratorActivity.class);
+        mActivityContext.startActivity(intent);
+    }
+}
