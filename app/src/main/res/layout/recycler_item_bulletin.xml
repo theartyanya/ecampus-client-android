@@ -27,21 +27,13 @@
         android:paddingTop="8dp">
 
         <TextView
-            android:id="@+id/text_view_bulletin_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toEndOf="@android:id/icon1"
-            android:text="06.01.2016"
-            android:textColor="@color/colorPrimaryText"
-            android:textSize="14sp"/>
-
-        <TextView
             android:id="@+id/text_view_bulletin_theme"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@id/text_view_bulletin_date"
-            android:layout_below="@id/text_view_bulletin_date"
+            android:layout_toEndOf="@android:id/icon1"
+            android:ellipsize="end"
             android:lineSpacingMultiplier="1.1"
+            android:maxLines="1"
             android:text="Увага модераторів"
             android:textColor="@color/colorPrimaryText"
             android:textSize="14sp"/>
@@ -50,11 +42,21 @@
             android:id="@+id/text_view_bulletin_author"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/text_view_bulletin_theme"
+            android:layout_toEndOf="@android:id/icon1"
+            android:text="Іваненко І.І."
+            android:textColor="@color/colorSecondaryText"
+            android:textSize="12sp"/>
+
+        <TextView
+            android:id="@+id/text_view_bulletin_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:text="Іваненко І.І."
-            android:textColor="#757575"
-            android:textSize="14sp"
+            android:text="06.01.2016"
+            android:textColor="@color/colorSecondaryText"
+            android:textSize="12sp"
             />
 
     </RelativeLayout>
@@ -65,8 +67,8 @@
         android:layout_height="48dp"
         android:layout_gravity="center"
         android:layout_marginBottom="4dp"
-        android:visibility="gone"
         android:background="?selectableItemBackgroundBorderless"
         android:contentDescription="@string/settings"
-        android:src="@mipmap/ic_action_navigation_more_vert"/>
+        android:src="@mipmap/ic_action_navigation_more_vert"
+        android:visibility="gone"/>
 </LinearLayout>

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.kpi.campus.ui.activity.BulletinBoardActivity">
+                                                 xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                 xmlns:tools="http://schemas.android.com/tools"
+                                                 android:layout_width="match_parent"
+                                                 android:layout_height="match_parent"
+                                                 tools:context="ua.kpi.campus.ui.activity.BulletinBoardActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -17,7 +17,7 @@
             android:background="@color/colorPrimary"
             app:layout_scrollFlags="scroll|enterAlways"
             app:popupTheme="@style/ThemeOverlay.AppBar.White.Popup"
-            app:theme="@style/ThemeOverlay.AppBar.White" />
+            app:theme="@style/ThemeOverlay.AppBar.White"/>
 
         <android.support.design.widget.TabLayout
             android:id="@+id/tab_layout"
@@ -27,7 +27,7 @@
             app:tabGravity="fill"
             app:tabIndicatorColor="@android:color/white"
             app:tabSelectedTextColor="@android:color/white"
-            app:tabTextColor="@android:color/white" />
+            app:tabTextColor="@android:color/white"/>
 
     </android.support.design.widget.AppBarLayout>
 
@@ -43,16 +43,23 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:indeterminate="true"
-            android:indeterminateDrawable="@drawable/progress" />
+            android:indeterminateDrawable="@drawable/progress"/>
 
         <!-- without this redundant linearLayout progressBar won't centered -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycler_view_bulletin"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ua.kpi.campus.ui.view.ExtendedRecyclerView
+                android:id="@android:id/list"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="wrap_content"
+                android:scrollbars="vertical"/>
+
+            <include
+                android:id="@android:id/empty"
+                layout="@layout/empty_bulletins"/>
         </LinearLayout>
     </RelativeLayout>
 

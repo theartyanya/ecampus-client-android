@@ -4,12 +4,12 @@ import android.support.test.espresso.intent.rule.IntentsTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.LargeTest;
 
-import com.kpi.campus.R;
-import com.kpi.campus.ui.activity.LoginActivity;
-
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import ua.kpi.campus.R;
+import ua.kpi.campus.ui.activity.LoginActivity;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -78,7 +78,7 @@ public class LoginActivityTest {
      * @param password
      */
     private void inputCredentials(String login, String password) {
-        onView(withId(R.id.edit_text_input_login)).perform(typeText(login), closeSoftKeyboard());
-        onView(withId(R.id.edit_text_input_password)).perform(typeText(password), closeSoftKeyboard());
+        onView(withId(R.id.edit_text_login)).perform(typeText(login), closeSoftKeyboard());
+        onView(withId(R.id.edit_text_password)).perform(typeText(password), closeSoftKeyboard());
     }
 }

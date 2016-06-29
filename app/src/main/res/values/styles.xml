@@ -49,4 +49,19 @@
         <item name="android:layout_marginLeft">16dp</item>
     </style>
 
+    <style name="Button" parent="Theme.AppCompat.Light">
+        <item name="colorControlHighlight">@color/colorPrimaryDark</item>
+        <item name="colorButtonNormal">@color/colorPrimary</item>
+    </style>
+
+    <style name="PopupAnimation">
+        <item name="android:windowEnterAnimation">@anim/bottom_up</item>
+        <item name="android:windowExitAnimation">@anim/bottom_down</item>
+    </style>
+
+    <style name="ErrorInputText">
+        <item name="android:textSize">8sp</item>
+        <item name="android:textColor">#ff4e4e</item>
+    </style>
+
 </resources>
