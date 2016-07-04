@@ -58,7 +58,7 @@ public class LoginPresenterTest {
     public void setLoaderResult_Error() {
         BaseResponse response = getErrorResponse();
         mPresenter.setLoaderResult(response);
-        verify(mView).onLoginFailed(response.getRequestResult());
+        verify(mView).onLoginFailed(response);
     }
 
     @Test
