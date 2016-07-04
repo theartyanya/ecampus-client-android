@@ -1,4 +1,4 @@
-package ua.kpi.campus.ui.activity;
+package ua.kpi.ecampus.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,13 +12,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
-import ua.kpi.campus.Config;
-import ua.kpi.campus.R;
-import ua.kpi.campus.di.UIModule;
-import ua.kpi.campus.model.Rating;
-import ua.kpi.campus.model.pojo.VoteTeacher;
-import ua.kpi.campus.ui.adapter.RateAdapter;
-import ua.kpi.campus.util.SnackbarUtil;
+import ua.kpi.ecampus.Config;
+import ua.kpi.ecampus.R;
+import ua.kpi.ecampus.di.UIModule;
+import ua.kpi.ecampus.model.Rating;
+import ua.kpi.ecampus.model.pojo.VoteTeacher;
+import ua.kpi.ecampus.ui.adapter.RateAdapter;
+import ua.kpi.ecampus.util.SnackbarUtil;
 
 /**
  * Created by Administrator on 08.06.2016.

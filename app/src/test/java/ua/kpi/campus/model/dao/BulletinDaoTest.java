@@ -1,4 +1,4 @@
-package ua.kpi.campus.model.dao;
+package ua.kpi.ecampus.model.dao;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -6,7 +6,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import ua.kpi.campus.model.pojo.Bulletin;
+import ua.kpi.ecampus.model.pojo.Bulletin;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;

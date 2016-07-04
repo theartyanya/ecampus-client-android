@@ -1,4 +1,4 @@
-package ua.kpi.campus.ui.adapter;
+package ua.kpi.ecampus.ui.adapter;
 
 import android.app.Activity;
 import android.content.Context;
@@ -14,8 +14,8 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import ua.kpi.campus.R;
-import ua.kpi.campus.model.Rating;
+import ua.kpi.ecampus.R;
+import ua.kpi.ecampus.model.Rating;
 
 /**
  * RateAdapter manages Rating data model and adapts it to

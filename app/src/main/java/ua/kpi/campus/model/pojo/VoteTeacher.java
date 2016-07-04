@@ -1,4 +1,4 @@
-package ua.kpi.campus.model.pojo;
+package ua.kpi.ecampus.model.pojo;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -9,7 +9,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.List;
 
-import ua.kpi.campus.model.Rating;
+import ua.kpi.ecampus.model.Rating;
 
 /**
  * Created by Administrator on 01.06.2016.
