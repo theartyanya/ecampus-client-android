@@ -55,8 +55,7 @@ public class BulletinDao implements IDataAccessObject<Bulletin> {
             List<Integer> ids = getIdsCollection(userProfile);
             mByProfile.addAll(filterBulletins(data, isMatchesProfile(ids)));
             ids = getIdsCollection(userSubdivision);
-            mBySubdivision.addAll(filterBulletins(data, isMatchesSubdivision
-                    (ids)));
+            mBySubdivision.addAll(filterBulletins(data, isMatchesSubdivision(ids)));
         }
     }
 

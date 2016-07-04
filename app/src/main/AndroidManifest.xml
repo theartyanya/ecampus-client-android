@@ -57,7 +57,10 @@
             android:parentActivityName="ua.kpi.campus.ui.activity.BulletinBoardModeratorActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="stateHidden"/>
+            android:windowSoftInputMode="stateHidden">
+
+        </activity>
+
         <activity
             android:name="ua.kpi.campus.ui.activity.BulletinBoardModeratorActivity"
             android:parentActivityName="ua.kpi.campus.ui.activity.BulletinBoardActivity"
@@ -73,9 +76,9 @@
             android:name="ua.kpi.campus.ui.activity.VotingStudentActivity"
             android:parentActivityName="ua.kpi.campus.ui.activity.MainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"/>
 
-        </activity>
+
 
         <activity
             android:name="ua.kpi.campus.ui.activity.RateTeacherActivity"

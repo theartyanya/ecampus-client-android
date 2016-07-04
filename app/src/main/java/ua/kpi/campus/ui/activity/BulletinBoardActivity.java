@@ -87,6 +87,7 @@ public class BulletinBoardActivity extends BaseActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bulletin_board);
         bindViews();
+
         mPresenter.setView(this);
         mPresenter.initializeViewComponent();
 
