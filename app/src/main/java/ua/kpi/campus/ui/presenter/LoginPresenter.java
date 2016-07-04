@@ -2,16 +2,15 @@ package ua.kpi.campus.ui.presenter;
 
 import android.os.Bundle;
 
+import javax.inject.Inject;
+
 import ua.kpi.campus.Config;
 import ua.kpi.campus.api.response.BaseResponse;
-import ua.kpi.campus.api.response.RequestResult;
 import ua.kpi.campus.model.pojo.Token;
 import ua.kpi.campus.model.pojo.User;
 import ua.kpi.campus.rx.UserRxLoader;
 import ua.kpi.campus.ui.Navigator;
 import ua.kpi.campus.ui.Preference;
-
-import javax.inject.Inject;
 
 /**
  * LoginPresenter created to manage LoginActivity.
@@ -72,7 +71,7 @@ public class LoginPresenter extends BasePresenter {
         if (answer != null) {
             onLoginSuccess(answer);
         } else {
-            mView.onLoginFailed(baseResponse.getRequestResult());
+            mView.onLoginFailed(baseResponse);
         }
     }
 
@@ -124,7 +123,7 @@ public class LoginPresenter extends BasePresenter {
 
         void activateLoginButton(boolean shouldShow);
 
-        void onLoginFailed(RequestResult result);
+        void onLoginFailed(BaseResponse response);
 
         void initLoader(Bundle args);
     }

@@ -23,15 +23,27 @@
         android:textSize="16sp"
         app:compoundDrawableHeight="28dp"
         app:compoundDrawableWidth="28dp"/>
-
-    <Spinner
-        android:id="@+id/spinner_terms"
-        style="@style/Margin"
+    
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="8dp"/>
+        android:layout_height="wrap_content">
+
+        <Spinner
+            android:id="@+id/spinner_terms"
+            style="@style/Margin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="8dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=""/>
+
+
+    </FrameLayout>
 
     <ua.kpi.campus.ui.view.TextViewDrawableSize
         style="@style/Margin"
