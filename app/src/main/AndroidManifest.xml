@@ -26,11 +26,15 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Dark"
             android:windowSoftInputMode="stateHidden"/>
+
         <activity
             android:name="ua.kpi.campus.ui.activity.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
-
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
         <activity
             android:name="ua.kpi.campus.ui.activity.BulletinBoardActivity"
@@ -70,10 +74,7 @@
             android:parentActivityName="ua.kpi.campus.ui.activity.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
+
         </activity>
 
         <activity
@@ -82,6 +83,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
 
-            </activity>
+        </activity>
     </application>
 </manifest>

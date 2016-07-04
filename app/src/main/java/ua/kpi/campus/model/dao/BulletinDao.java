@@ -43,7 +43,10 @@ public class BulletinDao implements IDataAccessObject<Bulletin> {
     public void setData(Collection<Bulletin> data) {
         if (data.isEmpty()) return;
 
-        mAll.addAll(data);
+        for (Bulletin b : data) {
+            trimTime(b);
+            mAll.add(b);
+        }
 
         List<Item> userProfile = User.getInstance().position;
         List<Item> userSubdivision = User.getInstance().subdivision;
@@ -63,6 +66,16 @@ public class BulletinDao implements IDataAccessObject<Bulletin> {
 
     @Override
     public void delete(Bulletin object) {
+    }
+
+    /**
+     * Trim time value in datetime strings in object
+     * @param bulletin with datetime strings
+     */
+    private void trimTime(Bulletin bulletin) {
+        bulletin.setDateStart(bulletin.getDateStart().split(" ")[0]);
+        bulletin.setDateStop(bulletin.getDateStop().split(" ")[0]);
+        bulletin.setDateCreate(bulletin.getDateCreate().split(" ")[0]);
     }
 
     /**

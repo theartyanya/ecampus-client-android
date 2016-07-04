@@ -2,17 +2,16 @@ package ua.kpi.campus.loader;
 
 import android.content.Context;
 
+import java.io.IOException;
+
+import retrofit2.Call;
+import retrofit2.Response;
 import ua.kpi.campus.api.response.BaseResponse;
 import ua.kpi.campus.api.response.RequestResult;
 import ua.kpi.campus.api.response.TokenResponse;
 import ua.kpi.campus.api.service.AuthService;
 import ua.kpi.campus.api.service.ServiceCreator;
 import ua.kpi.campus.model.pojo.Token;
-
-import java.io.IOException;
-
-import retrofit2.Call;
-import retrofit2.Response;
 
 
 /**
@@ -42,6 +41,7 @@ public class TokenLoader extends BaseLoader {
 
         return new TokenResponse()
                 .setRequestResult(RequestResult.OK)
+                .setStatusCode(resp.code())
                 .setAnswer(token);
     }
 }
