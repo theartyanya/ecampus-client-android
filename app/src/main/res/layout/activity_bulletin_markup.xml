@@ -265,6 +265,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_gravity="center"
                     android:elevation="0dp"
+                    android:background="@null"
                     android:src="@drawable/more_button"
                     android:textColor="@color/colorTextDark"
                     android:textSize="12sp" />
