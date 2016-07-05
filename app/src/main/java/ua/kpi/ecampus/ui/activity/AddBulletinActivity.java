@@ -8,18 +8,20 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import butterknife.Bind;
-import butterknife.OnClick;
-import ua.kpi.campus.R;
-import ua.kpi.campus.di.UIModule;
-import ua.kpi.campus.model.Recipient;
-import ua.kpi.campus.model.pojo.Bulletin;
-import ua.kpi.campus.model.pojo.User;
-import ua.kpi.campus.ui.presenter.SaveBulletinPresenter;
-import ua.kpi.campus.util.DateUtil;
-import ua.kpi.campus.util.ToastUtil;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import butterknife.Bind;
+import butterknife.OnClick;
+import ua.kpi.ecampus.R;
+import ua.kpi.ecampus.di.UIModule;
+import ua.kpi.ecampus.model.Recipient;
+import ua.kpi.ecampus.model.pojo.Bulletin;
+import ua.kpi.ecampus.model.pojo.User;
+import ua.kpi.ecampus.ui.presenter.SaveBulletinPresenter;
+import ua.kpi.ecampus.util.DateUtil;
+import ua.kpi.ecampus.util.ToastUtil;
 
 /**
  * Activity for addition of a Bulletin.

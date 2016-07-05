@@ -41,7 +41,7 @@
                 app:errorEnabled="true"
                 app:errorTextAppearance="@style/ErrorInputText">
 
-                <TextView
+                <EditText
                     android:id="@+id/edit_text_bulletin_theme"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -62,7 +62,7 @@
                 app:errorEnabled="true"
                 app:errorTextAppearance="@style/ErrorInputText">
 
-                <TextView
+                <EditText
                     android:id="@+id/edit_text_bulletin_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -96,7 +96,7 @@
                         app:errorEnabled="true"
                         app:errorTextAppearance="@style/ErrorInputText">
 
-                        <TextView
+                        <EditText
                             android:id="@+id/text_view_start_period"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -173,6 +173,7 @@
                 </RelativeLayout>
 
                 <RelativeLayout
+                    android:id="@+id/layout_end_period"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1.0">
@@ -186,7 +187,7 @@
                         app:errorEnabled="true"
                         app:errorTextAppearance="@style/ErrorInputText">
 
-                        <TextView
+                        <EditText
                             android:id="@+id/text_view_end_period"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"

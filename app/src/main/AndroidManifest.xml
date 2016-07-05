@@ -31,7 +31,10 @@
             android:name="ua.kpi.ecampus.ui.activity.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
-
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
         <activity
             android:name="ua.kpi.ecampus.ui.activity.BulletinBoardActivity"
@@ -76,13 +79,10 @@
         </activity>
         <activity
             android:name="ua.kpi.campus.ui.activity.VotingStudentActivity"
-            android:parentActivityName="ua.kpi.campus.ui.activity.MainActivity"
+            android:parentActivityName="ua.kpi.ecampus.ui.activity.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
+
         </activity>
     </application>
 </manifest>

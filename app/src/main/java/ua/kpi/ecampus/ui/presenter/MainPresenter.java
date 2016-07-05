@@ -3,21 +3,19 @@ package ua.kpi.ecampus.ui.presenter;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
-import ua.kpi.ecampus.model.Subsystem;
-import ua.kpi.ecampus.model.pojo.User;
-import ua.kpi.ecampus.ui.Navigator;
-import ua.kpi.ecampus.ui.Preference;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
 
-import ua.kpi.campus.model.Subsystem;
-import ua.kpi.campus.model.pojo.User;
-import ua.kpi.campus.ui.Navigator;
-import ua.kpi.campus.ui.Preference;
-import ua.kpi.campus.util.BulletinPredicates;
+import ua.kpi.ecampus.model.Subsystem;
+import ua.kpi.ecampus.model.pojo.User;
+import ua.kpi.ecampus.ui.Navigator;
+import ua.kpi.ecampus.ui.Preference;
+import ua.kpi.ecampus.util.BulletinPredicates;
+
 
 /**
  * MainPresenter created to manage MainActivity.

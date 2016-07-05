@@ -4,13 +4,14 @@ package com.kpi.campus.ui;
 import android.support.test.espresso.intent.rule.IntentsTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.LargeTest;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import ua.kpi.campus.R;
-import ua.kpi.campus.model.Subsystem;
-import ua.kpi.campus.ui.activity.MainActivity;
+import ua.kpi.ecampus.R;
+import ua.kpi.ecampus.model.Subsystem;
+import ua.kpi.ecampus.ui.activity.MainActivity;
 
 import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;

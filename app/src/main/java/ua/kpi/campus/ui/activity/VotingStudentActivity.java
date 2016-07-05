@@ -13,14 +13,16 @@ import java.util.List;
 import javax.inject.Inject;
 
 import butterknife.Bind;
-import ua.kpi.campus.R;
-import ua.kpi.campus.di.UIModule;
-import ua.kpi.campus.model.pojo.Item;
 import ua.kpi.campus.model.pojo.VoteTeacher;
-import ua.kpi.campus.ui.adapter.ItemSpinnerAdapter;
-import ua.kpi.campus.ui.adapter.NothingSelectedAdapter;
 import ua.kpi.campus.ui.adapter.VotingAdapter;
 import ua.kpi.campus.ui.presenter.VotingStudentPresenter;
+import ua.kpi.ecampus.R;
+import ua.kpi.ecampus.di.UIModule;
+import ua.kpi.ecampus.model.pojo.Item;
+import ua.kpi.ecampus.ui.activity.BaseActivity;
+import ua.kpi.ecampus.ui.adapter.ItemSpinnerAdapter;
+import ua.kpi.ecampus.ui.adapter.NothingSelectedAdapter;
+
 
 /**
  * Created by Administrator on 31.05.2016.

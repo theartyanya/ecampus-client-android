@@ -12,8 +12,8 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import ua.kpi.campus.R;
 import ua.kpi.campus.model.pojo.VoteTeacher;
+import ua.kpi.ecampus.R;
 
 /**
  * Created by Administrator on 01.06.2016.

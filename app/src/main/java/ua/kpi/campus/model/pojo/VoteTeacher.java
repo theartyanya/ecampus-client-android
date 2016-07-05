@@ -6,6 +6,8 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.List;
 
+import ua.kpi.ecampus.model.pojo.Item;
+
 /**
  * Created by Administrator on 01.06.2016.
  */

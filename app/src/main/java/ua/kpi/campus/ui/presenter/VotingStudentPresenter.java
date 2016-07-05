@@ -6,13 +6,14 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import ua.kpi.campus.model.dao.IDataAccessObject;
 import ua.kpi.campus.model.dao.VotingDao;
-import ua.kpi.campus.model.pojo.Item;
 import ua.kpi.campus.model.pojo.VoteSet;
 import ua.kpi.campus.model.pojo.VoteTeacher;
 import ua.kpi.campus.model.pojo.VoteTerm;
-import ua.kpi.campus.util.DateUtil;
+import ua.kpi.ecampus.model.dao.IDataAccessObject;
+import ua.kpi.ecampus.model.pojo.Item;
+import ua.kpi.ecampus.ui.presenter.BasePresenter;
+import ua.kpi.ecampus.util.DateUtil;
 
 /**
  * Created by Administrator on 01.06.2016.
