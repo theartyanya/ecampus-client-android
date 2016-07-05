@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:orientation="vertical"
-              tools:context="ua.kpi.campus.ui.activity.BulletinContentActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:context="ua.kpi.campus.ui.activity.BulletinContentActivity">
 
-    <include layout="@layout/toolbar"/>
+    <include layout="@layout/toolbar" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -24,12 +24,12 @@
                 android:layout_height="wrap_content"
                 android:text="Оголошення"
                 android:textColor="@color/colorPrimaryText"
-                android:textSize="16sp"/>
+                android:textSize="16sp" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/colorDivider"/>
+                android:background="@color/colorDivider" />
 
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/input_theme"
@@ -41,14 +41,14 @@
                 app:errorEnabled="true"
                 app:errorTextAppearance="@style/ErrorInputText">
 
-                <EditText
+                <TextView
                     android:id="@+id/edit_text_bulletin_theme"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@null"
                     android:hint="Тема"
                     android:inputType="text"
-                    android:textSize="14sp"/>
+                    android:textSize="14sp" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -62,16 +62,17 @@
                 app:errorEnabled="true"
                 app:errorTextAppearance="@style/ErrorInputText">
 
-                <EditText
+                <TextView
                     android:id="@+id/edit_text_bulletin_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@null"
                     android:hint="Текст оголошення"
+                    android:textColorHint="@color/colorSecondaryText"
                     android:inputType="textMultiLine"
                     android:isScrollContainer="true"
                     android:minHeight="20dp"
-                    android:textSize="14sp"/>
+                    android:textSize="14sp" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -95,9 +96,9 @@
                         app:errorEnabled="true"
                         app:errorTextAppearance="@style/ErrorInputText">
 
-                        <EditText
+                        <TextView
                             android:id="@+id/text_view_start_period"
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@null"
                             android:cursorVisible="false"
@@ -105,52 +106,70 @@
                             android:focusableInTouchMode="false"
                             android:hint="Початок показу"
                             android:paddingTop="2dp"
-                            android:textColorHint="@android:color/transparent"
-                            android:textSize="12sp"/>
+                            android:textColorHint="@color/colorSecondaryText"
+                            android:textSize="12sp" />
                     </android.support.design.widget.TextInputLayout>
 
-                    <TextView
-                        android:id="@+id/text_view_author"
+                    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:id="@+id/attribute_input_start_period"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_below="@id/input_start_period"
+                        android:visibility="gone">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <TextView
+                                android:id="@+id/text_view_author"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:text="@string/bulletin_author"
+                                android:textColor="@color/colorSecondaryText"
+                                android:textSize="8sp" />
+
+                            <TextView
+                                android:id="@+id/text_view_author_name"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:layout_toEndOf="@id/text_view_author"
+                                android:text="test"
+                                android:textColor="@color/colorSecondaryText"
+                                android:textSize="8sp" />
+
+                            <TextView
+                                android:id="@+id/text_view_actuality"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentLeft="true"
+                                android:layout_below="@id/text_view_author"
+                                android:layout_marginTop="4dp"
+                                android:text="@string/bulletin_actuality"
+                                android:textColor="@color/colorSecondaryText"
+                                android:textSize="8sp" />
+
+                            <TextView
+                                android:id="@+id/text_view_actuality_value"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/text_view_author_name"
+                                android:layout_marginTop="4dp"
+                                android:layout_toEndOf="@id/text_view_actuality"
+                                android:text="0"
+                                android:textColor="@color/colorSecondaryText"
+                                android:textSize="8sp" />
+                        </RelativeLayout>
+                    </FrameLayout>
+
+                    <ImageView
+                        android:id="@+id/imageView2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/input_start_period"
-                        android:layout_marginTop="8dp"
-                        android:text="@string/bulletin_author"
-                        android:textColor="@color/colorSecondaryText"
-                        android:textSize="8sp"/>
-
-                    <TextView
-                        android:id="@+id/text_view_author_name"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/input_start_period"
-                        android:layout_marginTop="8dp"
-                        android:layout_toEndOf="@id/text_view_author"
-                        android:text="test"
-                        android:textColor="@color/colorSecondaryText"
-                        android:textSize="8sp"/>
-
-                    <TextView
-                        android:id="@+id/text_view_actuality"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
-                        android:layout_below="@id/text_view_author"
-                        android:layout_marginTop="4dp"
-                        android:text="@string/bulletin_actuality"
-                        android:textColor="@color/colorSecondaryText"
-                        android:textSize="8sp"/>
-
-                    <TextView
-                        android:id="@+id/text_view_actuality_value"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/text_view_author_name"
-                        android:layout_marginTop="4dp"
-                        android:layout_toEndOf="@id/text_view_actuality"
-                        android:text="0"
-                        android:textColor="@color/colorSecondaryText"
-                        android:textSize="8sp"/>
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentStart="true" />
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -167,9 +186,9 @@
                         app:errorEnabled="true"
                         app:errorTextAppearance="@style/ErrorInputText">
 
-                        <EditText
+                        <TextView
                             android:id="@+id/text_view_end_period"
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@null"
                             android:cursorVisible="false"
@@ -177,52 +196,78 @@
                             android:focusableInTouchMode="false"
                             android:hint="Кінець показу"
                             android:paddingTop="2dp"
-                            android:textSize="12sp"/>
+                            android:textColorHint="@color/colorSecondaryText"
+                            android:textSize="12sp" />
                     </android.support.design.widget.TextInputLayout>
 
-                    <TextView
-                        android:id="@+id/text_view_creation_date"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/input_end_period"
-                        android:layout_marginTop="8dp"
-                        android:text="@string/bulletin_creation_date"
-                        android:textColor="@color/colorSecondaryText"
-                        android:textSize="8sp"/>
-
-                    <TextView
-                        android:id="@+id/text_view_creation_date_value"
+                    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:id="@+id/attribute_input_end_period"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_below="@id/input_end_period"
-                        android:layout_marginTop="8dp"
-                        android:layout_toEndOf="@id/text_view_creation_date"
-                        android:text="20.01.2015"
-                        android:textColor="@color/colorSecondaryText"
-                        android:textSize="8sp"/>
+                        android:visibility="gone">
 
-                    <TextView
-                        android:id="@+id/text_view_change_actuality_date"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/text_view_creation_date"
-                        android:layout_marginTop="4dp"
-                        android:text="@string/bulletin_date_change_actuality"
-                        android:textColor="@color/colorSecondaryText"
-                        android:textSize="8sp"/>
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_below="@id/input_end_period">
 
-                    <TextView
-                        android:id="@+id/text_view_change_actuality_date_value"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/text_view_creation_date_value"
-                        android:layout_marginTop="4dp"
-                        android:layout_toEndOf="@id/text_view_change_actuality_date"
-                        android:text="21.02.2014"
-                        android:textColor="@color/colorSecondaryText"
-                        android:textSize="8sp"/>
+                            <TextView
+                                android:id="@+id/text_view_creation_date"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:text="@string/bulletin_creation_date"
+                                android:textColor="@color/colorSecondaryText"
+                                android:textSize="8sp" />
+
+                            <TextView
+                                android:id="@+id/text_view_creation_date_value"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:layout_toEndOf="@id/text_view_creation_date"
+                                android:text="20.01.2015"
+                                android:textColor="@color/colorSecondaryText"
+                                android:textSize="8sp" />
+
+                            <TextView
+                                android:id="@+id/text_view_change_actuality_date"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/text_view_creation_date"
+                                android:layout_marginTop="4dp"
+                                android:text="@string/bulletin_date_change_actuality"
+                                android:textColor="@color/colorSecondaryText"
+                                android:textSize="8sp" />
+
+                            <TextView
+                                android:id="@+id/text_view_change_actuality_date_value"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/text_view_creation_date_value"
+                                android:layout_marginTop="4dp"
+                                android:layout_toEndOf="@id/text_view_change_actuality_date"
+                                android:text="21.02.2014"
+                                android:textColor="@color/colorSecondaryText"
+                                android:textSize="8sp" />
+                        </RelativeLayout>
+
+                    </FrameLayout>
+
                 </RelativeLayout>
 
+                <ImageButton
+                    android:id="@+id/btn_more_information"
+                    style="@style/TextAppearance.AppCompat.Button"
+                    android:layout_width="35dp"
+                    android:layout_height="28dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_gravity="bottom"
+                    android:elevation="0dp"
+                    android:src="@drawable/more_button"
+                    android:textColor="@color/colorTextDark"
+                    android:textSize="12sp" />
             </LinearLayout>
 
             <TextView
@@ -231,12 +276,12 @@
                 android:layout_marginTop="16dp"
                 android:text="Одержувачі"
                 android:textColor="@color/colorPrimaryText"
-                android:textSize="16sp"/>
+                android:textSize="16sp" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/colorDivider"/>
+                android:background="@color/colorDivider" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -256,7 +301,7 @@
                         android:checked="true"
                         android:paddingLeft="8dp"
                         android:text="Всім"
-                        android:textSize="12sp"/>
+                        android:textSize="12sp" />
 
                     <RadioButton
                         android:id="@+id/rb_profile"
@@ -265,7 +310,7 @@
                         android:checked="false"
                         android:paddingLeft="8dp"
                         android:text="За профілем"
-                        android:textSize="12sp"/>
+                        android:textSize="12sp" />
 
                     <RadioButton
                         android:id="@+id/rb_group"
@@ -273,7 +318,7 @@
                         android:layout_height="wrap_content"
                         android:paddingLeft="8dp"
                         android:text="За групою"
-                        android:textSize="12sp"/>
+                        android:textSize="12sp" />
                 </RadioGroup>
 
                 <ImageView
@@ -285,8 +330,7 @@
                     android:layout_marginLeft="4dp"
                     android:layout_marginRight="16dp"
                     android:layout_marginTop="16dp"
-                    android:src="@mipmap/subdivision_dark"
-                    />
+                    android:src="@mipmap/subdivision_dark" />
 
                 <Spinner
                     android:id="@+id/spinner_subdivision"
@@ -294,8 +338,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/radio_group_recipient"
                     android:layout_marginTop="16dp"
-                    android:layout_toRightOf="@id/image_view_subdiv"
-                    />
+                    android:layout_toRightOf="@id/image_view_subdiv" />
 
 
             </RelativeLayout>
@@ -318,13 +361,13 @@
                         android:layout_height="24dp"
                         android:layout_marginLeft="4dp"
                         android:layout_marginRight="16dp"
-                        android:src="@mipmap/profile_dark"/>
+                        android:src="@mipmap/profile_dark" />
 
                     <Spinner
                         android:id="@+id/spinner_profile"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_toRightOf="@id/image_view_profile"/>
+                        android:layout_toRightOf="@id/image_view_profile" />
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -340,13 +383,13 @@
                         android:layout_height="24dp"
                         android:layout_marginLeft="4dp"
                         android:layout_marginRight="16dp"
-                        android:src="@mipmap/index_dark"/>
+                        android:src="@mipmap/index_dark" />
 
                     <Spinner
                         android:id="@+id/spinner_group"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_toRightOf="@id/image_view_group"/>
+                        android:layout_toRightOf="@id/image_view_group" />
                 </RelativeLayout>
             </FrameLayout>
 
@@ -373,7 +416,7 @@
                             android:text="Переглянути"
                             android:textColor="@color/colorTextIcons"
                             android:textSize="12sp"
-                            android:theme="@style/Button"/>
+                            android:theme="@style/Button" />
                     </FrameLayout>
 
                     <TextView
@@ -385,7 +428,7 @@
                         android:gravity="center"
                         android:text="0"
                         android:textColor="@color/colorTextIcons"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold" />
                 </RelativeLayout>
 
                 <Button
@@ -397,7 +440,7 @@
                     android:text="Додати"
                     android:textColor="@color/colorTextIcons"
                     android:textSize="12sp"
-                    android:theme="@style/Button"/>
+                    android:theme="@style/Button" />
 
             </LinearLayout>
         </LinearLayout>

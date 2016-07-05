@@ -4,8 +4,14 @@ import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
+import butterknife.Bind;
+import butterknife.OnClick;
+import ua.kpi.campus.R;
 import ua.kpi.campus.di.UIModule;
 import ua.kpi.campus.model.Recipient;
 import ua.kpi.campus.model.pojo.Bulletin;
@@ -22,6 +28,8 @@ import java.util.List;
  */
 public class AddBulletinActivity extends SaveBulletinActivity implements
         SaveBulletinPresenter.IView {
+    @Bind(R.id.btn_more_information)
+    ImageButton imageButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -137,6 +145,24 @@ public class AddBulletinActivity extends SaveBulletinActivity implements
         // N / A
     }
 
+    @OnClick(R.id.btn_more_information)
+    public void onMoreInformation(){
+        hideShowMoreInformation((FrameLayout) findViewById(R.id.attribute_input_start_period));
+        hideShowMoreInformation((FrameLayout) findViewById(R.id.attribute_input_end_period));
+    }
+
+    private void hideShowMoreInformation(FrameLayout frameLayout){
+        if(frameLayout.getVisibility() != View.VISIBLE) {
+
+            imageButton.setImageResource(R.drawable.more_button_up);
+            frameLayout.setVisibility(View.VISIBLE);
+        }
+        else{
+
+            imageButton.setImageResource(R.drawable.more_button);
+            frameLayout.setVisibility(View.GONE);
+        }
+    }
     private void setToolbar() {
         setSupportActionBar(mToolbar);
         getSupportActionBar().setHomeButtonEnabled(true);
