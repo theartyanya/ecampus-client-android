@@ -3,13 +3,12 @@ package ua.kpi.ecampus.ui.activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-import ua.kpi.ecampus.CampusApplication;
-import ua.kpi.ecampus.di.ActivityModule;
-
 import java.util.List;
 
 import butterknife.ButterKnife;
 import dagger.ObjectGraph;
+import ua.kpi.ecampus.CampusApplication;
+import ua.kpi.ecampus.di.ActivityModule;
 
 /**
  * Base activity created to be extended by every activity class.
