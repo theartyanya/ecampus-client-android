@@ -3,19 +3,18 @@ package ua.kpi.ecampus.ui;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-
-import ua.kpi.ecampus.Config;
-import ua.kpi.ecampus.di.ActivityContext;
-import ua.kpi.ecampus.model.pojo.Bulletin;
-import ua.kpi.ecampus.ui.activity.BulletinBoardActivity;
-import ua.kpi.ecampus.ui.activity.BulletinBoardModeratorActivity;
-import ua.kpi.ecampus.ui.activity.BulletinContentActivity;
-import ua.kpi.ecampus.ui.activity.EditBulletinActivity;
-import ua.kpi.ecampus.ui.activity.LoginActivity;
-import ua.kpi.ecampus.ui.activity.MainActivity;
-import ua.kpi.ecampus.ui.activity.AddBulletinActivity;
-
 import javax.inject.Inject;
+import ua.kpi.campus.Config;
+import ua.kpi.campus.di.ActivityContext;
+import ua.kpi.campus.model.pojo.Bulletin;
+import ua.kpi.campus.ui.activity.AddBulletinActivity;
+import ua.kpi.campus.ui.activity.BulletinBoardActivity;
+import ua.kpi.campus.ui.activity.BulletinBoardModeratorActivity;
+import ua.kpi.campus.ui.activity.BulletinContentActivity;
+import ua.kpi.campus.ui.activity.EditBulletinActivity;
+import ua.kpi.campus.ui.activity.LoginActivity;
+import ua.kpi.campus.ui.activity.MainActivity;
+import ua.kpi.campus.ui.activity.VotingStudentActivity;
 
 /**
  * Class created to handle all the navigation between activities. This class knows how to open
@@ -62,6 +61,11 @@ public class Navigator {
     public void startEditBulletinActivity(Bulletin item) {
         Intent intent = getLaunchIntent(EditBulletinActivity.class);
         intent.putExtra(Config.KEY_BULLETIN, item);
+        mActivityContext.startActivity(intent);
+    }
+
+    public void startVotingStudentActivity() {
+        Intent intent = getLaunchIntent(VotingStudentActivity.class);
         mActivityContext.startActivity(intent);
     }
 
