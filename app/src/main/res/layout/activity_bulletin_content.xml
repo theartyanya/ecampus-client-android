@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="ua.kpi.campus.ui.activity.BulletinContentActivity">
+    tools:context="ua.kpi.ecampus.ui.activity.BulletinContentActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -15,7 +15,7 @@
             android:id="@+id/toolbar"
             layout="@layout/toolbar" />
 
-        <ua.kpi.campus.ui.view.TextViewDrawableSize
+        <ua.kpi.ecampus.ui.view.TextViewDrawableSize
             android:id="@+id/text_view_bulletin_theme"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -44,7 +44,7 @@
             android:textColor="@color/colorPrimaryText"
             android:textSize="14sp" />
 
-        <ua.kpi.campus.ui.view.TextViewDrawableSize
+        <ua.kpi.ecampus.ui.view.TextViewDrawableSize
             android:id="@+id/bulletin_period"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -87,7 +87,7 @@
             android:textColor="@color/colorSecondaryText"
             android:textSize="10sp" />
 
-        <ua.kpi.campus.ui.view.TextViewDrawableSize
+        <ua.kpi.ecampus.ui.view.TextViewDrawableSize
             android:id="@+id/bulletin_author"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -1,4 +1,4 @@
-package ua.kpi.campus.ui.adapter;
+package ua.kpi.ecampus.ui.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,12 +13,12 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import ua.kpi.campus.R;
-import ua.kpi.campus.model.pojo.VoteTeacher;
-import ua.kpi.campus.ui.view.OnItemClickListener;
+import ua.kpi.ecampus.R;
+import ua.kpi.ecampus.model.pojo.VoteTeacher;
+import ua.kpi.ecampus.ui.view.OnItemClickListener;
 
-import static ua.kpi.campus.util.TermPredicates.filter;
-import static ua.kpi.campus.util.TermPredicates.isMatchesId;
+import static ua.kpi.ecampus.util.TermPredicates.filter;
+import static ua.kpi.ecampus.util.TermPredicates.isMatchesId;
 
 /**
  * VotingAdapter manages VoteTeacher data model and adapts it to

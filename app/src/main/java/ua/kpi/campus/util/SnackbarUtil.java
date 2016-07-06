@@ -1,4 +1,4 @@
-package ua.kpi.campus.util;
+package ua.kpi.ecampus.util;
 
 import android.support.design.widget.Snackbar;
 import android.view.View;

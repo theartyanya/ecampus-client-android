@@ -1,4 +1,4 @@
-package ua.kpi.campus.util;
+package ua.kpi.ecampus.util;
 
 import com.annimon.stream.Collectors;
 import com.annimon.stream.Stream;
@@ -7,7 +7,7 @@ import com.annimon.stream.function.Predicate;
 import java.util.Collection;
 import java.util.List;
 
-import ua.kpi.campus.model.pojo.VoteTeacher;
+import ua.kpi.ecampus.model.pojo.VoteTeacher;
 
 /**
  * Created by Administrator on 07.06.2016.
