@@ -1,4 +1,4 @@
-package ua.kpi.campus.ui.presenter;
+package ua.kpi.ecampus.ui.presenter;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -6,13 +6,15 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import ua.kpi.campus.model.dao.IDataAccessObject;
-import ua.kpi.campus.model.dao.VotingDao;
-import ua.kpi.campus.model.pojo.Item;
-import ua.kpi.campus.model.pojo.VoteSet;
-import ua.kpi.campus.model.pojo.VoteTeacher;
-import ua.kpi.campus.model.pojo.VoteTerm;
-import ua.kpi.campus.util.DateUtil;
+import ua.kpi.ecampus.model.Rating;
+import ua.kpi.ecampus.model.dao.IDataAccessObject;
+import ua.kpi.ecampus.model.dao.VotingDao;
+import ua.kpi.ecampus.model.pojo.Item;
+import ua.kpi.ecampus.model.pojo.VoteSet;
+import ua.kpi.ecampus.model.pojo.VoteTeacher;
+import ua.kpi.ecampus.model.pojo.VoteTerm;
+import ua.kpi.ecampus.ui.Navigator;
+import ua.kpi.ecampus.util.DateUtil;
 
 /**
  * Created by Administrator on 01.06.2016.
@@ -21,10 +23,12 @@ public class VotingStudentPresenter extends BasePresenter {
 
     private IView mView;
     private IDataAccessObject<VoteSet> mDataAccess;
+    private Navigator mNavigator;
 
     @Inject
-    public VotingStudentPresenter() {
+    public VotingStudentPresenter(Navigator navigator) {
         mDataAccess = new VotingDao();
+        mNavigator = navigator;
     }
 
     public void setView(IView view) {
@@ -47,26 +51,30 @@ public class VotingStudentPresenter extends BasePresenter {
         VoteSet vs = new VoteSet();
 
         List<VoteTerm> terms = new ArrayList<>();
-        terms.add(new VoteTerm("1", "2015-2016", "2015-09-01", "2016-09-01"));
-        terms.add(new VoteTerm("2", "2014-2015", "2014-09-01", "2015-09-01"));
+        terms.add(new VoteTerm(1, "2015-2016", "2015-09-01", "2016-09-01"));
+        terms.add(new VoteTerm(2, "2014-2015", "2014-09-01", "2015-09-01"));
 
-        List<Item> criteria = new ArrayList<>();
-        criteria.add(new Item(1, "3.97"));
-        criteria.add(new Item(2, "4.21"));
-        criteria.add(new Item(3, "3.97"));
-        criteria.add(new Item(4, "4.21"));
-        criteria.add(new Item(5, "3.97"));
-        criteria.add(new Item(6, "4.21"));
+        List<Rating> criteria = new ArrayList<>();
+        criteria.add(new Rating(3F, "1"));
+        criteria.add(new Rating(4F, "2"));
+        criteria.add(new Rating(3F, "3"));
+        criteria.add(new Rating(4F, "4"));
+        criteria.add(new Rating(3F, "5"));
+        criteria.add(new Rating(4F, "6"));
 
         List<VoteTeacher> teachers = new ArrayList<>();
-        VoteTeacher t = new VoteTeacher("1", "1", "Крилов Євген " +
-                "Володимирович", true, "4.0");
+        VoteTeacher t = new VoteTeacher(1, 1, "Крилов Євген " +
+                "Володимирович", false, "4.0");
         t.setCriteria(criteria);
         teachers.add(t);
-        t = new VoteTeacher("1", "2", "Лісовиченко Олег Іванович", true, "4.3");
+        t = new VoteTeacher(1, 2, "Лісовиченко Олег Іванович", false, "4.3");
         t.setCriteria(criteria);
         teachers.add(t);
-        t = new VoteTeacher("1", "2", "Мелкумян Катерина Юріївна", false, "4.3");
+        t = new VoteTeacher(1, 3, "Мелкумян Катерина Юріївна", false, "4.3");
+        t.setCriteria(criteria);
+        teachers.add(t);
+        t = new VoteTeacher(2, 4, "Олійник Волдимир Валентинович", false, "4" +
+                ".3");
         t.setCriteria(criteria);
         teachers.add(t);
 
@@ -80,16 +88,18 @@ public class VotingStudentPresenter extends BasePresenter {
     }
 
     public void setResult() {
-        VoteSet voting = getVoting();
-        List<VoteTerm> terms = voting.getTerms();
+        List<VoteTerm> terms = getVoting().getTerms();
 
         List<Item> termNames = new ArrayList<>();
         for (VoteTerm t : terms) {
-            Item i = new Item(Integer.parseInt(t.getVoteId()), t.getVoteName());
+            Item i = new Item(t.getVoteId(), t.getVoteName());
             termNames.add(i);
         }
         mView.setTermsSpinner(termNames);
+    }
 
+    public void setSpecificAdapter() {
+        VoteSet voting = getVoting();
         VoteTerm latestTerm = voting.getTerms().get(0);
         if (isVotePeriod(latestTerm.getDateStop())) {
             // voting adapter
@@ -102,6 +112,10 @@ public class VotingStudentPresenter extends BasePresenter {
 
     public VoteSet getVoting() {
         return mDataAccess.getData().iterator().next();
+    }
+
+    public void onItemClick(Object item) {
+        mNavigator.startRatingActivity((VoteTeacher)item);
     }
 
     private boolean isVotePeriod(String endDate) {

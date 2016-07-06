@@ -1,4 +1,4 @@
-package ua.kpi.campus.model.pojo;
+package ua.kpi.ecampus.model.pojo;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

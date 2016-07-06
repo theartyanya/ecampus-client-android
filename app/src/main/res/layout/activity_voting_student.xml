@@ -1,36 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    tools:context="ua.kpi.campus.ui.activity.VotingStudentActivity">
+    tools:context="ua.kpi.ecampus.ui.activity.VotingStudentActivity">
 
     <include layout="@layout/toolbar"/>
 
-    <TextView
+    <ua.kpi.ecampus.ui.view.TextViewDrawableSize
         style="@style/Margin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:drawableLeft="@drawable/icon_calendar"
         android:text="Опитування"
-        android:textStyle="bold"/>
-
-    <Spinner
-        android:id="@+id/spinner_terms"
-        style="@style/Margin"
+        android:gravity="center"
+        android:drawablePadding="16dp"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        app:compoundDrawableHeight="28dp"
+        app:compoundDrawableWidth="28dp"/>
+    
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="8dp"
-        android:layout_marginRight="16dp"/>
+        android:layout_height="wrap_content">
 
-    <TextView
+        <Spinner
+            android:id="@+id/spinner_terms"
+            style="@style/Margin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="8dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=""/>
+
+
+    </FrameLayout>
+
+    <ua.kpi.ecampus.ui.view.TextViewDrawableSize
         style="@style/Margin"
+        android:id="@+id/tv_title_teachers"
+        android:visibility="invisible"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:drawablePadding="16dp"
+        android:drawableLeft="@drawable/icon_grad_hat"
+        android:textSize="16sp"
+        app:compoundDrawableHeight="28dp"
+        app:compoundDrawableWidth="28dp"
         android:text="Викладачі"
         android:textStyle="bold"/>
 
@@ -38,8 +65,7 @@
         android:id="@+id/recyclerview_teachers"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
+        android:visibility="gone"
         android:scrollbars="vertical"/>
 
 </LinearLayout>
