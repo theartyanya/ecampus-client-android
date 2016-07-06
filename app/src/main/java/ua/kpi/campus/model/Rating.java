@@ -1,4 +1,4 @@
-package ua.kpi.campus.model;
+package ua.kpi.ecampus.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;

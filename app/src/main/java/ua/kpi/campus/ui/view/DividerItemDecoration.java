@@ -1,4 +1,4 @@
-package ua.kpi.campus.ui.view;
+package ua.kpi.ecampus.ui.view;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -7,7 +7,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import ua.kpi.campus.R;
+import ua.kpi.ecampus.R;
 
 
 /**
