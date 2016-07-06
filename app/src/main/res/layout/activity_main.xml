@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#88BE34"
     tools:context=".MainActivity">
 
     <android.support.design.widget.AppBarLayout
@@ -21,10 +22,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:horizontalSpacing="4dp"
+        android:horizontalSpacing="2dp"
         android:numColumns="2"
         android:stretchMode="columnWidth"
-        android:verticalSpacing="4dp"
+        android:verticalSpacing="2dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
 </android.support.design.widget.CoordinatorLayout>

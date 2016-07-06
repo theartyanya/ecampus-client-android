@@ -5,6 +5,13 @@ import ua.kpi.ecampus.model.pojo.Item;
 import ua.kpi.ecampus.model.pojo.User;
 import ua.kpi.ecampus.util.DateUtil;
 
+import static ua.kpi.ecampus.util.BulletinPredicates.filterBulletins;
+import static ua.kpi.ecampus.util.BulletinPredicates.getIdsCollection;
+import static ua.kpi.ecampus.util.BulletinPredicates.isDeleted;
+import static ua.kpi.ecampus.util.BulletinPredicates.isMatchesProfile;
+import static ua.kpi.ecampus.util.BulletinPredicates.isMatchesSubdivision;
+import static ua.kpi.ecampus.util.BulletinPredicates.isNotExpired;
+
 import java.util.Collection;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -47,26 +54,24 @@ public class BulletinModeratorDao implements IDataAccessObject<Bulletin> {
     public void setData(Collection<Bulletin> data) {
         if (data.isEmpty()) return;
 
-        mAll.addAll(data);
+        for (Bulletin b : data) {
+            trimTime(b);
+            mAll.add(b);
+        }
 
         List<Item> userProfile = User.getInstance().position;
         List<Item> userSubdivision = User.getInstance().subdivision;
 
         if (userProfile != null && userSubdivision != null) {
-            List<Integer> ids = BulletinPredicates.getIdsCollection(userProfile);
-            mByProfile.addAll(BulletinPredicates.filterBulletins(data,
-                    BulletinPredicates.isMatchesProfile
-                    (ids)));
+            List<Integer> ids = getIdsCollection(userProfile);
+            mByProfile.addAll(filterBulletins(data, isMatchesProfile(ids)));
 
-            ids = BulletinPredicates.getIdsCollection(userSubdivision);
-            mBySubdiv.addAll(BulletinPredicates.filterBulletins(data,
-                    BulletinPredicates.isMatchesSubdivision
-                    (ids)));
+            ids = getIdsCollection(userSubdivision);
+            mBySubdiv.addAll(filterBulletins(data, isMatchesSubdivision(ids)));
         }
-        mNotExpired.addAll(BulletinPredicates.filterBulletins(data,
-                BulletinPredicates.isNotExpired(DateUtil
+        mNotExpired.addAll(filterBulletins(data, isNotExpired(DateUtil
                 .getCurrentDate())));
-        mDeleted.addAll(BulletinPredicates.filterBulletins(data, BulletinPredicates.isDeleted()));
+        mDeleted.addAll(filterBulletins(data, isDeleted()));
     }
 
     @Override
@@ -75,6 +80,16 @@ public class BulletinModeratorDao implements IDataAccessObject<Bulletin> {
 
     @Override
     public void delete(Bulletin object) {
+    }
+
+    /**
+     * Trim time value in datetime strings in object
+     * @param bulletin with datetime strings
+     */
+    private void trimTime(Bulletin bulletin) {
+        bulletin.setDateStart(bulletin.getDateStart().split(" ")[0]);
+        bulletin.setDateStop(bulletin.getDateStop().split(" ")[0]);
+        bulletin.setDateCreate(bulletin.getDateCreate().split(" ")[0]);
     }
 
     public Collection<Bulletin> getFilteredByProfile() {

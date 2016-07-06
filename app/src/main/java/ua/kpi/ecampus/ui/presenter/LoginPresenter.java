@@ -2,9 +2,10 @@ package ua.kpi.ecampus.ui.presenter;
 
 import android.os.Bundle;
 
+import javax.inject.Inject;
+
 import ua.kpi.ecampus.Config;
 import ua.kpi.ecampus.api.response.BaseResponse;
-import ua.kpi.ecampus.api.response.RequestResult;
 import ua.kpi.ecampus.model.pojo.Token;
 import ua.kpi.ecampus.model.pojo.User;
 import ua.kpi.ecampus.rx.UserRxLoader;
@@ -72,7 +73,7 @@ public class LoginPresenter extends BasePresenter {
         if (answer != null) {
             onLoginSuccess(answer);
         } else {
-            mView.onLoginFailed(baseResponse.getRequestResult());
+            mView.onLoginFailed(baseResponse);
         }
     }
 
@@ -124,7 +125,7 @@ public class LoginPresenter extends BasePresenter {
 
         void activateLoginButton(boolean shouldShow);
 
-        void onLoginFailed(RequestResult result);
+        void onLoginFailed(BaseResponse response);
 
         void initLoader(Bundle args);
     }

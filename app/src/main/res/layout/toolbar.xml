@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
     android:background="@color/colorPrimary"
+    android:elevation="4dp"
     app:popupTheme="@style/ThemeOverlay.AppBar.White.Popup"
     app:theme="@style/ThemeOverlay.AppBar.White"/>
 

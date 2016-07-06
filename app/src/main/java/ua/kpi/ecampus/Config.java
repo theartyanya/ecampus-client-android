@@ -16,6 +16,7 @@ public class Config {
     public static final String KEY_PASSWORD = "password";
     public static final String KEY_BULLETIN = "key_bulletin";
     public static final String KEY_TITLE = "key_title";
+    public static final String KEY_TEACHER = "key_teacher";
 
     /**
      * Keys for SharedPreferences
@@ -46,4 +47,10 @@ public class Config {
     public static final String USER_SUBDIVISION = "user_subdivision";
 
     public static final String USER_IS_BB_MODERATOR = "user_is_moderator";
+
+    /**
+     * Request code for startActivityForResult method
+     */
+    public static final int REQUEST_CODE  = 1;
+
 }
