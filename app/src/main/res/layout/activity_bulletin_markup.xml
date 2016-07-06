@@ -68,10 +68,10 @@
                     android:layout_height="wrap_content"
                     android:background="@null"
                     android:hint="Текст оголошення"
-                    android:textColorHint="@color/colorSecondaryText"
                     android:inputType="textMultiLine"
                     android:isScrollContainer="true"
                     android:minHeight="20dp"
+                    android:textColorHint="@color/colorSecondaryText"
                     android:textSize="14sp" />
 
             </android.support.design.widget.TextInputLayout>
@@ -98,7 +98,7 @@
 
                         <EditText
                             android:id="@+id/text_view_start_period"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@null"
                             android:cursorVisible="false"
@@ -189,7 +189,7 @@
 
                         <EditText
                             android:id="@+id/text_view_end_period"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@null"
                             android:cursorVisible="false"
@@ -264,8 +264,9 @@
                     android:layout_width="35dp"
                     android:layout_height="28dp"
                     android:layout_alignParentRight="true"
-                    android:layout_gravity="bottom"
+                    android:layout_gravity="center"
                     android:elevation="0dp"
+                    android:background="@null"
                     android:src="@drawable/more_button"
                     android:textColor="@color/colorTextDark"
                     android:textSize="12sp" />
