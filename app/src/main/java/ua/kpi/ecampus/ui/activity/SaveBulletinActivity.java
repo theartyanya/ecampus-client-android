@@ -309,6 +309,8 @@ public abstract class SaveBulletinActivity extends BaseActivity implements
     private Recipient createRecipient() {
         Recipient r = null;
         Item subdiv = (Item) mSpinnerSubdivision.getSelectedItem();
+        if(subdiv == null)
+            return null;
         String subdivId = Integer.toString(subdiv.getId());
         String subdivName = subdiv.getName();
         if (mRbAll.isChecked()) {
