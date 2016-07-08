@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 
+import javax.inject.Inject;
+
+import ua.kpi.ecampus.ui.activity.VotingStudentActivity;
 import ua.kpi.ecampus.Config;
 import ua.kpi.ecampus.di.ActivityContext;
 import ua.kpi.ecampus.model.pojo.Bulletin;
@@ -16,9 +19,6 @@ import ua.kpi.ecampus.ui.activity.EditBulletinActivity;
 import ua.kpi.ecampus.ui.activity.LoginActivity;
 import ua.kpi.ecampus.ui.activity.MainActivity;
 import ua.kpi.ecampus.ui.activity.RateTeacherActivity;
-import ua.kpi.ecampus.ui.activity.VotingStudentActivity;
-
-import javax.inject.Inject;
 
 /**
  * Class created to handle all the navigation between activities. This class knows how to open

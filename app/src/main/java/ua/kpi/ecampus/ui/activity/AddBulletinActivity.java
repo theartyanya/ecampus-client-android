@@ -6,6 +6,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import ua.kpi.ecampus.di.UIModule;
 import ua.kpi.ecampus.model.Recipient;
 import ua.kpi.ecampus.model.pojo.Bulletin;
@@ -13,9 +16,6 @@ import ua.kpi.ecampus.model.pojo.User;
 import ua.kpi.ecampus.ui.presenter.SaveBulletinPresenter;
 import ua.kpi.ecampus.util.DateUtil;
 import ua.kpi.ecampus.util.ToastUtil;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Activity for addition of a Bulletin.

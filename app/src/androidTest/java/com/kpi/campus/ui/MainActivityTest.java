@@ -13,6 +13,10 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import ua.kpi.ecampus.R;
+import ua.kpi.ecampus.model.Subsystem;
+import ua.kpi.ecampus.ui.activity.MainActivity;
+
 import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;

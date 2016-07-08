@@ -19,8 +19,8 @@ public class TermPredicates {
     }
 
     public static List<VoteTeacher> filter(Collection<VoteTeacher> bulletins,
-                                                 Predicate<VoteTeacher>
-                                                         predicate) {
+                                           Predicate<VoteTeacher>
+                                                   predicate) {
         return Stream.of(bulletins)
                 .filter(predicate)
                 .collect(Collectors.<VoteTeacher>toList());
