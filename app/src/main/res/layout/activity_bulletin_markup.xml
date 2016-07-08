@@ -261,13 +261,13 @@
                 <ImageButton
                     android:id="@+id/btn_more_information"
                     style="@style/TextAppearance.AppCompat.Button"
-                    android:layout_width="35dp"
-                    android:layout_height="28dp"
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
                     android:layout_alignParentRight="true"
                     android:layout_gravity="center"
                     android:elevation="0dp"
                     android:background="@null"
-                    android:src="@drawable/more_button"
+                    android:src="@drawable/arrow_down"
                     android:textColor="@color/colorTextDark"
                     android:textSize="12sp" />
             </LinearLayout>
