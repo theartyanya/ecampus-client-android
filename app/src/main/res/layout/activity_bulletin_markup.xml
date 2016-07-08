@@ -136,7 +136,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="8dp"
                                 android:layout_toEndOf="@id/text_view_author"
-                                android:text="test"
+                                android:text="Test"
                                 android:textColor="@color/colorSecondaryText"
                                 android:textSize="8sp" />
 
@@ -145,8 +145,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentLeft="true"
-                                android:layout_below="@id/text_view_author"
-                                android:layout_marginTop="4dp"
+                                android:layout_below="@id/text_view_author_name"
+                                android:layout_marginTop="3dp"
                                 android:text="@string/bulletin_actuality"
                                 android:textColor="@color/colorSecondaryText"
                                 android:textSize="8sp" />
@@ -156,7 +156,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_below="@id/text_view_author_name"
-                                android:layout_marginTop="4dp"
+                                android:layout_marginTop="3dp"
                                 android:layout_toEndOf="@id/text_view_actuality"
                                 android:text="0"
                                 android:textColor="@color/colorSecondaryText"
@@ -264,8 +264,8 @@
                     android:layout_height="28dp"
                     android:layout_alignParentRight="true"
                     android:layout_gravity="center"
-                    android:elevation="0dp"
                     android:background="@null"
+                    android:elevation="0dp"
                     android:src="@drawable/more_button"
                     android:textColor="@color/colorTextDark"
                     android:textSize="12sp" />
