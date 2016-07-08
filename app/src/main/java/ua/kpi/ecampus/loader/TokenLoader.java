@@ -42,6 +42,7 @@ public class TokenLoader extends BaseLoader {
 
         return new TokenResponse()
                 .setRequestResult(RequestResult.OK)
+                .setStatusCode(resp.code())
                 .setAnswer(token);
     }
 }

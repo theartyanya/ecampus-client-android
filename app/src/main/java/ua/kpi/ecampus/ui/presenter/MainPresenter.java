@@ -4,6 +4,11 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 
+import ua.kpi.ecampus.model.Subsystem;
+import ua.kpi.ecampus.model.pojo.User;
+import ua.kpi.ecampus.ui.Navigator;
+import ua.kpi.ecampus.ui.Preference;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

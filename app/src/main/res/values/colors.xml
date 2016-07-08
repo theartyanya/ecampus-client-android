@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#4caf50</color>
-    <color name="colorPrimaryDark">#388e3c</color>
+    <color name="colorPrimary">#29BE6D</color>
+    <color name="colorPrimaryDark">#20985A</color>
     <color name="colorAccent">#ff9800</color>
     <color name="colorAccentPressed">#fab144</color>
     <color name="colorLightPrimary">#c8e6c9</color>
@@ -9,11 +9,7 @@
     <color name="colorPrimaryText">#212121</color>
     <color name="colorSecondaryText">#727272</color>
     <color name="colorDivider">#bfbfbf</color>
-    <color name="colorStartGradient">#06ae17</color>
-    <color name="colorCenterGradient">#75e454</color>
-    <color name="colorEndGradient">#b4df7c</color>
-
     <color name="colorTextDark">#666666</color>
-    <color name="colorTextLight">#c2c2c2</color>
+    <color name="colorLightDivider">#e0e0e0</color>
 
 </resources>

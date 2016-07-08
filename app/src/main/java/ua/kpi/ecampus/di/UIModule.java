@@ -10,7 +10,8 @@ import ua.kpi.ecampus.ui.activity.MainActivity;
 import ua.kpi.ecampus.ui.activity.MainNotAuthActivity;
 
 import dagger.Module;
-import ua.kpi.campus.ui.activity.VotingStudentActivity;
+import ua.kpi.ecampus.ui.activity.RateTeacherActivity;
+import ua.kpi.ecampus.ui.activity.VotingStudentActivity;
 
 /**
  * Dagger module created to provide UI dependencies like presenters.
@@ -27,7 +28,8 @@ import ua.kpi.campus.ui.activity.VotingStudentActivity;
                 AddBulletinActivity.class,
                 BulletinBoardModeratorActivity.class,
                 EditBulletinActivity.class,
-                VotingStudentActivity.class
+                VotingStudentActivity.class,
+                RateTeacherActivity.class
 
         })
 public final class UIModule {

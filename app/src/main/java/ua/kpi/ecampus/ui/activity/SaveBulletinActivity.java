@@ -14,6 +14,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RadioButton;
@@ -22,6 +24,12 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.util.List;
+
+import javax.inject.Inject;
+
+import butterknife.Bind;
+import butterknife.OnClick;
 import ua.kpi.ecampus.R;
 import ua.kpi.ecampus.model.Recipient;
 import ua.kpi.ecampus.model.pojo.Item;
@@ -31,13 +39,6 @@ import ua.kpi.ecampus.ui.adapter.NothingSelectedAdapter;
 import ua.kpi.ecampus.ui.fragment.DatePickerFragment;
 import ua.kpi.ecampus.ui.presenter.SaveBulletinPresenter;
 import ua.kpi.ecampus.util.ToastUtil;
-
-import java.util.List;
-
-import javax.inject.Inject;
-
-import butterknife.Bind;
-import butterknife.OnClick;
 
 /**
  * Created by Administrator on 12.05.2016.
@@ -73,6 +74,8 @@ public abstract class SaveBulletinActivity extends BaseActivity implements
     protected RadioButton mRbProfile;
     @Bind(R.id.rb_group)
     protected RadioButton mRbGroup;
+    @Bind(R.id.btn_more_information)
+    protected ImageButton mMoreInfoBtn;
     @Inject
     protected SaveBulletinPresenter mPresenter;
 
@@ -153,6 +156,22 @@ public abstract class SaveBulletinActivity extends BaseActivity implements
         popWindow.setAnimationStyle(R.style.PopupAnimation);
         popWindow.showAtLocation(new LinearLayout(this), Gravity.BOTTOM, 0,
                 100);
+    }
+    @OnClick(R.id.btn_more_information)
+    public void onMoreInformation(){
+        hideShowMoreInformation((FrameLayout) findViewById(R.id.attribute_input_start_period));
+        hideShowMoreInformation((FrameLayout) findViewById(R.id.attribute_input_end_period));
+    }
+
+    private void hideShowMoreInformation(FrameLayout frameLayout){
+        if(frameLayout.getVisibility() != View.VISIBLE) {
+            mMoreInfoBtn.setImageResource(R.drawable.more_button_up);
+            frameLayout.setVisibility(View.VISIBLE);
+        }
+        else{
+            mMoreInfoBtn.setImageResource(R.drawable.more_button);
+            frameLayout.setVisibility(View.GONE);
+        }
     }
 
     protected void setDateListener() {
@@ -290,6 +309,8 @@ public abstract class SaveBulletinActivity extends BaseActivity implements
     private Recipient createRecipient() {
         Recipient r = null;
         Item subdiv = (Item) mSpinnerSubdivision.getSelectedItem();
+        if(subdiv == null)
+            return null;
         String subdivId = Integer.toString(subdiv.getId());
         String subdivName = subdiv.getName();
         if (mRbAll.isChecked()) {

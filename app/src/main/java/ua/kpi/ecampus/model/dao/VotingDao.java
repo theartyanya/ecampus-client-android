@@ -1,12 +1,11 @@
-package ua.kpi.campus.model.dao;
+package ua.kpi.ecampus.model.dao;
 
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import ua.kpi.campus.model.pojo.VoteSet;
-import ua.kpi.ecampus.model.dao.IDataAccessObject;
+import ua.kpi.ecampus.model.pojo.VoteSet;
 
 /**
  * Created by Administrator on 01.06.2016.
