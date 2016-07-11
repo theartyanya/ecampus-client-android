@@ -57,4 +57,21 @@
     <string name="recipient_must_be_added">Додайте одержувача</string>
     <string name="required_field">Обов\'язкове поле!</string>
     <string name="activity_name_voting">Голосування</string>
+
+
+    <string-array name="views_array">
+        <item>Оголошення</item>
+        <item>Моніторинг</item>
+        <item>Ректорський</item>
+        <item>Голосування</item>
+        <item>Навантаження НПП</item>
+        <item>РНП</item>
+        <item>Вийти</item>
+    </string-array>
+    <string name="menu">Меню</string>
+    <string name="first_screen">Первый экран</string>
+    <string name="second_screen">Второй экран</string>
+    <string name="third_screen">Третий экран</string>
+    <string name="open_menu">Open</string>
+    <string name="close_menu">Close</string>
 </resources>
