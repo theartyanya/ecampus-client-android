@@ -10,17 +10,16 @@ import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
 import android.widget.GridView;
 
-import ua.kpi.campus.di.UIModule;
-import ua.kpi.campus.model.Subsystem;
-import ua.kpi.campus.ui.adapter.GridSubsystemAdapter;
-import ua.kpi.campus.ui.presenter.MainPresenter;
-
 import java.util.LinkedList;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import butterknife.Bind;
+import ua.kpi.campus.di.UIModule;
+import ua.kpi.campus.model.Subsystem;
+import ua.kpi.campus.ui.adapter.GridSubsystemAdapter;
+import ua.kpi.campus.ui.presenter.MainPresenter;
 
 /**
  * Main activity for application.
@@ -79,11 +78,11 @@ public class MainActivity extends BaseActivity implements MainPresenter.IView {
         alertDialogBuilder.setMessage(ua.kpi.campus.R.string.logout_confirmation);
         alertDialogBuilder.setPositiveButton(ua.kpi.campus.R.string.yes, new
                 DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                mPresenter.logout();
-            }
-        });
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        mPresenter.logout();
+                    }
+                });
         alertDialogBuilder.setNegativeButton(ua.kpi.campus.R.string.no, new DialogInterface
                 .OnClickListener() {
             @Override
@@ -132,4 +131,5 @@ public class MainActivity extends BaseActivity implements MainPresenter.IView {
         //mToolbar.setNavigationIcon(R.mipmap.ic_action_menu);
         getSupportActionBar().setTitle(ua.kpi.campus.R.string.activity_name_main);
     }
+
 }

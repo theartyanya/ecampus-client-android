@@ -9,6 +9,9 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.Bind;
 import butterknife.OnClick;
 import ua.kpi.campus.R;
@@ -20,9 +23,6 @@ import ua.kpi.campus.ui.presenter.SaveBulletinPresenter;
 import ua.kpi.campus.util.DateUtil;
 import ua.kpi.campus.util.ToastUtil;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Activity for addition of a Bulletin.
  */
@@ -30,7 +30,6 @@ public class AddBulletinActivity extends SaveBulletinActivity implements
         SaveBulletinPresenter.IView {
     @Bind(R.id.btn_more_information)
     ImageButton imageButton;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import ua.kpi.campus.R;
 import ua.kpi.campus.ui.view.DrawerItem;
 
 /**
@@ -44,8 +43,8 @@ public class CustomDrawerAdapter extends ArrayAdapter<DrawerItem> {
 
             view = inflater.inflate(layoutResID, parent, false);
             drawerHolder.ItemName = (TextView) view
-                    .findViewById(R.id.label);// возможні баги!!!
-            drawerHolder.icon = (ImageView) view.findViewById(ua.kpi.campus.R.id.drawer_icon);// возможні баги!!
+                    .findViewById(ua.kpi.campus.R.id.label);
+            drawerHolder.icon = (ImageView) view.findViewById(ua.kpi.campus.R.id.drawer_icon);
 
             view.setTag(drawerHolder);
 
