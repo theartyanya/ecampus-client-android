@@ -5,6 +5,10 @@ import android.support.test.espresso.intent.rule.IntentsTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.LargeTest;
 
+import ua.kpi.ecampus.R;
+import ua.kpi.ecampus.model.Subsystem;
+import ua.kpi.ecampus.ui.activity.MainActivity;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;

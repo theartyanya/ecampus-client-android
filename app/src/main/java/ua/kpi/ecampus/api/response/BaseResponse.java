@@ -19,6 +19,8 @@ public class BaseResponse {
 
     private RequestResult mRequestResult;
 
+    private int mStatusCode;
+
     public BaseResponse() {
         mRequestResult = RequestResult.ERROR;
     }
@@ -47,6 +49,15 @@ public class BaseResponse {
         return this;
     }
 
+    public int getStatusCode() {
+        return mStatusCode;
+    }
+
+    public BaseResponse setStatusCode(int code) {
+        mStatusCode = code;
+        return this;
+    }
+    
     public void save(Context context) {
     }
 }

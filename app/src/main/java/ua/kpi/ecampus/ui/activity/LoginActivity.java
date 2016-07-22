@@ -8,15 +8,6 @@ import android.support.design.widget.TextInputLayout;
 import android.widget.Button;
 import android.widget.EditText;
 
-import ua.kpi.ecampus.Config;
-import ua.kpi.ecampus.R;
-import ua.kpi.ecampus.api.response.BaseResponse;
-import ua.kpi.ecampus.api.response.RequestResult;
-import ua.kpi.ecampus.di.UIModule;
-import ua.kpi.ecampus.loader.TokenLoader;
-import ua.kpi.ecampus.ui.presenter.LoginPresenter;
-import ua.kpi.ecampus.util.ToastUtil;
-
 import java.util.LinkedList;
 import java.util.List;
 
@@ -24,6 +15,13 @@ import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import ua.kpi.ecampus.Config;
+import ua.kpi.ecampus.R;
+import ua.kpi.ecampus.api.response.BaseResponse;
+import ua.kpi.ecampus.di.UIModule;
+import ua.kpi.ecampus.loader.TokenLoader;
+import ua.kpi.ecampus.ui.presenter.LoginPresenter;
+import ua.kpi.ecampus.util.ToastUtil;
 
 /**
  * Login activity.
@@ -77,16 +75,19 @@ public class LoginActivity extends BaseActivity implements LoginPresenter
     }
 
     @Override
-    public void onLoginFailed(RequestResult result) {
-        switch (result) {
+    public void onLoginFailed(BaseResponse response) {
+        switch (response.getRequestResult()) {
             case OK:
-                ToastUtil.showShortMessage(getString(R.string
-                                .invalid_credentials),
-                        getApplicationContext());
+                int code = response.getStatusCode();
+                if (code == 200)
+                    ToastUtil.showShortMessage(getString(R.string.invalid_credentials),
+                            getApplicationContext());
+                else if (code == 500)
+                    ToastUtil.showShortMessage(getString(R.string.server_error),
+                            getApplicationContext());
                 break;
             case ERROR:
-                ToastUtil.showShortMessage(getString(R.string.no_internet),
-                        getApplicationContext());
+                ToastUtil.showShortMessage(getString(R.string.no_internet),                                             getApplicationContext());
                 break;
         }
 
@@ -102,7 +103,7 @@ public class LoginActivity extends BaseActivity implements LoginPresenter
         String userLogin = mLogin.getText().toString();
         String userPassword = mPassword.getText().toString();
         boolean isValid = validateInput(userLogin, userPassword);
-        if(isValid) {
+        if (isValid) {
             mPresenter.onStartLogin();
             mPresenter.initRequest(userLogin, userPassword);
         }
@@ -145,6 +146,7 @@ public class LoginActivity extends BaseActivity implements LoginPresenter
 
     /**
      * Validate user input credentials.
+     *
      * @param inputLogin
      * @param inputPassword
      * @return true if credentials are not empty, false otherwise.
@@ -170,8 +172,9 @@ public class LoginActivity extends BaseActivity implements LoginPresenter
 
     /**
      * Handle user input error.
+     *
      * @param inputLayout TextInputLayout view
-     * @param errorMsg error message to show
+     * @param errorMsg    error message to show
      */
     private void setErrorInput(TextInputLayout inputLayout, String errorMsg) {
         inputLayout.setError(errorMsg);

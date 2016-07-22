@@ -6,10 +6,11 @@ import android.content.Intent;
 
 import javax.inject.Inject;
 
-import ua.kpi.campus.ui.activity.VotingStudentActivity;
+import ua.kpi.ecampus.ui.activity.VotingStudentActivity;
 import ua.kpi.ecampus.Config;
 import ua.kpi.ecampus.di.ActivityContext;
 import ua.kpi.ecampus.model.pojo.Bulletin;
+import ua.kpi.ecampus.model.pojo.VoteTeacher;
 import ua.kpi.ecampus.ui.activity.AddBulletinActivity;
 import ua.kpi.ecampus.ui.activity.BulletinBoardActivity;
 import ua.kpi.ecampus.ui.activity.BulletinBoardModeratorActivity;
@@ -17,6 +18,7 @@ import ua.kpi.ecampus.ui.activity.BulletinContentActivity;
 import ua.kpi.ecampus.ui.activity.EditBulletinActivity;
 import ua.kpi.ecampus.ui.activity.LoginActivity;
 import ua.kpi.ecampus.ui.activity.MainActivity;
+import ua.kpi.ecampus.ui.activity.RateTeacherActivity;
 
 /**
  * Class created to handle all the navigation between activities. This class knows how to open
@@ -69,6 +71,12 @@ public class Navigator {
     public void startVotingStudentActivity() {
         Intent intent = getLaunchIntent(VotingStudentActivity.class);
         mActivityContext.startActivity(intent);
+    }
+
+    public void startRatingActivity(VoteTeacher item) {
+        Intent intent = getLaunchIntent(RateTeacherActivity.class);
+        intent.putExtra(Config.KEY_TEACHER, item);
+        mActivityContext.startActivityForResult(intent, Config.REQUEST_CODE);
     }
 
     /**
