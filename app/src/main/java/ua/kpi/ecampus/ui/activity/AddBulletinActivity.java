@@ -23,6 +23,7 @@ import ua.kpi.ecampus.ui.presenter.SaveBulletinPresenter;
 import ua.kpi.ecampus.util.DateUtil;
 import ua.kpi.ecampus.util.ToastUtil;
 
+
 /**
  * Activity for addition of a Bulletin.
  */
@@ -30,7 +31,6 @@ public class AddBulletinActivity extends SaveBulletinActivity implements
         SaveBulletinPresenter.IView {
     @Bind(R.id.btn_more_information)
     ImageButton imageButton;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

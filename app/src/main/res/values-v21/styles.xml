@@ -60,6 +60,6 @@
         <item name="colorControlHighlight">@android:color/white</item>
     </style>
 
-    <style name="ThemeOverlay.AppBar.White.Popup" parent="ThemeOverlay.AppCompat.Light"/>
+    <style name="ThemeOverlay.AppBar.White.Popup" parent="ThemeOverlay.AppCompat.Light" />
 
 </resources>
