@@ -16,6 +16,10 @@ import java.util.List;
 import javax.inject.Inject;
 
 import butterknife.Bind;
+import ua.kpi.campus.Config;
+import ua.kpi.campus.di.UIModule;
+import ua.kpi.campus.model.pojo.Bulletin;
+import ua.kpi.campus.ui.presenter.BulletinContentPresenter;
 
 /**
  * This activity represents content of a Bulletin.
@@ -33,7 +37,6 @@ public class BulletinContentActivity extends BaseActivity implements
         super.onCreate(savedInstanceState);
         setContentView(ua.kpi.ecampus.R.layout.activity_bulletin_content);
         bindViews();
-
         mBulletin = getIntent().getParcelableExtra(Config.KEY_BULLETIN);
         mPresenter.setView(this);
         mPresenter.initializeViewComponent();
@@ -73,7 +76,6 @@ public class BulletinContentActivity extends BaseActivity implements
     private void setValuesInViews() {
         if (mBulletin == null)
             return;
-
         TextView textView;
         textView = (TextView) findViewById(ua.kpi.ecampus.R.id.text_view_bulletin_theme);
         textView.setText(mBulletin.getSubject());

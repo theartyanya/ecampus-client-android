@@ -42,6 +42,8 @@
     <string name="rnp">РНП</string>
     <string name="no_internet_access">Немає Інтернет підключення</string>
     <string name="spinner_title">Prompt</string>
+    <string name="settings_drawer">Налаштування</string>
+    <string name="logout">Вийти</string>
 
     <string name="bulletin_is_added">Оголошення створено</string>
     <string name="unauthorized">Виконайте авторизацію</string>
@@ -57,4 +59,13 @@
     <string name="recipient_must_be_added">Додайте одержувача</string>
     <string name="required_field">Обов\'язкове поле!</string>
     <string name="activity_name_voting">Голосування</string>
+
+
+    <string name="menu">Меню</string>
+
+    <string name="open_menu">Open</string>
+    <string name="close_menu">Close</string>
+
+    <string name="profile_name">Тест</string>
+    <string name="profile_email">Тест</string>
 </resources>

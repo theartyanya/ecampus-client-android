@@ -9,18 +9,20 @@ import android.view.MenuItem;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
 import android.widget.GridView;
-
 import ua.kpi.ecampus.di.UIModule;
 import ua.kpi.ecampus.model.Subsystem;
 import ua.kpi.ecampus.ui.adapter.GridSubsystemAdapter;
 import ua.kpi.ecampus.ui.presenter.MainPresenter;
-
 import java.util.LinkedList;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import butterknife.Bind;
+import ua.kpi.campus.di.UIModule;
+import ua.kpi.campus.model.Subsystem;
+import ua.kpi.campus.ui.adapter.GridSubsystemAdapter;
+import ua.kpi.campus.ui.presenter.MainPresenter;
 
 /**
  * Main activity for application.
@@ -132,4 +134,5 @@ public class MainActivity extends BaseActivity implements MainPresenter.IView {
         //mToolbar.setNavigationIcon(R.mipmap.ic_action_menu);
         getSupportActionBar().setTitle(ua.kpi.ecampus.R.string.activity_name_main);
     }
+
 }
