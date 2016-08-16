@@ -2,8 +2,11 @@ package ua.kpi.ecampus.ui.activity;
 
 import android.app.ProgressDialog;
 import android.graphics.Point;
+import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -16,6 +19,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RadioButton;
@@ -165,11 +169,11 @@ public abstract class SaveBulletinActivity extends BaseActivity implements
 
     private void hideShowMoreInformation(FrameLayout frameLayout){
         if(frameLayout.getVisibility() != View.VISIBLE) {
-            mMoreInfoBtn.setImageResource(R.drawable.more_button_up);
+            mMoreInfoBtn.setImageResource(R.drawable.arrow_up);
             frameLayout.setVisibility(View.VISIBLE);
         }
         else{
-            mMoreInfoBtn.setImageResource(R.drawable.more_button);
+            mMoreInfoBtn.setImageResource(R.drawable.arrow_down);
             frameLayout.setVisibility(View.GONE);
         }
     }
