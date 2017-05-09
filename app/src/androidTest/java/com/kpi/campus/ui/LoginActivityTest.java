@@ -1,11 +1,8 @@
 package com.kpi.campus.ui;
 
 import android.support.test.espresso.intent.rule.IntentsTestRule;
+import android.support.test.filters.LargeTest;
 import android.support.test.runner.AndroidJUnit4;
-import android.test.suitebuilder.annotation.LargeTest;
-
-import ua.kpi.ecampus.R;
-import ua.kpi.ecampus.ui.activity.LoginActivity;
 
 import org.junit.Rule;
 import org.junit.Test;

@@ -1,17 +1,16 @@
 package ua.kpi.ecampus.api.service;
 
-import com.squareup.okhttp.HttpUrl;
-import com.squareup.okhttp.mockwebserver.Dispatcher;
-import com.squareup.okhttp.mockwebserver.MockResponse;
-import com.squareup.okhttp.mockwebserver.MockWebServer;
-import com.squareup.okhttp.mockwebserver.RecordedRequest;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.List;
 
+import okhttp3.HttpUrl;
+import okhttp3.mockwebserver.Dispatcher;
+import okhttp3.mockwebserver.MockResponse;
+import okhttp3.mockwebserver.MockWebServer;
+import okhttp3.mockwebserver.RecordedRequest;
 import rx.observers.TestSubscriber;
 import ua.kpi.ecampus.model.Recipient;
 import ua.kpi.ecampus.model.pojo.Bulletin;
@@ -21,17 +20,14 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-/**
- * Created by Administrator on 19.05.2016.
- */
 public class BulletinServiceTest extends BaseServiceTest {
 
-    private MockWebServer server;
-    private BulletinService service;
     private final String BULLETIN_ID = "1";
     private final String SUBDIV_ID = "1000";
     private final int LAST_ID = 3;
     private final int LIMIT = 10;
+    private MockWebServer server;
+    private BulletinService service;
 
     @Before
     public void setUp() throws Exception {
@@ -203,7 +199,7 @@ public class BulletinServiceTest extends BaseServiceTest {
             service.getRecipientsBy(getToken(),("IncorrectRequest")).subscribe();
             fail();
         } catch (Exception expected) {
-            assertEquals("HTTP 404 OK", expected.getMessage());
+            assertEquals("HTTP 404 Client Error", expected.getMessage());
         }
     }
 

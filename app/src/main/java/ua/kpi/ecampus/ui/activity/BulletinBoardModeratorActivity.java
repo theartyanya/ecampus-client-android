@@ -20,7 +20,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.OnClick;
 import rx.Subscriber;
 import rx.Subscription;
@@ -42,25 +42,10 @@ import ua.kpi.ecampus.util.pagination.PaginationTool;
 public class BulletinBoardModeratorActivity extends BaseActivity implements
         BulletinBoardModeratorPresenter.IView {
 
-    @Bind(ua.kpi.ecampus.R.id.toolbar)
-    Toolbar mToolbar;
-    @Bind(ua.kpi.ecampus.R.id.tab_layout)
-    TabLayout mTabLayout;
-    @Bind(android.R.id.list)
-    ExtendedRecyclerView mRecyclerView;
-    @Bind(ua.kpi.ecampus.R.id.progress_bar_bulletin)
-    ProgressBar mProgressLoader;
-    @Inject
-    BulletinBoardModeratorPresenter mPresenter;
-    private PagingRecyclerAdapter mAdapter;
-    private Subscription mPagingSubscription;
-
     /**
-     * The list of bulletins which are currently in adapter.
-     * Designed for filtering purposes.
+     * Limit for the number of loaded items
      */
-    private Collection<Bulletin> mBulletins;
-
+    private final static int LIMIT = 100;
     /**
      * Is this activity is moderator activity.
      * Always true. Affects on recycler item view (enable Edit button).
@@ -74,21 +59,23 @@ public class BulletinBoardModeratorActivity extends BaseActivity implements
     private final int TAB_PROFILE = 2;
     private final int TAB_SUBDIVISION = 3;
     private final int TAB_DELETED = 4;
+    @BindView(ua.kpi.ecampus.R.id.toolbar)
+    Toolbar mToolbar;
+    @BindView(ua.kpi.ecampus.R.id.tab_layout)
+    TabLayout mTabLayout;
+    @BindView(android.R.id.list)
+    ExtendedRecyclerView mRecyclerView;
+    @BindView(ua.kpi.ecampus.R.id.progress_bar_bulletin)
+    ProgressBar mProgressLoader;
+    @Inject
+    BulletinBoardModeratorPresenter mPresenter;
+    private PagingRecyclerAdapter mAdapter;
+    private Subscription mPagingSubscription;
     /**
-     * Limit for the number of loaded items
+     * The list of bulletins which are currently in adapter.
+     * Designed for filtering purposes.
      */
-    private final static int LIMIT = 100;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(ua.kpi.ecampus.R.layout
-                .activity_bulletin_board_moderator);
-        bindViews();
-        mPresenter.setView(this);
-        mPresenter.initializeViewComponent();
-    }
-
+    private Collection<Bulletin> mBulletins;
     private OnItemClickListener onItemClickListener =
             new OnItemClickListener() {
                 @Override
@@ -97,7 +84,6 @@ public class BulletinBoardModeratorActivity extends BaseActivity implements
                     mPresenter.onItemClick(item);
                 }
             };
-
     private PopupMenu.OnMenuItemClickListener onMenuItemClickListener = new
             PopupMenu.OnMenuItemClickListener() {
                 @Override
@@ -111,7 +97,6 @@ public class BulletinBoardModeratorActivity extends BaseActivity implements
                     return true;
                 }
             };
-
     private SearchView.OnQueryTextListener onQueryTextChangeListener = new
             SearchView.OnQueryTextListener() {
                 @Override
@@ -127,6 +112,16 @@ public class BulletinBoardModeratorActivity extends BaseActivity implements
                     return false;
                 }
             };
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(ua.kpi.ecampus.R.layout
+                .activity_bulletin_board_moderator);
+        bindViews();
+        mPresenter.setView(this);
+        mPresenter.initializeViewComponent();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -165,27 +160,25 @@ public class BulletinBoardModeratorActivity extends BaseActivity implements
 
     private void setToolbar() {
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            getSupportActionBar().setTitle(ua.kpi.ecampus.
+                    R.string.activity_bulletin_moderator_mode_title);
+        }
         mToolbar.setNavigationIcon(ua.kpi.ecampus.R.mipmap
                 .ic_action_navigation_arrow_back);
-        getSupportActionBar().setTitle(ua.kpi.ecampus.R.string
-                .activity_bulletin_moderator_mode_title);
     }
 
+    @SuppressWarnings("ResourceType")
     private void setTabLayout() {
         TypedArray tabIcon = mPresenter.getTabsIcon();
-        mTabLayout.addTab(mTabLayout.newTab().setIcon(tabIcon.getResourceId
-                (TAB_ALL, -1)), true);
-        mTabLayout.addTab(mTabLayout.newTab().setIcon(tabIcon.getResourceId
-                (TAB_ACTUAL, -1)));
-        mTabLayout.addTab(mTabLayout.newTab().setIcon(tabIcon.getResourceId
-                (TAB_PROFILE, -1)));
-        mTabLayout.addTab(mTabLayout.newTab().setIcon(tabIcon.getResourceId
-                (TAB_SUBDIVISION, -1)));
-        mTabLayout.addTab(mTabLayout.newTab().setIcon(tabIcon.getResourceId
-                (TAB_DELETED, -1)));
-        mTabLayout.setOnTabSelectedListener(new TabLayout
+        mTabLayout.addTab(mTabLayout.newTab().setIcon(tabIcon.getResourceId(TAB_ALL, -1)), true);
+        mTabLayout.addTab(mTabLayout.newTab().setIcon(tabIcon.getResourceId(TAB_ACTUAL, -1)));
+        mTabLayout.addTab(mTabLayout.newTab().setIcon(tabIcon.getResourceId(TAB_PROFILE, -1)));
+        mTabLayout.addTab(mTabLayout.newTab().setIcon(tabIcon.getResourceId(TAB_SUBDIVISION, -1)));
+        mTabLayout.addTab(mTabLayout.newTab().setIcon(tabIcon.getResourceId(TAB_DELETED, -1)));
+        mTabLayout.addOnTabSelectedListener(new TabLayout
                 .OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {

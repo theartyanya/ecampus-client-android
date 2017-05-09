@@ -2,11 +2,8 @@ package ua.kpi.ecampus.ui.activity;
 
 import android.app.ProgressDialog;
 import android.graphics.Point;
-import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -19,7 +16,6 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RadioButton;
@@ -29,10 +25,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.util.List;
+import java.util.Locale;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.OnClick;
 import ua.kpi.ecampus.R;
 import ua.kpi.ecampus.model.Recipient;
@@ -44,51 +41,45 @@ import ua.kpi.ecampus.ui.fragment.DatePickerFragment;
 import ua.kpi.ecampus.ui.presenter.SaveBulletinPresenter;
 import ua.kpi.ecampus.util.ToastUtil;
 
-/**
- * Created by Administrator on 12.05.2016.
- */
 public abstract class SaveBulletinActivity extends BaseActivity implements
         SaveBulletinPresenter.IView {
 
-    @Bind(R.id.edit_text_bulletin_theme)
+    protected final String START_DATE = "start_date";
+    protected final String END_DATE = "end_date";
+    @BindView(R.id.edit_text_bulletin_theme)
     protected EditText mSubject;
-    @Bind(R.id.edit_text_bulletin_text)
+    @BindView(R.id.edit_text_bulletin_text)
     protected EditText mText;
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     protected Toolbar mToolbar;
-    @Bind(R.id.text_view_start_period)
+    @BindView(R.id.text_view_start_period)
     protected EditText mStartDate;
-    @Bind(R.id.text_view_end_period)
+    @BindView(R.id.text_view_end_period)
     protected EditText mEndDate;
-    @Bind(R.id.text_view_creation_date_value)
+    @BindView(R.id.text_view_creation_date_value)
     protected TextView mCreateDate;
-    @Bind(R.id.spinner_profile)
+    @BindView(R.id.spinner_profile)
     protected Spinner mSpinnerProfile;
-    @Bind(R.id.spinner_group)
+    @BindView(R.id.spinner_group)
     protected Spinner mSpinnerGroup;
-    @Bind(R.id.spinner_subdivision)
+    @BindView(R.id.spinner_subdivision)
     protected Spinner mSpinnerSubdivision;
-    @Bind(R.id.layout_profile)
+    @BindView(R.id.layout_profile)
     protected RelativeLayout mLayoutProfile;
-    @Bind(R.id.layout_group)
+    @BindView(R.id.layout_group)
     protected RelativeLayout mLayoutGroup;
-    @Bind(R.id.rb_all)
+    @BindView(R.id.rb_all)
     protected RadioButton mRbAll;
-    @Bind(R.id.rb_profile)
+    @BindView(R.id.rb_profile)
     protected RadioButton mRbProfile;
-    @Bind(R.id.rb_group)
+    @BindView(R.id.rb_group)
     protected RadioButton mRbGroup;
-    @Bind(R.id.btn_more_information)
+    @BindView(R.id.btn_more_information)
     protected ImageButton mMoreInfoBtn;
     @Inject
     protected SaveBulletinPresenter mPresenter;
-
     protected BulletinsRecipientAdapter mAdapter;
     protected ProgressDialog mProgressDialog;
-
-    protected final String START_DATE = "start_date";
-    protected final String END_DATE = "end_date";
-
 
     @Override
     public void showProgressDialog() {
@@ -122,7 +113,7 @@ public abstract class SaveBulletinActivity extends BaseActivity implements
     @Override
     public void updateBadgeCounter(int count) {
         TextView tvCounter = (TextView) findViewById(R.id.tv_badge_counter);
-        tvCounter.setText(Integer.toString(count));
+        tvCounter.setText(String.format(Locale.getDefault(), "%d", count));
     }
 
     @OnClick(R.id.btn_add_recipient)

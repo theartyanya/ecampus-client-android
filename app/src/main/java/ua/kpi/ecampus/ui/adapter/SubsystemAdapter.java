@@ -9,13 +9,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import ua.kpi.ecampus.model.Subsystem;
-import ua.kpi.ecampus.util.CollectionValidator;
-
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import ua.kpi.ecampus.model.Subsystem;
+import ua.kpi.ecampus.util.CollectionValidator;
 
 /**
  * SubsystemAdapter manages Subsystem data model and adapts it to
@@ -63,10 +62,9 @@ public class SubsystemAdapter extends RecyclerView.Adapter<SubsystemAdapter
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        @Bind(ua.kpi.ecampus.R.id.text_view_subsystem_name)
+        @BindView(ua.kpi.ecampus.R.id.text_view_subsystem_name)
         TextView name;
-
-        @Bind(ua.kpi.ecampus.R.id.image_view_subsystem_image)
+        @BindView(ua.kpi.ecampus.R.id.image_view_subsystem_image)
         ImageView image;
 
         public ViewHolder(View itemView) {

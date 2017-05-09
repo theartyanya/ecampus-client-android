@@ -1,23 +1,19 @@
 package ua.kpi.ecampus.api.service;
 
-import com.squareup.okhttp.HttpUrl;
-import com.squareup.okhttp.mockwebserver.Dispatcher;
-import com.squareup.okhttp.mockwebserver.MockResponse;
-import com.squareup.okhttp.mockwebserver.MockWebServer;
-import com.squareup.okhttp.mockwebserver.RecordedRequest;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import okhttp3.HttpUrl;
+import okhttp3.mockwebserver.Dispatcher;
+import okhttp3.mockwebserver.MockResponse;
+import okhttp3.mockwebserver.MockWebServer;
+import okhttp3.mockwebserver.RecordedRequest;
 import rx.observers.TestSubscriber;
 import ua.kpi.ecampus.model.pojo.User;
 
 import static org.junit.Assert.assertEquals;
 
-/**
- * Created by Admin on 18.05.2016.
- */
 public class UserServiceTest extends BaseServiceTest {
 
     private MockWebServer server;

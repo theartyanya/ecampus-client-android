@@ -8,15 +8,14 @@ import android.widget.ImageButton;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
-import ua.kpi.ecampus.model.pojo.Bulletin;
-import ua.kpi.ecampus.ui.view.OnItemClickListener;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import ua.kpi.ecampus.model.pojo.Bulletin;
+import ua.kpi.ecampus.ui.view.OnItemClickListener;
 
 /**
  * Manages Bulletin data model and adapts it to RecyclerView, which is in
@@ -49,13 +48,13 @@ public class PagingRecyclerAdapter extends RecyclerView
         notifyItemInserted(getItemCount() - items.size());
     }
 
+    public List<Bulletin> getItems() {
+        return mData;
+    }
+
     public void setItems(List<Bulletin> list) {
         mData = list;
         notifyDataSetChanged();
-    }
-
-    public List<Bulletin> getItems() {
-        return mData;
     }
 
     public boolean isAllItemsLoaded() {
@@ -67,7 +66,7 @@ public class PagingRecyclerAdapter extends RecyclerView
         return Long.valueOf(getItem(position).getId());
     }
 
-    public Bulletin getItem(int position) {
+    private Bulletin getItem(int position) {
         return mData.get(position);
     }
 
@@ -123,13 +122,13 @@ public class PagingRecyclerAdapter extends RecyclerView
 
     protected class ViewHolder extends RecyclerView.ViewHolder {
 
-        @Bind(ua.kpi.ecampus.R.id.text_view_bulletin_date)
+        @BindView(ua.kpi.ecampus.R.id.text_view_bulletin_date)
         TextView date;
-        @Bind(ua.kpi.ecampus.R.id.text_view_bulletin_theme)
+        @BindView(ua.kpi.ecampus.R.id.text_view_bulletin_theme)
         TextView theme;
-        @Bind(ua.kpi.ecampus.R.id.text_view_bulletin_author)
+        @BindView(ua.kpi.ecampus.R.id.text_view_bulletin_author)
         TextView author;
-        @Bind(ua.kpi.ecampus.R.id.button_overflow)
+        @BindView(ua.kpi.ecampus.R.id.button_overflow)
         ImageButton btnOverflow;
 
         public ViewHolder(View itemView) {
@@ -138,7 +137,7 @@ public class PagingRecyclerAdapter extends RecyclerView
         }
 
         @OnClick(ua.kpi.ecampus.R.id.layout_bulletin)
-        public void itemClick(View view) {
+        void itemClick(View view) {
             if (mListener != null) {
                 int pos = getAdapterPosition();
                 mListener.onItemClicked(view, pos, mData.get(pos));
@@ -146,7 +145,7 @@ public class PagingRecyclerAdapter extends RecyclerView
         }
 
         @OnClick(ua.kpi.ecampus.R.id.button_overflow)
-        public void btnOverflowClick(final View view) {
+        void btnOverflowClick(final View view) {
             int pos = getAdapterPosition();
             mClickedItem = mData.get(pos);
 

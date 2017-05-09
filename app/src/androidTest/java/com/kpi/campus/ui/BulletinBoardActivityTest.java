@@ -1,19 +1,18 @@
 package com.kpi.campus.ui;
 
-import android.support.test.espresso.PerformException;
 import android.support.test.espresso.intent.rule.IntentsTestRule;
+import android.support.test.filters.LargeTest;
 import android.support.test.runner.AndroidJUnit4;
-import android.test.suitebuilder.annotation.LargeTest;
 
-import ua.kpi.ecampus.R;
 import com.kpi.campus.helper.Sleep;
-import ua.kpi.ecampus.ui.activity.BulletinBoardActivity;
 
 import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import ua.kpi.ecampus.R;
+import ua.kpi.ecampus.ui.activity.BulletinBoardActivity;
 import ua.kpi.ecampus.ui.activity.BulletinBoardModeratorActivity;
 
 import static android.support.test.espresso.Espresso.onData;
@@ -135,7 +134,7 @@ public class BulletinBoardActivityTest {
     }
 
 
-    /**
+    /*
      * Tests that clicking on navigate up button shows parent activity
      * @throws PerformException if currently displayed activity is root activity, since pressing back
      *         button would result in application closing.

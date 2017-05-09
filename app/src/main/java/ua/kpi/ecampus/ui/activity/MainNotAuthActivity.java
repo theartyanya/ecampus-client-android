@@ -8,18 +8,16 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import ua.kpi.ecampus.model.Subsystem;
-import ua.kpi.ecampus.ui.adapter.SubsystemAdapter;
-import ua.kpi.ecampus.ui.presenter.MainNotAuthPresenter;
-import ua.kpi.ecampus.di.UIModule;
-
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
+import butterknife.BindView;
+import ua.kpi.ecampus.di.UIModule;
+import ua.kpi.ecampus.ui.adapter.SubsystemAdapter;
+import ua.kpi.ecampus.ui.presenter.MainNotAuthPresenter;
 
 /**
  * Main activity when user is not logged into a app.
@@ -27,9 +25,9 @@ import butterknife.Bind;
 public class MainNotAuthActivity extends BaseActivity implements
         MainNotAuthPresenter.IView {
 
-    @Bind(ua.kpi.ecampus.R.id.toolbar)
+    @BindView(ua.kpi.ecampus.R.id.toolbar)
     Toolbar mToolbar;
-    @Bind(ua.kpi.ecampus.R.id.recycler_view_subsystems)
+    @BindView(ua.kpi.ecampus.R.id.recycler_view_subsystems)
     RecyclerView mRecyclerView;
     @Inject
     MainNotAuthPresenter mPresenter;
@@ -81,7 +79,7 @@ public class MainNotAuthActivity extends BaseActivity implements
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        mAdapter = new SubsystemAdapter(this, new ArrayList<Subsystem>());
+        mAdapter = new SubsystemAdapter(this, new ArrayList<>());
         mRecyclerView.setAdapter(mAdapter);
 
         mAdapter.setData(mPresenter.getData());
@@ -91,6 +89,7 @@ public class MainNotAuthActivity extends BaseActivity implements
         setSupportActionBar(mToolbar);
         //getSupportActionBar().setDisplayShowHomeEnabled(true);
         //getSupportActionBar().setIcon(R.mipmap.ua.kpi.ecampus);
-        getSupportActionBar().setTitle(ua.kpi.ecampus.R.string.activity_name_main);
+        if (getSupportActionBar() != null)
+            getSupportActionBar().setTitle(ua.kpi.ecampus.R.string.activity_name_main);
     }
 }

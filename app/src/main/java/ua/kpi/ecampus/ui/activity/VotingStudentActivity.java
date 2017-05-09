@@ -15,7 +15,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import ua.kpi.ecampus.Config;
 import ua.kpi.ecampus.R;
 import ua.kpi.ecampus.di.UIModule;
@@ -28,18 +28,16 @@ import ua.kpi.ecampus.ui.presenter.VotingStudentPresenter;
 import ua.kpi.ecampus.ui.view.DividerItemDecoration;
 import ua.kpi.ecampus.ui.view.OnItemClickListener;
 
-/**
- * Created by Administrator on 31.05.2016.
- */
 public class VotingStudentActivity extends BaseActivity implements
         VotingStudentPresenter.IView {
 
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar mToolbar;
-    @Bind(R.id.recyclerview_teachers)
+    @BindView(R.id.recyclerview_teachers)
     RecyclerView mRecyclerView;
-    @Bind(R.id.spinner_terms)
+    @BindView(R.id.spinner_terms)
     Spinner mSpinnerTerms;
+
     @Inject
     VotingStudentPresenter mPresenter;
     private VotingAdapter mAdapter;
@@ -124,10 +122,12 @@ public class VotingStudentActivity extends BaseActivity implements
 
     private void setToolbar() {
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            getSupportActionBar().setTitle(R.string.activity_name_voting);
+        }
         mToolbar.setNavigationIcon(R.mipmap.ic_action_navigation_arrow_back);
-        getSupportActionBar().setTitle(R.string.activity_name_voting);
     }
 
     private void setRecyclerView() {

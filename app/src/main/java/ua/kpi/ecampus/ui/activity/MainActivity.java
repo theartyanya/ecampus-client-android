@@ -1,7 +1,6 @@
 package ua.kpi.ecampus.ui.activity;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -10,26 +9,25 @@ import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
 import android.widget.GridView;
 
-import ua.kpi.ecampus.di.UIModule;
-import ua.kpi.ecampus.model.Subsystem;
-import ua.kpi.ecampus.ui.adapter.GridSubsystemAdapter;
-import ua.kpi.ecampus.ui.presenter.MainPresenter;
-
 import java.util.LinkedList;
 import java.util.List;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
+import butterknife.BindView;
+import ua.kpi.ecampus.di.UIModule;
+import ua.kpi.ecampus.model.Subsystem;
+import ua.kpi.ecampus.ui.adapter.GridSubsystemAdapter;
+import ua.kpi.ecampus.ui.presenter.MainPresenter;
 
 /**
  * Main activity for application.
  */
 public class MainActivity extends BaseActivity implements MainPresenter.IView {
 
-    @Bind(ua.kpi.ecampus.R.id.toolbar)
+    @BindView(ua.kpi.ecampus.R.id.toolbar)
     Toolbar mToolbar;
-    @Bind(ua.kpi.ecampus.R.id.grid_view_subsystem)
+    @BindView(ua.kpi.ecampus.R.id.grid_view_subsystem)
     GridView mGridSubsystem;
     @Inject
     MainPresenter mPresenter;
@@ -77,19 +75,9 @@ public class MainActivity extends BaseActivity implements MainPresenter.IView {
     private void showLogoutDialog() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setMessage(ua.kpi.ecampus.R.string.logout_confirmation);
-        alertDialogBuilder.setPositiveButton(ua.kpi.ecampus.R.string.yes, new
-                DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                mPresenter.logout();
-            }
-        });
-        alertDialogBuilder.setNegativeButton(ua.kpi.ecampus.R.string.no, new DialogInterface
-                .OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                // Do nothing
-            }
+        alertDialogBuilder.setPositiveButton(ua.kpi.ecampus.R.string.yes, (dialog, which) -> mPresenter.logout());
+        alertDialogBuilder.setNegativeButton(ua.kpi.ecampus.R.string.no, (dialog, which) -> {
+            // Do nothing
         });
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
@@ -130,6 +118,7 @@ public class MainActivity extends BaseActivity implements MainPresenter.IView {
         //getSupportActionBar().setHomeButtonEnabled(true);
         //getSupportActionBar().setDisplayShowHomeEnabled(true);
         //mToolbar.setNavigationIcon(R.mipmap.ic_action_menu);
-        getSupportActionBar().setTitle(ua.kpi.ecampus.R.string.activity_name_main);
+        if (getSupportActionBar() != null)
+            getSupportActionBar().setTitle(ua.kpi.ecampus.R.string.activity_name_main);
     }
 }

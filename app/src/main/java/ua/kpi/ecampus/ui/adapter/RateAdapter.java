@@ -2,6 +2,7 @@ package ua.kpi.ecampus.ui.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +13,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import ua.kpi.ecampus.R;
 import ua.kpi.ecampus.model.Rating;
@@ -30,6 +31,13 @@ public class RateAdapter extends ArrayAdapter<Rating> {
     private Context mContext;
     private int mResourceId;
 
+    public RateAdapter(Context context, int resource, List<Rating> objects) {
+        super(context, resource, objects);
+        mContext = context;
+        mResourceId = resource;
+        mData = objects;
+    }
+
     private RatingBar.OnRatingBarChangeListener listener(
             final ViewHolder holder, final int position) {
         return (ratingBar, v, b) -> {
@@ -38,20 +46,14 @@ public class RateAdapter extends ArrayAdapter<Rating> {
         };
     }
 
-    public RateAdapter(Context context, int resource, List<Rating> objects) {
-        super(context, resource, objects);
-        mContext = context;
-        mResourceId = resource;
-        mData = objects;
-    }
-
     @Override
     public Rating getItem(int position) {
         return mData.get(position);
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    @NonNull
+    public View getView(int position, View convertView, @NonNull ViewGroup parent) {
         ViewHolder holder;
         LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 
@@ -89,9 +91,9 @@ public class RateAdapter extends ArrayAdapter<Rating> {
 
     protected class ViewHolder {
 
-        @Bind(R.id.tv_criterion)
+        @BindView(R.id.tv_criterion)
         TextView tvCriterion;
-        @Bind(R.id.rating_bar)
+        @BindView(R.id.rating_bar)
         RatingBar ratingBar;
 
         public ViewHolder(View itemView) {

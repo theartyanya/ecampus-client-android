@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,13 +17,13 @@ import org.hamcrest.TypeSafeMatcher;
  *
  * Created by Administrator on 03.03.2016.
  */
-public class DrawableMatcher extends TypeSafeMatcher<View> {
+class DrawableMatcher extends TypeSafeMatcher<View> {
 
     private final int resourceId;
     private String resourceName = null;
     private Drawable expectedDrawable = null;
 
-    public DrawableMatcher(int resourceId) {
+    DrawableMatcher(int resourceId) {
         super(View.class);
         this.resourceId = resourceId;
     }
@@ -48,7 +49,7 @@ public class DrawableMatcher extends TypeSafeMatcher<View> {
     private void loadDrawableFromResources(Context context) {
         try {
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-                expectedDrawable = context.getResources().getDrawable(resourceId);
+                expectedDrawable = ContextCompat.getDrawable(context, resourceId);
             } else {
                 expectedDrawable = context.getDrawable(resourceId);
             }

@@ -20,7 +20,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -42,30 +42,10 @@ import ua.kpi.ecampus.util.pagination.PaginationTool;
 public class BulletinBoardActivity extends BaseActivity implements
         BulletinBoardPresenter.IView {
 
-    @Bind(R.id.toolbar)
-    Toolbar mToolbar;
-    @Bind(R.id.tab_layout)
-    TabLayout mTabLayout;
-    @Bind(android.R.id.list)
-    ExtendedRecyclerView mRecyclerView;
-    @Bind(R.id.progress_bar_bulletin)
-    ProgressBar mProgressLoader;
-    @Inject
-    BulletinBoardPresenter mPresenter;
-    private PagingRecyclerAdapter mAdapter;
-    private Subscription mPagingSubscription;
-
     /**
-     * The list of bulletins which are currently in adapter.
-     * Designed for filtering purposes.
+     * Limit for the number of loaded items
      */
-    private Collection<Bulletin> mBulletins;
-
-    /**
-     * Whether the user is moderator.
-     * Affects on toolbar menu view.
-     */
-    private boolean mIsModerator;
+    private final static int LIMIT = 100;
     /**
      * Is this activity is moderator activity.
      * Always false. Affects on recycler item view (disable Edit button).
@@ -77,23 +57,28 @@ public class BulletinBoardActivity extends BaseActivity implements
     private final int TAB_ACTUAL = 0;
     private final int TAB_PROFILE = 1;
     private final int TAB_SUBDIVISION = 2;
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
+    @BindView(R.id.tab_layout)
+    TabLayout mTabLayout;
+    @BindView(android.R.id.list)
+    ExtendedRecyclerView mRecyclerView;
+    @BindView(R.id.progress_bar_bulletin)
+    ProgressBar mProgressLoader;
+    @Inject
+    BulletinBoardPresenter mPresenter;
+    private PagingRecyclerAdapter mAdapter;
+    private Subscription mPagingSubscription;
     /**
-     * Limit for the number of loaded items
+     * The list of bulletins which are currently in adapter.
+     * Designed for filtering purposes.
      */
-    private final static int LIMIT = 100;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bulletin_board);
-        bindViews();
-
-        mPresenter.setView(this);
-        mPresenter.initializeViewComponent();
-
-        mIsModerator = mPresenter.isModerator();
-    }
-
+    private Collection<Bulletin> mBulletins;
+    /**
+     * Whether the user is moderator.
+     * Affects on toolbar menu view.
+     */
+    private boolean mIsModerator;
     private OnItemClickListener onItemClickListener =
             new OnItemClickListener() {
                 @Override
@@ -102,7 +87,6 @@ public class BulletinBoardActivity extends BaseActivity implements
                     mPresenter.onItemClick(item);
                 }
             };
-
     private SearchView.OnQueryTextListener onQueryTextChangeListener = new
             SearchView.OnQueryTextListener() {
                 @Override
@@ -119,6 +103,17 @@ public class BulletinBoardActivity extends BaseActivity implements
                 }
             };
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_bulletin_board);
+        bindViews();
+
+        mPresenter.setView(this);
+        mPresenter.initializeViewComponent();
+
+        mIsModerator = mPresenter.isModerator();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -162,15 +157,13 @@ public class BulletinBoardActivity extends BaseActivity implements
         setRecyclerView();
     }
 
+    @SuppressWarnings("ResourceType")
     private void setTabLayout() {
         TypedArray tabIcon = mPresenter.getTabsIcon();
-        mTabLayout.addTab(mTabLayout.newTab().setIcon(tabIcon.getResourceId
-                (TAB_ACTUAL, -1)), true);
-        mTabLayout.addTab(mTabLayout.newTab().setIcon(tabIcon.getResourceId
-                (TAB_PROFILE, -1)));
-        mTabLayout.addTab(mTabLayout.newTab().setIcon(tabIcon.getResourceId
-                (TAB_SUBDIVISION, -1)));
-        mTabLayout.setOnTabSelectedListener(new TabLayout
+        mTabLayout.addTab(mTabLayout.newTab().setIcon(tabIcon.getResourceId(TAB_ACTUAL, -1)), true);
+        mTabLayout.addTab(mTabLayout.newTab().setIcon(tabIcon.getResourceId(TAB_PROFILE, -1)));
+        mTabLayout.addTab(mTabLayout.newTab().setIcon(tabIcon.getResourceId(TAB_SUBDIVISION, -1)));
+        mTabLayout.addOnTabSelectedListener(new TabLayout
                 .OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -206,10 +199,12 @@ public class BulletinBoardActivity extends BaseActivity implements
 
     private void setToolbar() {
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            getSupportActionBar().setTitle(R.string.activity_name_bulletin_board);
+        }
         mToolbar.setNavigationIcon(R.mipmap.ic_action_navigation_arrow_back);
-        getSupportActionBar().setTitle(R.string.activity_name_bulletin_board);
     }
 
     private void setVisible(View... views) {

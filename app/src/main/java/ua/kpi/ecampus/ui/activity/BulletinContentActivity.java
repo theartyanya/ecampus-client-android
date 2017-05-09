@@ -5,24 +5,25 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-import ua.kpi.ecampus.Config;
-import ua.kpi.ecampus.di.UIModule;
-import ua.kpi.ecampus.model.pojo.Bulletin;
-import ua.kpi.ecampus.ui.presenter.BulletinContentPresenter;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
+import butterknife.BindView;
+import ua.kpi.ecampus.Config;
+import ua.kpi.ecampus.di.UIModule;
+import ua.kpi.ecampus.model.pojo.Bulletin;
+import ua.kpi.ecampus.ui.presenter.BulletinContentPresenter;
+
 
 /**
  * This activity represents content of a Bulletin.
  */
 public class BulletinContentActivity extends BaseActivity implements
         BulletinContentPresenter.IView {
-    @Bind(ua.kpi.ecampus.R.id.toolbar)
+
+    @BindView(ua.kpi.ecampus.R.id.toolbar)
     Toolbar mToolbar;
     @Inject
     BulletinContentPresenter mPresenter;
@@ -64,10 +65,12 @@ public class BulletinContentActivity extends BaseActivity implements
 
     private void setToolbar() {
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            getSupportActionBar().setTitle(ua.kpi.ecampus.R.string.bulletin_text_content);
+        }
         mToolbar.setNavigationIcon(ua.kpi.ecampus.R.mipmap.ic_action_navigation_arrow_back);
-        getSupportActionBar().setTitle(ua.kpi.ecampus.R.string.bulletin_text_content);
     }
 
     private void setValuesInViews() {

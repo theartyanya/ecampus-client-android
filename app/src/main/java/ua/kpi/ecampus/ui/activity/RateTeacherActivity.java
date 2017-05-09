@@ -11,7 +11,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import ua.kpi.ecampus.Config;
 import ua.kpi.ecampus.R;
 import ua.kpi.ecampus.di.UIModule;
@@ -20,14 +20,11 @@ import ua.kpi.ecampus.model.pojo.VoteTeacher;
 import ua.kpi.ecampus.ui.adapter.RateAdapter;
 import ua.kpi.ecampus.util.SnackbarUtil;
 
-/**
- * Created by Administrator on 08.06.2016.
- */
 public class RateTeacherActivity extends BaseActivity {
 
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar mToolbar;
-    @Bind(R.id.listview_rate)
+    @BindView(R.id.listview_rate)
     ListView mList;
     private RateAdapter mAdapter;
     private VoteTeacher mTeacher;
@@ -84,9 +81,8 @@ public class RateTeacherActivity extends BaseActivity {
     private List<Rating> setRatingList() {
         List<Rating> list = new ArrayList<>();
         String[] criterion = getResources().getStringArray(R.array.voting_criteria);
-        if(!mTeacher.isVoted())
-            for (int i = 0; i < criterion.length; i++)
-                list.add(new Rating(0, criterion[i]));
+        if (!mTeacher.isVoted())
+            for (String aCriterion : criterion) list.add(new Rating(0, aCriterion));
         else {
             List<Rating> values = mTeacher.getCriteria();
             for (int i = 0; i < criterion.length; i++)
@@ -97,10 +93,12 @@ public class RateTeacherActivity extends BaseActivity {
 
     private void setToolbar() {
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            getSupportActionBar().setTitle(R.string.activity_name_rate_teacher);
+        }
         mToolbar.setNavigationIcon(R.mipmap.ic_action_navigation_arrow_back);
-        getSupportActionBar().setTitle(R.string.activity_name_rate_teacher);
     }
 
     private void setListView() {

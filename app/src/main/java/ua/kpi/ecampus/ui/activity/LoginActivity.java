@@ -13,7 +13,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.OnClick;
 import ua.kpi.ecampus.Config;
 import ua.kpi.ecampus.R;
@@ -29,11 +29,11 @@ import ua.kpi.ecampus.util.ToastUtil;
 public class LoginActivity extends BaseActivity implements LoginPresenter
         .IView, LoaderManager.LoaderCallbacks<BaseResponse> {
 
-    @Bind(R.id.edit_text_login)
+    @BindView(R.id.edit_text_login)
     EditText mLogin;
-    @Bind(R.id.edit_text_password)
+    @BindView(R.id.edit_text_password)
     EditText mPassword;
-    @Bind(R.id.button_login)
+    @BindView(R.id.button_login)
     Button mBtnLogin;
     @Inject
     LoginPresenter mPresenter;
@@ -147,8 +147,8 @@ public class LoginActivity extends BaseActivity implements LoginPresenter
     /**
      * Validate user input credentials.
      *
-     * @param inputLogin
-     * @param inputPassword
+     * @param inputLogin kappa
+     * @param inputPassword kappa
      * @return true if credentials are not empty, false otherwise.
      */
     private boolean validateInput(String inputLogin, String inputPassword) {

@@ -8,15 +8,14 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import ua.kpi.ecampus.R;
-import ua.kpi.ecampus.model.Recipient;
-import ua.kpi.ecampus.ui.presenter.SaveBulletinPresenter;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import ua.kpi.ecampus.R;
+import ua.kpi.ecampus.model.Recipient;
+import ua.kpi.ecampus.ui.presenter.SaveBulletinPresenter;
 
 /**
  * BulletinsRecipientAdapter manages recipient data (profile, subsystem,
@@ -35,12 +34,6 @@ public class BulletinsRecipientAdapter extends RecyclerView
 
     public BulletinsRecipientAdapter(SaveBulletinPresenter.IView view) {
         mView = view;
-    }
-
-    public void setItems(List<Recipient> list) {
-        mDataList = list;
-        mView.updateBadgeCounter(getItemCount());
-        notifyDataSetChanged();
     }
 
     public void clear() {
@@ -82,6 +75,12 @@ public class BulletinsRecipientAdapter extends RecyclerView
         return mDataList;
     }
 
+    public void setItems(List<Recipient> list) {
+        mDataList = list;
+        mView.updateBadgeCounter(getItemCount());
+        notifyDataSetChanged();
+    }
+
     public void addItem(final Recipient item) {
         Handler handler = new Handler();
         handler.postDelayed(() -> {
@@ -92,7 +91,7 @@ public class BulletinsRecipientAdapter extends RecyclerView
 
     }
 
-    public void removeItem(final int position) {
+    private void removeItem(final int position) {
         Handler handler = new Handler();
         handler.postDelayed(() -> {
             mDataList.remove(position);
@@ -105,11 +104,11 @@ public class BulletinsRecipientAdapter extends RecyclerView
 
     protected class ViewHolder extends RecyclerView.ViewHolder {
 
-        @Bind(R.id.tv_where)
+        @BindView(R.id.tv_where)
         TextView tvWhere;
-        @Bind(R.id.tv_whom)
+        @BindView(R.id.tv_whom)
         TextView tvWhom;
-        @Bind(R.id.button_delete_buffer_recipient)
+        @BindView(R.id.button_delete_buffer_recipient)
         ImageButton btnDelete;
 
         public ViewHolder(View itemView) {

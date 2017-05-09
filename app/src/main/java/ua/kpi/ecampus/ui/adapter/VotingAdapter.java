@@ -10,7 +10,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import ua.kpi.ecampus.R;
@@ -35,7 +35,7 @@ public class VotingAdapter extends RecyclerView.Adapter<VotingAdapter.ViewHolder
     /**
      * Set data to adapter
      *
-     * @param list
+     * @param list kappa
      */
     public void setAllItems(List<VoteTeacher> list) {
         mAllData = list;
@@ -45,7 +45,7 @@ public class VotingAdapter extends RecyclerView.Adapter<VotingAdapter.ViewHolder
     /**
      * Update item in adapter
      *
-     * @param item
+     * @param item kappa
      */
     public void updateItem(VoteTeacher item) {
         int pos = getItemPosition(item);
@@ -99,14 +99,14 @@ public class VotingAdapter extends RecyclerView.Adapter<VotingAdapter.ViewHolder
      * @param pos - position
      * @return item
      */
-    public VoteTeacher getItem(int pos) {
+    private VoteTeacher getItem(int pos) {
         return mCurrentData.get(pos);
     }
 
     /**
      * Set listener which is invoked when a item is clicked.
      *
-     * @param listener
+     * @param listener kappa
      */
     public void setOnItemClickListener(OnItemClickListener listener) {
         mListener = listener;
@@ -115,7 +115,7 @@ public class VotingAdapter extends RecyclerView.Adapter<VotingAdapter.ViewHolder
     /**
      * Get position in adapter of item with specified id
      *
-     * @param item
+     * @param item kappa
      * @return position
      */
     private int getItemPosition(VoteTeacher item) {
@@ -130,9 +130,9 @@ public class VotingAdapter extends RecyclerView.Adapter<VotingAdapter.ViewHolder
 
     protected class ViewHolder extends RecyclerView.ViewHolder {
 
-        @Bind(R.id.tv_teacher_name)
+        @BindView(R.id.tv_teacher_name)
         TextView tvTeacherName;
-        @Bind(R.id.image_voted)
+        @BindView(R.id.image_voted)
         ImageView imageVoted;
 
         public ViewHolder(View itemView) {
@@ -141,7 +141,7 @@ public class VotingAdapter extends RecyclerView.Adapter<VotingAdapter.ViewHolder
         }
 
         @OnClick(R.id.tv_feedback)
-        public void itemClick(View view) {
+        void itemClick(View view) {
             if (mListener != null) {
                 int pos = getAdapterPosition();
                 mListener.onItemClicked(view, pos, mCurrentData.get(pos));
