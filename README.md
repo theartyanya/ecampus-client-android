@@ -9,8 +9,6 @@ API v2.0
 * endpoint: http://api-campus-kpi-ua.azurewebsites.net/
 * structure: http://api-campus-kpi-ua.azurewebsites.net/system/structure
 
-
-===
 ####Соглашение о сотрудничестве 
 Если Вы решили стать частью команды разработчиков, то просим ознакомиться со следующим соглашением, принятым в проекте. 
 
